@@ -479,10 +479,19 @@
                         }
                     }
                 } else {
-                    // Can only move on edges when not drawing
+                    // Check if moving onto edge or into unclaimed area
                     if (isOnEdge(newX, newY)) {
+                        // Moving along edge
                         marker.x = newX;
                         marker.y = newY;
+                    } else if (marker.onEdge) {
+                        // Moving off edge into unclaimed area - auto-start drawing
+                        marker.drawing = true;
+                        marker.onEdge = false;
+                        marker.path = [{ x: marker.x, y: marker.y }];
+                        marker.x = newX;
+                        marker.y = newY;
+                        marker.path.push({ x: marker.x, y: marker.y });
                     }
                 }
             }
@@ -582,7 +591,7 @@
 
             ctx.font = '18px monospace';
             ctx.fillText('Arrow Keys / WASD to move', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 30);
-            ctx.fillText('F = Fast Draw (1x pts) | S = Slow Draw (2x pts)', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 60);
+            ctx.fillText('Move off the edge to draw lines', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 60);
             ctx.fillText('Claim 75% of the playfield!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 90);
         }
 
@@ -628,44 +637,22 @@
     }
 
     function handleKeyDown(e) {
-        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'f', 'F', 's', 'S'].includes(e.key)) {
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'w', 'a', 's', 'd', 'W', 'A', 'S', 'D'].includes(e.key)) {
             e.preventDefault();
         }
 
         gameState.keys[e.key] = true;
 
-        if (e.key === ' ' && !gameState.gameStarted && !gameState.gameOver) {
-            gameState.gameStarted = true;
-        }
-
-        // Start drawing
-        if ((e.key === 'f' || e.key === 'F') && gameState.gameStarted && !gameState.gameOver) {
-            if (gameState.marker.onEdge && !gameState.marker.drawing) {
-                gameState.marker.drawing = true;
-                gameState.marker.drawSpeed = 'fast';
-                gameState.marker.onEdge = false;
-                gameState.marker.path = [{ x: gameState.marker.x, y: gameState.marker.y }];
-            }
-        }
-
-        if ((e.key === 's' || e.key === 'S') && gameState.gameStarted && !gameState.gameOver) {
-            if (gameState.marker.onEdge && !gameState.marker.drawing) {
-                gameState.marker.drawing = true;
-                gameState.marker.drawSpeed = 'slow';
-                gameState.marker.onEdge = false;
-                gameState.marker.path = [{ x: gameState.marker.x, y: gameState.marker.y }];
-                gameState.marker.speed = 1; // Slower movement, aligns with grid
+        // Start game on any direction key
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', 'W', 'A', 'S', 'D', ' '].includes(e.key)) {
+            if (!gameState.gameStarted && !gameState.gameOver) {
+                gameState.gameStarted = true;
             }
         }
     }
 
     function handleKeyUp(e) {
         gameState.keys[e.key] = false;
-
-        // Reset speed when releasing slow draw
-        if ((e.key === 's' || e.key === 'S') && gameState.marker.drawSpeed === 'slow') {
-            gameState.marker.speed = 2;
-        }
     }
 
     window.launchQix = function() {
@@ -695,35 +682,24 @@
                 <canvas id="qixCanvas" width="800" height="600" style="border: 4px solid #333; border-radius: 10px; background: #000; max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
 
                 <!-- Mobile Controls -->
-                <div style="display: flex; gap: 0.5rem; justify-content: space-between; align-items: flex-end; margin-top: 1rem; max-width: 100%;">
-                    <!-- Left side: Fast and Slow buttons stacked -->
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <button id="qixFastBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #00ccff 0%, #0099cc 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 0.9rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3); line-height: 1.2;">
-                            ⚡<br>FAST
-                        </button>
-                        <button id="qixSlowBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 0.9rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3); line-height: 1.2;">
-                            🐢<br>SLOW
-                        </button>
-                    </div>
-
-                    <!-- Right side: Directional controls -->
-                    <div style="display: grid; grid-template-columns: repeat(3, 70px); grid-template-rows: repeat(3, 70px); gap: 5px;">
+                <div style="display: flex; justify-content: center; margin-top: 1rem;">
+                    <div style="display: grid; grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(3, 80px); gap: 8px;">
                         <div></div>
-                        <button id="qixUpBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 1.5rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                        <button id="qixUpBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
                             ⬆️
                         </button>
                         <div></div>
 
-                        <button id="qixLeftBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 1.5rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                        <button id="qixLeftBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
                             ⬅️
                         </button>
                         <div></div>
-                        <button id="qixRightBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 1.5rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                        <button id="qixRightBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
                             ➡️
                         </button>
 
                         <div></div>
-                        <button id="qixDownBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 1.5rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                        <button id="qixDownBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
                             ⬇️
                         </button>
                         <div></div>
@@ -734,11 +710,9 @@
                     <h4 style="color: #333; margin-bottom: 1rem;">How to Play:</h4>
                     <ul style="color: #666; text-align: left; line-height: 1.8;">
                         <li>🎯 <strong>Objective:</strong> Claim 75% of the playfield to complete each level</li>
-                        <li>📐 <strong>IMPORTANT:</strong> Press ⚡ FAST or 🐢 SLOW button to start drawing, then use arrows to move into black area!</li>
-                        <li>⚡ <strong>Fast Draw (blue):</strong> Quick but worth 1x points</li>
-                        <li>🐢 <strong>Slow Draw (orange):</strong> Slower but worth 2x points!</li>
-                        <li>💎 You start on the edge (blue) - arrows only move along the edge until you start drawing</li>
-                        <li>🎨 When you complete a box back to the edge, the side WITHOUT the Qix gets claimed</li>
+                        <li>⬆️⬇️⬅️➡️ <strong>Controls:</strong> Hold arrow keys to move</li>
+                        <li>💎 Move along the blue edge, then move INTO the black area to start drawing</li>
+                        <li>🎨 Draw back to any edge to claim the area (side without the Qix gets filled)</li>
                         <li>☠️ <strong>The Qix:</strong> Don't let it touch your incomplete lines!</li>
                         <li>🏆 Bonus: Every 1% above 75% = 1,000 bonus points!</li>
                     </ul>
@@ -760,10 +734,9 @@
         const downBtn = document.getElementById('qixDownBtn');
         const leftBtn = document.getElementById('qixLeftBtn');
         const rightBtn = document.getElementById('qixRightBtn');
-        const fastBtn = document.getElementById('qixFastBtn');
-        const slowBtn = document.getElementById('qixSlowBtn');
 
-        upBtn.addEventListener('touchstart', () => {
+        upBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (!gameState.gameStarted && !gameState.gameOver) {
                 gameState.gameStarted = true;
             }
@@ -778,7 +751,8 @@
         });
         upBtn.addEventListener('mouseup', () => gameState.keys['ArrowUp'] = false);
 
-        downBtn.addEventListener('touchstart', () => {
+        downBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (!gameState.gameStarted && !gameState.gameOver) {
                 gameState.gameStarted = true;
             }
@@ -793,7 +767,8 @@
         });
         downBtn.addEventListener('mouseup', () => gameState.keys['ArrowDown'] = false);
 
-        leftBtn.addEventListener('touchstart', () => {
+        leftBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (!gameState.gameStarted && !gameState.gameOver) {
                 gameState.gameStarted = true;
             }
@@ -808,7 +783,8 @@
         });
         leftBtn.addEventListener('mouseup', () => gameState.keys['ArrowLeft'] = false);
 
-        rightBtn.addEventListener('touchstart', () => {
+        rightBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (!gameState.gameStarted && !gameState.gameOver) {
                 gameState.gameStarted = true;
             }
@@ -822,31 +798,6 @@
             gameState.keys['ArrowRight'] = true;
         });
         rightBtn.addEventListener('mouseup', () => gameState.keys['ArrowRight'] = false);
-
-        fastBtn.addEventListener('click', () => {
-            if (!gameState.gameStarted && !gameState.gameOver) {
-                gameState.gameStarted = true;
-            }
-            if (gameState.marker.onEdge && !gameState.marker.drawing) {
-                gameState.marker.drawing = true;
-                gameState.marker.drawSpeed = 'fast';
-                gameState.marker.onEdge = false;
-                gameState.marker.path = [{ x: gameState.marker.x, y: gameState.marker.y }];
-            }
-        });
-
-        slowBtn.addEventListener('click', () => {
-            if (!gameState.gameStarted && !gameState.gameOver) {
-                gameState.gameStarted = true;
-            }
-            if (gameState.marker.onEdge && !gameState.marker.drawing) {
-                gameState.marker.drawing = true;
-                gameState.marker.drawSpeed = 'slow';
-                gameState.marker.onEdge = false;
-                gameState.marker.path = [{ x: gameState.marker.x, y: gameState.marker.y }];
-                gameState.marker.speed = 1;
-            }
-        });
 
         // Start game loop
         lastTime = 0;
