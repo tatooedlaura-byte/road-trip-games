@@ -979,6 +979,13 @@
         gameState.score = 0;
         gameState.highScore = localStorage.getItem('cavernsHighScore') || 0;
 
+        // Disable text selection and context menu on canvas
+        canvas.style.userSelect = 'none';
+        canvas.style.webkitUserSelect = 'none';
+        canvas.style.touchAction = 'none';
+        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+        canvas.addEventListener('selectstart', (e) => e.preventDefault());
+
         // Setup event listeners
         document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('keyup', handleKeyUp);
