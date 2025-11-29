@@ -690,9 +690,9 @@
     }
 
     function drawTouchControls() {
-        const btnSize = 70;
-        const btnY = GAME_HEIGHT - 140;
-        const margin = 20;
+        const btnSize = 80;
+        const btnY = GAME_HEIGHT - 180;
+        const margin = 15;
 
         // Left button
         ctx.fillStyle = touchLeft ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.2)';
@@ -822,9 +822,9 @@
     }
 
     function checkTouchButtons(x, y) {
-        const btnSize = 70;
-        const btnY = GAME_HEIGHT - 140;
-        const margin = 20;
+        const btnSize = 80;
+        const btnY = GAME_HEIGHT - 180;
+        const margin = 15;
 
         // Left button bounds
         const leftX = margin + btnSize / 2;
