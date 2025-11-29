@@ -5,9 +5,9 @@
     const CANVAS_WIDTH = 800;
     const CANVAS_HEIGHT = 600;
     const GRAVITY = 0.5;
-    const FLAP_POWER = -8; // Stronger flap for tap controls
+    const FLAP_POWER = -6; // Moderate flap power for responsive feel
     const MOVE_SPEED = 4;
-    const FLAP_COOLDOWN = 8; // Cooldown to prevent spam-tapping
+    const FLAP_COOLDOWN = 3; // Short cooldown for responsive flapping
 
     let gameState = {
         player: null,

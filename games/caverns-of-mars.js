@@ -62,6 +62,9 @@
     let mouseX = 0;
     let mouseY = 0;
     let mouseDown = false;
+    let touchLeft = false;
+    let touchRight = false;
+    let touchShoot = false;
 
     // Cave segment generation
     function generateCaveSegment(y, isReactor = false) {
@@ -151,16 +154,16 @@
 
     function updateShip(dt) {
         // Horizontal movement
-        if (keys['ArrowLeft'] || keys['a']) {
+        if (keys['ArrowLeft'] || keys['a'] || keys['A'] || touchLeft) {
             ship.vx = -3;
-        } else if (keys['ArrowRight'] || keys['d']) {
+        } else if (keys['ArrowRight'] || keys['d'] || keys['D'] || touchRight) {
             ship.vx = 3;
         } else {
             ship.vx *= 0.9;
         }
 
         // Shooting
-        ship.shooting = keys[' '] || mouseDown;
+        ship.shooting = keys[' '] || touchShoot;
 
         // Vertical movement (gravity and shooting)
         if (ship.shooting && ship.fuel > 0) {
@@ -681,6 +684,62 @@
         // Depth
         const depthPercent = Math.min(100, (cave.scrollOffset / cave.totalDepth * 100).toFixed(0));
         ctx.fillText(`DEPTH: ${depthPercent}%`, GAME_WIDTH - 10, GAME_HEIGHT - 10);
+
+        // Draw mobile touch controls
+        drawTouchControls();
+    }
+
+    function drawTouchControls() {
+        const btnSize = 70;
+        const btnY = GAME_HEIGHT - 140;
+        const margin = 20;
+
+        // Left button
+        ctx.fillStyle = touchLeft ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.2)';
+        ctx.beginPath();
+        ctx.arc(margin + btnSize / 2, btnY, btnSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        // Arrow
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.moveTo(margin + btnSize / 2 + 10, btnY - 15);
+        ctx.lineTo(margin + btnSize / 2 - 15, btnY);
+        ctx.lineTo(margin + btnSize / 2 + 10, btnY + 15);
+        ctx.closePath();
+        ctx.fill();
+
+        // Right button
+        ctx.fillStyle = touchRight ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.2)';
+        ctx.beginPath();
+        ctx.arc(margin + btnSize + 20 + btnSize / 2, btnY, btnSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        // Arrow
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.moveTo(margin + btnSize + 20 + btnSize / 2 - 10, btnY - 15);
+        ctx.lineTo(margin + btnSize + 20 + btnSize / 2 + 15, btnY);
+        ctx.lineTo(margin + btnSize + 20 + btnSize / 2 - 10, btnY + 15);
+        ctx.closePath();
+        ctx.fill();
+
+        // Fire button (right side)
+        ctx.fillStyle = touchShoot ? 'rgba(255, 100, 100, 0.7)' : 'rgba(255, 100, 100, 0.3)';
+        ctx.beginPath();
+        ctx.arc(GAME_WIDTH - margin - btnSize / 2, btnY, btnSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ff6666';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('FIRE', GAME_WIDTH - margin - btnSize / 2, btnY + 5);
     }
 
     function drawVictory() {
@@ -736,7 +795,7 @@
     // Event handlers
     function handleKeyDown(e) {
         // Prevent default scrolling for game controls
-        if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ', 'a', 'd', 'w', 's'].includes(e.key)) {
+        if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ', 'a', 'd', 'w', 's', 'A', 'D', 'W', 'S'].includes(e.key)) {
             e.preventDefault();
         }
         keys[e.key] = true;
@@ -762,29 +821,107 @@
         mouseDown = false;
     }
 
+    function checkTouchButtons(x, y) {
+        const btnSize = 70;
+        const btnY = GAME_HEIGHT - 140;
+        const margin = 20;
+
+        // Left button bounds
+        const leftX = margin + btnSize / 2;
+        const rightX = margin + btnSize + 20 + btnSize / 2;
+        const fireX = GAME_WIDTH - margin - btnSize / 2;
+
+        const distLeft = Math.sqrt(Math.pow(x - leftX, 2) + Math.pow(y - btnY, 2));
+        const distRight = Math.sqrt(Math.pow(x - rightX, 2) + Math.pow(y - btnY, 2));
+        const distFire = Math.sqrt(Math.pow(x - fireX, 2) + Math.pow(y - btnY, 2));
+
+        return {
+            left: distLeft < btnSize / 2,
+            right: distRight < btnSize / 2,
+            fire: distFire < btnSize / 2
+        };
+    }
+
     function handleTouchStart(e) {
         if (!canvas) return;
         e.preventDefault();
         const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        mouseX = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
-        mouseY = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
+
+        // Check all touches
+        for (let i = 0; i < e.touches.length; i++) {
+            const touch = e.touches[i];
+            const x = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
+            const y = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
+
+            if (gameState.mode === 'descending' || gameState.mode === 'escaping') {
+                const buttons = checkTouchButtons(x, y);
+                if (buttons.left) touchLeft = true;
+                if (buttons.right) touchRight = true;
+                if (buttons.fire) touchShoot = true;
+            }
+
+            mouseX = x;
+            mouseY = y;
+        }
+
         mouseDown = true;
         handleClick(mouseX, mouseY);
     }
 
     function handleTouchEnd(e) {
         e.preventDefault();
-        mouseDown = false;
+        // Reset all touch controls when no touches remain
+        if (e.touches.length === 0) {
+            touchLeft = false;
+            touchRight = false;
+            touchShoot = false;
+            mouseDown = false;
+        } else {
+            // Re-check remaining touches
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            touchLeft = false;
+            touchRight = false;
+            touchShoot = false;
+
+            for (let i = 0; i < e.touches.length; i++) {
+                const touch = e.touches[i];
+                const x = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
+                const y = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
+
+                const buttons = checkTouchButtons(x, y);
+                if (buttons.left) touchLeft = true;
+                if (buttons.right) touchRight = true;
+                if (buttons.fire) touchShoot = true;
+            }
+        }
     }
 
     function handleTouchMove(e) {
         if (!canvas) return;
         e.preventDefault();
         const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        mouseX = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
-        mouseY = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
+
+        // Reset and re-check all touches
+        touchLeft = false;
+        touchRight = false;
+        touchShoot = false;
+
+        for (let i = 0; i < e.touches.length; i++) {
+            const touch = e.touches[i];
+            const x = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
+            const y = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
+
+            if (gameState.mode === 'descending' || gameState.mode === 'escaping') {
+                const buttons = checkTouchButtons(x, y);
+                if (buttons.left) touchLeft = true;
+                if (buttons.right) touchRight = true;
+                if (buttons.fire) touchShoot = true;
+            }
+
+            mouseX = x;
+            mouseY = y;
+        }
     }
 
     function handleClick(x, y) {
