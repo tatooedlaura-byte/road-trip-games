@@ -690,9 +690,9 @@
     }
 
     function drawTouchControls() {
-        const btnSize = 100;
-        const btnY = GAME_HEIGHT - 180;
-        const margin = 15;
+        const btnSize = 130;
+        const btnY = GAME_HEIGHT - 200;
+        const margin = 10;
 
         // Fire button (left side)
         ctx.fillStyle = touchShoot ? 'rgba(255, 100, 100, 0.7)' : 'rgba(255, 100, 100, 0.3)';
@@ -703,25 +703,25 @@
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 16px Arial';
+        ctx.font = 'bold 20px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('FIRE', margin + btnSize / 2, btnY + 6);
+        ctx.fillText('FIRE', margin + btnSize / 2, btnY + 7);
 
         // Left button (right side)
-        const rightBaseX = GAME_WIDTH - margin - btnSize * 2 - 20;
+        const rightBaseX = GAME_WIDTH - margin - btnSize * 2 - 15;
         ctx.fillStyle = touchLeft ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.2)';
         ctx.beginPath();
         ctx.arc(rightBaseX + btnSize / 2, btnY, btnSize / 2, 0, Math.PI * 2);
         ctx.fill();
         ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.stroke();
         // Arrow
         ctx.fillStyle = '#fff';
         ctx.beginPath();
-        ctx.moveTo(rightBaseX + btnSize / 2 + 15, btnY - 20);
-        ctx.lineTo(rightBaseX + btnSize / 2 - 20, btnY);
-        ctx.lineTo(rightBaseX + btnSize / 2 + 15, btnY + 20);
+        ctx.moveTo(rightBaseX + btnSize / 2 + 20, btnY - 28);
+        ctx.lineTo(rightBaseX + btnSize / 2 - 28, btnY);
+        ctx.lineTo(rightBaseX + btnSize / 2 + 20, btnY + 28);
         ctx.closePath();
         ctx.fill();
 
@@ -731,14 +731,14 @@
         ctx.arc(GAME_WIDTH - margin - btnSize / 2, btnY, btnSize / 2, 0, Math.PI * 2);
         ctx.fill();
         ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.stroke();
         // Arrow
         ctx.fillStyle = '#fff';
         ctx.beginPath();
-        ctx.moveTo(GAME_WIDTH - margin - btnSize / 2 - 15, btnY - 20);
-        ctx.lineTo(GAME_WIDTH - margin - btnSize / 2 + 20, btnY);
-        ctx.lineTo(GAME_WIDTH - margin - btnSize / 2 - 15, btnY + 20);
+        ctx.moveTo(GAME_WIDTH - margin - btnSize / 2 - 20, btnY - 28);
+        ctx.lineTo(GAME_WIDTH - margin - btnSize / 2 + 28, btnY);
+        ctx.lineTo(GAME_WIDTH - margin - btnSize / 2 - 20, btnY + 28);
         ctx.closePath();
         ctx.fill();
     }
@@ -823,9 +823,9 @@
     }
 
     function checkTouchButtons(x, y) {
-        const btnSize = 100;
-        const btnY = GAME_HEIGHT - 180;
-        const margin = 15;
+        const btnSize = 130;
+        const btnY = GAME_HEIGHT - 200;
+        const margin = 10;
 
         // Fire button on left
         const fireX = margin + btnSize / 2;
