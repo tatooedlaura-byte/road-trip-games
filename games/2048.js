@@ -1,4 +1,4 @@
-// 2048 - Modern overhaul with dark theme and slide animations
+// 2048 - Modern overhaul with dark theme (no animations for reliability)
 (function() {
     'use strict';
 
@@ -80,7 +80,6 @@
             }
 
             .g2048-board {
-                position: relative;
                 background: linear-gradient(145deg, #2a2a4a, #1a1a3a);
                 border: 3px solid #444;
                 border-radius: 12px;
@@ -95,53 +94,28 @@
                 gap: 10px;
             }
 
-            .g2048-cell-bg {
+            .g2048-cell {
                 aspect-ratio: 1;
                 border-radius: 8px;
                 background: rgba(255, 255, 255, 0.05);
-            }
-
-            .g2048-tiles {
-                position: absolute;
-                top: 10px;
-                left: 10px;
-                right: 10px;
-                bottom: 10px;
-                pointer-events: none;
-            }
-
-            .g2048-tile {
-                position: absolute;
-                border-radius: 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-weight: bold;
-                transition: transform 0.15s ease-out;
             }
 
-            .g2048-tile.pop {
-                animation: tilePop 0.15s ease-out;
-            }
-
-            @keyframes tilePop {
-                0% { transform: scale(0); }
-                70% { transform: scale(1.1); }
-                100% { transform: scale(1); }
-            }
-
-            .g2048-tile.tile-2 { background: linear-gradient(145deg, #eee4da, #d8cfc5); color: #776e65; }
-            .g2048-tile.tile-4 { background: linear-gradient(145deg, #ede0c8, #d7cbb5); color: #776e65; }
-            .g2048-tile.tile-8 { background: linear-gradient(145deg, #f2b179, #dc9d68); color: #f9f6f2; }
-            .g2048-tile.tile-16 { background: linear-gradient(145deg, #f59563, #df8050); color: #f9f6f2; }
-            .g2048-tile.tile-32 { background: linear-gradient(145deg, #f67c5f, #e0684c); color: #f9f6f2; }
-            .g2048-tile.tile-64 { background: linear-gradient(145deg, #f65e3b, #e04a28); color: #f9f6f2; }
-            .g2048-tile.tile-128 { background: linear-gradient(145deg, #edcf72, #d7b95f); color: #f9f6f2; box-shadow: 0 0 20px rgba(237, 207, 114, 0.4); }
-            .g2048-tile.tile-256 { background: linear-gradient(145deg, #edcc61, #d7b64e); color: #f9f6f2; box-shadow: 0 0 25px rgba(237, 204, 97, 0.5); }
-            .g2048-tile.tile-512 { background: linear-gradient(145deg, #edc850, #d7b23d); color: #f9f6f2; box-shadow: 0 0 30px rgba(237, 200, 80, 0.6); }
-            .g2048-tile.tile-1024 { background: linear-gradient(145deg, #edc53f, #d7af2c); color: #f9f6f2; box-shadow: 0 0 35px rgba(237, 197, 63, 0.7); }
-            .g2048-tile.tile-2048 { background: linear-gradient(145deg, #edc22e, #d7ac1b); color: #f9f6f2; box-shadow: 0 0 40px rgba(237, 194, 46, 0.8); }
-            .g2048-tile.tile-super { background: linear-gradient(145deg, #3c3a32, #2a2820); color: #f9f6f2; box-shadow: 0 0 40px rgba(60, 58, 50, 0.8); }
+            .g2048-cell.tile-2 { background: linear-gradient(145deg, #eee4da, #d8cfc5); color: #776e65; }
+            .g2048-cell.tile-4 { background: linear-gradient(145deg, #ede0c8, #d7cbb5); color: #776e65; }
+            .g2048-cell.tile-8 { background: linear-gradient(145deg, #f2b179, #dc9d68); color: #f9f6f2; }
+            .g2048-cell.tile-16 { background: linear-gradient(145deg, #f59563, #df8050); color: #f9f6f2; }
+            .g2048-cell.tile-32 { background: linear-gradient(145deg, #f67c5f, #e0684c); color: #f9f6f2; }
+            .g2048-cell.tile-64 { background: linear-gradient(145deg, #f65e3b, #e04a28); color: #f9f6f2; }
+            .g2048-cell.tile-128 { background: linear-gradient(145deg, #edcf72, #d7b95f); color: #f9f6f2; box-shadow: 0 0 20px rgba(237, 207, 114, 0.4); }
+            .g2048-cell.tile-256 { background: linear-gradient(145deg, #edcc61, #d7b64e); color: #f9f6f2; box-shadow: 0 0 25px rgba(237, 204, 97, 0.5); }
+            .g2048-cell.tile-512 { background: linear-gradient(145deg, #edc850, #d7b23d); color: #f9f6f2; box-shadow: 0 0 30px rgba(237, 200, 80, 0.6); }
+            .g2048-cell.tile-1024 { background: linear-gradient(145deg, #edc53f, #d7af2c); color: #f9f6f2; box-shadow: 0 0 35px rgba(237, 197, 63, 0.7); }
+            .g2048-cell.tile-2048 { background: linear-gradient(145deg, #edc22e, #d7ac1b); color: #f9f6f2; box-shadow: 0 0 40px rgba(237, 194, 46, 0.8); }
+            .g2048-cell.tile-super { background: linear-gradient(145deg, #3c3a32, #2a2820); color: #f9f6f2; box-shadow: 0 0 40px rgba(60, 58, 50, 0.8); }
 
             .g2048-controls {
                 display: grid;
@@ -264,41 +238,43 @@
 
     const GRID_SIZE = 4;
     let cellSize = 70;
-    let cellGap = 10;
-    let tileIdCounter = 0;
 
+    // Simple 2D grid - much more reliable than tile tracking
+    let grid = [];
     let gameState = {
         mode: 'playing',
-        tiles: [], // Array of {id, value, row, col}
         score: 0,
         bestScore: parseInt(localStorage.getItem('2048BestScore')) || 0,
         won: false,
         canContinue: false
     };
 
-    function getGridCell(row, col) {
-        return gameState.tiles.find(t => t.row === row && t.col === col);
-    }
-
     function initGame() {
-        gameState.tiles = [];
+        // Initialize empty grid
+        grid = [];
+        for (let r = 0; r < GRID_SIZE; r++) {
+            grid[r] = [];
+            for (let c = 0; c < GRID_SIZE; c++) {
+                grid[r][c] = 0;
+            }
+        }
+
         gameState.score = 0;
         gameState.won = false;
         gameState.canContinue = false;
         gameState.mode = 'playing';
-        tileIdCounter = 0;
 
         addRandomTile();
         addRandomTile();
         renderBoard();
-        renderTiles();
+        renderGrid();
     }
 
     function addRandomTile() {
         const emptyCells = [];
         for (let r = 0; r < GRID_SIZE; r++) {
             for (let c = 0; c < GRID_SIZE; c++) {
-                if (!getGridCell(r, c)) {
+                if (grid[r][c] === 0) {
                     emptyCells.push({ row: r, col: c });
                 }
             }
@@ -306,198 +282,100 @@
 
         if (emptyCells.length > 0) {
             const cell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            const tile = {
-                id: tileIdCounter++,
-                value: Math.random() < 0.9 ? 2 : 4,
-                row: cell.row,
-                col: cell.col,
-                isNew: true
-            };
-            gameState.tiles.push(tile);
+            grid[cell.row][cell.col] = Math.random() < 0.9 ? 2 : 4;
         }
+    }
+
+    function slideRow(row) {
+        // Remove zeros
+        let arr = row.filter(val => val !== 0);
+
+        // Merge adjacent equal values
+        for (let i = 0; i < arr.length - 1; i++) {
+            if (arr[i] === arr[i + 1]) {
+                arr[i] *= 2;
+                gameState.score += arr[i];
+                if (arr[i] === 2048 && !gameState.won) {
+                    gameState.won = true;
+                    gameState.mode = 'won';
+                }
+                arr.splice(i + 1, 1);
+            }
+        }
+
+        // Pad with zeros
+        while (arr.length < GRID_SIZE) {
+            arr.push(0);
+        }
+
+        return arr;
     }
 
     function move(direction) {
         let moved = false;
-
-        // Clear new flag from all tiles
-        gameState.tiles.forEach(t => t.isNew = false);
+        const oldGrid = grid.map(row => [...row]);
 
         if (direction === 'left') {
-            for (let row = 0; row < GRID_SIZE; row++) {
-                moved = moveRowLeft(row) || moved;
+            for (let r = 0; r < GRID_SIZE; r++) {
+                grid[r] = slideRow(grid[r]);
             }
         } else if (direction === 'right') {
-            for (let row = 0; row < GRID_SIZE; row++) {
-                moved = moveRowRight(row) || moved;
+            for (let r = 0; r < GRID_SIZE; r++) {
+                grid[r] = slideRow(grid[r].reverse()).reverse();
             }
         } else if (direction === 'up') {
-            for (let col = 0; col < GRID_SIZE; col++) {
-                moved = moveColUp(col) || moved;
+            for (let c = 0; c < GRID_SIZE; c++) {
+                let col = [];
+                for (let r = 0; r < GRID_SIZE; r++) {
+                    col.push(grid[r][c]);
+                }
+                col = slideRow(col);
+                for (let r = 0; r < GRID_SIZE; r++) {
+                    grid[r][c] = col[r];
+                }
             }
         } else if (direction === 'down') {
-            for (let col = 0; col < GRID_SIZE; col++) {
-                moved = moveColDown(col) || moved;
-            }
-        }
-
-        return moved;
-    }
-
-    function moveRowLeft(row) {
-        const rowTiles = gameState.tiles.filter(t => t.row === row).sort((a, b) => a.col - b.col);
-        let moved = false;
-        let targetCol = 0;
-
-        for (let i = 0; i < rowTiles.length; i++) {
-            const tile = rowTiles[i];
-
-            // Check for merge with previous tile at targetCol-1
-            if (targetCol > 0) {
-                const prevTile = gameState.tiles.find(t => t.row === row && t.col === targetCol - 1);
-                if (prevTile && prevTile.value === tile.value && !prevTile.merged) {
-                    // Merge
-                    prevTile.value *= 2;
-                    prevTile.merged = true;
-                    gameState.score += prevTile.value;
-                    if (prevTile.value === 2048 && !gameState.won) {
-                        gameState.won = true;
-                        gameState.mode = 'won';
-                    }
-                    // Remove merged tile
-                    gameState.tiles = gameState.tiles.filter(t => t !== tile);
-                    moved = true;
-                    continue;
+            for (let c = 0; c < GRID_SIZE; c++) {
+                let col = [];
+                for (let r = 0; r < GRID_SIZE; r++) {
+                    col.push(grid[r][c]);
+                }
+                col = slideRow(col.reverse()).reverse();
+                for (let r = 0; r < GRID_SIZE; r++) {
+                    grid[r][c] = col[r];
                 }
             }
-
-            if (tile.col !== targetCol) {
-                tile.col = targetCol;
-                moved = true;
-            }
-            targetCol++;
         }
 
-        // Clear merged flags
-        gameState.tiles.forEach(t => t.merged = false);
-        return moved;
-    }
-
-    function moveRowRight(row) {
-        const rowTiles = gameState.tiles.filter(t => t.row === row).sort((a, b) => b.col - a.col);
-        let moved = false;
-        let targetCol = GRID_SIZE - 1;
-
-        for (let i = 0; i < rowTiles.length; i++) {
-            const tile = rowTiles[i];
-
-            if (targetCol < GRID_SIZE - 1) {
-                const prevTile = gameState.tiles.find(t => t.row === row && t.col === targetCol + 1);
-                if (prevTile && prevTile.value === tile.value && !prevTile.merged) {
-                    prevTile.value *= 2;
-                    prevTile.merged = true;
-                    gameState.score += prevTile.value;
-                    if (prevTile.value === 2048 && !gameState.won) {
-                        gameState.won = true;
-                        gameState.mode = 'won';
-                    }
-                    gameState.tiles = gameState.tiles.filter(t => t !== tile);
+        // Check if anything moved
+        for (let r = 0; r < GRID_SIZE; r++) {
+            for (let c = 0; c < GRID_SIZE; c++) {
+                if (grid[r][c] !== oldGrid[r][c]) {
                     moved = true;
-                    continue;
+                    break;
                 }
             }
-
-            if (tile.col !== targetCol) {
-                tile.col = targetCol;
-                moved = true;
-            }
-            targetCol--;
+            if (moved) break;
         }
 
-        gameState.tiles.forEach(t => t.merged = false);
-        return moved;
-    }
-
-    function moveColUp(col) {
-        const colTiles = gameState.tiles.filter(t => t.col === col).sort((a, b) => a.row - b.row);
-        let moved = false;
-        let targetRow = 0;
-
-        for (let i = 0; i < colTiles.length; i++) {
-            const tile = colTiles[i];
-
-            if (targetRow > 0) {
-                const prevTile = gameState.tiles.find(t => t.col === col && t.row === targetRow - 1);
-                if (prevTile && prevTile.value === tile.value && !prevTile.merged) {
-                    prevTile.value *= 2;
-                    prevTile.merged = true;
-                    gameState.score += prevTile.value;
-                    if (prevTile.value === 2048 && !gameState.won) {
-                        gameState.won = true;
-                        gameState.mode = 'won';
-                    }
-                    gameState.tiles = gameState.tiles.filter(t => t !== tile);
-                    moved = true;
-                    continue;
-                }
-            }
-
-            if (tile.row !== targetRow) {
-                tile.row = targetRow;
-                moved = true;
-            }
-            targetRow++;
-        }
-
-        gameState.tiles.forEach(t => t.merged = false);
-        return moved;
-    }
-
-    function moveColDown(col) {
-        const colTiles = gameState.tiles.filter(t => t.col === col).sort((a, b) => b.row - a.row);
-        let moved = false;
-        let targetRow = GRID_SIZE - 1;
-
-        for (let i = 0; i < colTiles.length; i++) {
-            const tile = colTiles[i];
-
-            if (targetRow < GRID_SIZE - 1) {
-                const prevTile = gameState.tiles.find(t => t.col === col && t.row === targetRow + 1);
-                if (prevTile && prevTile.value === tile.value && !prevTile.merged) {
-                    prevTile.value *= 2;
-                    prevTile.merged = true;
-                    gameState.score += prevTile.value;
-                    if (prevTile.value === 2048 && !gameState.won) {
-                        gameState.won = true;
-                        gameState.mode = 'won';
-                    }
-                    gameState.tiles = gameState.tiles.filter(t => t !== tile);
-                    moved = true;
-                    continue;
-                }
-            }
-
-            if (tile.row !== targetRow) {
-                tile.row = targetRow;
-                moved = true;
-            }
-            targetRow--;
-        }
-
-        gameState.tiles.forEach(t => t.merged = false);
         return moved;
     }
 
     function canMove() {
         // Check for empty cells
-        if (gameState.tiles.length < 16) return true;
+        for (let r = 0; r < GRID_SIZE; r++) {
+            for (let c = 0; c < GRID_SIZE; c++) {
+                if (grid[r][c] === 0) return true;
+            }
+        }
 
         // Check for possible merges
-        for (const tile of gameState.tiles) {
-            const right = gameState.tiles.find(t => t.row === tile.row && t.col === tile.col + 1);
-            const down = gameState.tiles.find(t => t.row === tile.row + 1 && t.col === tile.col);
-            if (right && right.value === tile.value) return true;
-            if (down && down.value === tile.value) return true;
+        for (let r = 0; r < GRID_SIZE; r++) {
+            for (let c = 0; c < GRID_SIZE; c++) {
+                const val = grid[r][c];
+                if (c < GRID_SIZE - 1 && grid[r][c + 1] === val) return true;
+                if (r < GRID_SIZE - 1 && grid[r + 1][c] === val) return true;
+            }
         }
 
         return false;
@@ -510,49 +388,26 @@
         const moved = move(direction);
 
         if (moved) {
-            // Update tile positions with animation
-            updateTilePositions();
+            addRandomTile();
 
-            // After animation, add new tile
-            setTimeout(() => {
-                addRandomTile();
-
-                if (gameState.score > gameState.bestScore) {
-                    gameState.bestScore = gameState.score;
-                    localStorage.setItem('2048BestScore', gameState.bestScore);
-                }
-
-                if (!canMove()) {
-                    gameState.mode = 'gameover';
-                }
-
-                renderTiles();
-                updateScore();
-
-                if (gameState.mode === 'won' && !gameState.canContinue) {
-                    showWinModal();
-                } else if (gameState.mode === 'gameover') {
-                    showGameOverModal();
-                }
-            }, 150);
-        }
-    }
-
-    function updateTilePositions() {
-        gameState.tiles.forEach(tile => {
-            const el = document.getElementById(`tile-${tile.id}`);
-            if (el) {
-                const x = tile.col * (cellSize + cellGap);
-                const y = tile.row * (cellSize + cellGap);
-                el.style.transform = `translate(${x}px, ${y}px)`;
-
-                // Update value display if merged
-                const tileClass = tile.value > 2048 ? 'tile-super' : `tile-${tile.value}`;
-                el.className = `g2048-tile ${tileClass}`;
-                el.textContent = tile.value;
+            if (gameState.score > gameState.bestScore) {
+                gameState.bestScore = gameState.score;
+                localStorage.setItem('2048BestScore', gameState.bestScore);
             }
-        });
-        updateScore();
+
+            if (!canMove()) {
+                gameState.mode = 'gameover';
+            }
+
+            renderGrid();
+            updateScore();
+
+            if (gameState.mode === 'won' && !gameState.canContinue) {
+                showWinModal();
+            } else if (gameState.mode === 'gameover') {
+                showGameOverModal();
+            }
+        }
     }
 
     function updateScore() {
@@ -560,36 +415,34 @@
         if (scoreEl) scoreEl.textContent = gameState.score;
     }
 
-    function renderTiles() {
-        const container = document.getElementById('g2048-tiles');
-        if (!container) return;
-
-        container.innerHTML = '';
-
-        gameState.tiles.forEach(tile => {
-            const tileClass = tile.value > 2048 ? 'tile-super' : `tile-${tile.value}`;
-            const fontSize = tile.value >= 1000 ? cellSize * 0.35 : cellSize * 0.45;
-            const x = tile.col * (cellSize + cellGap);
-            const y = tile.row * (cellSize + cellGap);
-
-            const div = document.createElement('div');
-            div.id = `tile-${tile.id}`;
-            div.className = `g2048-tile ${tileClass}${tile.isNew ? ' pop' : ''}`;
-            div.style.cssText = `width: ${cellSize}px; height: ${cellSize}px; font-size: ${fontSize}px; transform: translate(${x}px, ${y}px);`;
-            div.textContent = tile.value;
-            container.appendChild(div);
-        });
+    function renderGrid() {
+        for (let r = 0; r < GRID_SIZE; r++) {
+            for (let c = 0; c < GRID_SIZE; c++) {
+                const cell = document.getElementById(`g2048-cell-${r}-${c}`);
+                if (cell) {
+                    const val = grid[r][c];
+                    cell.className = 'g2048-cell';
+                    if (val > 0) {
+                        const tileClass = val > 2048 ? 'tile-super' : `tile-${val}`;
+                        cell.classList.add(tileClass);
+                        cell.textContent = val;
+                    } else {
+                        cell.textContent = '';
+                    }
+                }
+            }
+        }
     }
 
     function renderBoard() {
         const content = document.getElementById('game2048Content');
         cellSize = Math.min(70, (window.innerWidth - 100) / 4);
-        cellGap = 10;
-        const boardSize = cellSize * 4 + cellGap * 3;
 
         let gridHtml = '';
-        for (let i = 0; i < 16; i++) {
-            gridHtml += `<div class="g2048-cell-bg" style="width: ${cellSize}px; height: ${cellSize}px;"></div>`;
+        for (let r = 0; r < GRID_SIZE; r++) {
+            for (let c = 0; c < GRID_SIZE; c++) {
+                gridHtml += `<div class="g2048-cell" id="g2048-cell-${r}-${c}" style="width: ${cellSize}px; height: ${cellSize}px; font-size: ${cellSize * 0.4}px;"></div>`;
+            }
         }
 
         content.innerHTML = `
@@ -611,11 +464,10 @@
                     <button class="g2048-btn" onclick="init2048Game()">New Game</button>
                 </div>
 
-                <div class="g2048-board" style="width: ${boardSize + 20}px; height: ${boardSize + 20}px;">
-                    <div class="g2048-grid" style="gap: ${cellGap}px;">
+                <div class="g2048-board">
+                    <div class="g2048-grid">
                         ${gridHtml}
                     </div>
-                    <div class="g2048-tiles" id="g2048-tiles"></div>
                 </div>
 
                 <div class="g2048-controls">
