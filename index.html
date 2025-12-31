@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.118.7';</script>
+    <script>window.APP_VERSION = '1.118.8';</script>
 
     <style>
         * {
@@ -902,26 +902,6 @@
                 <div id="qixContent"></div>
             </div>
 
-            <!-- Drug Wars Day Selection Modal -->
-            <div id="drugwarsDaySelectModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000;">
-                <div style="background: white; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center;">
-                    <h2 style="margin-top: 0; color: #2c3e50;">💊 Drug Wars</h2>
-                    <p style="font-size: 1.2rem; margin: 1.5rem 0;">Choose game length:</p>
-                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
-                        <button onclick="drugWarsStartGame(30)" style="background: #3498db; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
-                            📅 30 Days (Quick Game)
-                        </button>
-                        <button onclick="drugWarsStartGame(60)" style="background: #9b59b6; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
-                            📅 60 Days (Medium Game)
-                        </button>
-                        <button onclick="drugWarsStartGame(90)" style="background: #e74c3c; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
-                            📅 90 Days (Long Game)
-                        </button>
-                    </div>
-                    <button onclick="document.getElementById('drugwarsDaySelectModal').style.display='none'; document.getElementById('gamesMenu').style.display='block';" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 1.5rem;">← Back</button>
-                </div>
-            </div>
-
             <!-- Drug Wars Game Section (hidden by default) -->
             <div id="drugwarsGame" style="display: none; background: rgba(255,255,255,0.95); border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
                 <div style="margin-bottom: 1rem;">
@@ -966,39 +946,6 @@
                     </div>
                 </div>
 
-                <!-- Police Encounter Modal -->
-                <div id="drugwarsPoliceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000;">
-                    <div style="background: white; padding: 2rem; border-radius: 15px; max-width: 400px; text-align: center;">
-                        <h2 style="margin-top: 0; color: #e74c3c;">🚓 Officer Hardass!</h2>
-                        <p style="font-size: 1.1rem; margin: 1.5rem 0;">You've been spotted!</p>
-                        <div style="display: flex; gap: 1rem; justify-content: center;">
-                            <button id="drugwarsPoliceRun" style="background: #f39c12; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">🏃 Run</button>
-                            <button id="drugwarsPoliceFight" style="background: #e74c3c; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">⚔️ Fight</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Game Over Screen -->
-                <div id="drugwarsGameOverScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000;">
-                    <div style="background: white; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center;">
-                        <h2 style="margin-top: 0; color: #2c3e50;">🎮 GAME OVER</h2>
-                        <p style="font-size: 1.5rem; margin: 2rem 0;">Check your final score!</p>
-                        <button onclick="drugWarsRestart()" style="background: #27ae60; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold; margin-right: 1rem;">🔄 Play Again</button>
-                        <button onclick="exitDrugWars()" style="background: #95a5a6; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">🏠 Menu</button>
-                    </div>
-                </div>
-
-                <!-- Number Input Modal -->
-                <div id="drugwarsNumberInput" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1001;">
-                    <div style="background: white; padding: 2rem; border-radius: 10px; max-width: 400px; width: 90%;">
-                        <h3 id="drugwarsNumberInputPrompt" style="margin-top: 0;">Enter amount:</h3>
-                        <input type="number" id="drugwarsNumberInputField" inputmode="numeric" pattern="[0-9]*" style="width: 100%; padding: 1rem; font-size: 1.5rem; border: 2px solid #3498db; border-radius: 5px; text-align: center;" />
-                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                            <button id="drugwarsNumberInputCancel" style="flex: 1; background: #95a5a6; color: white; border: none; padding: 1rem; border-radius: 5px; cursor: pointer; font-size: 1rem;">Cancel</button>
-                            <button id="drugwarsNumberInputOK" style="flex: 1; background: #3498db; color: white; border: none; padding: 1rem; border-radius: 5px; cursor: pointer; font-size: 1rem;">OK</button>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Breakout Game Section (hidden by default) -->
@@ -1173,6 +1120,57 @@
                 <div id="game2048Content"></div>
             </div>
 
+        </div>
+    </div>
+
+    <!-- Drug Wars Modals (outside app-container to fix fixed positioning) -->
+    <div id="drugwarsDaySelectModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 10000;">
+        <div style="background: white; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center; margin: 1rem;">
+            <h2 style="margin-top: 0; color: #2c3e50;">💊 Drug Wars</h2>
+            <p style="font-size: 1.2rem; margin: 1.5rem 0;">Choose game length:</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+                <button onclick="drugWarsStartGame(30)" style="background: #3498db; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
+                    📅 30 Days (Quick Game)
+                </button>
+                <button onclick="drugWarsStartGame(60)" style="background: #9b59b6; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
+                    📅 60 Days (Medium Game)
+                </button>
+                <button onclick="drugWarsStartGame(90)" style="background: #e74c3c; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
+                    📅 90 Days (Long Game)
+                </button>
+            </div>
+            <button onclick="document.getElementById('drugwarsDaySelectModal').style.display='none'; document.getElementById('gamesMenu').style.display='block';" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 1.5rem;">← Back</button>
+        </div>
+    </div>
+
+    <div id="drugwarsPoliceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 10000;">
+        <div style="background: white; padding: 2rem; border-radius: 15px; max-width: 400px; text-align: center; margin: 1rem;">
+            <h2 style="margin-top: 0; color: #e74c3c;">🚓 Officer Hardass!</h2>
+            <p style="font-size: 1.1rem; margin: 1.5rem 0;">You've been spotted!</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button id="drugwarsPoliceRun" style="background: #f39c12; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">🏃 Run</button>
+                <button id="drugwarsPoliceFight" style="background: #e74c3c; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">⚔️ Fight</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="drugwarsGameOverScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 10000;">
+        <div style="background: white; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center; margin: 1rem;">
+            <h2 style="margin-top: 0; color: #2c3e50;">🎮 GAME OVER</h2>
+            <p style="font-size: 1.5rem; margin: 2rem 0;">Check your final score!</p>
+            <button onclick="drugWarsRestart()" style="background: #27ae60; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold; margin-right: 1rem;">🔄 Play Again</button>
+            <button onclick="exitDrugWars()" style="background: #95a5a6; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">🏠 Menu</button>
+        </div>
+    </div>
+
+    <div id="drugwarsNumberInput" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 10001;">
+        <div style="background: white; padding: 2rem; border-radius: 10px; max-width: 400px; width: 90%; margin: 1rem;">
+            <h3 id="drugwarsNumberInputPrompt" style="margin-top: 0;">Enter amount:</h3>
+            <input type="number" id="drugwarsNumberInputField" inputmode="numeric" pattern="[0-9]*" style="width: 100%; padding: 1rem; font-size: 1.5rem; border: 2px solid #3498db; border-radius: 5px; text-align: center; box-sizing: border-box;" />
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <button id="drugwarsNumberInputCancel" style="flex: 1; background: #95a5a6; color: white; border: none; padding: 1rem; border-radius: 5px; cursor: pointer; font-size: 1rem;">Cancel</button>
+                <button id="drugwarsNumberInputOK" style="flex: 1; background: #3498db; color: white; border: none; padding: 1rem; border-radius: 5px; cursor: pointer; font-size: 1rem;">OK</button>
+            </div>
         </div>
     </div>
 
