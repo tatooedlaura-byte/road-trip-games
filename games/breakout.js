@@ -19,16 +19,16 @@
     const BRICK_OFFSET_LEFT = 35;
     const STARTING_LIVES = 3;
 
-    // Brick colors and points
+    // Brick colors and points - neon theme
     const BRICK_COLORS = [
-        { color: '#e74c3c', points: 7 },  // Red
-        { color: '#e74c3c', points: 7 },  // Red
-        { color: '#f39c12', points: 5 },  // Orange
-        { color: '#f39c12', points: 5 },  // Orange
-        { color: '#2ecc71', points: 3 },  // Green
-        { color: '#2ecc71', points: 3 },  // Green
-        { color: '#f1c40f', points: 1 },  // Yellow
-        { color: '#f1c40f', points: 1 }   // Yellow
+        { color: '#ef4444', glow: 'rgba(239, 68, 68, 0.6)', points: 7 },  // Red
+        { color: '#ef4444', glow: 'rgba(239, 68, 68, 0.6)', points: 7 },  // Red
+        { color: '#f97316', glow: 'rgba(249, 115, 22, 0.6)', points: 5 },  // Orange
+        { color: '#f97316', glow: 'rgba(249, 115, 22, 0.6)', points: 5 },  // Orange
+        { color: '#22c55e', glow: 'rgba(34, 197, 94, 0.6)', points: 3 },  // Green
+        { color: '#22c55e', glow: 'rgba(34, 197, 94, 0.6)', points: 3 },  // Green
+        { color: '#eab308', glow: 'rgba(234, 179, 8, 0.6)', points: 1 },  // Yellow
+        { color: '#eab308', glow: 'rgba(234, 179, 8, 0.6)', points: 1 }   // Yellow
     ];
 
     // Level configurations
@@ -616,20 +616,28 @@
     function renderGame() {
         const ctx = gameState.ctx;
 
-        // Clear canvas
-        ctx.fillStyle = '#1a1a1a';
+        // Clear canvas with dark background
+        ctx.fillStyle = '#0a0a15';
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        // Draw bricks
+        // Draw bricks with glow effects
         for (let brick of gameState.bricks) {
             if (!brick.visible) continue;
 
+            // Get the glow color from BRICK_COLORS based on brick color
+            const brickInfo = BRICK_COLORS.find(b => b.color === brick.color);
+            const glowColor = brickInfo ? brickInfo.glow : 'rgba(255,255,255,0.3)';
+
+            // Draw glow
+            ctx.shadowColor = glowColor;
+            ctx.shadowBlur = 10;
             ctx.fillStyle = brick.color;
             ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
 
-            // Add 3D effect
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-            ctx.lineWidth = 2;
+            // Add highlight
+            ctx.shadowBlur = 0;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 1;
             ctx.strokeRect(brick.x, brick.y, brick.width, brick.height);
 
             // Draw power-up emoji if this brick has one
@@ -637,14 +645,21 @@
                 ctx.font = '16px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#fff';
                 ctx.fillText(brick.powerup.emoji, brick.x + brick.width / 2, brick.y + brick.height / 2);
             }
         }
 
-        // Draw falling power-ups
+        // Reset shadow
+        ctx.shadowBlur = 0;
+
+        // Draw falling power-ups with glow
         for (let powerup of gameState.powerups) {
+            ctx.shadowColor = powerup.type.color;
+            ctx.shadowBlur = 15;
             ctx.fillStyle = powerup.type.color;
             ctx.fillRect(powerup.x, powerup.y, 20, 20);
+            ctx.shadowBlur = 0;
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
             ctx.lineWidth = 2;
             ctx.strokeRect(powerup.x, powerup.y, 20, 20);
@@ -655,49 +670,58 @@
             ctx.fillText(powerup.type.emoji, powerup.x + 10, powerup.y + 10);
         }
 
-        // Draw paddle
-        ctx.fillStyle = '#3498db';
-        ctx.fillRect(gameState.paddle.x, gameState.paddle.y, gameState.paddle.width, PADDLE_HEIGHT);
-        ctx.strokeStyle = '#2980b9';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(gameState.paddle.x, gameState.paddle.y, gameState.paddle.width, PADDLE_HEIGHT);
+        // Draw paddle with neon glow
+        ctx.shadowColor = 'rgba(59, 130, 246, 0.8)';
+        ctx.shadowBlur = 15;
+        ctx.fillStyle = '#3b82f6';
+        ctx.beginPath();
+        ctx.roundRect(gameState.paddle.x, gameState.paddle.y, gameState.paddle.width, PADDLE_HEIGHT, 4);
+        ctx.fill();
+        ctx.shadowBlur = 0;
 
-        // Draw main ball
-        ctx.fillStyle = '#ecf0f1';
+        // Draw main ball with glow
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+        ctx.shadowBlur = 15;
+        ctx.fillStyle = '#ffffff';
         ctx.beginPath();
         ctx.arc(gameState.ball.x, gameState.ball.y, BALL_RADIUS, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#bdc3c7';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        ctx.shadowBlur = 0;
 
-        // Draw extra balls (multi-ball)
+        // Draw extra balls (multi-ball) with glow
         for (let ball of gameState.balls) {
-            ctx.fillStyle = '#ecf0f1';
+            ctx.shadowColor = 'rgba(168, 85, 247, 0.8)';
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = '#a855f7';
             ctx.beginPath();
             ctx.arc(ball.x, ball.y, BALL_RADIUS, 0, Math.PI * 2);
             ctx.fill();
-            ctx.strokeStyle = '#bdc3c7';
-            ctx.lineWidth = 2;
-            ctx.stroke();
+            ctx.shadowBlur = 0;
         }
 
         // Draw launch hint
         if (!gameState.ball.launched && !gameState.gameOver) {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            ctx.font = '20px Arial';
+            ctx.fillStyle = 'rgba(243, 156, 18, 0.9)';
+            ctx.font = 'bold 22px Arial';
             ctx.textAlign = 'center';
+            ctx.shadowColor = 'rgba(243, 156, 18, 0.6)';
+            ctx.shadowBlur = 10;
             ctx.fillText('SPACE or CLICK to launch!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            ctx.shadowBlur = 0;
         }
 
         // Draw pause message
         if (gameState.paused) {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = '#f39c12';
+            ctx.shadowColor = 'rgba(243, 156, 18, 0.8)';
+            ctx.shadowBlur = 20;
             ctx.font = 'bold 48px Arial';
             ctx.textAlign = 'center';
             ctx.fillText('PAUSED', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#9ca3af';
             ctx.font = '20px Arial';
             ctx.fillText('Press P to resume', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);
         }

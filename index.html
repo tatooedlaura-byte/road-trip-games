@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.115.1';</script>
+    <script>window.APP_VERSION = '1.116.0';</script>
 
     <style>
         * {
@@ -1013,54 +1013,63 @@
 
             <!-- Breakout Game Section (hidden by default) -->
             <div id="breakoutGame" style="display: none;">
-                <div style="margin-bottom: 1rem;">
-                    <button onclick="exitBreakout()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
-                    <button onclick="breakoutPause()" style="background: #3498db; color: white; border: none; padding: 0.5rem 1rem; cursor: pointer; margin-left: 0.5rem;">⏸️ Pause (P)</button>
-                </div>
+                <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
+                    <!-- Back Button -->
+                    <button onclick="exitBreakout()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
 
-                <!-- Status Bar -->
-                <div style="background: #f0f0f0; padding: 0.75rem; margin-bottom: 1rem; font-family: monospace; font-size: 1rem; text-align: center;">
-                    <strong>Score: <span id="breakoutScore" style="color: #2ecc71;">0</span></strong> |
-                    <strong>Lives: <span id="breakoutLives" style="color: #e74c3c;">3</span></strong> |
-                    <strong>Level: <span id="breakoutLevel" style="color: #3498db;">1</span></strong>
-                </div>
+                    <!-- Title and Pause -->
+                    <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
+                        <h1 style="font-size: 1.8rem; color: #f39c12; text-shadow: 0 0 20px rgba(243, 156, 18, 0.5); margin: 0;">🧱 Breakout</h1>
+                        <button onclick="breakoutPause()" style="background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; cursor: pointer; margin-top: 0.5rem; font-size: 0.8rem;">⏸️ Pause (P)</button>
+                    </div>
 
-                <!-- Message Area -->
-                <div id="breakoutMessage" style="background: #fffacd; padding: 0.75rem; margin-bottom: 1rem; display: none; border-left: 4px solid #f39c12; text-align: center; font-weight: bold;"></div>
+                    <!-- Status Bar -->
+                    <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.7rem; color: #888;">SCORE</div>
+                            <div id="breakoutScore" style="font-size: 1.3rem; font-weight: bold; color: #4ade80;">0</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.7rem; color: #888;">LIVES</div>
+                            <div id="breakoutLives" style="font-size: 1.3rem; font-weight: bold; color: #f87171;">3</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.7rem; color: #888;">LEVEL</div>
+                            <div id="breakoutLevel" style="font-size: 1.3rem; font-weight: bold; color: #60a5fa;">1</div>
+                        </div>
+                    </div>
 
-                <!-- Game Canvas -->
-                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
-                    <canvas id="breakoutCanvas" width="800" height="600" style="border: 3px solid #2c3e50; background: #1a1a1a; max-width: 100%; height: auto;"></canvas>
-                </div>
+                    <!-- Message Area -->
+                    <div id="breakoutMessage" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.2)); padding: 0.75rem; margin-bottom: 1rem; display: none; border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 8px; text-align: center; font-weight: bold; color: #fde68a;"></div>
 
-                <!-- Instructions -->
-                <div style="background: white; padding: 1rem; border: 1px solid #ddd; font-size: 0.9rem;">
-                    <strong>Controls:</strong>
-                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                        <li><strong>Arrow Keys</strong>, <strong>Mouse</strong>, or <strong>Touch Buttons</strong> - Move paddle</li>
-                        <li><strong>Space</strong>, <strong>Click</strong>, or <strong>Launch Button</strong> - Launch ball</li>
-                        <li><strong>P</strong> - Pause/Resume game</li>
-                    </ul>
-                    <strong>Goal:</strong> Break all bricks to advance to the next level. You have 3 lives!
-                </div>
+                    <!-- Game Canvas -->
+                    <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                        <canvas id="breakoutCanvas" width="800" height="600" style="border: 3px solid #f39c12; border-radius: 8px; background: #0a0a15; max-width: 100%; height: auto; box-shadow: 0 0 30px rgba(243, 156, 18, 0.3);"></canvas>
+                    </div>
 
-                <!-- Mobile Touch Controls - Standardized Layout -->
-                <div id="breakoutControls" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2rem; padding: 0 1rem;">
-                    <button id="breakoutBtnLaunch" style="width: 90px; height: 90px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; border-radius: 50%; font-size: 0.9rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">LAUNCH</button>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button id="breakoutBtnLeft" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">◀</button>
-                        <button id="breakoutBtnRight" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▶</button>
+                    <!-- Instructions -->
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; color: #9ca3af; border: 1px solid rgba(255,255,255,0.1);">
+                        <strong style="color: #d1d5db;">Controls:</strong> Arrow keys / Mouse / Touch buttons to move | Space / Click to launch | P to pause
+                    </div>
+
+                    <!-- Mobile Touch Controls -->
+                    <div id="breakoutControls" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding: 0 1rem;">
+                        <button id="breakoutBtnLaunch" style="width: 80px; height: 80px; background: linear-gradient(145deg, #f39c12, #d97706); color: white; border: none; border-radius: 50%; font-size: 0.8rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);">LAUNCH</button>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button id="breakoutBtnLeft" style="width: 70px; height: 70px; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 15px; font-size: 1.8rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);">◀</button>
+                            <button id="breakoutBtnRight" style="width: 70px; height: 70px; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 15px; font-size: 1.8rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);">▶</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Game Over Screen -->
                 <div id="breakoutGameOverScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000;">
-                    <div style="background: white; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center;">
-                        <h2 id="breakoutGameOverTitle" style="margin-top: 0; color: #2c3e50;">GAME OVER</h2>
-                        <p id="breakoutGameOverMessage" style="font-size: 1.2rem; margin: 1rem 0;">Better luck next time!</p>
-                        <p style="font-size: 2rem; margin: 1.5rem 0; color: #2ecc71;">Final Score: <strong id="breakoutFinalScore">0</strong></p>
-                        <button onclick="breakoutRestart()" style="background: #27ae60; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold; margin-right: 1rem;">🔄 Play Again</button>
-                        <button onclick="exitBreakout()" style="background: #95a5a6; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">🏠 Menu</button>
+                    <div style="background: linear-gradient(145deg, #1a1a2e, #0f0f1e); border: 3px solid #f39c12; padding: 2.5rem; border-radius: 20px; max-width: 400px; text-align: center; box-shadow: 0 0 50px rgba(243, 156, 18, 0.4);">
+                        <h2 id="breakoutGameOverTitle" style="margin-top: 0; color: #f39c12; font-size: 2rem; text-shadow: 0 0 20px rgba(243, 156, 18, 0.5);">GAME OVER</h2>
+                        <p id="breakoutGameOverMessage" style="font-size: 1rem; margin: 1rem 0; color: #9ca3af;">Better luck next time!</p>
+                        <p style="font-size: 1.5rem; margin: 1.5rem 0; color: #4ade80;">Final Score: <strong id="breakoutFinalScore">0</strong></p>
+                        <button onclick="breakoutRestart()" style="background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; margin: 0.3rem;">🔄 Play Again</button>
+                        <button onclick="exitBreakout()" style="background: linear-gradient(145deg, #4b5563, #374151); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; margin: 0.3rem;">🏠 Menu</button>
                     </div>
                 </div>
             </div>
