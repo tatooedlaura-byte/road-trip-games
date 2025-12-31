@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.117.0';</script>
+    <script>window.APP_VERSION = '1.118.0';</script>
 
     <style>
         * {
@@ -28,35 +28,65 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #fda085 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             min-height: 100vh;
             padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .app-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
         }
 
         .header {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             color: white;
-            padding: 2rem;
+            padding: 3rem 2rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(25%, 25%); }
         }
 
         .header h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .header p {
-            opacity: 0.9;
-            font-size: 1rem;
+            opacity: 0.95;
+            font-size: 1.1rem;
+            position: relative;
         }
 
         .content {
@@ -74,24 +104,52 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: 20px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 0.5rem;
+            position: relative;
         }
 
         .feature-card p {
-            opacity: 0.9;
+            opacity: 0.95;
+            position: relative;
         }
+
+        /* Unique colors for home feature cards */
+        .feature-grid > .feature-card:nth-child(1) { background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%); }
+        .feature-grid > .feature-card:nth-child(2) { background: linear-gradient(135deg, #5f27cd 0%, #a29bfe 100%); }
+        .feature-grid > .feature-card:nth-child(3) { background: linear-gradient(135deg, #00d2d3 0%, #54a0ff 100%); }
+        .feature-grid > .feature-card:nth-child(4) { background: linear-gradient(135deg, #ff9ff3 0%, #f368e0 100%); }
 
         .welcome {
             text-align: center;
@@ -101,12 +159,19 @@
         .welcome h2 {
             color: #333;
             margin-bottom: 1rem;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .welcome p {
-            color: #666;
-            font-size: 1.1rem;
-            line-height: 1.6;
+            color: #555;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .toast {
@@ -165,77 +230,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        .roadmap {
-            margin-top: 3rem;
-            padding: 2rem;
-            background: #f8f9fa;
-            border-radius: 15px;
-        }
-
-        .roadmap h2 {
-            color: #333;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .roadmap-section {
-            margin-bottom: 2rem;
-        }
-
-        .roadmap-section h3 {
-            color: #ff6b35;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .roadmap-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .roadmap-list li {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            background: white;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .roadmap-list li.completed {
-            border-left-color: #28a745;
-            opacity: 0.7;
-        }
-
-        .roadmap-list li.in-progress {
-            border-left-color: #f7931e;
-            font-weight: bold;
-        }
-
-        .status-badge {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            margin-left: auto;
-            font-weight: bold;
-        }
-
-        .status-badge.completed {
-            background: #28a745;
-            color: white;
-        }
-
-        .status-badge.in-progress {
-            background: #f7931e;
-            color: white;
-        }
-
-        .status-badge.planned {
-            background: #6c757d;
-            color: white;
-        }
 
         @media (max-width: 768px) {
             .header h1 {
@@ -1179,63 +1173,6 @@
                 <div id="game2048Content"></div>
             </div>
 
-            <div class="roadmap">
-                <h2>🗺️ Development Roadmap</h2>
-
-                <div class="roadmap-section">
-                    <h3>✅ Completed</h3>
-                    <ul class="roadmap-list">
-                        <li class="completed">
-                            <span>🚀 Initial PWA setup with offline support</span>
-                            <span class="status-badge completed">Done</span>
-                        </li>
-                        <li class="completed">
-                            <span>📱 Mobile-responsive design</span>
-                            <span class="status-badge completed">Done</span>
-                        </li>
-                        <li class="completed">
-                            <span>🚙 License Plate Tracker - All 51 US states/DC + 13 Canadian provinces</span>
-                            <span class="status-badge completed">Done</span>
-                        </li>
-                        <li class="completed">
-                            <span>🎯 Travel Bingo (Spot cows, water towers, bridges, etc.)</span>
-                            <span class="status-badge completed">Done</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="roadmap-section">
-                    <h3>🎯 Up Next</h3>
-                    <ul class="roadmap-list">
-                        <li class="planned">
-                            <span>🎮 Classic Road Trip Games (I Spy, Would You Rather)</span>
-                            <span class="status-badge planned">Planned</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="roadmap-section">
-                    <h3>💡 Future Features</h3>
-                    <ul class="roadmap-list">
-                        <li class="planned">
-                            <span>📍 GPS-Based Location Facts</span>
-                            <span class="status-badge planned">Planned</span>
-                        </li>
-                        <li class="planned">
-                            <span>📊 Trip Statistics & Mileage Tracker</span>
-                            <span class="status-badge planned">Planned</span>
-                        </li>
-                        <li class="planned">
-                            <span>📸 Trip Photo Journal</span>
-                            <span class="status-badge planned">Planned</span>
-                        </li>
-                        <li class="planned">
-                            <span>🗺️ Interactive Trip Map</span>
-                            <span class="status-badge planned">Planned</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 
