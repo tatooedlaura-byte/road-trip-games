@@ -1,6 +1,357 @@
-// Minesweeper Game - Complete implementation based on classic Windows Minesweeper
+// Minesweeper Game - Modern overhaul with dark theme
 (function() {
     'use strict';
+
+    // Inject styles
+    const styleId = 'minesweeper-styles';
+    if (!document.getElementById(styleId)) {
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = `
+            .ms-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 1rem;
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                min-height: 100%;
+                border-radius: 12px;
+            }
+
+            .ms-title {
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: #e94560;
+                text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+                margin: 0;
+            }
+
+            .ms-difficulty-row {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .ms-diff-btn {
+                background: linear-gradient(145deg, #2a2a4a, #1a1a3a);
+                color: #aaa;
+                border: 2px solid #333;
+                padding: 0.6rem 1rem;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+            }
+
+            .ms-diff-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .ms-diff-btn.active-beginner {
+                background: linear-gradient(145deg, #4CAF50, #388E3C);
+                color: white;
+                border-color: #4CAF50;
+                box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+            }
+
+            .ms-diff-btn.active-intermediate {
+                background: linear-gradient(145deg, #FF9800, #F57C00);
+                color: white;
+                border-color: #FF9800;
+                box-shadow: 0 0 15px rgba(255, 152, 0, 0.4);
+            }
+
+            .ms-diff-btn.active-expert {
+                background: linear-gradient(145deg, #e94560, #c23a51);
+                color: white;
+                border-color: #e94560;
+                box-shadow: 0 0 15px rgba(233, 69, 96, 0.4);
+            }
+
+            .ms-info-bar {
+                background: linear-gradient(145deg, #1a1a2e, #0f0f1e);
+                border: 2px solid #333;
+                border-radius: 12px;
+                padding: 0.5rem 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+                box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            }
+
+            .ms-counter {
+                background: #000;
+                color: #ff3333;
+                font-family: 'Courier New', monospace;
+                font-size: 1.5rem;
+                font-weight: bold;
+                padding: 0.3rem 0.6rem;
+                border-radius: 6px;
+                border: 2px solid #333;
+                min-width: 3.5rem;
+                text-align: center;
+                text-shadow: 0 0 10px rgba(255, 51, 51, 0.7);
+            }
+
+            .ms-face-btn {
+                background: linear-gradient(145deg, #3a3a5a, #2a2a4a);
+                border: 2px solid #444;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 1.8rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .ms-face-btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px rgba(233, 69, 96, 0.4);
+            }
+
+            .ms-face-btn:active {
+                transform: scale(0.95);
+            }
+
+            .ms-mode-btn {
+                background: linear-gradient(145deg, #4CAF50, #388E3C);
+                color: white;
+                border: none;
+                padding: 0.6rem 1.2rem;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            }
+
+            .ms-mode-btn.flag-mode {
+                background: linear-gradient(145deg, #FF9800, #F57C00);
+                box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+            }
+
+            .ms-mode-btn:hover {
+                transform: translateY(-2px);
+            }
+
+            .ms-grid-wrapper {
+                max-width: 100%;
+                overflow-x: auto;
+                padding: 0.5rem;
+            }
+
+            .ms-grid-container {
+                background: linear-gradient(145deg, #2a2a4a, #1a1a3a);
+                border: 3px solid #444;
+                border-radius: 12px;
+                padding: 8px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                            inset 0 2px 10px rgba(255, 255, 255, 0.05);
+            }
+
+            .ms-grid {
+                display: grid;
+                gap: 2px;
+                background: #222;
+            }
+
+            .ms-cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                -webkit-touch-callout: none;
+                touch-action: manipulation;
+                transition: all 0.15s ease;
+                border-radius: 4px;
+            }
+
+            .ms-cell.hidden {
+                background: linear-gradient(145deg, #4a4a6a, #3a3a5a);
+                border: 2px solid #555;
+                box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1),
+                            inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+            }
+
+            .ms-cell.hidden:hover {
+                background: linear-gradient(145deg, #5a5a7a, #4a4a6a);
+                transform: scale(1.05);
+            }
+
+            .ms-cell.revealed {
+                background: linear-gradient(145deg, #2a2a3a, #1a1a2a);
+                border: 1px solid #333;
+                animation: revealCell 0.2s ease-out;
+            }
+
+            @keyframes revealCell {
+                0% {
+                    transform: scale(0.8);
+                    opacity: 0.5;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .ms-cell.flagged {
+                background: linear-gradient(145deg, #5a4a2a, #4a3a1a);
+                border: 2px solid #FF9800;
+                animation: flagPlace 0.3s ease-out;
+            }
+
+            @keyframes flagPlace {
+                0% { transform: scale(1.3); }
+                50% { transform: scale(0.9); }
+                100% { transform: scale(1); }
+            }
+
+            .ms-cell.mine {
+                background: linear-gradient(145deg, #8a2a2a, #6a1a1a);
+                border: 2px solid #e94560;
+                animation: mineReveal 0.3s ease-out;
+            }
+
+            .ms-cell.mine-hit {
+                background: linear-gradient(145deg, #ff0000, #cc0000);
+                animation: mineExplode 0.5s ease-out;
+            }
+
+            @keyframes mineReveal {
+                0% { transform: scale(0); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
+            }
+
+            @keyframes mineExplode {
+                0% { transform: scale(0.5); background: #fff; }
+                50% { transform: scale(1.3); }
+                100% { transform: scale(1); }
+            }
+
+            .ms-cell .num-1 { color: #4fc3f7; text-shadow: 0 0 8px rgba(79, 195, 247, 0.6); }
+            .ms-cell .num-2 { color: #81c784; text-shadow: 0 0 8px rgba(129, 199, 132, 0.6); }
+            .ms-cell .num-3 { color: #e57373; text-shadow: 0 0 8px rgba(229, 115, 115, 0.6); }
+            .ms-cell .num-4 { color: #9575cd; text-shadow: 0 0 8px rgba(149, 117, 205, 0.6); }
+            .ms-cell .num-5 { color: #ffb74d; text-shadow: 0 0 8px rgba(255, 183, 77, 0.6); }
+            .ms-cell .num-6 { color: #4dd0e1; text-shadow: 0 0 8px rgba(77, 208, 225, 0.6); }
+            .ms-cell .num-7 { color: #f06292; text-shadow: 0 0 8px rgba(240, 98, 146, 0.6); }
+            .ms-cell .num-8 { color: #90a4ae; text-shadow: 0 0 8px rgba(144, 164, 174, 0.6); }
+
+            .ms-instructions {
+                text-align: center;
+                color: #888;
+                font-size: 0.85rem;
+                max-width: 500px;
+                line-height: 1.5;
+            }
+
+            .ms-instructions strong {
+                color: #e94560;
+            }
+
+            .ms-game-over {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(145deg, #1a1a2e, #0f0f1e);
+                border: 3px solid #e94560;
+                border-radius: 20px;
+                padding: 2rem;
+                text-align: center;
+                z-index: 1000;
+                box-shadow: 0 0 50px rgba(233, 69, 96, 0.5);
+                animation: popIn 0.4s ease-out;
+            }
+
+            .ms-game-over.win {
+                border-color: #4CAF50;
+                box-shadow: 0 0 50px rgba(76, 175, 80, 0.5);
+            }
+
+            @keyframes popIn {
+                0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+                50% { transform: translate(-50%, -50%) scale(1.1); }
+                100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            }
+
+            .ms-game-over h2 {
+                font-size: 2rem;
+                margin: 0 0 1rem 0;
+                color: #e94560;
+            }
+
+            .ms-game-over.win h2 {
+                color: #4CAF50;
+            }
+
+            .ms-game-over p {
+                color: #aaa;
+                margin: 0.5rem 0;
+                font-size: 1.1rem;
+            }
+
+            .ms-game-over button {
+                background: linear-gradient(145deg, #e94560, #c23a51);
+                color: white;
+                border: none;
+                padding: 0.8rem 2rem;
+                border-radius: 10px;
+                font-size: 1.1rem;
+                font-weight: bold;
+                cursor: pointer;
+                margin-top: 1rem;
+                transition: all 0.3s ease;
+            }
+
+            .ms-game-over.win button {
+                background: linear-gradient(145deg, #4CAF50, #388E3C);
+            }
+
+            .ms-game-over button:hover {
+                transform: scale(1.05);
+            }
+
+            .ms-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 999;
+            }
+
+            .ms-confetti {
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                top: -10px;
+                z-index: 1001;
+                animation: confettiFall linear forwards;
+            }
+
+            @keyframes confettiFall {
+                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 
     // Game constants
     const DIFFICULTIES = {
@@ -24,7 +375,8 @@
         timer: 0,
         timerInterval: null,
         minesRemaining: 10,
-        flagMode: false  // Toggle between reveal and flag mode
+        flagMode: false,
+        showingEndScreen: false
     };
 
     // Touch handling for long-press
@@ -37,6 +389,9 @@
         if (gameState.timerInterval) {
             clearInterval(gameState.timerInterval);
         }
+
+        // Close any end screen
+        closeEndScreen();
 
         const config = DIFFICULTIES[difficulty];
         gameState = {
@@ -53,7 +408,8 @@
             timer: 0,
             timerInterval: null,
             minesRemaining: config.mines,
-            flagMode: false
+            flagMode: false,
+            showingEndScreen: false
         };
 
         // Initialize empty grid (mines placed on first click)
@@ -62,7 +418,7 @@
             gameState.revealed[r] = [];
             gameState.flagged[r] = [];
             for (let c = 0; c < gameState.cols; c++) {
-                gameState.grid[r][c] = 0; // 0 = no mine, numbers = adjacent mine count
+                gameState.grid[r][c] = 0;
                 gameState.revealed[r][c] = false;
                 gameState.flagged[r][c] = false;
             }
@@ -147,7 +503,7 @@
 
     // Handle left click
     function handleLeftClick(row, col) {
-        if (gameState.gameOver) {
+        if (gameState.gameOver || gameState.showingEndScreen) {
             return;
         }
 
@@ -178,9 +534,11 @@
         if (gameState.grid[row][col] === 'mine') {
             gameState.gameOver = true;
             gameState.won = false;
+            gameState.hitMine = { row, col };
             revealAllMines();
             stopTimer();
             renderGame();
+            showEndScreen(false);
             return;
         }
 
@@ -238,6 +596,7 @@
                             if (gameState.grid[r][c] === 'mine') {
                                 gameState.gameOver = true;
                                 gameState.won = false;
+                                gameState.hitMine = { row: r, col: c };
                                 revealAllMines();
                                 stopTimer();
                             } else {
@@ -249,6 +608,9 @@
             }
             checkWin();
             renderGame();
+            if (gameState.gameOver && !gameState.won) {
+                showEndScreen(false);
+            }
         }
     }
 
@@ -290,6 +652,8 @@
                 }
             }
             gameState.minesRemaining = 0;
+            renderGame();
+            showEndScreen(true);
         }
     }
 
@@ -311,7 +675,58 @@
     function updateTimerDisplay() {
         const timerEl = document.getElementById('minesweeperTimer');
         if (timerEl) {
-            timerEl.textContent = String(gameState.timer).padStart(3, '0');
+            timerEl.textContent = String(Math.min(999, gameState.timer)).padStart(3, '0');
+        }
+    }
+
+    // Show end screen
+    function showEndScreen(won) {
+        gameState.showingEndScreen = true;
+        const content = document.getElementById('minesweeperContent');
+
+        if (won) {
+            createConfetti();
+        }
+
+        const endScreenHtml = `
+            <div class="ms-overlay" onclick="closeMsEndScreen()"></div>
+            <div class="ms-game-over ${won ? 'win' : ''}">
+                <h2>${won ? '🎉 Victory!' : '💥 Game Over!'}</h2>
+                <p>${won ? 'You cleared the minefield!' : 'You hit a mine!'}</p>
+                <p>Time: ${gameState.timer} seconds</p>
+                <p>Difficulty: ${gameState.difficulty.charAt(0).toUpperCase() + gameState.difficulty.slice(1)}</p>
+                <button onclick="closeMsEndScreen(); initMinesweeper();">Play Again</button>
+            </div>
+        `;
+        content.insertAdjacentHTML('beforeend', endScreenHtml);
+    }
+
+    function closeEndScreen() {
+        gameState.showingEndScreen = false;
+        const overlay = document.querySelector('.ms-overlay');
+        const endScreen = document.querySelector('.ms-game-over');
+        if (overlay) overlay.remove();
+        if (endScreen) endScreen.remove();
+        // Remove confetti
+        document.querySelectorAll('.ms-confetti').forEach(c => c.remove());
+    }
+
+    window.closeMsEndScreen = closeEndScreen;
+
+    // Create confetti effect
+    function createConfetti() {
+        const colors = ['#e94560', '#4CAF50', '#FF9800', '#4fc3f7', '#9575cd', '#f06292'];
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.className = 'ms-confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }, i * 50);
         }
     }
 
@@ -319,155 +734,70 @@
     function renderGame() {
         const content = document.getElementById('minesweeperContent');
 
-        // Calculate cell size based on difficulty and available screen width
-        // Account for all borders, padding, and margins:
-        // - Grid border: 6px (3px each side)
-        // - Grid padding: 4px (2px each side)
-        // - Outer padding: ~10px
-        // - Info bar gap and other spacing: ~10px
-        const reservedSpace = 60;
+        // Calculate cell size based on difficulty and screen
+        const reservedSpace = 80;
         const availableWidth = Math.min(window.innerWidth - reservedSpace, 1200);
 
-        // Calculate optimal cell size to fit screen
         let maxCellSize;
         if (gameState.difficulty === 'beginner') {
-            maxCellSize = 30;
+            maxCellSize = 36;
         } else if (gameState.difficulty === 'intermediate') {
-            maxCellSize = 22;  // Reduced from 24 to ensure fit
-        } else { // expert
-            maxCellSize = 20;
+            maxCellSize = 28;
+        } else {
+            maxCellSize = 22;
         }
 
-        // Ensure board fits on screen - account for grid borders/padding in width calculation
-        const gridBorderPadding = 14;  // 6px border + 4px padding + 4px safety margin
-        const calculatedSize = Math.floor((availableWidth - gridBorderPadding) / gameState.cols);
-        const cellSize = Math.min(maxCellSize, Math.max(15, calculatedSize));
-
-        // Scale UI elements for smaller boards
-        const counterFontSize = Math.min(24, cellSize + 6);
-        const buttonSize = Math.min(50, cellSize * 1.8);
-        const buttonFontSize = Math.min(32, cellSize * 1.2);
+        const gridPadding = 20;
+        const calculatedSize = Math.floor((availableWidth - gridPadding) / gameState.cols);
+        const cellSize = Math.min(maxCellSize, Math.max(18, calculatedSize));
 
         content.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 0.25rem; max-width: 100%; overflow-x: hidden;">
-                <!-- Difficulty Selection -->
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                    <button onclick="changeDifficulty('beginner')" style="
-                        background: ${gameState.difficulty === 'beginner' ? '#4CAF50' : '#e0e0e0'};
-                        color: ${gameState.difficulty === 'beginner' ? 'white' : '#333'};
-                        border: none;
-                        padding: 0.5rem 1rem;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-weight: bold;
-                    ">Beginner (9x9)</button>
-                    <button onclick="changeDifficulty('intermediate')" style="
-                        background: ${gameState.difficulty === 'intermediate' ? '#FF9800' : '#e0e0e0'};
-                        color: ${gameState.difficulty === 'intermediate' ? 'white' : '#333'};
-                        border: none;
-                        padding: 0.5rem 1rem;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-weight: bold;
-                    ">Intermediate (16x16)</button>
-                    <button onclick="changeDifficulty('expert')" style="
-                        background: ${gameState.difficulty === 'expert' ? '#F44336' : '#e0e0e0'};
-                        color: ${gameState.difficulty === 'expert' ? 'white' : '#333'};
-                        border: none;
-                        padding: 0.5rem 1rem;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-weight: bold;
-                    ">Expert (30x16)</button>
+            <div class="ms-container">
+                <h1 class="ms-title">💣 Minesweeper</h1>
+
+                <div class="ms-difficulty-row">
+                    <button class="ms-diff-btn ${gameState.difficulty === 'beginner' ? 'active-beginner' : ''}"
+                            onclick="changeDifficulty('beginner')">
+                        Beginner (9×9)
+                    </button>
+                    <button class="ms-diff-btn ${gameState.difficulty === 'intermediate' ? 'active-intermediate' : ''}"
+                            onclick="changeDifficulty('intermediate')">
+                        Intermediate (16×16)
+                    </button>
+                    <button class="ms-diff-btn ${gameState.difficulty === 'expert' ? 'active-expert' : ''}"
+                            onclick="changeDifficulty('expert')">
+                        Expert (30×16)
+                    </button>
                 </div>
 
-                <!-- Game Info Bar -->
-                <div style="
-                    background: #c0c0c0;
-                    border: 3px solid #808080;
-                    padding: 0.25rem;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    width: ${cellSize * gameState.cols + 4}px;
-                    max-width: 100%;
-                    box-sizing: border-box;
-                    gap: 0.5rem;
-                ">
-                    <div style="
-                        background: #000;
-                        color: #f00;
-                        font-family: 'Courier New', monospace;
-                        font-size: ${counterFontSize}px;
-                        font-weight: bold;
-                        padding: 0.25rem 0.5rem;
-                        border: 2px inset #808080;
-                        min-width: ${counterFontSize * 2}px;
-                        text-align: center;
-                    ">${String(Math.max(0, gameState.minesRemaining)).padStart(3, '0')}</div>
-
-                    <button onclick="initMinesweeper()" style="
-                        background: #c0c0c0;
-                        border: 3px outset #fff;
-                        font-size: ${buttonFontSize}px;
-                        width: ${buttonSize}px;
-                        height: ${buttonSize}px;
-                        cursor: pointer;
-                        padding: 0;
-                        flex-shrink: 0;
-                    ">${gameState.gameOver ? (gameState.won ? '😎' : '😵') : '🙂'}</button>
-
-                    <div style="
-                        background: #000;
-                        color: #f00;
-                        font-family: 'Courier New', monospace;
-                        font-size: ${counterFontSize}px;
-                        font-weight: bold;
-                        padding: 0.25rem 0.5rem;
-                        border: 2px inset #808080;
-                        min-width: ${counterFontSize * 2}px;
-                        text-align: center;
-                    " id="minesweeperTimer">${String(gameState.timer).padStart(3, '0')}</div>
+                <div class="ms-info-bar" style="width: ${cellSize * gameState.cols + 16}px; max-width: 100%;">
+                    <div class="ms-counter">
+                        ${String(Math.max(0, gameState.minesRemaining)).padStart(3, '0')}
+                    </div>
+                    <button class="ms-face-btn" onclick="initMinesweeper()">
+                        ${gameState.gameOver ? (gameState.won ? '😎' : '😵') : '🙂'}
+                    </button>
+                    <div class="ms-counter" id="minesweeperTimer">
+                        ${String(Math.min(999, gameState.timer)).padStart(3, '0')}
+                    </div>
                 </div>
 
-                <!-- Flag Mode Toggle (for mobile/touch devices) -->
-                <button onclick="toggleFlagMode()" style="
-                    background: ${gameState.flagMode ? '#FF9800' : '#4CAF50'};
-                    color: white;
-                    border: none;
-                    padding: 0.5rem 1rem;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-weight: bold;
-                    font-size: 1rem;
-                ">
-                    ${gameState.flagMode ? '🚩 FLAG MODE' : '👆 REVEAL MODE'}
+                <button class="ms-mode-btn ${gameState.flagMode ? 'flag-mode' : ''}" onclick="toggleFlagMode()">
+                    ${gameState.flagMode ? '🚩 Flag Mode' : '👆 Reveal Mode'}
                 </button>
 
-                <!-- Game Grid Container -->
-                <div style="max-width: 100%; overflow-x: hidden;">
-                    <div style="
-                        display: inline-block;
-                        background: #c0c0c0;
-                        border: 3px solid #808080;
-                        padding: 2px;
-                    ">
-                        <div style="
-                            display: grid;
-                            grid-template-columns: repeat(${gameState.cols}, ${cellSize}px);
-                            gap: 0;
-                            background: #c0c0c0;
-                        ">
+                <div class="ms-grid-wrapper">
+                    <div class="ms-grid-container">
+                        <div class="ms-grid" style="grid-template-columns: repeat(${gameState.cols}, ${cellSize}px);">
                             ${renderGrid(cellSize)}
                         </div>
                     </div>
                 </div>
 
-                <!-- Instructions -->
-                <div style="text-align: center; color: #666; font-size: 0.8rem; max-width: 600px; padding: 0 0.25rem;">
-                    <p><strong>Desktop:</strong> Left-click to reveal | Right-click to flag | Middle-click on numbers to chord</p>
-                    <p><strong>Mobile:</strong> Toggle flag mode button or long-press to flag</p>
-                    <p style="margin-top: 0.15rem;">💡 First click is always safe! Numbers show adjacent mine count.</p>
+                <div class="ms-instructions">
+                    <strong>Desktop:</strong> Click to reveal · Right-click to flag · Middle-click numbers to chord<br>
+                    <strong>Mobile:</strong> Use mode toggle or long-press to flag<br>
+                    💡 First click is always safe!
                 </div>
             </div>
         `;
@@ -482,54 +812,36 @@
                 const revealed = gameState.revealed[r][c];
                 const flagged = gameState.flagged[r][c];
                 const value = gameState.grid[r][c];
+                const isHitMine = gameState.hitMine && gameState.hitMine.row === r && gameState.hitMine.col === c;
 
+                let cellClass = 'ms-cell';
                 let content = '';
-                let bgColor = '#c0c0c0';
-                let border = '3px outset #fff';
-                let color = '#000';
-                let fontWeight = 'bold';
 
                 if (flagged && !revealed) {
+                    cellClass += ' hidden flagged';
                     content = '🚩';
-                    bgColor = '#c0c0c0';
                 } else if (revealed) {
-                    border = '1px solid #808080';
-                    bgColor = '#bdbdbd';
-
                     if (value === 'mine') {
+                        cellClass += isHitMine ? ' mine mine-hit' : ' mine';
                         content = '💣';
-                        bgColor = gameState.gameOver && !gameState.won ? '#ff0000' : '#bdbdbd';
-                    } else if (value > 0) {
-                        content = value;
-                        const colors = ['', '#0000ff', '#008000', '#ff0000', '#000080', '#800000', '#008080', '#000000', '#808080'];
-                        color = colors[value];
+                    } else {
+                        cellClass += ' revealed';
+                        if (value > 0) {
+                            content = `<span class="num-${value}">${value}</span>`;
+                        }
                     }
+                } else {
+                    cellClass += ' hidden';
                 }
 
                 html += `
-                    <div
-                        onmousedown="handleMouseDown(event, ${r}, ${c})"
-                        oncontextmenu="handleRightClickCell(${r}, ${c}, event)"
-                        ontouchstart="handleTouchStart(event, ${r}, ${c})"
-                        ontouchend="handleTouchEnd(event, ${r}, ${c})"
-                        ontouchmove="handleTouchMove()"
-                        style="
-                            width: ${cellSize}px;
-                            height: ${cellSize}px;
-                            background: ${bgColor};
-                            border: ${border};
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: ${cellSize * 0.6}px;
-                            font-weight: ${fontWeight};
-                            color: ${color};
-                            cursor: ${gameState.gameOver ? 'default' : 'pointer'};
-                            user-select: none;
-                            -webkit-user-select: none;
-                            -webkit-touch-callout: none;
-                            touch-action: manipulation;
-                        "
+                    <div class="${cellClass}"
+                         style="width: ${cellSize}px; height: ${cellSize}px; font-size: ${cellSize * 0.55}px;"
+                         onmousedown="handleMouseDown(event, ${r}, ${c})"
+                         oncontextmenu="handleRightClickCell(${r}, ${c}, event)"
+                         ontouchstart="handleTouchStart(event, ${r}, ${c})"
+                         ontouchend="handleTouchEnd(event, ${r}, ${c})"
+                         ontouchmove="handleTouchMove()"
                     >${content}</div>
                 `;
             }
@@ -542,12 +854,9 @@
     window.handleMouseDown = function(event, row, col) {
         event.preventDefault();
 
-        // Left click
         if (event.button === 0) {
             handleLeftClick(row, col);
-        }
-        // Middle click (chording)
-        else if (event.button === 1) {
+        } else if (event.button === 1) {
             handleChording(row, col);
         }
     };
@@ -558,16 +867,13 @@
 
     // Touch event handlers for long-press flagging
     window.handleTouchStart = function(event, row, col) {
-        event.preventDefault(); // Prevent context menu / copy menu
+        event.preventDefault();
         touchHandled = false;
 
-        // Start long-press timer (500ms)
         touchTimer = setTimeout(() => {
-            // Long press detected - toggle flag
             toggleFlag(row, col);
             touchHandled = true;
 
-            // Vibrate if available (haptic feedback)
             if (navigator.vibrate) {
                 navigator.vibrate(50);
             }
@@ -575,26 +881,22 @@
     };
 
     window.handleTouchEnd = function(event, row, col) {
-        // Clear long-press timer
         if (touchTimer) {
             clearTimeout(touchTimer);
             touchTimer = null;
         }
 
-        // If long-press was handled, don't process as click
         if (touchHandled) {
             event.preventDefault();
             touchHandled = false;
             return;
         }
 
-        // Normal tap - treat as left click
         event.preventDefault();
         handleLeftClick(row, col);
     };
 
     window.handleTouchMove = function() {
-        // Cancel long-press if finger moves
         if (touchTimer) {
             clearTimeout(touchTimer);
             touchTimer = null;
@@ -627,6 +929,7 @@
     // Exit to menu
     window.exitMinesweeper = function() {
         stopTimer();
+        closeEndScreen();
         document.getElementById('minesweeperGame').style.display = 'none';
         document.getElementById('gamesMenu').style.display = 'block';
     };
