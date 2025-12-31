@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.118.8';</script>
+    <script>window.APP_VERSION = '1.119.0';</script>
 
     <style>
         * {
@@ -903,49 +903,83 @@
             </div>
 
             <!-- Drug Wars Game Section (hidden by default) -->
-            <div id="drugwarsGame" style="display: none; background: rgba(255,255,255,0.95); border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-                <div style="margin-bottom: 1rem;">
-                    <button onclick="exitDrugWars()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
-                </div>
+            <div id="drugwarsGame" style="display: none;">
+                <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
+                    <!-- Back Button -->
+                    <button onclick="exitDrugWars()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
 
-                <!-- Status Bar -->
-                <div style="background: #f0f0f0; padding: 0.75rem; margin-bottom: 1rem; font-family: monospace; font-size: 0.9rem;">
-                    <strong>Day <span id="drugwarsDay">1</span>/<span id="drugwarsTotalDays">30</span></strong> |
-                    Location: <strong id="drugwarsLocation">Bronx</strong> |
-                    Cash: <strong style="color: #2ecc71;">$<span id="drugwarsCash">2,000</span></strong> |
-                    Debt: <strong style="color: #e74c3c;">$<span id="drugwarsDebt">5,500</span></strong> |
-                    Bank: <strong>$<span id="drugwarsBank">0</span></strong> |
-                    Net: <strong id="drugwarsNetWorth" style="color: #e74c3c;">-$3,500</strong>
-                    <br>
-                    Space: <span id="drugwarsSpace">0/100</span> |
-                    Guns: <span id="drugwarsGuns">0</span> |
-                    Health: <span id="drugwarsHealth">100</span>
-                </div>
+                    <!-- Title -->
+                    <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
+                        <h1 style="font-size: 1.8rem; color: #a855f7; text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); margin: 0;">💊 Drug Wars</h1>
+                        <p style="color: #888; font-size: 0.8rem; margin-top: 0.25rem;">NYC 1984</p>
+                    </div>
 
-                <!-- Message Area -->
-                <div id="drugwarsMessage" style="background: #fffacd; padding: 0.75rem; margin-bottom: 1rem; display: none; border-left: 4px solid #f39c12;"></div>
+                    <!-- Stats Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.65rem; color: #888; text-transform: uppercase;">Day</div>
+                            <div style="font-size: 1.1rem; font-weight: bold; color: #60a5fa;"><span id="drugwarsDay">1</span>/<span id="drugwarsTotalDays">30</span></div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.65rem; color: #888; text-transform: uppercase;">Location</div>
+                            <div id="drugwarsLocation" style="font-size: 1rem; font-weight: bold; color: #fbbf24;">Bronx</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.65rem; color: #888; text-transform: uppercase;">Health</div>
+                            <div style="font-size: 1.1rem; font-weight: bold; color: #f87171;"><span id="drugwarsHealth">100</span>%</div>
+                        </div>
+                    </div>
 
-                <!-- Bronx Actions -->
-                <div id="drugwarsBronxActions" style="background: #e8f4f8; padding: 0.75rem; margin-bottom: 1rem; display: none;">
-                    <strong>Bronx Services:</strong>
-                    <a href="#" onclick="drugWarsBank(); return false;" style="margin-left: 1rem;">Bank</a> |
-                    <a href="#" onclick="drugWarsLoan(); return false;">Loan Shark</a>
-                </div>
+                    <!-- Financial Stats -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
+                        <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1)); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(34, 197, 94, 0.3);">
+                            <div style="font-size: 0.7rem; color: #4ade80; text-transform: uppercase;">Cash</div>
+                            <div style="font-size: 1.3rem; font-weight: bold; color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);">$<span id="drugwarsCash">2,000</span></div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1)); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                            <div style="font-size: 0.7rem; color: #f87171; text-transform: uppercase;">Debt</div>
+                            <div style="font-size: 1.3rem; font-weight: bold; color: #f87171; text-shadow: 0 0 10px rgba(248, 113, 113, 0.5);">$<span id="drugwarsDebt">5,500</span></div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1)); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.3);">
+                            <div style="font-size: 0.7rem; color: #60a5fa; text-transform: uppercase;">Bank</div>
+                            <div style="font-size: 1.3rem; font-weight: bold; color: #60a5fa;">$<span id="drugwarsBank">0</span></div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.1)); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(168, 85, 247, 0.3);">
+                            <div style="font-size: 0.7rem; color: #c084fc; text-transform: uppercase;">Net Worth</div>
+                            <div id="drugwarsNetWorth" style="font-size: 1.3rem; font-weight: bold; color: #f87171; text-shadow: 0 0 10px rgba(248, 113, 113, 0.5);">-$3,500</div>
+                        </div>
+                    </div>
 
-                <!-- Market Prices -->
-                <div style="background: white; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd;">
-                    <strong>Market Prices:</strong>
-                    <table id="drugwarsPrices" style="width: 100%; margin-top: 0.5rem; font-family: monospace; font-size: 0.9rem;">
-                    </table>
-                </div>
+                    <!-- Inventory Stats -->
+                    <div style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; color: #ccc; font-size: 0.85rem;">
+                        <div>🎒 <span id="drugwarsSpace">0/100</span></div>
+                        <div>🔫 <span id="drugwarsGuns">0</span></div>
+                    </div>
 
-                <!-- Travel -->
-                <div style="background: white; padding: 1rem; border: 1px solid #ddd;">
-                    <strong>Travel to:</strong>
-                    <div id="drugwarsLocations" style="margin-top: 0.5rem;">
+                    <!-- Message Area -->
+                    <div id="drugwarsMessage" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); padding: 0.75rem; margin-bottom: 1rem; display: none; border-radius: 8px; border-left: 4px solid #fbbf24; color: #fcd34d; font-size: 0.9rem;"></div>
+
+                    <!-- Bronx Actions -->
+                    <div id="drugwarsBronxActions" style="background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1)); padding: 0.75rem; margin-bottom: 1rem; display: none; border-radius: 8px; border: 1px solid rgba(34, 211, 238, 0.3); text-align: center;">
+                        <span style="color: #22d3ee; font-weight: bold;">🏦 Bronx Services:</span>
+                        <button onclick="drugWarsBank(); return false;" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; margin-left: 0.75rem; font-size: 0.85rem;">💰 Bank</button>
+                        <button onclick="drugWarsLoan(); return false;" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; margin-left: 0.5rem; font-size: 0.85rem;">🦈 Loan Shark</button>
+                    </div>
+
+                    <!-- Market Prices -->
+                    <div style="background: rgba(255,255,255,0.05); padding: 1rem; margin-bottom: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div style="color: #c084fc; font-weight: bold; margin-bottom: 0.75rem; font-size: 1rem;">📈 Market Prices</div>
+                        <table id="drugwarsPrices" style="width: 100%; font-family: monospace; font-size: 0.85rem; color: #e5e5e5;">
+                        </table>
+                    </div>
+
+                    <!-- Travel -->
+                    <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div style="color: #60a5fa; font-weight: bold; margin-bottom: 0.75rem; font-size: 1rem;">🚇 Travel to:</div>
+                        <div id="drugwarsLocations" style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                        </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- Breakout Game Section (hidden by default) -->
@@ -1124,52 +1158,54 @@
     </div>
 
     <!-- Drug Wars Modals (outside app-container to fix fixed positioning) -->
-    <div id="drugwarsDaySelectModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 10000;">
-        <div style="background: white; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center; margin: 1rem;">
-            <h2 style="margin-top: 0; color: #2c3e50;">💊 Drug Wars</h2>
-            <p style="font-size: 1.2rem; margin: 1.5rem 0;">Choose game length:</p>
-            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
-                <button onclick="drugWarsStartGame(30)" style="background: #3498db; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
-                    📅 30 Days (Quick Game)
+    <div id="drugwarsDaySelectModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 10000;">
+        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 2.5rem; border-radius: 20px; max-width: 400px; text-align: center; margin: 1rem; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);">
+            <h2 style="margin-top: 0; color: #a855f7; text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); font-size: 2rem;">💊 Drug Wars</h2>
+            <p style="font-size: 1rem; color: #888; margin: 1rem 0;">NYC 1984 - Choose game length:</p>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem;">
+                <button onclick="drugWarsStartGame(30)" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; border: none; padding: 1.2rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);">
+                    📅 30 Days (Quick)
                 </button>
-                <button onclick="drugWarsStartGame(60)" style="background: #9b59b6; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
-                    📅 60 Days (Medium Game)
+                <button onclick="drugWarsStartGame(60)" style="background: linear-gradient(135deg, #a855f7, #9333ea); color: white; border: none; padding: 1.2rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);">
+                    📅 60 Days (Medium)
                 </button>
-                <button onclick="drugWarsStartGame(90)" style="background: #e74c3c; color: white; border: none; padding: 1.5rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">
-                    📅 90 Days (Long Game)
+                <button onclick="drugWarsStartGame(90)" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 1.2rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);">
+                    📅 90 Days (Long)
                 </button>
             </div>
-            <button onclick="document.getElementById('drugwarsDaySelectModal').style.display='none'; document.getElementById('gamesMenu').style.display='block';" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 1.5rem;">← Back</button>
+            <button onclick="document.getElementById('drugwarsDaySelectModal').style.display='none'; document.getElementById('gamesMenu').style.display='block';" style="background: rgba(255,255,255,0.1); color: #888; border: 1px solid rgba(255,255,255,0.2); padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; margin-top: 1.5rem;">← Back</button>
         </div>
     </div>
 
-    <div id="drugwarsPoliceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 10000;">
-        <div style="background: white; padding: 2rem; border-radius: 15px; max-width: 400px; text-align: center; margin: 1rem;">
-            <h2 style="margin-top: 0; color: #e74c3c;">🚓 Officer Hardass!</h2>
-            <p style="font-size: 1.1rem; margin: 1.5rem 0;">You've been spotted!</p>
+    <div id="drugwarsPoliceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 10000;">
+        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 2rem; border-radius: 20px; max-width: 400px; text-align: center; margin: 1rem; border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: 0 0 40px rgba(239, 68, 68, 0.2); animation: pulse 1s infinite;">
+            <h2 style="margin-top: 0; color: #f87171; text-shadow: 0 0 20px rgba(248, 113, 113, 0.5); font-size: 1.8rem;">🚓 Officer Hardass!</h2>
+            <p style="font-size: 1.1rem; margin: 1.5rem 0; color: #e5e5e5;">You've been spotted!</p>
             <div style="display: flex; gap: 1rem; justify-content: center;">
-                <button id="drugwarsPoliceRun" style="background: #f39c12; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">🏃 Run</button>
-                <button id="drugwarsPoliceFight" style="background: #e74c3c; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">⚔️ Fight</button>
+                <button id="drugwarsPoliceRun" style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a2e; border: none; padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);">🏃 Run</button>
+                <button id="drugwarsPoliceFight" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);">⚔️ Fight</button>
             </div>
         </div>
     </div>
 
-    <div id="drugwarsGameOverScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 10000;">
-        <div style="background: white; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center; margin: 1rem;">
-            <h2 style="margin-top: 0; color: #2c3e50;">🎮 GAME OVER</h2>
-            <p style="font-size: 1.5rem; margin: 2rem 0;">Check your final score!</p>
-            <button onclick="drugWarsRestart()" style="background: #27ae60; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold; margin-right: 1rem;">🔄 Play Again</button>
-            <button onclick="exitDrugWars()" style="background: #95a5a6; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">🏠 Menu</button>
+    <div id="drugwarsGameOverScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 10000;">
+        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 2.5rem; border-radius: 20px; max-width: 450px; text-align: center; margin: 1rem; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);">
+            <h2 style="margin-top: 0; color: #a855f7; text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); font-size: 2rem;">🎮 GAME OVER</h2>
+            <p style="font-size: 1.2rem; margin: 1.5rem 0; color: #e5e5e5;">Check your final score!</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button onclick="drugWarsRestart()" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);">🔄 Play Again</button>
+                <button onclick="exitDrugWars()" style="background: rgba(255,255,255,0.1); color: #e5e5e5; border: 1px solid rgba(255,255,255,0.2); padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem; font-weight: bold;">🏠 Menu</button>
+            </div>
         </div>
     </div>
 
-    <div id="drugwarsNumberInput" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 10001;">
-        <div style="background: white; padding: 2rem; border-radius: 10px; max-width: 400px; width: 90%; margin: 1rem;">
-            <h3 id="drugwarsNumberInputPrompt" style="margin-top: 0;">Enter amount:</h3>
-            <input type="number" id="drugwarsNumberInputField" inputmode="numeric" pattern="[0-9]*" style="width: 100%; padding: 1rem; font-size: 1.5rem; border: 2px solid #3498db; border-radius: 5px; text-align: center; box-sizing: border-box;" />
+    <div id="drugwarsNumberInput" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 10001;">
+        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 2rem; border-radius: 15px; max-width: 400px; width: 90%; margin: 1rem; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 0 40px rgba(59, 130, 246, 0.2);">
+            <h3 id="drugwarsNumberInputPrompt" style="margin-top: 0; color: #60a5fa; font-size: 1.1rem;">Enter amount:</h3>
+            <input type="number" id="drugwarsNumberInputField" inputmode="numeric" pattern="[0-9]*" style="width: 100%; padding: 1rem; font-size: 1.5rem; border: 2px solid rgba(59, 130, 246, 0.5); border-radius: 10px; text-align: center; box-sizing: border-box; background: rgba(0,0,0,0.3); color: #4ade80; font-weight: bold;" />
             <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                <button id="drugwarsNumberInputCancel" style="flex: 1; background: #95a5a6; color: white; border: none; padding: 1rem; border-radius: 5px; cursor: pointer; font-size: 1rem;">Cancel</button>
-                <button id="drugwarsNumberInputOK" style="flex: 1; background: #3498db; color: white; border: none; padding: 1rem; border-radius: 5px; cursor: pointer; font-size: 1rem;">OK</button>
+                <button id="drugwarsNumberInputCancel" style="flex: 1; background: rgba(255,255,255,0.1); color: #888; border: 1px solid rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; cursor: pointer; font-size: 1rem;">Cancel</button>
+                <button id="drugwarsNumberInputOK" style="flex: 1; background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; border: none; padding: 1rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">OK</button>
             </div>
         </div>
     </div>
@@ -2199,7 +2235,7 @@
     <script src="games/centipede.js?v=1.62.0"></script>
     <script src="games/asteroids.js?v=1.68.0"></script>
     <script src="games/qix.js?v=1.70.0"></script>
-    <script src="games/drugwars.js?v=1.84.3"></script>
+    <script src="games/drugwars.js?v=1.119.0"></script>
     <script src="games/breakout.js?v=1.0.0"></script>
     <script src="games/frogger.js?v=1.0.0"></script>
     <script src="games/pharaoh.js?v=1.61.0"></script>

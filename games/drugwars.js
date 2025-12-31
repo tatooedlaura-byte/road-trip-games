@@ -500,7 +500,8 @@
         const netWorth = gameState.cash + gameState.bankBalance - gameState.debt;
         const netWorthEl = document.getElementById('drugwarsNetWorth');
         netWorthEl.textContent = `$${netWorth.toLocaleString()}`;
-        netWorthEl.style.color = netWorth >= 0 ? '#2ecc71' : '#e74c3c';
+        netWorthEl.style.color = netWorth >= 0 ? '#4ade80' : '#f87171';
+        netWorthEl.style.textShadow = netWorth >= 0 ? '0 0 10px rgba(74, 222, 128, 0.5)' : '0 0 10px rgba(248, 113, 113, 0.5)';
 
         // Update message
         const msgEl = document.getElementById('drugwarsMessage');
@@ -524,18 +525,19 @@
             const owned = gameState.inventory[drug] || 0;
 
             if (price === null) {
-                row.innerHTML = `<td colspan="4" style="padding: 0.25rem; color: #888;">${drug}: Not available</td>`;
+                row.innerHTML = `<td colspan="4" style="padding: 0.4rem; color: #666; font-style: italic;">${drug}: Not available</td>`;
             } else {
                 const isEvent = gameState.currentEvent && gameState.currentEvent.drug === drug;
-                const priceStyle = isEvent ? 'color: #ff00ff; font-weight: bold;' : '';
+                const priceStyle = isEvent ? 'color: #f0abfc; font-weight: bold; text-shadow: 0 0 10px rgba(240, 171, 252, 0.5);' : 'color: #4ade80;';
+                const ownedStyle = owned > 0 ? 'color: #fbbf24;' : 'color: #666;';
 
                 row.innerHTML = `
-                    <td style="padding: 0.25rem;">${drug}:</td>
-                    <td style="padding: 0.25rem; ${priceStyle}">$${price.toLocaleString()}</td>
-                    <td style="padding: 0.25rem;">${owned > 0 ? `(own ${owned})` : ''}</td>
-                    <td style="padding: 0.25rem;">
-                        <button onclick="window.drugWarsBuy('${drug}')" style="background: #2ecc71; color: white; border: none; padding: 0.3rem 0.6rem; cursor: pointer; margin-right: 0.25rem; border-radius: 3px; font-size: 0.9rem;">Buy</button>
-                        <button onclick="window.drugWarsSell('${drug}')" style="background: #e74c3c; color: white; border: none; padding: 0.3rem 0.6rem; cursor: pointer; border-radius: 3px; font-size: 0.9rem;">Sell</button>
+                    <td style="padding: 0.4rem; color: #e5e5e5;">${drug}</td>
+                    <td style="padding: 0.4rem; ${priceStyle}">$${price.toLocaleString()}</td>
+                    <td style="padding: 0.4rem; ${ownedStyle}">${owned > 0 ? `×${owned}` : '-'}</td>
+                    <td style="padding: 0.4rem; text-align: right;">
+                        <button onclick="window.drugWarsBuy('${drug}')" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border: none; padding: 0.35rem 0.7rem; cursor: pointer; margin-right: 0.25rem; border-radius: 6px; font-size: 0.8rem; font-weight: bold;">Buy</button>
+                        <button onclick="window.drugWarsSell('${drug}')" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 0.35rem 0.7rem; cursor: pointer; border-radius: 6px; font-size: 0.8rem; font-weight: bold;">Sell</button>
                     </td>
                 `;
             }
@@ -547,16 +549,16 @@
         locationsDiv.innerHTML = '';
 
         LOCATIONS.forEach((loc, i) => {
-            if (i > 0) locationsDiv.appendChild(document.createTextNode(' '));
-
             const btn = document.createElement('button');
             btn.textContent = loc;
             btn.onclick = () => { travel(loc); };
 
             if (loc === gameState.location) {
-                btn.style.cssText = 'background: #3498db; color: white; border: 1px solid #2980b9; padding: 0.3rem 0.6rem; cursor: pointer; border-radius: 3px; font-size: 0.9rem; font-weight: bold;';
+                btn.style.cssText = 'background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; border: none; padding: 0.5rem 1rem; cursor: default; border-radius: 8px; font-size: 0.85rem; font-weight: bold; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);';
             } else {
-                btn.style.cssText = 'background: #ecf0f1; color: #2c3e50; border: 1px solid #bdc3c7; padding: 0.3rem 0.6rem; cursor: pointer; border-radius: 3px; font-size: 0.9rem;';
+                btn.style.cssText = 'background: rgba(255,255,255,0.1); color: #e5e5e5; border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem; cursor: pointer; border-radius: 8px; font-size: 0.85rem; transition: all 0.2s;';
+                btn.onmouseover = () => { btn.style.background = 'rgba(255,255,255,0.2)'; btn.style.borderColor = 'rgba(255,255,255,0.4)'; };
+                btn.onmouseout = () => { btn.style.background = 'rgba(255,255,255,0.1)'; btn.style.borderColor = 'rgba(255,255,255,0.2)'; };
             }
 
             locationsDiv.appendChild(btn);
