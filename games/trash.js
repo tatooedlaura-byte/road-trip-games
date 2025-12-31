@@ -12,6 +12,26 @@
                 padding: 1rem;
                 background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
                 border-radius: 12px;
+                position: relative;
+            }
+
+            .trash-back-btn {
+                position: absolute;
+                top: 0.75rem;
+                left: 0.75rem;
+                background: rgba(75, 85, 99, 0.8);
+                color: white;
+                border: none;
+                padding: 0.5rem 0.75rem;
+                border-radius: 8px;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                z-index: 10;
+            }
+
+            .trash-back-btn:hover {
+                background: rgba(75, 85, 99, 1);
             }
 
             .trash-header {
@@ -521,8 +541,9 @@
 
         content.innerHTML = `
             <div class="trash-container">
-                <div class="trash-header">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <button class="trash-back-btn" onclick="exitTrash()">← Back</button>
+                <div class="trash-header" style="padding-top: 2rem;">
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
                         <h1 class="trash-title">🗑️ Trash</h1>
                         <button class="trash-btn info" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="showTrashRules()">📖 Rules</button>
                     </div>
@@ -571,12 +592,11 @@
                     ${renderPlayerCards(trashState.player1Cards, trashState.currentPlayer === 1, 1)}
                 </div>
 
+                ${trashState.gameOver ? `
                 <div class="trash-actions">
-                    ${trashState.gameOver ? `
-                        <button class="trash-btn" onclick="initializeGame()">🔄 Play Again</button>
-                    ` : ''}
-                    <button class="trash-btn secondary" onclick="exitTrash()">← Back</button>
+                    <button class="trash-btn" onclick="initializeGame()">🔄 Play Again</button>
                 </div>
+                ` : ''}
             </div>
         `;
     }

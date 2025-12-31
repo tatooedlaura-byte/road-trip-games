@@ -13,6 +13,26 @@
                 background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
                 border-radius: 12px;
                 text-align: center;
+                position: relative;
+            }
+
+            .war-back-btn {
+                position: absolute;
+                top: 0.75rem;
+                left: 0.75rem;
+                background: rgba(75, 85, 99, 0.8);
+                color: white;
+                border: none;
+                padding: 0.5rem 0.75rem;
+                border-radius: 8px;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                z-index: 10;
+            }
+
+            .war-back-btn:hover {
+                background: rgba(75, 85, 99, 1);
             }
 
             .war-title {
@@ -551,7 +571,8 @@
 
         content.innerHTML = `
             <div class="war-container">
-                <h1 class="war-title">🎴 War</h1>
+                <button class="war-back-btn" onclick="exitWar()">← Back</button>
+                <h1 class="war-title" style="padding-top: 1.5rem;">🎴 War</h1>
 
                 <div class="war-scores">
                     <div class="war-score">
@@ -613,8 +634,6 @@
                 ` : `
                     <button class="war-btn" onclick="initializeGame()">🔄 Play Again</button>
                 `}
-
-                <button class="war-btn secondary" onclick="exitWar()">← Back</button>
             </div>
         `;
     }
