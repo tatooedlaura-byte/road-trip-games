@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.118.3';</script>
+    <script>window.APP_VERSION = '1.118.4';</script>
 
     <style>
         * {
@@ -1763,7 +1763,7 @@
                         >
                             ${checkmarks}
                             <span style="font-size: clamp(3rem, 12vw, 5rem); line-height: 1;">${emoji}</span>
-                            <span style="font-size: clamp(0.4rem, 1.2vw, 0.6rem); line-height: 1; opacity: 0.7;">${text}</span>
+                            <span style="font-size: clamp(0.7rem, 2.5vw, 1rem); line-height: 1.1; font-weight: 500;">${text}</span>
                         </div>
                     `;
                 } else {
@@ -1795,7 +1795,7 @@
                             ${!isFree ? `onmouseover="if(!${isMarked}) this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(${isMarked ? '0.95' : '1'})'"` : ''}
                         >
                             <span style="font-size: clamp(3rem, 12vw, 5rem); line-height: 1;">${emoji}</span>
-                            <span style="font-size: clamp(0.4rem, 1.2vw, 0.6rem); line-height: 1; opacity: ${isMarked ? '1' : '0.7'};">${text}</span>
+                            <span style="font-size: clamp(0.7rem, 2.5vw, 1rem); line-height: 1.1; font-weight: 500;">${text}</span>
                         </div>
                     `;
                 }
