@@ -1,4 +1,4 @@
-// 2048 - Modern overhaul with dark theme and animations
+// 2048 - Modern overhaul with dark theme and slide animations
 (function() {
     'use strict';
 
@@ -79,60 +79,78 @@
                 box-shadow: 0 6px 20px rgba(237, 194, 46, 0.4);
             }
 
-            .g2048-btn.secondary {
-                background: linear-gradient(145deg, #3a3a5a, #2a2a4a);
-                color: #fff;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            }
-
             .g2048-board {
+                position: relative;
                 background: linear-gradient(145deg, #2a2a4a, #1a1a3a);
                 border: 3px solid #444;
                 border-radius: 12px;
                 padding: 10px;
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 10px;
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
                             inset 0 2px 10px rgba(255, 255, 255, 0.05);
             }
 
-            .g2048-cell {
+            .g2048-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+
+            .g2048-cell-bg {
                 aspect-ratio: 1;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .g2048-tiles {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+
+            .g2048-tile {
+                position: absolute;
                 border-radius: 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-weight: bold;
-                transition: all 0.15s ease;
+                transition: top 0.15s ease-out, left 0.15s ease-out;
             }
 
-            .g2048-cell.empty {
-                background: rgba(255, 255, 255, 0.05);
+            .g2048-tile.new {
+                animation: tileAppear 0.2s ease-out;
             }
 
-            .g2048-cell.tile-2 { background: linear-gradient(145deg, #eee4da, #d8cfc5); color: #776e65; }
-            .g2048-cell.tile-4 { background: linear-gradient(145deg, #ede0c8, #d7cbb5); color: #776e65; }
-            .g2048-cell.tile-8 { background: linear-gradient(145deg, #f2b179, #dc9d68); color: #f9f6f2; }
-            .g2048-cell.tile-16 { background: linear-gradient(145deg, #f59563, #df8050); color: #f9f6f2; }
-            .g2048-cell.tile-32 { background: linear-gradient(145deg, #f67c5f, #e0684c); color: #f9f6f2; }
-            .g2048-cell.tile-64 { background: linear-gradient(145deg, #f65e3b, #e04a28); color: #f9f6f2; }
-            .g2048-cell.tile-128 { background: linear-gradient(145deg, #edcf72, #d7b95f); color: #f9f6f2; box-shadow: 0 0 20px rgba(237, 207, 114, 0.4); }
-            .g2048-cell.tile-256 { background: linear-gradient(145deg, #edcc61, #d7b64e); color: #f9f6f2; box-shadow: 0 0 25px rgba(237, 204, 97, 0.5); }
-            .g2048-cell.tile-512 { background: linear-gradient(145deg, #edc850, #d7b23d); color: #f9f6f2; box-shadow: 0 0 30px rgba(237, 200, 80, 0.6); }
-            .g2048-cell.tile-1024 { background: linear-gradient(145deg, #edc53f, #d7af2c); color: #f9f6f2; box-shadow: 0 0 35px rgba(237, 197, 63, 0.7); }
-            .g2048-cell.tile-2048 { background: linear-gradient(145deg, #edc22e, #d7ac1b); color: #f9f6f2; box-shadow: 0 0 40px rgba(237, 194, 46, 0.8); animation: glow2048 1s ease-in-out infinite alternate; }
-            .g2048-cell.tile-super { background: linear-gradient(145deg, #3c3a32, #2a2820); color: #f9f6f2; box-shadow: 0 0 40px rgba(60, 58, 50, 0.8); }
-
-            .g2048-cell.new-tile {
-                animation: popIn 0.2s ease-out;
+            .g2048-tile.merged {
+                animation: tileMerge 0.2s ease-out;
             }
 
-            @keyframes popIn {
-                0% { transform: scale(0); }
+            @keyframes tileAppear {
+                0% { transform: scale(0); opacity: 0; }
                 50% { transform: scale(1.1); }
+                100% { transform: scale(1); opacity: 1; }
+            }
+
+            @keyframes tileMerge {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
                 100% { transform: scale(1); }
             }
+
+            .g2048-tile.tile-2 { background: linear-gradient(145deg, #eee4da, #d8cfc5); color: #776e65; }
+            .g2048-tile.tile-4 { background: linear-gradient(145deg, #ede0c8, #d7cbb5); color: #776e65; }
+            .g2048-tile.tile-8 { background: linear-gradient(145deg, #f2b179, #dc9d68); color: #f9f6f2; }
+            .g2048-tile.tile-16 { background: linear-gradient(145deg, #f59563, #df8050); color: #f9f6f2; }
+            .g2048-tile.tile-32 { background: linear-gradient(145deg, #f67c5f, #e0684c); color: #f9f6f2; }
+            .g2048-tile.tile-64 { background: linear-gradient(145deg, #f65e3b, #e04a28); color: #f9f6f2; }
+            .g2048-tile.tile-128 { background: linear-gradient(145deg, #edcf72, #d7b95f); color: #f9f6f2; box-shadow: 0 0 20px rgba(237, 207, 114, 0.4); }
+            .g2048-tile.tile-256 { background: linear-gradient(145deg, #edcc61, #d7b64e); color: #f9f6f2; box-shadow: 0 0 25px rgba(237, 204, 97, 0.5); }
+            .g2048-tile.tile-512 { background: linear-gradient(145deg, #edc850, #d7b23d); color: #f9f6f2; box-shadow: 0 0 30px rgba(237, 200, 80, 0.6); }
+            .g2048-tile.tile-1024 { background: linear-gradient(145deg, #edc53f, #d7af2c); color: #f9f6f2; box-shadow: 0 0 35px rgba(237, 197, 63, 0.7); }
+            .g2048-tile.tile-2048 { background: linear-gradient(145deg, #edc22e, #d7ac1b); color: #f9f6f2; box-shadow: 0 0 40px rgba(237, 194, 46, 0.8); animation: glow2048 1s ease-in-out infinite alternate; }
+            .g2048-tile.tile-super { background: linear-gradient(145deg, #3c3a32, #2a2820); color: #f9f6f2; box-shadow: 0 0 40px rgba(60, 58, 50, 0.8); }
 
             @keyframes glow2048 {
                 0% { box-shadow: 0 0 30px rgba(237, 194, 46, 0.6); }
@@ -194,7 +212,13 @@
                 text-align: center;
                 z-index: 1000;
                 box-shadow: 0 0 50px rgba(237, 194, 46, 0.5);
-                animation: popIn 0.4s ease-out;
+                animation: modalAppear 0.4s ease-out;
+            }
+
+            @keyframes modalAppear {
+                0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+                50% { transform: translate(-50%, -50%) scale(1.1); }
+                100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
             }
 
             .g2048-modal.gameover {
@@ -253,41 +277,60 @@
     }
 
     const GRID_SIZE = 4;
+    let cellSize = 70;
+    let cellGap = 10;
 
     let gameState = {
-        mode: 'playing', // playing, won, gameover
+        mode: 'playing',
         grid: [],
         score: 0,
         bestScore: parseInt(localStorage.getItem('2048BestScore')) || 0,
         won: false,
         canContinue: false,
-        newTiles: []
+        tiles: [], // Array of tile objects with id, value, row, col, isNew, isMerged
+        nextTileId: 0,
+        animating: false
     };
+
+    function createTile(value, row, col, isNew = false) {
+        return {
+            id: gameState.nextTileId++,
+            value,
+            row,
+            col,
+            isNew,
+            isMerged: false
+        };
+    }
 
     function initGame() {
         gameState.grid = [];
+        gameState.tiles = [];
+        gameState.nextTileId = 0;
+
         for (let i = 0; i < GRID_SIZE; i++) {
             gameState.grid[i] = [];
             for (let j = 0; j < GRID_SIZE; j++) {
-                gameState.grid[i][j] = 0;
+                gameState.grid[i][j] = null;
             }
         }
+
         gameState.score = 0;
         gameState.won = false;
         gameState.canContinue = false;
         gameState.mode = 'playing';
-        gameState.newTiles = [];
+        gameState.animating = false;
 
-        // Add two starting tiles
         addRandomTile();
         addRandomTile();
+        render();
     }
 
     function addRandomTile() {
         const emptyCells = [];
         for (let i = 0; i < GRID_SIZE; i++) {
             for (let j = 0; j < GRID_SIZE; j++) {
-                if (gameState.grid[i][j] === 0) {
+                if (!gameState.grid[i][j]) {
                     emptyCells.push({ row: i, col: j });
                 }
             }
@@ -296,107 +339,160 @@
         if (emptyCells.length > 0) {
             const cell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
             const value = Math.random() < 0.9 ? 2 : 4;
-            gameState.grid[cell.row][cell.col] = value;
-            gameState.newTiles.push(`${cell.row}-${cell.col}`);
+            const tile = createTile(value, cell.row, cell.col, true);
+            gameState.grid[cell.row][cell.col] = tile;
+            gameState.tiles.push(tile);
         }
     }
 
-    function slide(row) {
-        let arr = row.filter(val => val !== 0);
+    function move(direction) {
+        if (gameState.animating) return false;
+        if (gameState.mode === 'gameover') return false;
+        if (gameState.mode === 'won' && !gameState.canContinue) return false;
 
-        for (let i = 0; i < arr.length - 1; i++) {
-            if (arr[i] === arr[i + 1]) {
-                arr[i] *= 2;
-                gameState.score += arr[i];
-                if (arr[i] === 2048 && !gameState.won) {
+        let moved = false;
+        const mergedTiles = [];
+
+        // Clear merge flags
+        gameState.tiles.forEach(t => {
+            t.isNew = false;
+            t.isMerged = false;
+        });
+
+        // Process based on direction
+        if (direction === 'left') {
+            for (let row = 0; row < GRID_SIZE; row++) {
+                moved = processRow(row, 0, 1, mergedTiles) || moved;
+            }
+        } else if (direction === 'right') {
+            for (let row = 0; row < GRID_SIZE; row++) {
+                moved = processRow(row, GRID_SIZE - 1, -1, mergedTiles) || moved;
+            }
+        } else if (direction === 'up') {
+            for (let col = 0; col < GRID_SIZE; col++) {
+                moved = processCol(col, 0, 1, mergedTiles) || moved;
+            }
+        } else if (direction === 'down') {
+            for (let col = 0; col < GRID_SIZE; col++) {
+                moved = processCol(col, GRID_SIZE - 1, -1, mergedTiles) || moved;
+            }
+        }
+
+        return moved;
+    }
+
+    function processRow(row, start, step, mergedTiles) {
+        let moved = false;
+        const tiles = [];
+
+        // Collect tiles in order
+        for (let col = start; col >= 0 && col < GRID_SIZE; col += step) {
+            if (gameState.grid[row][col]) {
+                tiles.push(gameState.grid[row][col]);
+                gameState.grid[row][col] = null;
+            }
+        }
+
+        // Merge and place
+        let targetCol = start;
+        for (let i = 0; i < tiles.length; i++) {
+            const tile = tiles[i];
+
+            // Check for merge with next tile
+            if (i < tiles.length - 1 && tiles[i].value === tiles[i + 1].value) {
+                // Merge
+                tile.value *= 2;
+                tile.isMerged = true;
+                gameState.score += tile.value;
+
+                if (tile.value === 2048 && !gameState.won) {
                     gameState.won = true;
                     gameState.mode = 'won';
                 }
-                arr.splice(i + 1, 1);
+
+                // Remove the merged tile
+                const removedTile = tiles[i + 1];
+                removedTile.row = row;
+                removedTile.col = targetCol;
+                mergedTiles.push(removedTile);
+                i++; // Skip next tile
             }
-        }
 
-        while (arr.length < GRID_SIZE) {
-            arr.push(0);
-        }
-
-        return arr;
-    }
-
-    function moveLeft() {
-        let moved = false;
-        for (let i = 0; i < GRID_SIZE; i++) {
-            const original = [...gameState.grid[i]];
-            gameState.grid[i] = slide(gameState.grid[i]);
-            if (original.some((val, idx) => val !== gameState.grid[i][idx])) {
+            if (tile.row !== row || tile.col !== targetCol) {
                 moved = true;
             }
+            tile.row = row;
+            tile.col = targetCol;
+            gameState.grid[row][targetCol] = tile;
+            targetCol += step;
         }
+
         return moved;
     }
 
-    function moveRight() {
+    function processCol(col, start, step, mergedTiles) {
         let moved = false;
-        for (let i = 0; i < GRID_SIZE; i++) {
-            const original = [...gameState.grid[i]];
-            gameState.grid[i] = slide(gameState.grid[i].reverse()).reverse();
-            if (original.some((val, idx) => val !== gameState.grid[i][idx])) {
-                moved = true;
-            }
-        }
-        return moved;
-    }
+        const tiles = [];
 
-    function moveUp() {
-        let moved = false;
-        for (let j = 0; j < GRID_SIZE; j++) {
-            let column = [];
-            for (let i = 0; i < GRID_SIZE; i++) {
-                column.push(gameState.grid[i][j]);
-            }
-            const original = [...column];
-            column = slide(column);
-            for (let i = 0; i < GRID_SIZE; i++) {
-                gameState.grid[i][j] = column[i];
-            }
-            if (original.some((val, idx) => val !== column[idx])) {
-                moved = true;
+        // Collect tiles in order
+        for (let row = start; row >= 0 && row < GRID_SIZE; row += step) {
+            if (gameState.grid[row][col]) {
+                tiles.push(gameState.grid[row][col]);
+                gameState.grid[row][col] = null;
             }
         }
-        return moved;
-    }
 
-    function moveDown() {
-        let moved = false;
-        for (let j = 0; j < GRID_SIZE; j++) {
-            let column = [];
-            for (let i = 0; i < GRID_SIZE; i++) {
-                column.push(gameState.grid[i][j]);
+        // Merge and place
+        let targetRow = start;
+        for (let i = 0; i < tiles.length; i++) {
+            const tile = tiles[i];
+
+            // Check for merge with next tile
+            if (i < tiles.length - 1 && tiles[i].value === tiles[i + 1].value) {
+                // Merge
+                tile.value *= 2;
+                tile.isMerged = true;
+                gameState.score += tile.value;
+
+                if (tile.value === 2048 && !gameState.won) {
+                    gameState.won = true;
+                    gameState.mode = 'won';
+                }
+
+                // Remove the merged tile
+                const removedTile = tiles[i + 1];
+                removedTile.row = targetRow;
+                removedTile.col = col;
+                mergedTiles.push(removedTile);
+                i++; // Skip next tile
             }
-            const original = [...column];
-            column = slide(column.reverse()).reverse();
-            for (let i = 0; i < GRID_SIZE; i++) {
-                gameState.grid[i][j] = column[i];
-            }
-            if (original.some((val, idx) => val !== column[idx])) {
+
+            if (tile.row !== targetRow || tile.col !== col) {
                 moved = true;
             }
+            tile.row = targetRow;
+            tile.col = col;
+            gameState.grid[targetRow][col] = tile;
+            targetRow += step;
         }
+
         return moved;
     }
 
     function canMove() {
+        // Check for empty cells
         for (let i = 0; i < GRID_SIZE; i++) {
             for (let j = 0; j < GRID_SIZE; j++) {
-                if (gameState.grid[i][j] === 0) return true;
+                if (!gameState.grid[i][j]) return true;
             }
         }
 
+        // Check for possible merges
         for (let i = 0; i < GRID_SIZE; i++) {
             for (let j = 0; j < GRID_SIZE; j++) {
-                const val = gameState.grid[i][j];
-                if (j < GRID_SIZE - 1 && gameState.grid[i][j + 1] === val) return true;
-                if (i < GRID_SIZE - 1 && gameState.grid[i + 1][j] === val) return true;
+                const val = gameState.grid[i][j].value;
+                if (j < GRID_SIZE - 1 && gameState.grid[i][j + 1] && gameState.grid[i][j + 1].value === val) return true;
+                if (i < GRID_SIZE - 1 && gameState.grid[i + 1][j] && gameState.grid[i + 1][j].value === val) return true;
             }
         }
 
@@ -404,39 +500,58 @@
     }
 
     function handleMove(direction) {
-        if (gameState.mode === 'gameover') return;
-        if (gameState.mode === 'won' && !gameState.canContinue) return;
-
-        gameState.newTiles = [];
-        let moved = false;
-
-        switch (direction) {
-            case 'left': moved = moveLeft(); break;
-            case 'right': moved = moveRight(); break;
-            case 'up': moved = moveUp(); break;
-            case 'down': moved = moveDown(); break;
-        }
+        const moved = move(direction);
 
         if (moved) {
-            addRandomTile();
+            gameState.animating = true;
+            updateTilePositions();
 
-            if (gameState.score > gameState.bestScore) {
-                gameState.bestScore = gameState.score;
-                localStorage.setItem('2048BestScore', gameState.bestScore);
-            }
+            setTimeout(() => {
+                // Remove merged tiles
+                gameState.tiles = gameState.tiles.filter(t => {
+                    for (let i = 0; i < GRID_SIZE; i++) {
+                        for (let j = 0; j < GRID_SIZE; j++) {
+                            if (gameState.grid[i][j] === t) return true;
+                        }
+                    }
+                    return false;
+                });
 
-            if (!canMove()) {
-                gameState.mode = 'gameover';
-            }
+                addRandomTile();
+                gameState.animating = false;
 
-            render();
+                if (gameState.score > gameState.bestScore) {
+                    gameState.bestScore = gameState.score;
+                    localStorage.setItem('2048BestScore', gameState.bestScore);
+                }
 
-            if (gameState.mode === 'won' && !gameState.canContinue) {
-                showWinModal();
-            } else if (gameState.mode === 'gameover') {
-                showGameOverModal();
-            }
+                if (!canMove()) {
+                    gameState.mode = 'gameover';
+                }
+
+                render();
+
+                if (gameState.mode === 'won' && !gameState.canContinue) {
+                    showWinModal();
+                } else if (gameState.mode === 'gameover') {
+                    showGameOverModal();
+                }
+            }, 150);
         }
+    }
+
+    function updateTilePositions() {
+        gameState.tiles.forEach(tile => {
+            const el = document.getElementById(`tile-${tile.id}`);
+            if (el) {
+                el.style.top = (tile.row * (cellSize + cellGap)) + 'px';
+                el.style.left = (tile.col * (cellSize + cellGap)) + 'px';
+            }
+        });
+
+        // Update score display
+        const scoreEl = document.getElementById('g2048-score');
+        if (scoreEl) scoreEl.textContent = gameState.score;
     }
 
     function createConfetti() {
@@ -498,39 +613,37 @@
 
     window.init2048Game = function() {
         initGame();
-        render();
     };
 
     function render() {
         const content = document.getElementById('game2048Content');
-        const cellSize = Math.min(70, (window.innerWidth - 100) / 4);
+        cellSize = Math.min(70, (window.innerWidth - 100) / 4);
+        cellGap = 10;
+        const boardSize = cellSize * 4 + cellGap * 3;
 
-        let boardHtml = '';
-        for (let i = 0; i < GRID_SIZE; i++) {
-            for (let j = 0; j < GRID_SIZE; j++) {
-                const value = gameState.grid[i][j];
-                const isNew = gameState.newTiles.includes(`${i}-${j}`);
-                let cellClass = 'g2048-cell';
-
-                if (value === 0) {
-                    cellClass += ' empty';
-                } else if (value > 2048) {
-                    cellClass += ' tile-super';
-                } else {
-                    cellClass += ` tile-${value}`;
-                }
-
-                if (isNew) {
-                    cellClass += ' new-tile';
-                }
-
-                const fontSize = value >= 1000 ? cellSize * 0.35 : cellSize * 0.45;
-
-                boardHtml += `<div class="${cellClass}" style="width: ${cellSize}px; height: ${cellSize}px; font-size: ${fontSize}px;">
-                    ${value > 0 ? value : ''}
-                </div>`;
-            }
+        // Build grid background
+        let gridHtml = '';
+        for (let i = 0; i < 16; i++) {
+            gridHtml += `<div class="g2048-cell-bg" style="width: ${cellSize}px; height: ${cellSize}px;"></div>`;
         }
+
+        // Build tiles
+        let tilesHtml = '';
+        gameState.tiles.forEach(tile => {
+            const tileClass = tile.value > 2048 ? 'tile-super' : `tile-${tile.value}`;
+            const fontSize = tile.value >= 1000 ? cellSize * 0.35 : cellSize * 0.45;
+            const top = tile.row * (cellSize + cellGap);
+            const left = tile.col * (cellSize + cellGap);
+            const animClass = tile.isNew ? 'new' : (tile.isMerged ? 'merged' : '');
+
+            tilesHtml += `
+                <div id="tile-${tile.id}"
+                     class="g2048-tile ${tileClass} ${animClass}"
+                     style="width: ${cellSize}px; height: ${cellSize}px; font-size: ${fontSize}px; top: ${top}px; left: ${left}px;">
+                    ${tile.value}
+                </div>
+            `;
+        });
 
         content.innerHTML = `
             <div class="g2048-container">
@@ -539,7 +652,7 @@
                 <div class="g2048-score-row">
                     <div class="g2048-score-box">
                         <div class="g2048-score-label">Score</div>
-                        <div class="g2048-score-value">${gameState.score}</div>
+                        <div class="g2048-score-value" id="g2048-score">${gameState.score}</div>
                     </div>
                     <div class="g2048-score-box">
                         <div class="g2048-score-label">Best</div>
@@ -551,8 +664,13 @@
                     <button class="g2048-btn" onclick="init2048Game()">New Game</button>
                 </div>
 
-                <div class="g2048-board" style="width: ${cellSize * 4 + 50}px;">
-                    ${boardHtml}
+                <div class="g2048-board" style="width: ${boardSize + 20}px; height: ${boardSize + 20}px;">
+                    <div class="g2048-grid" style="gap: ${cellGap}px;">
+                        ${gridHtml}
+                    </div>
+                    <div class="g2048-tiles">
+                        ${tilesHtml}
+                    </div>
                 </div>
 
                 <div class="g2048-controls">
@@ -651,7 +769,6 @@
         document.getElementById('game2048Content').addEventListener('touchend', handleTouchEnd);
 
         initGame();
-        render();
     };
 
     window.exit2048 = function() {
