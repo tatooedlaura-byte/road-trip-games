@@ -508,7 +508,6 @@
     window.launchWouldYouRather = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.querySelector('.roadmap').style.display = 'none';
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('wouldYouRatherGame').style.display = 'block';
         showCategorySelection();

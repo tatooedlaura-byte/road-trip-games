@@ -658,7 +658,6 @@
     window.launchQix = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.querySelector('.roadmap').style.display = 'none';
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('qixGame').style.display = 'block';
 

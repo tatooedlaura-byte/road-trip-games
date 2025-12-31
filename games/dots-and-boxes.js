@@ -44,7 +44,6 @@
     window.launchDotsAndBoxes = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.querySelector('.roadmap').style.display = 'none';
         document.getElementById('plateTracker').style.display = 'none';
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('dotsAndBoxesGame').style.display = 'block';
