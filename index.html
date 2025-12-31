@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.118.0';</script>
+    <script>window.APP_VERSION = '1.118.1';</script>
 
     <style>
         * {
@@ -1265,7 +1265,6 @@
         function showHome() {
             document.querySelector('.welcome').style.display = 'block';
             document.querySelector('.feature-grid').style.display = 'grid';
-            document.querySelector('.roadmap').style.display = 'block';
             document.getElementById('plateTracker').style.display = 'none';
             document.getElementById('travelBingo').style.display = 'none';
             document.getElementById('gamesMenu').style.display = 'none';
@@ -1274,7 +1273,6 @@
         function showGamesMenu() {
             document.querySelector('.welcome').style.display = 'none';
             document.querySelector('.feature-grid').style.display = 'none';
-            document.querySelector('.roadmap').style.display = 'none';
             document.getElementById('plateTracker').style.display = 'none';
             document.getElementById('dotsAndBoxesGame').style.display = 'none';
             document.getElementById('guessWhoGame').style.display = 'none';
@@ -1284,7 +1282,6 @@
         function showLicensePlateTracker() {
             document.querySelector('.welcome').style.display = 'none';
             document.querySelector('.feature-grid').style.display = 'none';
-            document.querySelector('.roadmap').style.display = 'none';
             document.getElementById('plateTracker').style.display = 'block';
             loadPlateTracker();
         }
@@ -1459,7 +1456,6 @@
         function showTravelBingo() {
             document.querySelector('.welcome').style.display = 'none';
             document.querySelector('.feature-grid').style.display = 'none';
-            document.querySelector('.roadmap').style.display = 'none';
             document.getElementById('plateTracker').style.display = 'none';
             document.getElementById('gamesMenu').style.display = 'none';
             document.getElementById('travelBingo').style.display = 'none';
