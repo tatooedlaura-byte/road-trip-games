@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.118.1';</script>
+    <script>window.APP_VERSION = '1.118.2';</script>
 
     <style>
         * {
@@ -1713,6 +1713,11 @@
                 const isFree = index === 12;
                 let isMarked, bgColor, textColor;
 
+                // Split emoji from text
+                const parts = item.split(' ');
+                const emoji = parts[0];
+                const text = parts.slice(1).join(' ');
+
                 if (bingoGameMode === 'competitive') {
                     const p1Marked = player1Marks[index];
                     const p2Marked = player2Marks[index];
@@ -1747,17 +1752,18 @@
                                 cursor: ${isFree ? 'default' : 'pointer'};
                                 transition: all 0.2s;
                                 box-shadow: ${isMarked ? '0 4px 8px rgba(0, 0, 0, 0.4)' : '0 2px 4px rgba(0,0,0,0.1)'};
-                                padding: 0.1rem;
+                                padding: 0.2rem;
                                 text-align: center;
-                                font-size: clamp(0.6rem, 2vw, 0.9rem);
                                 color: ${textColor};
                                 transform: ${isMarked ? 'scale(0.95)' : 'scale(1)'};
                                 position: relative;
+                                gap: 0.1rem;
                             "
                             ${!isFree ? `onmouseover="if(!${isMarked}) this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(${isMarked ? '0.95' : '1'})'"` : ''}
                         >
                             ${checkmarks}
-                            ${item}
+                            <span style="font-size: clamp(1.5rem, 6vw, 2.5rem); line-height: 1;">${emoji}</span>
+                            <span style="font-size: clamp(0.5rem, 1.5vw, 0.7rem); line-height: 1.1; opacity: 0.8;">${text}</span>
                         </div>
                     `;
                 } else {
@@ -1780,16 +1786,16 @@
                                 cursor: ${isFree ? 'default' : 'pointer'};
                                 transition: all 0.2s;
                                 box-shadow: ${isMarked ? '0 4px 8px rgba(0, 0, 0, 0.4)' : '0 2px 4px rgba(0,0,0,0.1)'};
-                                padding: 0.1rem;
+                                padding: 0.2rem;
                                 text-align: center;
-                                font-size: clamp(0.6rem, 2vw, 0.9rem);
-                                font-weight: ${isMarked ? 'bold' : 'normal'};
                                 color: ${textColor};
                                 transform: ${isMarked ? 'scale(0.95)' : 'scale(1)'};
+                                gap: 0.1rem;
                             "
                             ${!isFree ? `onmouseover="if(!${isMarked}) this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(${isMarked ? '0.95' : '1'})'"` : ''}
                         >
-                            ${item}
+                            <span style="font-size: clamp(1.5rem, 6vw, 2.5rem); line-height: 1;">${emoji}</span>
+                            <span style="font-size: clamp(0.5rem, 1.5vw, 0.7rem); line-height: 1.1; opacity: ${isMarked ? '1' : '0.8'};">${text}</span>
                         </div>
                     `;
                 }
