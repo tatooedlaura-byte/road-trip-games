@@ -495,11 +495,18 @@
             return;
         }
 
+        let changed = false;
         switch (dir) {
-            case 'up': if (gameState.direction !== 'down') gameState.nextDirection = 'up'; break;
-            case 'down': if (gameState.direction !== 'up') gameState.nextDirection = 'down'; break;
-            case 'left': if (gameState.direction !== 'right') gameState.nextDirection = 'left'; break;
-            case 'right': if (gameState.direction !== 'left') gameState.nextDirection = 'right'; break;
+            case 'up': if (gameState.direction !== 'down') { gameState.nextDirection = 'up'; changed = true; } break;
+            case 'down': if (gameState.direction !== 'up') { gameState.nextDirection = 'down'; changed = true; } break;
+            case 'left': if (gameState.direction !== 'right') { gameState.nextDirection = 'left'; changed = true; } break;
+            case 'right': if (gameState.direction !== 'left') { gameState.nextDirection = 'right'; changed = true; } break;
+        }
+
+        // Move immediately on direction change for responsiveness
+        if (changed && moveTimer > 30) {
+            moveTimer = 0;
+            moveSnake();
         }
     };
 
@@ -529,27 +536,32 @@
             return;
         }
 
+        let dir = null;
         switch (e.key) {
             case 'ArrowUp':
             case 'w':
             case 'W':
-                if (gameState.direction !== 'down') gameState.nextDirection = 'up';
+                dir = 'up';
                 break;
             case 'ArrowDown':
             case 's':
             case 'S':
-                if (gameState.direction !== 'up') gameState.nextDirection = 'down';
+                dir = 'down';
                 break;
             case 'ArrowLeft':
             case 'a':
             case 'A':
-                if (gameState.direction !== 'right') gameState.nextDirection = 'left';
+                dir = 'left';
                 break;
             case 'ArrowRight':
             case 'd':
             case 'D':
-                if (gameState.direction !== 'left') gameState.nextDirection = 'right';
+                dir = 'right';
                 break;
+        }
+
+        if (dir) {
+            handleSnakeDir(dir);
         }
     }
 
