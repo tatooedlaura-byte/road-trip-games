@@ -220,6 +220,7 @@
         gameState.speed = 150;
         gameState.gameOver = false;
         gameState.newHighScore = false;
+        gameState.gameOverShown = false;
         spawnFood();
     }
 
@@ -509,7 +510,9 @@
         update(deltaTime);
         draw();
 
-        if (gameState.mode === 'gameover') {
+        // Only render gameover UI once (not every frame)
+        if (gameState.mode === 'gameover' && !gameState.gameOverShown) {
+            gameState.gameOverShown = true;
             renderUI();
         }
 
