@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.118.5';</script>
+    <script>window.APP_VERSION = '1.118.6';</script>
 
     <style>
         * {
@@ -1630,8 +1630,19 @@
         function generateNewBingoCard() {
             // Get items from current theme
             const themeItems = BINGO_THEMES[currentTheme].items;
+            // Remove duplicates by extracting the text portion and keeping unique items
+            const seen = new Set();
+            const uniqueItems = themeItems.filter(item => {
+                // Extract text part (after emoji) for comparison
+                const textPart = item.split(' ').slice(1).join(' ').toLowerCase();
+                if (seen.has(textPart)) {
+                    return false;
+                }
+                seen.add(textPart);
+                return true;
+            });
             // Shuffle and pick 24 random items (center will be FREE)
-            const shuffled = [...themeItems].sort(() => Math.random() - 0.5);
+            const shuffled = [...uniqueItems].sort(() => Math.random() - 0.5);
             bingoCard = shuffled.slice(0, 24);
             // Insert FREE space in the middle (index 12)
             bingoCard.splice(12, 0, '⭐ FREE');
