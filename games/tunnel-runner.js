@@ -31,14 +31,14 @@
     let smoothingFactor = 0.15; // Lower = smoother (0-1)
     let noiseOffset = 0; // For continuous noise-like movement
 
-    // Color palette for tunnel variations
+    // Color palette for tunnel variations with neon glow
     const TUNNEL_COLORS = [
-        { wall: '#6c5ce7', edge: '#a29bfe', name: 'purple' },
-        { wall: '#00b894', edge: '#55efc4', name: 'green' },
-        { wall: '#0984e3', edge: '#74b9ff', name: 'blue' },
-        { wall: '#d63031', edge: '#ff7675', name: 'red' },
-        { wall: '#fdcb6e', edge: '#ffeaa7', name: 'yellow' },
-        { wall: '#e17055', edge: '#fab1a0', name: 'orange' }
+        { wall: '#6c5ce7', edge: '#a29bfe', glow: 'rgba(162, 155, 254, 0.6)', name: 'purple' },
+        { wall: '#00b894', edge: '#55efc4', glow: 'rgba(85, 239, 196, 0.6)', name: 'green' },
+        { wall: '#0984e3', edge: '#74b9ff', glow: 'rgba(116, 185, 255, 0.6)', name: 'blue' },
+        { wall: '#d63031', edge: '#ff7675', glow: 'rgba(255, 118, 117, 0.6)', name: 'red' },
+        { wall: '#fdcb6e', edge: '#ffeaa7', glow: 'rgba(255, 234, 167, 0.6)', name: 'yellow' },
+        { wall: '#e17055', edge: '#fab1a0', glow: 'rgba(250, 177, 160, 0.6)', name: 'orange' }
     ];
 
     // Rocket object
@@ -487,9 +487,11 @@
         ctx.closePath();
         ctx.fill();
 
-        // Draw top edge line with curves
+        // Draw top edge line with curves and neon glow
         ctx.strokeStyle = color.edge;
         ctx.lineWidth = 3;
+        ctx.shadowColor = color.glow;
+        ctx.shadowBlur = 15;
         ctx.beginPath();
 
         if (tunnelSegments.length > 0) {
@@ -511,6 +513,7 @@
             }
         }
         ctx.stroke();
+        ctx.shadowBlur = 0;
 
         // Draw bottom wall as smooth curved path
         ctx.fillStyle = color.wall;
@@ -540,9 +543,11 @@
         ctx.closePath();
         ctx.fill();
 
-        // Draw bottom edge line with curves
+        // Draw bottom edge line with curves and neon glow
         ctx.strokeStyle = color.edge;
         ctx.lineWidth = 3;
+        ctx.shadowColor = color.glow;
+        ctx.shadowBlur = 15;
         ctx.beginPath();
 
         if (tunnelSegments.length > 0) {
@@ -564,6 +569,7 @@
             }
         }
         ctx.stroke();
+        ctx.shadowBlur = 0;
 
         // Draw split dividers as smooth paths
         for (let segment of tunnelSegments) {
@@ -579,10 +585,12 @@
             }
         }
 
-        // Draw divider edges
+        // Draw divider edges with neon glow
         let inSplit = false;
         ctx.strokeStyle = color.edge;
         ctx.lineWidth = 3;
+        ctx.shadowColor = color.glow;
+        ctx.shadowBlur = 15;
 
         // Top edge of divider
         ctx.beginPath();
@@ -625,13 +633,17 @@
         }
         ctx.stroke();
 
-        // Draw obstacles
+        // Reset shadow for obstacles
+        ctx.shadowBlur = 0;
+
+        // Draw obstacles with neon glow
         for (let segment of tunnelSegments) {
             for (let obstacle of segment.obstacles) {
-                ctx.fillStyle = '#9b59b6';
-
                 if (obstacle.type === 'stalactite') {
                     // Draw stalactite - base attached to ceiling, point hanging down
+                    ctx.fillStyle = '#9b59b6';
+                    ctx.shadowColor = 'rgba(155, 89, 182, 0.8)';
+                    ctx.shadowBlur = 12;
                     ctx.beginPath();
                     // Wide base at ceiling
                     ctx.moveTo(segment.x, obstacle.y);
@@ -641,12 +653,16 @@
                     ctx.closePath();
                     ctx.fill();
 
-                    // Add highlight
-                    ctx.strokeStyle = '#bb8fce';
+                    // Add highlight with glow
+                    ctx.strokeStyle = '#d4a5e8';
                     ctx.lineWidth = 2;
                     ctx.stroke();
+                    ctx.shadowBlur = 0;
                 } else if (obstacle.type === 'stalagmite') {
                     // Draw stalagmite - base attached to floor, point rising up
+                    ctx.fillStyle = '#9b59b6';
+                    ctx.shadowColor = 'rgba(155, 89, 182, 0.8)';
+                    ctx.shadowBlur = 12;
                     ctx.beginPath();
                     // Wide base at floor
                     ctx.moveTo(segment.x, obstacle.y);
@@ -656,17 +672,20 @@
                     ctx.closePath();
                     ctx.fill();
 
-                    // Add highlight
-                    ctx.strokeStyle = '#bb8fce';
+                    // Add highlight with glow
+                    ctx.strokeStyle = '#d4a5e8';
                     ctx.lineWidth = 2;
                     ctx.stroke();
+                    ctx.shadowBlur = 0;
                 } else if (obstacle.type === 'crystal') {
-                    // Draw floating crystal obstacle (diamond shape)
+                    // Draw floating crystal obstacle (diamond shape) with red glow
                     const centerX = segment.x + SEGMENT_WIDTH / 2;
                     const centerY = obstacle.y;
                     const size = obstacle.size;
 
                     ctx.fillStyle = '#e74c3c';
+                    ctx.shadowColor = 'rgba(231, 76, 60, 0.8)';
+                    ctx.shadowBlur = 15;
                     ctx.beginPath();
                     ctx.moveTo(centerX, centerY - size / 2);
                     ctx.lineTo(centerX + size / 2, centerY);
@@ -675,31 +694,35 @@
                     ctx.closePath();
                     ctx.fill();
 
-                    // Add highlight
-                    ctx.strokeStyle = '#ff7979';
+                    // Add highlight with glow
+                    ctx.strokeStyle = '#ff8a80';
                     ctx.lineWidth = 3;
                     ctx.stroke();
+                    ctx.shadowBlur = 0;
                 }
             }
         }
 
-        // Draw coins
+        // Draw coins with golden glow
         for (let segment of tunnelSegments) {
             for (let coin of segment.coins) {
                 if (!coin.collected) {
                     const centerX = segment.x + SEGMENT_WIDTH / 2;
                     const centerY = coin.y;
 
-                    // Draw coin
+                    // Draw coin with golden glow
                     ctx.fillStyle = '#f1c40f';
+                    ctx.shadowColor = 'rgba(241, 196, 15, 0.8)';
+                    ctx.shadowBlur = 12;
                     ctx.beginPath();
                     ctx.arc(centerX, centerY, COIN_SIZE / 2, 0, Math.PI * 2);
                     ctx.fill();
 
                     // Add coin border
-                    ctx.strokeStyle = '#f39c12';
+                    ctx.strokeStyle = '#ffeaa7';
                     ctx.lineWidth = 2;
                     ctx.stroke();
+                    ctx.shadowBlur = 0;
 
                     // Add inner circle for detail
                     ctx.strokeStyle = '#f39c12';
@@ -712,7 +735,7 @@
         }
     }
 
-    // Draw rocket
+    // Draw rocket with neon glow
     function drawRocket() {
         ctx.save();
         ctx.translate(rocket.x + ROCKET_SIZE / 2, rocket.y + ROCKET_SIZE / 2);
@@ -721,8 +744,10 @@
         const tilt = Math.min(Math.max(rocket.velocity * 0.05, -0.3), 0.3);
         ctx.rotate(tilt);
 
-        // Rocket body
-        ctx.fillStyle = '#ff6b6b';
+        // Rocket body with cyan glow
+        ctx.fillStyle = '#00d4ff';
+        ctx.shadowColor = 'rgba(0, 212, 255, 0.8)';
+        ctx.shadowBlur = 15;
         ctx.beginPath();
         ctx.moveTo(ROCKET_SIZE / 2, 0);
         ctx.lineTo(-ROCKET_SIZE / 2, -ROCKET_SIZE / 3);
@@ -730,9 +755,16 @@
         ctx.closePath();
         ctx.fill();
 
-        // Rocket flame
+        // Rocket outline
+        ctx.strokeStyle = '#88f0ff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Rocket flame with orange glow
         if (gameState === 'playing') {
             ctx.fillStyle = '#feca57';
+            ctx.shadowColor = 'rgba(254, 202, 87, 0.9)';
+            ctx.shadowBlur = 20;
             const flameSize = 10 + Math.random() * 5;
             ctx.beginPath();
             ctx.moveTo(-ROCKET_SIZE / 2, -5);
@@ -742,11 +774,14 @@
             ctx.fill();
         }
 
-        // Rocket window
+        // Rocket window with glow
         ctx.fillStyle = '#74b9ff';
+        ctx.shadowColor = 'rgba(116, 185, 255, 0.8)';
+        ctx.shadowBlur = 8;
         ctx.beginPath();
         ctx.arc(0, 0, 6, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0;
 
         ctx.restore();
     }
@@ -768,65 +803,99 @@
         ctx.fillText(`Best: ${highCoins}`, 20, 120);
     }
 
-    // Draw menu
+    // Draw menu with neon styling
     function drawMenu() {
-        ctx.fillStyle = 'white';
+        // Title with cyan glow
+        ctx.fillStyle = '#00d4ff';
+        ctx.shadowColor = 'rgba(0, 212, 255, 0.8)';
+        ctx.shadowBlur = 20;
         ctx.font = 'bold 48px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('🚀 TUNNEL RUNNER', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 100);
+        ctx.fillText('TUNNEL RUNNER', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 100);
+        ctx.shadowBlur = 0;
 
-        ctx.font = '20px Arial';
+        // Instructions
+        ctx.fillStyle = '#a0a0a0';
+        ctx.font = '18px Arial';
         ctx.fillText('Navigate through the changing tunnel!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 50);
         ctx.fillText('Avoid walls, obstacles, and narrow passages!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 25);
         ctx.fillText('Choose your path when the tunnel splits!', GAME_WIDTH / 2, GAME_HEIGHT / 2);
+
+        ctx.fillStyle = '#74b9ff';
         ctx.fillText('Tap or hold to fly up', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 35);
         ctx.fillText('Release to fall down', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 60);
 
+        // Start button with golden glow
         ctx.font = 'bold 32px Arial';
         ctx.fillStyle = '#feca57';
+        ctx.shadowColor = 'rgba(254, 202, 87, 0.8)';
+        ctx.shadowBlur = 15;
         ctx.fillText('TAP TO START', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 120);
+        ctx.shadowBlur = 0;
 
+        // High score
         if (highScore > 0) {
             ctx.font = '20px Arial';
-            ctx.fillStyle = 'white';
-            ctx.fillText(`High Score: ${highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 170);
+            ctx.fillStyle = '#888';
+            ctx.fillText(`High Score: ${highScore}  |  Best Coins: ${highCoins}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 170);
         }
     }
 
-    // Draw game over
+    // Draw game over with neon styling
     function drawGameOver() {
-        // Semi-transparent overlay
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        // Semi-transparent overlay with gradient
+        ctx.fillStyle = 'rgba(10, 10, 30, 0.85)';
         ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-        ctx.fillStyle = 'white';
+        // Game Over title with red glow
+        ctx.fillStyle = '#ff6b6b';
+        ctx.shadowColor = 'rgba(255, 107, 107, 0.8)';
+        ctx.shadowBlur = 20;
         ctx.font = 'bold 48px Arial';
         ctx.textAlign = 'center';
         ctx.fillText('GAME OVER', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 80);
+        ctx.shadowBlur = 0;
 
-        ctx.font = '32px Arial';
+        // Score with cyan glow
+        ctx.fillStyle = '#00d4ff';
+        ctx.shadowColor = 'rgba(0, 212, 255, 0.6)';
+        ctx.shadowBlur = 10;
+        ctx.font = 'bold 32px Arial';
         ctx.fillText(`Score: ${score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 - 30);
+        ctx.shadowBlur = 0;
 
+        // Coins with golden glow
         ctx.fillStyle = '#f1c40f';
+        ctx.shadowColor = 'rgba(241, 196, 15, 0.6)';
+        ctx.shadowBlur = 10;
         ctx.font = '28px Arial';
-        ctx.fillText(`💰 Coins: ${coins}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 10);
+        ctx.fillText(`Coins: ${coins}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 10);
+        ctx.shadowBlur = 0;
 
         if (score > highScore || coins > highCoins) {
-            ctx.fillStyle = '#feca57';
+            // New record with bright glow
+            ctx.fillStyle = '#55efc4';
+            ctx.shadowColor = 'rgba(85, 239, 196, 0.8)';
+            ctx.shadowBlur = 15;
             ctx.font = 'bold 24px Arial';
             let messages = [];
             if (score > highScore) messages.push('NEW HIGH SCORE');
             if (coins > highCoins) messages.push('MOST COINS');
-            ctx.fillText(`🎉 ${messages.join(' & ')}! 🎉`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
+            ctx.fillText(`${messages.join(' & ')}!`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
+            ctx.shadowBlur = 0;
         } else {
-            ctx.fillStyle = 'white';
-            ctx.font = '20px Arial';
-            ctx.fillText(`High: ${highScore} | Best Coins: ${highCoins}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
+            ctx.fillStyle = '#888';
+            ctx.font = '18px Arial';
+            ctx.fillText(`High: ${highScore}  |  Best Coins: ${highCoins}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
         }
 
+        // Play again with golden glow
         ctx.font = 'bold 28px Arial';
         ctx.fillStyle = '#feca57';
+        ctx.shadowColor = 'rgba(254, 202, 87, 0.8)';
+        ctx.shadowBlur = 15;
         ctx.fillText('TAP TO PLAY AGAIN', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 110);
+        ctx.shadowBlur = 0;
     }
 
     // Game over
@@ -870,20 +939,21 @@
         const content = document.getElementById('tunnelRunnerContent');
 
         content.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding-top: 2rem;">
                 <canvas id="tunnelCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="
-                    border: 4px solid #6c5ce7;
-                    border-radius: 10px;
+                    border: 3px solid #00d4ff;
+                    border-radius: 12px;
                     max-width: 100%;
                     height: auto;
                     background: #1a1a2e;
                     cursor: pointer;
                     touch-action: none;
+                    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.5);
                 "></canvas>
 
-                <div style="text-align: center; color: #666;">
-                    <p style="margin: 0.5rem 0;">💡 <strong>Desktop:</strong> Click or press Space to fly up</p>
-                    <p style="margin: 0.5rem 0;">📱 <strong>Mobile:</strong> Tap screen to fly up</p>
+                <div style="text-align: center; color: #888; font-size: 0.9rem;">
+                    <p style="margin: 0.5rem 0;"><strong style="color: #74b9ff;">Desktop:</strong> Click or press Space to fly up</p>
+                    <p style="margin: 0.5rem 0;"><strong style="color: #74b9ff;">Mobile:</strong> Tap screen to fly up</p>
                 </div>
             </div>
         `;
