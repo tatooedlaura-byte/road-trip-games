@@ -289,7 +289,8 @@
         canContinue: false,
         tiles: [], // Array of tile objects with id, value, row, col, isNew, isMerged
         nextTileId: 0,
-        animating: false
+        animating: false,
+        animationTimeout: null
     };
 
     function createTile(value, row, col, isNew = false) {
@@ -500,43 +501,61 @@
     }
 
     function handleMove(direction) {
+        // If animating, finish previous animation first
+        if (gameState.animating) {
+            finishAnimation();
+        }
+
         const moved = move(direction);
 
         if (moved) {
             gameState.animating = true;
             updateTilePositions();
 
-            setTimeout(() => {
-                // Remove merged tiles
-                gameState.tiles = gameState.tiles.filter(t => {
-                    for (let i = 0; i < GRID_SIZE; i++) {
-                        for (let j = 0; j < GRID_SIZE; j++) {
-                            if (gameState.grid[i][j] === t) return true;
-                        }
-                    }
-                    return false;
-                });
-
-                addRandomTile();
-                gameState.animating = false;
-
-                if (gameState.score > gameState.bestScore) {
-                    gameState.bestScore = gameState.score;
-                    localStorage.setItem('2048BestScore', gameState.bestScore);
-                }
-
-                if (!canMove()) {
-                    gameState.mode = 'gameover';
-                }
-
-                render();
-
-                if (gameState.mode === 'won' && !gameState.canContinue) {
-                    showWinModal();
-                } else if (gameState.mode === 'gameover') {
-                    showGameOverModal();
-                }
+            // Set timeout but allow interruption
+            gameState.animationTimeout = setTimeout(() => {
+                finishAnimation();
             }, 250);
+        }
+    }
+
+    function finishAnimation() {
+        if (!gameState.animating) return;
+
+        // Clear any pending timeout
+        if (gameState.animationTimeout) {
+            clearTimeout(gameState.animationTimeout);
+            gameState.animationTimeout = null;
+        }
+
+        // Remove merged tiles
+        gameState.tiles = gameState.tiles.filter(t => {
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    if (gameState.grid[i][j] === t) return true;
+                }
+            }
+            return false;
+        });
+
+        addRandomTile();
+        gameState.animating = false;
+
+        if (gameState.score > gameState.bestScore) {
+            gameState.bestScore = gameState.score;
+            localStorage.setItem('2048BestScore', gameState.bestScore);
+        }
+
+        if (!canMove()) {
+            gameState.mode = 'gameover';
+        }
+
+        render();
+
+        if (gameState.mode === 'won' && !gameState.canContinue) {
+            showWinModal();
+        } else if (gameState.mode === 'gameover') {
+            showGameOverModal();
         }
     }
 
