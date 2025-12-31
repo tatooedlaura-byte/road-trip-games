@@ -1042,91 +1042,94 @@
         content.innerHTML = `
             <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
                 <canvas id="skierCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="
-                    border: 4px solid #2d5016;
-                    border-radius: 10px;
+                    border: 3px solid rgba(103, 232, 249, 0.5);
+                    border-radius: 12px;
                     max-width: 100%;
                     height: auto;
-                    background: #87ceeb;
+                    background: linear-gradient(180deg, #87ceeb 0%, #e0f0ff 100%);
                     cursor: pointer;
                     touch-action: none;
+                    box-shadow: 0 0 30px rgba(103, 232, 249, 0.3);
                 "></canvas>
 
                 <!-- Mode Selection Buttons (shown initially) -->
-                <div id="modeButtons" style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                <div id="modeButtons" style="display: flex; gap: 1rem; margin-top: 1rem;">
                     <button id="btnDownhill" style="
-                        width: 140px;
-                        padding: 1rem;
-                        background: linear-gradient(135deg, #4169E1 0%, #2c4d9e 100%);
+                        width: 150px;
+                        padding: 1.25rem 1rem;
+                        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
                         border: none;
-                        border-radius: 12px;
+                        border-radius: 14px;
                         color: white;
-                        font-size: 0.95rem;
+                        font-size: 1rem;
                         font-weight: bold;
                         cursor: pointer;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                        transition: transform 0.2s;
+                        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+                        transition: all 0.3s;
                     ">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🏔️</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏔️</div>
                         <div>DOWNHILL</div>
-                        <div style="font-size: 0.7rem; font-weight: normal; margin-top: 0.25rem; opacity: 0.9;">Go for distance!</div>
+                        <div style="font-size: 0.75rem; font-weight: normal; margin-top: 0.35rem; opacity: 0.9;">Go for distance!</div>
                     </button>
                     <button id="btnSlalom" style="
-                        width: 140px;
-                        padding: 1rem;
-                        background: linear-gradient(135deg, #DC143C 0%, #a01028 100%);
+                        width: 150px;
+                        padding: 1.25rem 1rem;
+                        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
                         border: none;
-                        border-radius: 12px;
+                        border-radius: 14px;
                         color: white;
-                        font-size: 0.95rem;
+                        font-size: 1rem;
                         font-weight: bold;
                         cursor: pointer;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                        transition: transform 0.2s;
+                        box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+                        transition: all 0.3s;
                     ">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">⛳</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⛳</div>
                         <div>SLALOM</div>
-                        <div style="font-size: 0.7rem; font-weight: normal; margin-top: 0.25rem; opacity: 0.9;">Race the clock!</div>
+                        <div style="font-size: 0.75rem; font-weight: normal; margin-top: 0.35rem; opacity: 0.9;">Race the clock!</div>
                     </button>
                 </div>
 
-                <div id="gameInfo" style="text-align: center; color: #666; display: none;">
-                    <p style="margin: 0.5rem 0;">💡 <strong>Controls:</strong> Arrow keys, swipe, or use buttons below</p>
-                    <p style="margin: 0.5rem 0;">🎯 <strong>Goal:</strong> <span id="goalText"></span></p>
+                <div id="gameInfo" style="text-align: center; color: #94a3b8; display: none;">
+                    <p style="margin: 0.5rem 0;">💡 <span style="color: #67e8f9;">Controls:</span> Arrow keys, swipe, or use buttons below</p>
+                    <p style="margin: 0.5rem 0;">🎯 <span style="color: #67e8f9;">Goal:</span> <span id="goalText"></span></p>
                 </div>
 
                 <!-- Left/Right Control Buttons (hidden initially) -->
-                <div id="controlButtons" style="display: none; gap: 20px; margin-top: 1rem;">
+                <div id="controlButtons" style="display: none; gap: 1.5rem; margin-top: 1rem;">
                     <button id="btnSkiLeft" style="
                         width: 100px;
                         height: 80px;
-                        background: linear-gradient(145deg, #4a4a4a, #2a2a2a);
-                        border: 3px solid #666;
-                        border-radius: 15px;
-                        color: white;
-                        font-size: 32px;
+                        background: linear-gradient(145deg, rgba(103, 232, 249, 0.3), rgba(103, 232, 249, 0.1));
+                        border: 2px solid rgba(103, 232, 249, 0.5);
+                        border-radius: 16px;
+                        color: #67e8f9;
+                        font-size: 36px;
                         cursor: pointer;
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                        box-shadow: 0 4px 15px rgba(103, 232, 249, 0.2);
                         user-select: none;
                         -webkit-tap-highlight-color: transparent;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        transition: all 0.2s;
                     ">◀</button>
                     <button id="btnSkiRight" style="
                         width: 100px;
                         height: 80px;
-                        background: linear-gradient(145deg, #4a4a4a, #2a2a2a);
-                        border: 3px solid #666;
-                        border-radius: 15px;
-                        color: white;
-                        font-size: 32px;
+                        background: linear-gradient(145deg, rgba(103, 232, 249, 0.3), rgba(103, 232, 249, 0.1));
+                        border: 2px solid rgba(103, 232, 249, 0.5);
+                        border-radius: 16px;
+                        color: #67e8f9;
+                        font-size: 36px;
                         cursor: pointer;
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                        box-shadow: 0 4px 15px rgba(103, 232, 249, 0.2);
                         user-select: none;
                         -webkit-tap-highlight-color: transparent;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        transition: all 0.2s;
                     ">▶</button>
                 </div>
             </div>

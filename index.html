@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.119.2';</script>
+    <script>window.APP_VERSION = '1.120.0';</script>
 
     <style>
         * {
@@ -829,12 +829,18 @@
 
             <!-- Downhill Skier Game Section (hidden by default) -->
             <div id="downhillSkierGame" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <button onclick="exitDownhillSkierToMenu()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
-                    <h2 style="margin: 0;">⛷️ Downhill Skier</h2>
-                    <div style="width: 120px;"></div>
+                <div style="background: linear-gradient(135deg, #0c1929 0%, #1a3a5c 50%, #0d2137 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
+                    <!-- Back Button -->
+                    <button onclick="exitDownhillSkierToMenu()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
+
+                    <!-- Title -->
+                    <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
+                        <h1 style="font-size: 1.8rem; color: #67e8f9; text-shadow: 0 0 20px rgba(103, 232, 249, 0.5); margin: 0;">⛷️ Downhill Skier</h1>
+                        <p style="color: #888; font-size: 0.8rem; margin-top: 0.25rem;">Alpine Adventure</p>
+                    </div>
+
+                    <div id="downhillSkierContent"></div>
                 </div>
-                <div id="downhillSkierContent"></div>
             </div>
 
             <!-- Galaxian Game Section (hidden by default) -->
@@ -2219,7 +2225,7 @@
     <script src="games/guess-who.js?v=1.31.1"></script>
     <script src="games/joust.js?v=1.32.0"></script>
     <script src="games/tunnel-runner.js?v=1.39.1"></script>
-    <script src="games/downhill-skier.js?v=1.53.1"></script>
+    <script src="games/downhill-skier.js?v=1.120.0"></script>
     <script src="games/pacman.js?v=1.50.1"></script>
     <script src="games/galaxian.js?v=1.56.1"></script>
     <script src="games/galaga.js?v=1.56.1"></script>
