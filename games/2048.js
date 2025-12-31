@@ -116,7 +116,7 @@
                 align-items: center;
                 justify-content: center;
                 font-weight: bold;
-                transition: top 0.15s ease-out, left 0.15s ease-out;
+                transition: top 0.25s ease-out, left 0.25s ease-out;
             }
 
             .g2048-tile.new {
@@ -536,7 +536,7 @@
                 } else if (gameState.mode === 'gameover') {
                     showGameOverModal();
                 }
-            }, 150);
+            }, 250);
         }
     }
 
