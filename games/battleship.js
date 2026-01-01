@@ -99,11 +99,15 @@
                 border-radius: 10px;
                 padding: 6px;
                 box-shadow: inset 0 2px 10px rgba(0,0,0,0.4);
+                max-width: 100%;
+                overflow-x: auto;
             }
 
             .bs-grid {
                 display: grid;
                 gap: 2px;
+                width: fit-content;
+                max-width: 100%;
             }
 
             .bs-grid-header {
@@ -686,9 +690,9 @@
     function renderPlacementGrid(player) {
         const playerData = player === 1 ? state.player1 : state.player2;
         const letters = 'ABCDEFGHIJ'.split('');
-        const cellSize = 'clamp(28px, 8vw, 36px)';
+        const cellSize = 'clamp(24px, 6.5vw, 32px)';
 
-        let html = `<div class="bs-grid-container"><div class="bs-grid" style="grid-template-columns: 20px repeat(10, ${cellSize});">`;
+        let html = `<div class="bs-grid-container"><div class="bs-grid" style="grid-template-columns: 16px repeat(10, ${cellSize});">`;
 
         // Header row
         html += '<div class="bs-header-cell"></div>';
@@ -915,9 +919,9 @@
         const opponentData = opponentPlayer === 1 ? state.player1 : state.player2;
         const currentPlayerData = state.currentPlayer === 1 ? state.player1 : state.player2;
         const letters = 'ABCDEFGHIJ'.split('');
-        const cellSize = 'clamp(26px, 7.5vw, 32px)';
+        const cellSize = 'clamp(22px, 6vw, 28px)';
 
-        let html = `<div class="bs-grid-container"><div class="bs-grid" style="grid-template-columns: 18px repeat(10, ${cellSize});">`;
+        let html = `<div class="bs-grid-container"><div class="bs-grid" style="grid-template-columns: 14px repeat(10, ${cellSize});">`;
 
         html += '<div class="bs-header-cell"></div>';
         for (let i = 1; i <= 10; i++) {
@@ -965,9 +969,9 @@
         const playerData = player === 1 ? state.player1 : state.player2;
         const opponentData = player === 1 ? state.player2 : state.player1;
         const letters = 'ABCDEFGHIJ'.split('');
-        const cellSize = 'clamp(26px, 7.5vw, 32px)';
+        const cellSize = 'clamp(22px, 6vw, 28px)';
 
-        let html = `<div class="bs-grid-container"><div class="bs-grid" style="grid-template-columns: 18px repeat(10, ${cellSize});">`;
+        let html = `<div class="bs-grid-container"><div class="bs-grid" style="grid-template-columns: 14px repeat(10, ${cellSize});">`;
 
         html += '<div class="bs-header-cell"></div>';
         for (let i = 1; i <= 10; i++) {
