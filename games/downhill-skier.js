@@ -523,50 +523,84 @@
                 ctx.ellipse(obstacle.x - mogulSize * 0.2, obstacle.y - mogulSize * 0.2, mogulSize * 0.4, mogulSize * 0.2, 0, 0, Math.PI * 2);
                 ctx.fill();
             } else if (obstacle.type === 'tree') {
-                // Draw tree as a triangle
-                const treeHeight = obstacle.size * 1.2;
+                // Draw improved pine tree with snow
+                const treeHeight = obstacle.size * 1.4;
+                const baseWidth = obstacle.size * 0.6;
 
-                // Tree shadow
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                // Tree shadow on snow
+                ctx.fillStyle = 'rgba(0, 0, 50, 0.15)';
                 ctx.beginPath();
-                ctx.ellipse(obstacle.x + 2, obstacle.y + 5, obstacle.size * 0.4, obstacle.size * 0.15, 0, 0, Math.PI * 2);
+                ctx.ellipse(obstacle.x + 4, obstacle.y + 8, obstacle.size * 0.5, obstacle.size * 0.18, 0.2, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Tree trunk
-                ctx.fillStyle = '#654321';
-                ctx.fillRect(obstacle.x - 4, obstacle.y - 10, 8, 15);
+                // Tree trunk with bark texture
+                const trunkGradient = ctx.createLinearGradient(obstacle.x - 5, 0, obstacle.x + 5, 0);
+                trunkGradient.addColorStop(0, '#3d2817');
+                trunkGradient.addColorStop(0.5, '#5c3d2e');
+                trunkGradient.addColorStop(1, '#3d2817');
+                ctx.fillStyle = trunkGradient;
+                ctx.fillRect(obstacle.x - 5, obstacle.y - 12, 10, 18);
 
-                // Tree foliage (triangles)
+                // Bottom layer of branches (darkest green)
+                ctx.fillStyle = '#1a3d0c';
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x, obstacle.y - treeHeight * 0.35);
+                ctx.lineTo(obstacle.x - baseWidth, obstacle.y - 8);
+                ctx.lineTo(obstacle.x + baseWidth, obstacle.y - 8);
+                ctx.closePath();
+                ctx.fill();
+
+                // Snow on bottom branches
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x - baseWidth * 0.7, obstacle.y - 14);
+                ctx.quadraticCurveTo(obstacle.x - baseWidth * 0.5, obstacle.y - 20, obstacle.x - baseWidth * 0.2, obstacle.y - 18);
+                ctx.quadraticCurveTo(obstacle.x, obstacle.y - 22, obstacle.x + baseWidth * 0.3, obstacle.y - 17);
+                ctx.quadraticCurveTo(obstacle.x + baseWidth * 0.6, obstacle.y - 20, obstacle.x + baseWidth * 0.8, obstacle.y - 12);
+                ctx.lineTo(obstacle.x + baseWidth * 0.5, obstacle.y - 10);
+                ctx.lineTo(obstacle.x - baseWidth * 0.5, obstacle.y - 10);
+                ctx.closePath();
+                ctx.fill();
+
+                // Middle layer of branches
                 ctx.fillStyle = '#2d5016';
-                ctx.strokeStyle = '#1a3010';
-                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x, obstacle.y - treeHeight * 0.65);
+                ctx.lineTo(obstacle.x - baseWidth * 0.75, obstacle.y - treeHeight * 0.25);
+                ctx.lineTo(obstacle.x + baseWidth * 0.75, obstacle.y - treeHeight * 0.25);
+                ctx.closePath();
+                ctx.fill();
 
-                // Bottom triangle
+                // Snow on middle branches
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x - baseWidth * 0.5, obstacle.y - treeHeight * 0.35);
+                ctx.quadraticCurveTo(obstacle.x - baseWidth * 0.3, obstacle.y - treeHeight * 0.45, obstacle.x, obstacle.y - treeHeight * 0.4);
+                ctx.quadraticCurveTo(obstacle.x + baseWidth * 0.3, obstacle.y - treeHeight * 0.45, obstacle.x + baseWidth * 0.5, obstacle.y - treeHeight * 0.32);
+                ctx.lineTo(obstacle.x + baseWidth * 0.35, obstacle.y - treeHeight * 0.28);
+                ctx.lineTo(obstacle.x - baseWidth * 0.35, obstacle.y - treeHeight * 0.28);
+                ctx.closePath();
+                ctx.fill();
+
+                // Top layer of branches (lightest green)
+                ctx.fillStyle = '#3d6b1e';
                 ctx.beginPath();
                 ctx.moveTo(obstacle.x, obstacle.y - treeHeight);
-                ctx.lineTo(obstacle.x - obstacle.size / 2, obstacle.y - 10);
-                ctx.lineTo(obstacle.x + obstacle.size / 2, obstacle.y - 10);
+                ctx.lineTo(obstacle.x - baseWidth * 0.5, obstacle.y - treeHeight * 0.55);
+                ctx.lineTo(obstacle.x + baseWidth * 0.5, obstacle.y - treeHeight * 0.55);
                 ctx.closePath();
                 ctx.fill();
-                ctx.stroke();
 
-                // Middle triangle
+                // Snow cap on top
+                ctx.fillStyle = '#ffffff';
                 ctx.beginPath();
-                ctx.moveTo(obstacle.x, obstacle.y - treeHeight * 1.1);
-                ctx.lineTo(obstacle.x - obstacle.size / 2.5, obstacle.y - treeHeight * 0.4);
-                ctx.lineTo(obstacle.x + obstacle.size / 2.5, obstacle.y - treeHeight * 0.4);
+                ctx.moveTo(obstacle.x, obstacle.y - treeHeight - 3);
+                ctx.quadraticCurveTo(obstacle.x - baseWidth * 0.25, obstacle.y - treeHeight * 0.85, obstacle.x - baseWidth * 0.3, obstacle.y - treeHeight * 0.7);
+                ctx.lineTo(obstacle.x + baseWidth * 0.3, obstacle.y - treeHeight * 0.7);
+                ctx.quadraticCurveTo(obstacle.x + baseWidth * 0.25, obstacle.y - treeHeight * 0.85, obstacle.x, obstacle.y - treeHeight - 3);
                 ctx.closePath();
                 ctx.fill();
-                ctx.stroke();
 
-                // Top triangle
-                ctx.beginPath();
-                ctx.moveTo(obstacle.x, obstacle.y - treeHeight * 1.3);
-                ctx.lineTo(obstacle.x - obstacle.size / 3, obstacle.y - treeHeight * 0.7);
-                ctx.lineTo(obstacle.x + obstacle.size / 3, obstacle.y - treeHeight * 0.7);
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
             } else if (obstacle.type === 'rock') {
                 // Draw rock as an irregular polygon
                 const rockSize = obstacle.size;
