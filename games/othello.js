@@ -21,6 +21,25 @@
                 padding: 1.25rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
+                position: relative;
+            }
+
+            .oth-back-btn {
+                position: absolute;
+                top: 0.75rem;
+                left: 0.75rem;
+                background: rgba(255,255,255,0.15);
+                border: none;
+                color: white;
+                padding: 0.4rem 0.7rem;
+                border-radius: 8px;
+                font-size: 0.8rem;
+                cursor: pointer;
+                z-index: 10;
+            }
+
+            .oth-back-btn:hover {
+                background: rgba(255,255,255,0.25);
             }
 
             .oth-header {
@@ -574,6 +593,7 @@
         content.innerHTML = `
             <div class="oth-container">
                 <div class="oth-card">
+                    <button class="oth-back-btn" onclick="window.othello.exit()">← Back</button>
                     <div class="oth-header">
                         <h1 class="oth-title">Othello</h1>
                         <p class="oth-subtitle">Classic disc-flipping strategy</p>
@@ -601,10 +621,6 @@
                                 <button class="oth-diff-btn hard" onclick="window.othello.startAI('hard')">Hard</button>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="oth-buttons">
-                        <button class="oth-btn oth-btn-secondary" onclick="window.othello.exit()">← Back</button>
                     </div>
                 </div>
             </div>
