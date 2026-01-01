@@ -16,7 +16,7 @@
 
     const COLORS = ['#22d3ee', '#f472b6']; // Cyan, Pink
     const GLOW_COLORS = ['rgba(34, 211, 238, 0.6)', 'rgba(244, 114, 182, 0.6)'];
-    const PLAYER_NAMES = ['Player 1', 'Player 2'];
+    let playerNames = ['Player 1', 'Player 2'];
 
     // Initialize game state
     function initGame() {
@@ -89,9 +89,54 @@
         `;
     };
 
-    // Start game with selected mode
+    // Start game with selected mode - show name entry first
     window.startDotsAndBoxes = function(mode) {
         dotsState.gameMode = mode;
+        showNameEntry();
+    };
+
+    // Show name entry screen
+    function showNameEntry() {
+        const app = document.getElementById('dotsAndBoxesContent');
+        const isAI = dotsState.gameMode === 'vs-ai';
+
+        app.innerHTML = `
+            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
+                <button onclick="launchDotsAndBoxes()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
+
+                <div style="text-align: center; padding-top: 2rem; max-width: 400px; margin: 0 auto;">
+                    <h1 style="font-size: 1.8rem; color: #22d3ee; text-shadow: 0 0 20px rgba(34, 211, 238, 0.5); margin: 0 0 0.5rem 0;">📦 Dots & Boxes</h1>
+                    <p style="color: #888; margin-bottom: 2rem;">${isAI ? 'Enter your name' : 'Enter player names'}</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="text-align: left;">
+                            <label style="display: block; color: ${COLORS[0]}; font-weight: bold; margin-bottom: 0.5rem; font-size: 0.9rem;">Player 1 (Cyan)</label>
+                            <input type="text" id="dotsPlayer1Name" placeholder="Enter name" value="${playerNames[0] === 'Player 1' ? '' : playerNames[0]}" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 2px solid ${COLORS[0]}; background: rgba(34, 211, 238, 0.1); color: white; font-size: 1rem; box-sizing: border-box;">
+                        </div>
+                        ${!isAI ? `
+                        <div style="text-align: left;">
+                            <label style="display: block; color: ${COLORS[1]}; font-weight: bold; margin-bottom: 0.5rem; font-size: 0.9rem;">Player 2 (Pink)</label>
+                            <input type="text" id="dotsPlayer2Name" placeholder="Enter name" value="${playerNames[1] === 'Player 2' ? '' : playerNames[1]}" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 2px solid ${COLORS[1]}; background: rgba(244, 114, 182, 0.1); color: white; font-size: 1rem; box-sizing: border-box;">
+                        </div>
+                        ` : ''}
+                    </div>
+
+                    <button onclick="startDotsGame()" style="background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; width: 100%;">Start Game</button>
+                </div>
+            </div>
+        `;
+
+        setTimeout(() => document.getElementById('dotsPlayer1Name')?.focus(), 100);
+    }
+
+    // Start the actual game after name entry
+    window.startDotsGame = function() {
+        const player1Input = document.getElementById('dotsPlayer1Name')?.value.trim();
+        const player2Input = dotsState.gameMode === 'vs-ai' ? 'Computer' : document.getElementById('dotsPlayer2Name')?.value.trim();
+
+        playerNames[0] = player1Input || 'Player 1';
+        playerNames[1] = player2Input || 'Player 2';
+
         initGame();
         renderGame();
     };
@@ -105,7 +150,7 @@
         if (!dotsState.gameOver) {
             const currentName = dotsState.gameMode === 'vs-ai' && dotsState.currentPlayer === 1
                 ? 'Computer'
-                : PLAYER_NAMES[dotsState.currentPlayer];
+                : playerNames[dotsState.currentPlayer];
             const indicatorColor = COLORS[dotsState.currentPlayer];
             const glowColor = GLOW_COLORS[dotsState.currentPlayer];
             playerIndicator = `
@@ -128,11 +173,11 @@
                     <!-- Score Display -->
                     <div style="display: flex; justify-content: space-around; margin-bottom: 1rem; gap: 0.5rem;">
                         <div style="background: ${COLORS[0]}22; border: 2px solid ${COLORS[0]}; color: white; padding: 0.75rem 1.5rem; border-radius: 10px; flex: 1; text-align: center; box-shadow: 0 0 15px ${GLOW_COLORS[0]};">
-                            <div style="font-size: 0.8rem; color: ${COLORS[0]};">Player 1</div>
+                            <div style="font-size: 0.8rem; color: ${COLORS[0]};">${playerNames[0]}</div>
                             <div style="font-size: 2rem; font-weight: bold; color: ${COLORS[0]};">${dotsState.scores[0]}</div>
                         </div>
                         <div style="background: ${COLORS[1]}22; border: 2px solid ${COLORS[1]}; color: white; padding: 0.75rem 1.5rem; border-radius: 10px; flex: 1; text-align: center; box-shadow: 0 0 15px ${GLOW_COLORS[1]};">
-                            <div style="font-size: 0.8rem; color: ${COLORS[1]};">${dotsState.gameMode === 'vs-ai' ? 'Computer' : 'Player 2'}</div>
+                            <div style="font-size: 0.8rem; color: ${COLORS[1]};">${dotsState.gameMode === 'vs-ai' ? 'Computer' : playerNames[1]}</div>
                             <div style="font-size: 2rem; font-weight: bold; color: ${COLORS[1]};">${dotsState.scores[1]}</div>
                         </div>
                     </div>
@@ -146,7 +191,7 @@
 
                     ${dotsState.gameOver ? `
                         <div style="text-align: center; padding: 1.5rem; background: ${dotsState.scores[0] > dotsState.scores[1] ? COLORS[0] : dotsState.scores[1] > dotsState.scores[0] ? COLORS[1] : '#6b7280'}22; border: 2px solid ${dotsState.scores[0] > dotsState.scores[1] ? COLORS[0] : dotsState.scores[1] > dotsState.scores[0] ? COLORS[1] : '#6b7280'}; color: white; border-radius: 12px; margin-top: 1rem; font-size: 1.2rem; font-weight: bold; box-shadow: 0 0 20px ${dotsState.scores[0] > dotsState.scores[1] ? GLOW_COLORS[0] : dotsState.scores[1] > dotsState.scores[0] ? GLOW_COLORS[1] : 'rgba(107, 114, 128, 0.5)'};">
-                            ${dotsState.scores[0] > dotsState.scores[1] ? '🎉 Player 1 Wins!' : dotsState.scores[1] > dotsState.scores[0] ? (dotsState.gameMode === 'vs-ai' ? '🤖 Computer Wins!' : '🎉 Player 2 Wins!') : '🤝 It\'s a Tie!'}
+                            ${dotsState.scores[0] > dotsState.scores[1] ? '🎉 ' + playerNames[0] + ' Wins!' : dotsState.scores[1] > dotsState.scores[0] ? (dotsState.gameMode === 'vs-ai' ? '🤖 Computer Wins!' : '🎉 ' + playerNames[1] + ' Wins!') : '🤝 It\'s a Tie!'}
                         </div>
                     ` : ''}
                 </div>
