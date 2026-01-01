@@ -584,8 +584,8 @@
                     ctx.ellipse(obstacle.x + 4, obstacle.y + 8, drawWidth * 0.4, drawHeight * 0.15, 0.2, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // Alternate between tree types for variety
-                    const treeSprite = (Math.floor(obstacle.x + obstacle.y) % 3 === 0) ? sprites.treeDark : sprites.tree;
+                    // Alternate between tree types for variety (use only x position so it doesn't change as tree scrolls)
+                    const treeSprite = (Math.floor(obstacle.x) % 3 === 0) ? sprites.treeDark : sprites.tree;
                     ctx.drawImage(treeSprite, obstacle.x - drawWidth / 2, obstacle.y - drawHeight, drawWidth, drawHeight);
                 } else {
                     // Fallback: Draw simple pine tree
