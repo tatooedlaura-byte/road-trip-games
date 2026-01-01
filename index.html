@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Road Trip Games - Your Ultimate Travel Companion</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1e293b">
+    <meta name="theme-color" content="#374151">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.121.0';</script>
+    <script>window.APP_VERSION = '1.121.1';</script>
 
     <style>
         * {
@@ -28,7 +28,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -36,31 +36,31 @@
         .app-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.95);
+            background: #1f2937;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+            border: 1px solid #374151;
         }
 
         .header {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
             color: white;
             padding: 2rem;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid #4b5563;
         }
 
         .header h1 {
             font-size: 2rem;
             margin-bottom: 0.5rem;
-            color: #60a5fa;
+            color: #93c5fd;
         }
 
         .header p {
-            opacity: 0.7;
+            opacity: 0.9;
             font-size: 1rem;
-            color: #94a3b8;
+            color: #d1d5db;
         }
 
         .content {
@@ -75,30 +75,30 @@
         }
 
         .feature-card {
-            background: rgba(255,255,255,0.05);
+            background: #374151;
             color: white;
             padding: 1.5rem;
             border-radius: 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid #4b5563;
         }
 
         .feature-card:hover {
-            background: rgba(255,255,255,0.1);
+            background: #4b5563;
             transform: translateY(-5px);
-            border-color: rgba(96, 165, 250, 0.3);
+            border-color: #6b7280;
         }
 
         .feature-card h3 {
             font-size: 1.4rem;
             margin-bottom: 0.5rem;
-            color: #f1f5f9;
+            color: #f9fafb;
         }
 
         .feature-card p {
-            color: #94a3b8;
+            color: #d1d5db;
             font-size: 0.9rem;
         }
 
@@ -108,13 +108,13 @@
         }
 
         .welcome h2 {
-            color: #f1f5f9;
+            color: #f9fafb;
             margin-bottom: 1rem;
             font-size: 1.8rem;
         }
 
         .welcome p {
-            color: #94a3b8;
+            color: #d1d5db;
             font-size: 1.15rem;
             line-height: 1.7;
             max-width: 600px;
@@ -149,7 +149,7 @@
             transform: translateX(-50%);
             width: 40px;
             height: 40px;
-            background: #334155;
+            background: #4b5563;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -166,8 +166,8 @@
         .spinner {
             width: 24px;
             height: 24px;
-            border: 3px solid #334155;
-            border-top: 3px solid #60a5fa;
+            border: 3px solid #6b7280;
+            border-top: 3px solid #93c5fd;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -245,8 +245,8 @@
         }
 
         .stats-content {
-            background: #1e293b;
-            color: #f1f5f9;
+            background: #1f2937;
+            color: #f9fafb;
             border-radius: 20px;
             padding: 2rem;
             max-width: 600px;
@@ -254,7 +254,7 @@
             max-height: 80vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid #374151;
         }
 
         .stats-header {
@@ -263,11 +263,11 @@
             align-items: center;
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid #374151;
         }
 
         .stats-player-card {
-            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
             color: white;
             padding: 1.5rem;
             border-radius: 15px;
