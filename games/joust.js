@@ -226,18 +226,12 @@
                     ctx.scale(-1, 1);
                 }
 
-                // Tint yellow for player (draw with golden overlay)
+                // Draw bird sprite (player uses base blue/yellow bird)
                 ctx.drawImage(
                     assets.birdSprite,
                     frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
-
-                // Add golden tint overlay
-                ctx.globalCompositeOperation = 'source-atop';
-                ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
-                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
-                ctx.globalCompositeOperation = 'source-over';
             } else {
                 // Fallback: Draw simple directional sprite (larger)
                 ctx.fillStyle = '#FFD700'; // Gold color for player
@@ -449,19 +443,6 @@
                     frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
-
-                // Add color tint based on enemy type
-                ctx.globalCompositeOperation = 'source-atop';
-                let tintColor;
-                switch(this.type) {
-                    case 'shadow': tintColor = 'rgba(128, 0, 128, 0.4)'; break; // Purple
-                    case 'hunter': tintColor = 'rgba(0, 0, 255, 0.3)'; break; // Blue (less tint - already blue)
-                    case 'bounder':
-                    default: tintColor = 'rgba(255, 0, 0, 0.4)'; break; // Red
-                }
-                ctx.fillStyle = tintColor;
-                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
-                ctx.globalCompositeOperation = 'source-over';
             } else {
                 // Fallback: Draw triangle enemy with type-specific color
                 ctx.fillStyle = this.color;
@@ -527,7 +508,7 @@
             ctx.save();
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
-            // Try to draw sprite (use green tinted bird for pterodactyl)
+            // Try to draw sprite for pterodactyl
             if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.birdSprite) {
                 const frameIndex = Math.floor(gameState.animFrame / 4) % SPRITE_CONFIG.flyFrames.length; // Faster animation
                 const frame = SPRITE_CONFIG.flyFrames[frameIndex];
@@ -543,22 +524,6 @@
                     frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
-
-                // Add green/dark tint for pterodactyl
-                ctx.globalCompositeOperation = 'source-atop';
-                ctx.fillStyle = 'rgba(0, 100, 0, 0.5)';
-                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
-                ctx.globalCompositeOperation = 'source-over';
-
-                // Add menacing red eye glow
-                ctx.shadowColor = '#ff0000';
-                ctx.shadowBlur = 10;
-                ctx.fillStyle = '#ff0000';
-                const eyeX = this.direction === 1 ? 15 : -15;
-                ctx.beginPath();
-                ctx.arc(eyeX, -5, 4, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
             } else {
                 // Fallback: Draw pterodactyl (menacing gray/black flying dinosaur)
                 ctx.fillStyle = '#4a4a4a';
