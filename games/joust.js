@@ -15,6 +15,9 @@
         loaded: false
     };
 
+    // Set to true to use original triangle shapes instead of sprites
+    const USE_FALLBACK_GRAPHICS = true; // DEBUG: Force fallback until sprites work
+
     // Sprite positions in enemy-sprites.png (measured from image)
     // Pterrors are in 2 rows - blue/green on row 1, red/purple/yellow on row 2
     const SPRITE_CONFIG = {
@@ -217,8 +220,8 @@
             ctx.save();
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
-            // Try to draw sprite
-            if (assets.loaded && assets.sprites) {
+            // Try to draw sprite (unless fallback is forced)
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.sprites) {
                 const config = SPRITE_CONFIG.pterror;
                 const colorConfig = config.colors.yellow; // Player is yellow
                 const frame = Math.floor(gameState.animFrame / 8) % 2; // Animate wings
@@ -432,8 +435,8 @@
             ctx.save();
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
-            // Try to draw sprite
-            if (assets.loaded && assets.sprites) {
+            // Try to draw sprite (unless fallback is forced)
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.sprites) {
                 const config = SPRITE_CONFIG.pterror;
                 // Map enemy types to sprite colors
                 let spriteColor;
@@ -525,7 +528,7 @@
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
             // Try to draw sprite (use green pterror for pterodactyl - distinct from enemies)
-            if (assets.loaded && assets.sprites) {
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.sprites) {
                 const config = SPRITE_CONFIG.pterror;
                 const spriteColor = config.colors.green; // Green for pterodactyl boss
 
