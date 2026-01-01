@@ -11,27 +11,26 @@
 
     // Sprite assets
     const assets = {
-        birdSprite: null,
+        pterrors: null,
         loaded: false
     };
 
     // Set to true to use original triangle shapes instead of sprites
-    const USE_FALLBACK_GRAPHICS = false; // Set to false to use sprites
+    const USE_FALLBACK_GRAPHICS = false;
 
-    // Sprite config for bird-animated.png
-    // 11 columns x 8 rows, each cell 48x32 pixels
-    // Flying animation is in rows 5-7 (y = 160, 192, 224)
+    // Sprite config for enemy-sprites.png pterrors
+    // Each pterror has 2 animation frames, roughly 38x26 pixels each
     const SPRITE_CONFIG = {
-        frameWidth: 48,
-        frameHeight: 32,
-        // Flying animation frames (row 5-6, multiple columns)
-        flyFrames: [
-            { x: 0, y: 160 },   // Flying frame 1
-            { x: 48, y: 160 },  // Flying frame 2
-            { x: 96, y: 160 },  // Flying frame 3
-            { x: 0, y: 192 },   // Flying frame 4
-            { x: 48, y: 192 }   // Flying frame 5
-        ]
+        frameWidth: 38,
+        frameHeight: 26,
+        // Pterror colors with their positions (2 frames each)
+        colors: {
+            yellow: { frames: [{ x: 160, y: 184 }, { x: 198, y: 184 }] },  // Player
+            red:    { frames: [{ x: 0, y: 184 }, { x: 38, y: 184 }] },     // Bounder
+            blue:   { frames: [{ x: 0, y: 136 }, { x: 38, y: 136 }] },     // Hunter
+            purple: { frames: [{ x: 80, y: 184 }, { x: 118, y: 184 }] },   // Shadow
+            green:  { frames: [{ x: 80, y: 136 }, { x: 118, y: 136 }] }    // Pterodactyl
+        }
     };
 
     let gameState = {
@@ -56,18 +55,18 @@
 
     // Load sprite assets
     function loadAssets(callback) {
-        assets.birdSprite = new Image();
-        assets.birdSprite.onload = () => {
+        assets.pterrors = new Image();
+        assets.pterrors.onload = () => {
             assets.loaded = true;
-            console.log('Bird sprite loaded successfully');
+            console.log('Pterror sprites loaded successfully');
             callback();
         };
-        assets.birdSprite.onerror = (e) => {
-            console.warn('Failed to load bird sprite:', e);
+        assets.pterrors.onerror = (e) => {
+            console.warn('Failed to load pterror sprites:', e);
             assets.loaded = false;
             callback();
         };
-        assets.birdSprite.src = 'assets/joust/bird-animated.png';
+        assets.pterrors.src = 'assets/joust/enemy-sprites.png';
     }
 
     // Platform layouts for different waves
@@ -217,27 +216,19 @@
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
             // Try to draw sprite (unless fallback is forced)
-            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.birdSprite) {
-                const frameIndex = Math.floor(gameState.animFrame / 6) % SPRITE_CONFIG.flyFrames.length;
-                const frame = SPRITE_CONFIG.flyFrames[frameIndex];
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.pterrors) {
+                const color = SPRITE_CONFIG.colors.yellow;
+                const frameIndex = Math.floor(gameState.animFrame / 8) % color.frames.length;
+                const frame = color.frames[frameIndex];
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
                     ctx.scale(-1, 1);
                 }
 
-                // Draw golden glow behind player
-                ctx.shadowColor = '#FFD700';
-                ctx.shadowBlur = 15;
-                ctx.fillStyle = 'rgba(255, 215, 0, 0.6)';
-                ctx.beginPath();
-                ctx.ellipse(0, 0, this.width / 2.5, this.height / 2.5, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-
-                // Draw bird sprite
+                // Draw yellow pterror sprite
                 ctx.drawImage(
-                    assets.birdSprite,
+                    assets.pterrors,
                     frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
@@ -437,36 +428,27 @@
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
             // Try to draw sprite (unless fallback is forced)
-            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.birdSprite) {
-                const frameIndex = Math.floor(gameState.animFrame / 6) % SPRITE_CONFIG.flyFrames.length;
-                const frame = SPRITE_CONFIG.flyFrames[frameIndex];
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.pterrors) {
+                // Get the right colored pterror based on enemy type
+                let color;
+                switch(this.type) {
+                    case 'shadow': color = SPRITE_CONFIG.colors.purple; break;
+                    case 'hunter': color = SPRITE_CONFIG.colors.blue; break;
+                    case 'bounder':
+                    default: color = SPRITE_CONFIG.colors.red; break;
+                }
+
+                const frameIndex = Math.floor(gameState.animFrame / 8) % color.frames.length;
+                const frame = color.frames[frameIndex];
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
                     ctx.scale(-1, 1);
                 }
 
-                // Draw colored glow behind enemy based on type
-                let glowColor;
-                switch(this.type) {
-                    case 'shadow': glowColor = '#800080'; break; // Purple
-                    case 'hunter': glowColor = '#0066FF'; break; // Blue
-                    case 'bounder':
-                    default: glowColor = '#FF0000'; break; // Red
-                }
-                ctx.shadowColor = glowColor;
-                ctx.shadowBlur = 12;
-                ctx.fillStyle = glowColor;
-                ctx.globalAlpha = 0.5;
-                ctx.beginPath();
-                ctx.ellipse(0, 0, this.width / 2.5, this.height / 2.5, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
-                ctx.shadowBlur = 0;
-
-                // Draw bird sprite
+                // Draw colored pterror sprite
                 ctx.drawImage(
-                    assets.birdSprite,
+                    assets.pterrors,
                     frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
@@ -536,42 +518,22 @@
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
             // Try to draw sprite for pterodactyl
-            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.birdSprite) {
-                const frameIndex = Math.floor(gameState.animFrame / 4) % SPRITE_CONFIG.flyFrames.length; // Faster animation
-                const frame = SPRITE_CONFIG.flyFrames[frameIndex];
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.pterrors) {
+                const color = SPRITE_CONFIG.colors.green;
+                const frameIndex = Math.floor(gameState.animFrame / 5) % color.frames.length; // Faster animation
+                const frame = color.frames[frameIndex];
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
                     ctx.scale(-1, 1);
                 }
 
-                // Draw menacing green/dark glow behind pterodactyl
-                ctx.shadowColor = '#00FF00';
-                ctx.shadowBlur = 20;
-                ctx.fillStyle = '#004400';
-                ctx.globalAlpha = 0.7;
-                ctx.beginPath();
-                ctx.ellipse(0, 0, this.width / 2.2, this.height / 2.2, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
-                ctx.shadowBlur = 0;
-
-                // Draw larger sprite for pterodactyl
+                // Draw green pterror sprite (larger for pterodactyl boss)
                 ctx.drawImage(
-                    assets.birdSprite,
+                    assets.pterrors,
                     frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
-
-                // Add menacing red eye
-                ctx.shadowColor = '#ff0000';
-                ctx.shadowBlur = 8;
-                ctx.fillStyle = '#ff0000';
-                const eyeX = this.direction === 1 ? 12 : -12;
-                ctx.beginPath();
-                ctx.arc(eyeX, -8, 4, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
             } else {
                 // Fallback: Draw pterodactyl (menacing gray/black flying dinosaur)
                 ctx.fillStyle = '#4a4a4a';
