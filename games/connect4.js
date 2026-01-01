@@ -21,6 +21,25 @@
                 padding: 1.5rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
+                position: relative;
+            }
+
+            .c4-back-btn {
+                position: absolute;
+                top: 0.75rem;
+                left: 0.75rem;
+                background: rgba(255,255,255,0.15);
+                border: none;
+                color: white;
+                padding: 0.4rem 0.7rem;
+                border-radius: 8px;
+                font-size: 0.8rem;
+                cursor: pointer;
+                z-index: 10;
+            }
+
+            .c4-back-btn:hover {
+                background: rgba(255,255,255,0.25);
             }
 
             .c4-header {
@@ -453,6 +472,7 @@
         content.innerHTML = `
             <div class="c4-container">
                 <div class="c4-card">
+                    <button class="c4-back-btn" onclick="exitConnect4()">← Back</button>
                     <div class="c4-header">
                         <h1 class="c4-title">Connect 4</h1>
                         <p class="c4-subtitle">Drop discs & connect four to win!</p>
@@ -477,10 +497,6 @@
                             <span class="c4-mode-desc">Single Player</span>
                         </button>
                     </div>
-
-                    <div class="c4-buttons">
-                        <button class="c4-btn c4-btn-secondary" onclick="exitConnect4()">← Back</button>
-                    </div>
                 </div>
             </div>
         `;
@@ -501,6 +517,7 @@
         content.innerHTML = `
             <div class="c4-container">
                 <div class="c4-card">
+                    <button class="c4-back-btn" onclick="showSetup()">← Back</button>
                     <div class="c4-header">
                         <h1 class="c4-title">Player Names</h1>
                         <p class="c4-subtitle">${state.isAI ? 'Enter your name' : 'Enter player names'}</p>
@@ -525,7 +542,6 @@
                     ` : ''}
 
                     <div class="c4-buttons">
-                        <button class="c4-btn c4-btn-secondary" onclick="showSetup()">← Back</button>
                         <button class="c4-btn c4-btn-primary" onclick="startConnect4WithNames()">Start Game</button>
                     </div>
                 </div>
@@ -834,6 +850,7 @@
         content.innerHTML = `
             <div class="c4-container">
                 <div class="c4-card" style="position: relative; overflow: hidden;">
+                    <button class="c4-back-btn" onclick="exitConnect4()">← Back</button>
                     <div class="c4-winner-banner">
                         <h2 class="c4-winner-title">🎉 Victory! 🎉</h2>
                         <p class="c4-winner-name" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
@@ -850,7 +867,6 @@
 
                     <div class="c4-buttons">
                         <button class="c4-btn c4-btn-primary" onclick="playAgain()">🔄 Play Again</button>
-                        <button class="c4-btn c4-btn-secondary" onclick="exitConnect4()">← Back to Games</button>
                     </div>
                 </div>
             </div>
@@ -864,6 +880,7 @@
         content.innerHTML = `
             <div class="c4-container">
                 <div class="c4-card">
+                    <button class="c4-back-btn" onclick="exitConnect4()">← Back</button>
                     <div class="c4-winner-banner" style="background: linear-gradient(135deg, rgba(100,100,100,0.3) 0%, rgba(150,150,150,0.2) 100%);">
                         <h2 class="c4-winner-title">🤝 Draw!</h2>
                         <p class="c4-winner-name">The board is full - it's a tie!</p>
@@ -877,7 +894,6 @@
 
                     <div class="c4-buttons">
                         <button class="c4-btn c4-btn-primary" onclick="playAgain()">🔄 Play Again</button>
-                        <button class="c4-btn c4-btn-secondary" onclick="exitConnect4()">← Back to Games</button>
                     </div>
                 </div>
             </div>

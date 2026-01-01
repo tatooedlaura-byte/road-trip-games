@@ -21,6 +21,25 @@
                 padding: 1.5rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
+                position: relative;
+            }
+
+            .ttt-back-btn {
+                position: absolute;
+                top: 0.75rem;
+                left: 0.75rem;
+                background: rgba(255,255,255,0.15);
+                border: none;
+                color: white;
+                padding: 0.4rem 0.7rem;
+                border-radius: 8px;
+                font-size: 0.8rem;
+                cursor: pointer;
+                z-index: 10;
+            }
+
+            .ttt-back-btn:hover {
+                background: rgba(255,255,255,0.25);
             }
 
             .ttt-header {
@@ -368,6 +387,7 @@
         content.innerHTML = `
             <div class="ttt-container">
                 <div class="ttt-card">
+                    <button class="ttt-back-btn" onclick="exitTicTacToe()">← Back</button>
                     <div class="ttt-header">
                         <h1 class="ttt-title">Tic Tac Toe</h1>
                         <p class="ttt-subtitle">Classic strategy for two</p>
@@ -391,10 +411,6 @@
                             <span class="ttt-mode-title">vs Computer</span>
                             <span class="ttt-mode-desc">Single Player</span>
                         </button>
-                    </div>
-
-                    <div class="ttt-buttons" style="margin-top: 1.5rem;">
-                        <button class="ttt-btn ttt-btn-secondary" onclick="exitTicTacToe()">← Back</button>
                     </div>
                 </div>
             </div>
@@ -438,6 +454,7 @@
         content.innerHTML = `
             <div class="ttt-container">
                 <div class="ttt-card" style="position: relative; overflow: hidden;">
+                    <button class="ttt-back-btn" onclick="exitTicTacToe()">← Back</button>
                     <div class="ttt-scoreboard">
                         <div class="ttt-score">
                             <div class="ttt-score-symbol x">X</div>
@@ -464,7 +481,6 @@
                     </div>
 
                     <div class="ttt-buttons">
-                        <button class="ttt-btn ttt-btn-secondary" onclick="exitTicTacToe()">← Exit</button>
                         <button class="ttt-btn ttt-btn-primary" onclick="window.tictactoe.newGame()">↺ New Game</button>
                     </div>
                 </div>

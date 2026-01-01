@@ -21,6 +21,25 @@
                 padding: 0.75rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
+                position: relative;
+            }
+
+            .bs-back-btn {
+                position: absolute;
+                top: 0.5rem;
+                left: 0.5rem;
+                background: rgba(255,255,255,0.15);
+                border: none;
+                color: white;
+                padding: 0.4rem 0.7rem;
+                border-radius: 8px;
+                font-size: 0.8rem;
+                cursor: pointer;
+                z-index: 10;
+            }
+
+            .bs-back-btn:hover {
+                background: rgba(255,255,255,0.25);
             }
 
             .bs-header {
@@ -566,6 +585,7 @@
         content.innerHTML = `
             <div class="bs-container">
                 <div class="bs-card">
+                    <button class="bs-back-btn" onclick="exitBattleship()">← Back</button>
                     <div class="bs-header">
                         <h1 class="bs-title">Battleship</h1>
                         <p class="bs-subtitle">Classic naval combat strategy</p>
@@ -590,10 +610,6 @@
                             <span class="bs-mode-desc">Single Player</span>
                         </button>
                     </div>
-
-                    <div class="bs-buttons">
-                        <button class="bs-btn bs-btn-secondary" onclick="exitBattleship()">← Back</button>
-                    </div>
                 </div>
             </div>
         `;
@@ -614,6 +630,7 @@
         content.innerHTML = `
             <div class="bs-container">
                 <div class="bs-card">
+                    <button class="bs-back-btn" onclick="showSetup()">← Back</button>
                     <div class="bs-header">
                         <h1 class="bs-title">Player Names</h1>
                         <p class="bs-subtitle">${state.isAI ? 'Enter your name' : 'Enter player names'}</p>
@@ -632,7 +649,6 @@
                     ` : ''}
 
                     <div class="bs-buttons">
-                        <button class="bs-btn bs-btn-secondary" onclick="showSetup()">← Back</button>
                         <button class="bs-btn bs-btn-primary" onclick="startWithNames()">Start Game</button>
                     </div>
                 </div>
@@ -658,6 +674,7 @@
         content.innerHTML = `
             <div class="bs-container">
                 <div class="bs-card">
+                    <button class="bs-back-btn" onclick="exitBattleship()">← Back</button>
                     <div class="bs-phase-indicator">
                         <span class="bs-phase-text">${playerName} - Place Your Ships</span>
                     </div>
@@ -678,10 +695,6 @@
                     </div>
 
                     ${renderPlacementGrid(player)}
-
-                    <div class="bs-buttons">
-                        <button class="bs-btn bs-btn-secondary" onclick="exitBattleship()">← Exit</button>
-                    </div>
                 </div>
             </div>
         `;
@@ -891,6 +904,7 @@
         content.innerHTML = `
             <div class="bs-container">
                 <div class="bs-card">
+                    <button class="bs-back-btn" onclick="exitBattleship()">← Back</button>
                     <div class="bs-phase-indicator attack">
                         <span class="bs-phase-text">${playerName}'s Turn • ${sunkCount}/5 Ships Sunk</span>
                     </div>
@@ -905,10 +919,6 @@
                             <div class="bs-grid-label defense">🛡️ Your Fleet</div>
                             ${renderDefenseGrid(currentPlayer)}
                         </div>
-                    </div>
-
-                    <div class="bs-buttons">
-                        <button class="bs-btn bs-btn-secondary" onclick="exitBattleship()">← Exit</button>
                     </div>
                 </div>
             </div>
@@ -1183,6 +1193,7 @@
         content.innerHTML = `
             <div class="bs-container">
                 <div class="bs-card">
+                    <button class="bs-back-btn" onclick="exitBattleship()">← Back</button>
                     <div class="bs-winner-banner">
                         <h2 class="bs-winner-title">${isPlayerWin ? '🎉 Victory! 🎉' : '😔 Defeat'}</h2>
                         <p class="bs-winner-name">${winnerName} Wins!</p>
@@ -1192,7 +1203,6 @@
 
                     <div class="bs-buttons">
                         <button class="bs-btn bs-btn-primary" onclick="launchBattleship()">🔄 Play Again</button>
-                        <button class="bs-btn bs-btn-secondary" onclick="exitBattleship()">← Back to Games</button>
                     </div>
                 </div>
             </div>
