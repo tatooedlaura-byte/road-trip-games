@@ -224,12 +224,12 @@
     let startGracePeriod = 0; // Frames of reduced gravity at start
 
     function createRocket() {
-        startGracePeriod = 90; // About 1.5 seconds of grace period
+        startGracePeriod = 60; // 1 second grace period at start only
         return {
             x: 150,
             y: GAME_HEIGHT / 2,
             velocity: 0,
-            gravity: 0.2,
+            gravity: 0.25,
             lift: -4.5,
             maxVelocity: 6
         };
@@ -410,10 +410,10 @@
         // Update fire animation
         fireFrame = (fireFrame + 0.5) % assets.fire.length;
 
-        // Update rocket physics with grace period
+        // Update rocket physics with grace period at start
         let currentGravity = rocket.gravity;
         if (startGracePeriod > 0) {
-            currentGravity = rocket.gravity * 0.3; // Much lighter gravity at start
+            currentGravity = 0; // No gravity at start - ship hovers until player is ready
             startGracePeriod--;
         }
         rocket.velocity += currentGravity;
