@@ -14,9 +14,9 @@
     const GAME_HEIGHT = 600;
     const ROCKET_SIZE = 40;
     const SCROLL_SPEED = 3;
-    const BASE_TUNNEL_WIDTH = 200;
-    const MIN_TUNNEL_WIDTH = 160;
-    const MAX_TUNNEL_WIDTH = 240;
+    const BASE_TUNNEL_WIDTH = 280;
+    const MIN_TUNNEL_WIDTH = 220;
+    const MAX_TUNNEL_WIDTH = 320;
     const SEGMENT_WIDTH = 20;
     const OBSTACLE_CHANCE = 0.08;
     const COIN_CHANCE = 0.075;
@@ -221,12 +221,15 @@
     }
 
     // Rocket object
+    let startGracePeriod = 0; // Frames of reduced gravity at start
+
     function createRocket() {
+        startGracePeriod = 90; // About 1.5 seconds of grace period
         return {
             x: 150,
             y: GAME_HEIGHT / 2,
             velocity: 0,
-            gravity: 0.25,
+            gravity: 0.2,
             lift: -4.5,
             maxVelocity: 6
         };
@@ -407,8 +410,13 @@
         // Update fire animation
         fireFrame = (fireFrame + 0.5) % assets.fire.length;
 
-        // Update rocket physics
-        rocket.velocity += rocket.gravity;
+        // Update rocket physics with grace period
+        let currentGravity = rocket.gravity;
+        if (startGracePeriod > 0) {
+            currentGravity = rocket.gravity * 0.3; // Much lighter gravity at start
+            startGracePeriod--;
+        }
+        rocket.velocity += currentGravity;
         rocket.velocity = Math.max(-rocket.maxVelocity, Math.min(rocket.maxVelocity, rocket.velocity));
         rocket.y += rocket.velocity;
 
