@@ -17,56 +17,6 @@
     let animationId;
     let keys = {};
 
-    // Sprite assets from Kenney's Tiny Ski pack
-    // Note: Sprites disabled - hand-drawn graphics look better at scale
-    const USE_SPRITES = false;
-    const sprites = {
-        tree: null,
-        treeDark: null,
-        bush: null,
-        skier: null,
-        flagRed: null,
-        flagBlue: null,
-        snowman: null,
-        loaded: false
-    };
-
-    // Load sprite images
-    function loadSprites(callback) {
-        const basePath = 'assets/downhill-skier/Tiles/';
-        const toLoad = [
-            { name: 'tree', file: 'tile_0006.png' },
-            { name: 'treeDark', file: 'tile_0018.png' },
-            { name: 'bush', file: 'tile_0030.png' },
-            { name: 'skier', file: 'tile_0070.png' },
-            { name: 'flagRed', file: 'tile_0008.png' },
-            { name: 'flagBlue', file: 'tile_0009.png' },
-            { name: 'snowman', file: 'tile_0078.png' }
-        ];
-
-        let loadedCount = 0;
-        toLoad.forEach(item => {
-            const img = new Image();
-            img.onload = () => {
-                sprites[item.name] = img;
-                loadedCount++;
-                if (loadedCount === toLoad.length) {
-                    sprites.loaded = true;
-                    console.log('Downhill Skier sprites loaded');
-                    if (callback) callback();
-                }
-            };
-            img.onerror = () => {
-                console.warn('Failed to load sprite:', item.file);
-                loadedCount++;
-                if (loadedCount === toLoad.length) {
-                    if (callback) callback();
-                }
-            };
-            img.src = basePath + item.file;
-        });
-    }
-
     const GAME_WIDTH = 800;
     const GAME_HEIGHT = 600;
     const SKIER_WIDTH = 30;
@@ -573,51 +523,37 @@
                 ctx.ellipse(obstacle.x - mogulSize * 0.2, obstacle.y - mogulSize * 0.2, mogulSize * 0.4, mogulSize * 0.2, 0, 0, Math.PI * 2);
                 ctx.fill();
             } else if (obstacle.type === 'tree') {
-                // Draw tree using sprite if available (disabled - hand-drawn looks better)
-                if (USE_SPRITES && sprites.loaded && sprites.tree) {
-                    // Scale sprite based on tree size (16px original, scale to obstacle.size * 2)
-                    const scale = (obstacle.size * 2) / 16;
-                    const drawWidth = 16 * scale;
-                    const drawHeight = 16 * scale;
+                // Draw pine tree with snow
+                const treeHeight = obstacle.size * 1.4;
+                const baseWidth = obstacle.size * 0.6;
 
-                    // Draw shadow
-                    ctx.fillStyle = 'rgba(0, 0, 50, 0.15)';
-                    ctx.beginPath();
-                    ctx.ellipse(obstacle.x + 4, obstacle.y + 8, drawWidth * 0.4, drawHeight * 0.15, 0.2, 0, Math.PI * 2);
-                    ctx.fill();
+                // Shadow
+                ctx.fillStyle = 'rgba(0, 0, 50, 0.15)';
+                ctx.beginPath();
+                ctx.ellipse(obstacle.x + 4, obstacle.y + 8, obstacle.size * 0.5, obstacle.size * 0.18, 0.2, 0, Math.PI * 2);
+                ctx.fill();
 
-                    // Alternate between tree types for variety (use only x position so it doesn't change as tree scrolls)
-                    const treeSprite = (Math.floor(obstacle.x) % 3 === 0) ? sprites.treeDark : sprites.tree;
-                    ctx.drawImage(treeSprite, obstacle.x - drawWidth / 2, obstacle.y - drawHeight, drawWidth, drawHeight);
-                } else {
-                    // Fallback: Draw simple pine tree
-                    const treeHeight = obstacle.size * 1.4;
-                    const baseWidth = obstacle.size * 0.6;
+                // Trunk
+                ctx.fillStyle = '#5c3d2e';
+                ctx.fillRect(obstacle.x - 5, obstacle.y - 12, 10, 18);
 
-                    ctx.fillStyle = 'rgba(0, 0, 50, 0.15)';
-                    ctx.beginPath();
-                    ctx.ellipse(obstacle.x + 4, obstacle.y + 8, obstacle.size * 0.5, obstacle.size * 0.18, 0.2, 0, Math.PI * 2);
-                    ctx.fill();
+                // Tree body
+                ctx.fillStyle = '#2d5016';
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x, obstacle.y - treeHeight);
+                ctx.lineTo(obstacle.x - baseWidth, obstacle.y - 8);
+                ctx.lineTo(obstacle.x + baseWidth, obstacle.y - 8);
+                ctx.closePath();
+                ctx.fill();
 
-                    ctx.fillStyle = '#5c3d2e';
-                    ctx.fillRect(obstacle.x - 5, obstacle.y - 12, 10, 18);
-
-                    ctx.fillStyle = '#2d5016';
-                    ctx.beginPath();
-                    ctx.moveTo(obstacle.x, obstacle.y - treeHeight);
-                    ctx.lineTo(obstacle.x - baseWidth, obstacle.y - 8);
-                    ctx.lineTo(obstacle.x + baseWidth, obstacle.y - 8);
-                    ctx.closePath();
-                    ctx.fill();
-
-                    ctx.fillStyle = '#ffffff';
-                    ctx.beginPath();
-                    ctx.moveTo(obstacle.x, obstacle.y - treeHeight - 3);
-                    ctx.lineTo(obstacle.x - baseWidth * 0.3, obstacle.y - treeHeight * 0.7);
-                    ctx.lineTo(obstacle.x + baseWidth * 0.3, obstacle.y - treeHeight * 0.7);
-                    ctx.closePath();
-                    ctx.fill();
-                }
+                // Snow cap
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x, obstacle.y - treeHeight - 3);
+                ctx.lineTo(obstacle.x - baseWidth * 0.3, obstacle.y - treeHeight * 0.7);
+                ctx.lineTo(obstacle.x + baseWidth * 0.3, obstacle.y - treeHeight * 0.7);
+                ctx.closePath();
+                ctx.fill();
 
             } else if (obstacle.type === 'rock') {
                 // Draw rock as an irregular polygon
@@ -658,55 +594,29 @@
     // Draw slalom gates
     function drawGates() {
         for (let gate of gates) {
-            // Use sprites if available (disabled - hand-drawn looks better)
-            if (USE_SPRITES && sprites.loaded && sprites.flagRed && sprites.flagBlue) {
-                const flagScale = 3; // Scale 16px sprites to 48px
-                const flagSize = 16 * flagScale;
+            // Draw left pole (red)
+            ctx.fillStyle = '#DC143C';
+            ctx.fillRect(gate.leftPoleX - 3, gate.y - POLE_HEIGHT, 6, POLE_HEIGHT);
 
-                // Draw left flag (red)
-                ctx.save();
-                if (gate.passed) {
-                    ctx.globalAlpha = 0.5;
-                } else if (gate.missed) {
-                    ctx.globalAlpha = 0.3;
-                }
-                ctx.drawImage(sprites.flagRed, gate.leftPoleX - flagSize / 2, gate.y - flagSize, flagSize, flagSize);
-                ctx.restore();
+            ctx.fillStyle = gate.passed ? '#90EE90' : gate.missed ? '#FFB6C1' : '#FF6B6B';
+            ctx.beginPath();
+            ctx.moveTo(gate.leftPoleX + 3, gate.y - POLE_HEIGHT);
+            ctx.lineTo(gate.leftPoleX + 20, gate.y - POLE_HEIGHT + 8);
+            ctx.lineTo(gate.leftPoleX + 3, gate.y - POLE_HEIGHT + 16);
+            ctx.closePath();
+            ctx.fill();
 
-                // Draw right flag (blue)
-                ctx.save();
-                if (gate.passed) {
-                    ctx.globalAlpha = 0.5;
-                } else if (gate.missed) {
-                    ctx.globalAlpha = 0.3;
-                }
-                ctx.drawImage(sprites.flagBlue, gate.rightPoleX - flagSize / 2, gate.y - flagSize, flagSize, flagSize);
-                ctx.restore();
-            } else {
-                // Fallback: Draw left pole (red)
-                ctx.fillStyle = '#DC143C';
-                ctx.fillRect(gate.leftPoleX - 3, gate.y - POLE_HEIGHT, 6, POLE_HEIGHT);
+            // Draw right pole (blue)
+            ctx.fillStyle = '#4169E1';
+            ctx.fillRect(gate.rightPoleX - 3, gate.y - POLE_HEIGHT, 6, POLE_HEIGHT);
 
-                ctx.fillStyle = gate.passed ? '#90EE90' : gate.missed ? '#FFB6C1' : '#FF6B6B';
-                ctx.beginPath();
-                ctx.moveTo(gate.leftPoleX + 3, gate.y - POLE_HEIGHT);
-                ctx.lineTo(gate.leftPoleX + 20, gate.y - POLE_HEIGHT + 8);
-                ctx.lineTo(gate.leftPoleX + 3, gate.y - POLE_HEIGHT + 16);
-                ctx.closePath();
-                ctx.fill();
-
-                // Fallback: Draw right pole (blue)
-                ctx.fillStyle = '#4169E1';
-                ctx.fillRect(gate.rightPoleX - 3, gate.y - POLE_HEIGHT, 6, POLE_HEIGHT);
-
-                ctx.fillStyle = gate.passed ? '#90EE90' : gate.missed ? '#FFB6C1' : '#6B9BFF';
-                ctx.beginPath();
-                ctx.moveTo(gate.rightPoleX - 3, gate.y - POLE_HEIGHT);
-                ctx.lineTo(gate.rightPoleX - 20, gate.y - POLE_HEIGHT + 8);
-                ctx.lineTo(gate.rightPoleX - 3, gate.y - POLE_HEIGHT + 16);
-                ctx.closePath();
-                ctx.fill();
-            }
+            ctx.fillStyle = gate.passed ? '#90EE90' : gate.missed ? '#FFB6C1' : '#6B9BFF';
+            ctx.beginPath();
+            ctx.moveTo(gate.rightPoleX - 3, gate.y - POLE_HEIGHT);
+            ctx.lineTo(gate.rightPoleX - 20, gate.y - POLE_HEIGHT + 8);
+            ctx.lineTo(gate.rightPoleX - 3, gate.y - POLE_HEIGHT + 16);
+            ctx.closePath();
+            ctx.fill();
 
             // Draw dotted line between poles to show gate
             if (!gate.passed && !gate.missed) {
@@ -739,28 +649,20 @@
         }
         ctx.rotate(tilt);
 
-        // Draw skier sprite if available (disabled - hand-drawn looks better)
-        if (USE_SPRITES && sprites.loaded && sprites.skier) {
-            // Scale 16px sprite to skier size
-            const scale = 2.5;
-            const drawSize = 16 * scale;
-            ctx.drawImage(sprites.skier, -drawSize / 2, -drawSize / 2, drawSize, drawSize);
-        } else {
-            // Fallback: Skier body (simple triangle shape)
-            ctx.fillStyle = skier.crashed ? '#ff3333' : '#ff6b6b';
-            ctx.beginPath();
-            ctx.moveTo(0, -SKIER_HEIGHT / 2);
-            ctx.lineTo(-SKIER_WIDTH / 2, SKIER_HEIGHT / 2);
-            ctx.lineTo(SKIER_WIDTH / 2, SKIER_HEIGHT / 2);
-            ctx.closePath();
-            ctx.fill();
+        // Skier body (simple triangle shape)
+        ctx.fillStyle = skier.crashed ? '#ff3333' : '#ff6b6b';
+        ctx.beginPath();
+        ctx.moveTo(0, -SKIER_HEIGHT / 2);
+        ctx.lineTo(-SKIER_WIDTH / 2, SKIER_HEIGHT / 2);
+        ctx.lineTo(SKIER_WIDTH / 2, SKIER_HEIGHT / 2);
+        ctx.closePath();
+        ctx.fill();
 
-            // Skier head
-            ctx.fillStyle = '#ffd93d';
-            ctx.beginPath();
-            ctx.arc(0, -SKIER_HEIGHT / 2 - 5, 6, 0, Math.PI * 2);
-            ctx.fill();
-        }
+        // Skier head
+        ctx.fillStyle = '#ffd93d';
+        ctx.beginPath();
+        ctx.arc(0, -SKIER_HEIGHT / 2 - 5, 6, 0, Math.PI * 2);
+        ctx.fill();
 
         // Skis
         ctx.strokeStyle = '#333';
@@ -1228,11 +1130,6 @@
         // Initialize canvas
         gameCanvas = document.getElementById('skierCanvas');
         ctx = gameCanvas.getContext('2d');
-
-        // Load sprites
-        loadSprites(() => {
-            console.log('Sprites ready for Downhill Skier');
-        });
 
         gameState = 'menu';
         draw();
