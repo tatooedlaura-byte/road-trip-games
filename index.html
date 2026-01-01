@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Road Trip Games - Your Ultimate Travel Companion</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4b5563">
+    <meta name="theme-color" content="#1e1e2e">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.121.3';</script>
+    <script>window.APP_VERSION = '1.122.0';</script>
 
     <style>
         * {
@@ -28,7 +28,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -36,31 +36,31 @@
         .app-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #374151;
+            background: #1a1a2e;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
-            border: 1px solid #4b5563;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+            border: 1px solid #3d3d5c;
         }
 
         .header {
-            background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+            background: linear-gradient(135deg, #2d2d44 0%, #3d3d5c 100%);
             color: white;
             padding: 2rem;
             text-align: center;
-            border-bottom: 1px solid #6b7280;
+            border-bottom: 1px solid #4d4d6d;
         }
 
         .header h1 {
             font-size: 2rem;
             margin-bottom: 0.5rem;
-            color: #bfdbfe;
+            color: #a5b4fc;
         }
 
         .header p {
             opacity: 0.9;
             font-size: 1rem;
-            color: #e5e7eb;
+            color: #c4b5fd;
         }
 
         .content {
@@ -75,31 +75,42 @@
         }
 
         .feature-card {
-            background: #9ca3af;
-            color: #1f2937;
             padding: 1.5rem;
             border-radius: 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 1px solid #d1d5db;
         }
 
         .feature-card:hover {
-            background: #d1d5db;
             transform: translateY(-5px);
-            border-color: #e5e7eb;
+            filter: brightness(1.1);
         }
 
         .feature-card h3 {
             font-size: 1.4rem;
             margin-bottom: 0.5rem;
-            color: #111827;
+            color: #1f2937;
         }
 
         .feature-card p {
             color: #374151;
             font-size: 0.9rem;
+        }
+
+        .feature-card:nth-child(3n+1) {
+            background: linear-gradient(135deg, #86efac 0%, #4ade80 100%);
+            border: 1px solid #22c55e;
+        }
+
+        .feature-card:nth-child(3n+2) {
+            background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+            border: 1px solid #3b82f6;
+        }
+
+        .feature-card:nth-child(3n) {
+            background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);
+            border: 1px solid #8b5cf6;
         }
 
         .welcome {
@@ -108,13 +119,13 @@
         }
 
         .welcome h2 {
-            color: #f9fafb;
+            color: #a5b4fc;
             margin-bottom: 1rem;
             font-size: 1.8rem;
         }
 
         .welcome p {
-            color: #d1d5db;
+            color: #c4b5fd;
             font-size: 1.15rem;
             line-height: 1.7;
             max-width: 600px;
