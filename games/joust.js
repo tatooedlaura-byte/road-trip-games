@@ -1,4 +1,4 @@
-// Joust Game
+// Joust Game - With Sprite Support
 (function() {
     'use strict';
 
@@ -8,6 +8,31 @@
     const FLAP_POWER = -6; // Moderate flap power for responsive feel
     const MOVE_SPEED = 4;
     const FLAP_COOLDOWN = 3; // Short cooldown for responsive flapping
+
+    // Sprite assets
+    const assets = {
+        sprites: null,
+        loaded: false
+    };
+
+    // Sprite positions in enemy-sprites.png (approximate pixel positions)
+    // Pterror sprites are in rows 2-3, each color has 2 animation frames
+    const SPRITE_CONFIG = {
+        pterror: {
+            frameWidth: 32,
+            frameHeight: 24,
+            // Y position where pterrors start
+            baseY: 80,
+            // Colors and their X offsets (each color has 2 frames)
+            colors: {
+                blue: { x: 0 },
+                green: { x: 64 },
+                red: { x: 128 },
+                purple: { x: 192 },
+                yellow: { x: 256 }
+            }
+        }
+    };
 
     let gameState = {
         player: null,
@@ -25,8 +50,24 @@
         ctx: null,
         animationId: null,
         waveTimer: 0, // Timer for pterodactyl spawn
-        flapHeld: false // Track if flap button is held
+        flapHeld: false, // Track if flap button is held
+        animFrame: 0 // Global animation frame counter
     };
+
+    // Load sprite assets
+    function loadAssets(callback) {
+        assets.sprites = new Image();
+        assets.sprites.onload = () => {
+            assets.loaded = true;
+            callback();
+        };
+        assets.sprites.onerror = () => {
+            console.warn('Failed to load sprites, using fallback rendering');
+            assets.loaded = false;
+            callback();
+        };
+        assets.sprites.src = 'assets/joust/enemy-sprites.png';
+    }
 
     // Platform layouts for different waves
     const WAVE_PLATFORMS = {
@@ -174,38 +215,60 @@
             ctx.save();
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
-            // Draw simple directional sprite (larger)
-            ctx.fillStyle = '#FFD700'; // Gold color for player
+            // Try to draw sprite
+            if (assets.loaded && assets.sprites) {
+                const config = SPRITE_CONFIG.pterror;
+                const colorConfig = config.colors.yellow; // Player is yellow
+                const frame = Math.floor(gameState.animFrame / 8) % 2; // Animate wings
 
-            if (this.direction === 1) {
-                // Facing right - draw triangle pointing right
-                ctx.beginPath();
-                ctx.moveTo(-22, -18);  // Top left
-                ctx.lineTo(-22, 18);   // Bottom left
-                ctx.lineTo(22, 0);     // Right point
-                ctx.closePath();
-                ctx.fill();
+                const srcX = colorConfig.x + (frame * config.frameWidth);
+                const srcY = config.baseY;
 
-                // Add eye
-                ctx.fillStyle = '#000';
-                ctx.beginPath();
-                ctx.arc(8, -4, 3, 0, Math.PI * 2);
-                ctx.fill();
+                // Flip horizontally if facing left
+                if (this.direction === -1) {
+                    ctx.scale(-1, 1);
+                }
+
+                // Draw scaled up sprite
+                ctx.drawImage(
+                    assets.sprites,
+                    srcX, srcY, config.frameWidth, config.frameHeight,
+                    -this.width / 2, -this.height / 2, this.width, this.height
+                );
             } else {
-                // Facing left - draw triangle pointing left
-                ctx.beginPath();
-                ctx.moveTo(22, -18);   // Top right
-                ctx.lineTo(22, 18);    // Bottom right
-                ctx.lineTo(-22, 0);    // Left point
-                ctx.closePath();
-                ctx.fillStyle = '#FFD700';
-                ctx.fill();
+                // Fallback: Draw simple directional sprite (larger)
+                ctx.fillStyle = '#FFD700'; // Gold color for player
 
-                // Add eye
-                ctx.fillStyle = '#000';
-                ctx.beginPath();
-                ctx.arc(-8, -4, 3, 0, Math.PI * 2);
-                ctx.fill();
+                if (this.direction === 1) {
+                    // Facing right - draw triangle pointing right
+                    ctx.beginPath();
+                    ctx.moveTo(-22, -18);  // Top left
+                    ctx.lineTo(-22, 18);   // Bottom left
+                    ctx.lineTo(22, 0);     // Right point
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Add eye
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(8, -4, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    // Facing left - draw triangle pointing left
+                    ctx.beginPath();
+                    ctx.moveTo(22, -18);   // Top right
+                    ctx.lineTo(22, 18);    // Bottom right
+                    ctx.lineTo(-22, 0);    // Left point
+                    ctx.closePath();
+                    ctx.fillStyle = '#FFD700';
+                    ctx.fill();
+
+                    // Add eye
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-8, -4, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
 
             ctx.restore();
@@ -367,37 +430,66 @@
             ctx.save();
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
-            // Draw triangle enemy with type-specific color
-            ctx.fillStyle = this.color;
+            // Try to draw sprite
+            if (assets.loaded && assets.sprites) {
+                const config = SPRITE_CONFIG.pterror;
+                // Map enemy types to sprite colors
+                let spriteColor;
+                switch(this.type) {
+                    case 'shadow': spriteColor = config.colors.purple; break;
+                    case 'hunter': spriteColor = config.colors.blue; break;
+                    case 'bounder':
+                    default: spriteColor = config.colors.red; break;
+                }
 
-            if (this.direction === 1) {
-                // Facing right - draw triangle pointing right
-                ctx.beginPath();
-                ctx.moveTo(-22, -18);  // Top left
-                ctx.lineTo(-22, 18);   // Bottom left
-                ctx.lineTo(22, 0);     // Right point
-                ctx.closePath();
-                ctx.fill();
+                const frame = Math.floor(gameState.animFrame / 8) % 2; // Animate wings
+                const srcX = spriteColor.x + (frame * config.frameWidth);
+                const srcY = config.baseY;
 
-                // Add eye
-                ctx.fillStyle = '#000';
-                ctx.beginPath();
-                ctx.arc(8, -4, 3, 0, Math.PI * 2);
-                ctx.fill();
+                // Flip horizontally if facing left
+                if (this.direction === -1) {
+                    ctx.scale(-1, 1);
+                }
+
+                // Draw scaled up sprite
+                ctx.drawImage(
+                    assets.sprites,
+                    srcX, srcY, config.frameWidth, config.frameHeight,
+                    -this.width / 2, -this.height / 2, this.width, this.height
+                );
             } else {
-                // Facing left - draw triangle pointing left
-                ctx.beginPath();
-                ctx.moveTo(22, -18);   // Top right
-                ctx.lineTo(22, 18);    // Bottom right
-                ctx.lineTo(-22, 0);    // Left point
-                ctx.closePath();
-                ctx.fill();
+                // Fallback: Draw triangle enemy with type-specific color
+                ctx.fillStyle = this.color;
 
-                // Add eye
-                ctx.fillStyle = '#000';
-                ctx.beginPath();
-                ctx.arc(-8, -4, 3, 0, Math.PI * 2);
-                ctx.fill();
+                if (this.direction === 1) {
+                    // Facing right - draw triangle pointing right
+                    ctx.beginPath();
+                    ctx.moveTo(-22, -18);  // Top left
+                    ctx.lineTo(-22, 18);   // Bottom left
+                    ctx.lineTo(22, 0);     // Right point
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Add eye
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(8, -4, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    // Facing left - draw triangle pointing left
+                    ctx.beginPath();
+                    ctx.moveTo(22, -18);   // Top right
+                    ctx.lineTo(22, 18);    // Bottom right
+                    ctx.lineTo(-22, 0);    // Left point
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Add eye
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-8, -4, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
 
             ctx.restore();
@@ -430,47 +522,79 @@
             ctx.save();
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
-            // Draw pterodactyl (menacing gray/black flying dinosaur)
-            ctx.fillStyle = '#4a4a4a';
+            // Try to draw sprite (use green pterror for pterodactyl - distinct from enemies)
+            if (assets.loaded && assets.sprites) {
+                const config = SPRITE_CONFIG.pterror;
+                const spriteColor = config.colors.green; // Green for pterodactyl boss
 
-            if (this.direction === 1) {
-                // Facing right - larger, more menacing shape
-                ctx.beginPath();
-                ctx.moveTo(-30, 0);    // Body left
-                ctx.lineTo(-25, -20);  // Wing up
-                ctx.lineTo(-10, -10);  // Wing middle
-                ctx.lineTo(30, -15);   // Wing tip
-                ctx.lineTo(35, 0);     // Head point
-                ctx.lineTo(30, 15);    // Wing tip down
-                ctx.lineTo(-10, 10);   // Wing middle down
-                ctx.lineTo(-25, 20);   // Wing down
-                ctx.closePath();
-                ctx.fill();
+                const frame = Math.floor(gameState.animFrame / 6) % 2; // Faster wing animation
+                const srcX = spriteColor.x + (frame * config.frameWidth);
+                const srcY = config.baseY;
 
-                // Eye (red, menacing)
+                // Flip horizontally if facing left
+                if (this.direction === -1) {
+                    ctx.scale(-1, 1);
+                }
+
+                // Draw larger sprite for pterodactyl
+                ctx.drawImage(
+                    assets.sprites,
+                    srcX, srcY, config.frameWidth, config.frameHeight,
+                    -this.width / 2, -this.height / 2, this.width, this.height
+                );
+
+                // Add menacing red eye glow
+                ctx.shadowColor = '#ff0000';
+                ctx.shadowBlur = 10;
                 ctx.fillStyle = '#ff0000';
+                const eyeX = this.direction === 1 ? 15 : -15;
                 ctx.beginPath();
-                ctx.arc(25, -2, 4, 0, Math.PI * 2);
+                ctx.arc(eyeX, -5, 4, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.shadowBlur = 0;
             } else {
-                // Facing left
-                ctx.beginPath();
-                ctx.moveTo(30, 0);     // Body right
-                ctx.lineTo(25, -20);   // Wing up
-                ctx.lineTo(10, -10);   // Wing middle
-                ctx.lineTo(-30, -15);  // Wing tip
-                ctx.lineTo(-35, 0);    // Head point
-                ctx.lineTo(-30, 15);   // Wing tip down
-                ctx.lineTo(10, 10);    // Wing middle down
-                ctx.lineTo(25, 20);    // Wing down
-                ctx.closePath();
-                ctx.fill();
+                // Fallback: Draw pterodactyl (menacing gray/black flying dinosaur)
+                ctx.fillStyle = '#4a4a4a';
 
-                // Eye (red, menacing)
-                ctx.fillStyle = '#ff0000';
-                ctx.beginPath();
-                ctx.arc(-25, -2, 4, 0, Math.PI * 2);
-                ctx.fill();
+                if (this.direction === 1) {
+                    // Facing right - larger, more menacing shape
+                    ctx.beginPath();
+                    ctx.moveTo(-30, 0);    // Body left
+                    ctx.lineTo(-25, -20);  // Wing up
+                    ctx.lineTo(-10, -10);  // Wing middle
+                    ctx.lineTo(30, -15);   // Wing tip
+                    ctx.lineTo(35, 0);     // Head point
+                    ctx.lineTo(30, 15);    // Wing tip down
+                    ctx.lineTo(-10, 10);   // Wing middle down
+                    ctx.lineTo(-25, 20);   // Wing down
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Eye (red, menacing)
+                    ctx.fillStyle = '#ff0000';
+                    ctx.beginPath();
+                    ctx.arc(25, -2, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    // Facing left
+                    ctx.beginPath();
+                    ctx.moveTo(30, 0);     // Body right
+                    ctx.lineTo(25, -20);   // Wing up
+                    ctx.lineTo(10, -10);   // Wing middle
+                    ctx.lineTo(-30, -15);  // Wing tip
+                    ctx.lineTo(-35, 0);    // Head point
+                    ctx.lineTo(-30, 15);   // Wing tip down
+                    ctx.lineTo(10, 10);    // Wing middle down
+                    ctx.lineTo(25, 20);    // Wing down
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Eye (red, menacing)
+                    ctx.fillStyle = '#ff0000';
+                    ctx.beginPath();
+                    ctx.arc(-25, -2, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
 
             ctx.restore();
@@ -544,7 +668,8 @@
             ctx: null,
             animationId: null,
             waveTimer: 0,
-            flapHeld: false
+            flapHeld: false,
+            animFrame: 0
         };
 
         loadPlatformsForWave(1);
@@ -662,6 +787,9 @@
 
     function update() {
         if (!gameState.gameStarted || gameState.gameOver) return;
+
+        // Update animation frame
+        gameState.animFrame++;
 
         // Update player - add momentum instead of instant movement
         if (gameState.keys['ArrowLeft'] || gameState.keys['a']) {
@@ -972,8 +1100,14 @@
             gameState.keys['ArrowRight'] = false;
         });
 
-        // Start game loop
-        gameLoop();
+        // Load assets then start game loop
+        if (!assets.loaded && !assets.sprites) {
+            loadAssets(() => {
+                gameLoop();
+            });
+        } else {
+            gameLoop();
+        }
     }
 
     window.exitJoust = function() {
