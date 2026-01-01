@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.125.1';</script>
+    <script>window.APP_VERSION = '1.125.2';</script>
 
     <style>
         * {
@@ -547,9 +547,34 @@
                 </div>
 
                 <div class="feature-grid">
+                    <div class="feature-card" onclick="launch2048()">
+                        <h3>🔢 2048</h3>
+                        <p>Slide and combine tiles to reach 2048!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchAsteroids()">
+                        <h3>🚀 Asteroids</h3>
+                        <p>Classic 1979 vector arcade game!</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchBattleship()">
                         <h3>⚓ Battleship</h3>
                         <p>Pass-and-play naval combat game</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchBreakout()">
+                        <h3>🧱 Breakout</h3>
+                        <p>Classic 1976 brick breaking arcade game!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchCavernsOfMars()">
+                        <h3>🔴 Caverns of Mars</h3>
+                        <p>Classic 1981 vertical shooter - descend into Mars!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchCentipede()">
+                        <h3>🐛 Centipede</h3>
+                        <p>Classic 1980 Atari arcade shooter!</p>
                     </div>
 
                     <div class="feature-card" onclick="launchConnectFour()">
@@ -557,14 +582,69 @@
                         <p>Drop discs and connect four in a row</p>
                     </div>
 
+                    <div class="feature-card" onclick="launchDotsAndBoxes()">
+                        <h3>📦 Dots and Boxes</h3>
+                        <p>Connect dots to capture boxes</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchDownhillSkier()">
+                        <h3>⛷️ Downhill Skier</h3>
+                        <p>Ski down the mountain avoiding trees!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchDrugWars()">
+                        <h3>💊 Drug Wars</h3>
+                        <p>Classic 1984 drug dealing economic strategy game!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchFrogger()">
+                        <h3>🐸 Frogger</h3>
+                        <p>Classic 1981 arcade game - hop to safety!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchGalaga()">
+                        <h3>👾 Galaga</h3>
+                        <p>1981 sequel with tractor beam & dual fighters!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchGalaxian()">
+                        <h3>🚀 Galaxian</h3>
+                        <p>Classic 1979 space shooter arcade game!</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchGuessWho()">
                         <h3>🕵️ Guess Who</h3>
                         <p>Figure out the mystery person</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchDotsAndBoxes()">
-                        <h3>📦 Dots and Boxes</h3>
-                        <p>Connect dots to capture boxes</p>
+                    <div class="feature-card" onclick="launchJoust()">
+                        <h3>🦤 Joust</h3>
+                        <p>Ride your ostrich to defeat enemy riders!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchMinesweeper()">
+                        <h3>💣 Minesweeper</h3>
+                        <p>Clear the grid without hitting mines</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchOthello()">
+                        <h3>⚫ Othello</h3>
+                        <p>Flip discs to dominate the board</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchPacman()">
+                        <h3>🟡 Pac-Man</h3>
+                        <p>Eat dots and avoid ghosts in the maze!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchQix()">
+                        <h3>🎨 Qix</h3>
+                        <p>Classic 1981 drawing puzzle game!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchSnake()">
+                        <h3>🐍 Snake</h3>
+                        <p>Classic arcade game - eat and grow!</p>
                     </div>
 
                     <div class="feature-card" onclick="launchTicTacToe()">
@@ -577,19 +657,9 @@
                         <p>Fast-paced card game</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchWouldYouRather()">
-                        <h3>🤔 Would You Rather</h3>
-                        <p>Funny and tough choices</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchOthello()">
-                        <h3>⚫ Othello</h3>
-                        <p>Flip discs to dominate the board</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchMinesweeper()">
-                        <h3>💣 Minesweeper</h3>
-                        <p>Clear the grid without hitting mines</p>
+                    <div class="feature-card" onclick="launchTunnelRunner()">
+                        <h3>🚀 Tunnel Runner</h3>
+                        <p>Fly your rocket through the tunnel!</p>
                     </div>
 
                     <div class="feature-card" onclick="launchWar()">
@@ -597,79 +667,9 @@
                         <p>Classic card battle - highest card wins!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchJoust()">
-                        <h3>🦤 Joust</h3>
-                        <p>Ride your ostrich to defeat enemy riders!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchTunnelRunner()">
-                        <h3>🚀 Tunnel Runner</h3>
-                        <p>Fly your rocket through the tunnel!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchDownhillSkier()">
-                        <h3>⛷️ Downhill Skier</h3>
-                        <p>Ski down the mountain avoiding trees!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchPacman()">
-                        <h3>🟡 Pac-Man</h3>
-                        <p>Eat dots and avoid ghosts in the maze!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchGalaxian()">
-                        <h3>🚀 Galaxian</h3>
-                        <p>Classic 1979 space shooter arcade game!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchGalaga()">
-                        <h3>👾 Galaga</h3>
-                        <p>1981 sequel with tractor beam & dual fighters!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchCentipede()">
-                        <h3>🐛 Centipede</h3>
-                        <p>Classic 1980 Atari arcade shooter!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchAsteroids()">
-                        <h3>🚀 Asteroids</h3>
-                        <p>Classic 1979 vector arcade game!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchQix()">
-                        <h3>🎨 Qix</h3>
-                        <p>Classic 1981 drawing puzzle game!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchDrugWars()">
-                        <h3>💊 Drug Wars</h3>
-                        <p>Classic 1984 drug dealing economic strategy game!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchBreakout()">
-                        <h3>🧱 Breakout</h3>
-                        <p>Classic 1976 brick breaking arcade game!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchFrogger()">
-                        <h3>🐸 Frogger</h3>
-                        <p>Classic 1981 arcade game - hop to safety!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchCavernsOfMars()">
-                        <h3>🔴 Caverns of Mars</h3>
-                        <p>Classic 1981 vertical shooter - descend into Mars!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchSnake()">
-                        <h3>🐍 Snake</h3>
-                        <p>Classic arcade game - eat and grow!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launch2048()">
-                        <h3>🔢 2048</h3>
-                        <p>Slide and combine tiles to reach 2048!</p>
+                    <div class="feature-card" onclick="launchWouldYouRather()">
+                        <h3>🤔 Would You Rather</h3>
+                        <p>Funny and tough choices</p>
                     </div>
 
                 </div>
