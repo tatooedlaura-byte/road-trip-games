@@ -274,8 +274,8 @@
             }
 
             .oth-mode-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+                display: flex;
+                flex-direction: column;
                 gap: 1rem;
                 margin-top: 1.25rem;
             }
@@ -284,11 +284,13 @@
                 background: rgba(255,255,255,0.1);
                 border: 2px solid rgba(255,255,255,0.2);
                 border-radius: 15px;
-                padding: 1.25rem 1rem;
+                padding: 1rem;
                 color: white;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 text-align: center;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             .oth-mode-btn:hover {
