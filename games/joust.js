@@ -226,7 +226,16 @@
                     ctx.scale(-1, 1);
                 }
 
-                // Draw bird sprite (player uses base blue/yellow bird)
+                // Draw golden glow behind player
+                ctx.shadowColor = '#FFD700';
+                ctx.shadowBlur = 15;
+                ctx.fillStyle = 'rgba(255, 215, 0, 0.6)';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.width / 2.5, this.height / 2.5, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Draw bird sprite
                 ctx.drawImage(
                     assets.birdSprite,
                     frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
@@ -437,6 +446,24 @@
                     ctx.scale(-1, 1);
                 }
 
+                // Draw colored glow behind enemy based on type
+                let glowColor;
+                switch(this.type) {
+                    case 'shadow': glowColor = '#800080'; break; // Purple
+                    case 'hunter': glowColor = '#0066FF'; break; // Blue
+                    case 'bounder':
+                    default: glowColor = '#FF0000'; break; // Red
+                }
+                ctx.shadowColor = glowColor;
+                ctx.shadowBlur = 12;
+                ctx.fillStyle = glowColor;
+                ctx.globalAlpha = 0.5;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.width / 2.5, this.height / 2.5, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+
                 // Draw bird sprite
                 ctx.drawImage(
                     assets.birdSprite,
@@ -518,12 +545,33 @@
                     ctx.scale(-1, 1);
                 }
 
+                // Draw menacing green/dark glow behind pterodactyl
+                ctx.shadowColor = '#00FF00';
+                ctx.shadowBlur = 20;
+                ctx.fillStyle = '#004400';
+                ctx.globalAlpha = 0.7;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.width / 2.2, this.height / 2.2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+
                 // Draw larger sprite for pterodactyl
                 ctx.drawImage(
                     assets.birdSprite,
                     frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
+
+                // Add menacing red eye
+                ctx.shadowColor = '#ff0000';
+                ctx.shadowBlur = 8;
+                ctx.fillStyle = '#ff0000';
+                const eyeX = this.direction === 1 ? 12 : -12;
+                ctx.beginPath();
+                ctx.arc(eyeX, -8, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
             } else {
                 // Fallback: Draw pterodactyl (menacing gray/black flying dinosaur)
                 ctx.fillStyle = '#4a4a4a';
