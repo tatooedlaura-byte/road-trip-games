@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Road Trip Games - Your Ultimate Travel Companion</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff6b35">
+    <meta name="theme-color" content="#1e293b">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.120.0';</script>
+    <script>window.APP_VERSION = '1.121.0';</script>
 
     <style>
         * {
@@ -28,65 +28,39 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #fda085 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             min-height: 100vh;
             padding: 20px;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         .app-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             color: white;
-            padding: 3rem 2rem;
+            padding: 2rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: shimmer 8s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(25%, 25%); }
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
-            position: relative;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            color: #60a5fa;
         }
 
         .header p {
-            opacity: 0.95;
-            font-size: 1.1rem;
-            position: relative;
+            opacity: 0.7;
+            font-size: 1rem;
+            color: #94a3b8;
         }
 
         .content {
@@ -101,55 +75,32 @@
         }
 
         .feature-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(255,255,255,0.05);
             color: white;
-            padding: 2rem;
-            border-radius: 20px;
+            padding: 1.5rem;
+            border-radius: 16px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .feature-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-        }
-
-        .feature-card:hover::after {
-            opacity: 1;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+            border-color: rgba(96, 165, 250, 0.3);
         }
 
         .feature-card h3 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
-            position: relative;
+            color: #f1f5f9;
         }
 
         .feature-card p {
-            opacity: 0.95;
-            position: relative;
+            color: #94a3b8;
+            font-size: 0.9rem;
         }
-
-        /* Unique colors for home feature cards */
-        .feature-grid > .feature-card:nth-child(1) { background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%); }
-        .feature-grid > .feature-card:nth-child(2) { background: linear-gradient(135deg, #5f27cd 0%, #a29bfe 100%); }
-        .feature-grid > .feature-card:nth-child(3) { background: linear-gradient(135deg, #00d2d3 0%, #54a0ff 100%); }
-        .feature-grid > .feature-card:nth-child(4) { background: linear-gradient(135deg, #ff9ff3 0%, #f368e0 100%); }
 
         .welcome {
             text-align: center;
@@ -157,17 +108,13 @@
         }
 
         .welcome h2 {
-            color: #333;
+            color: #f1f5f9;
             margin-bottom: 1rem;
             font-size: 1.8rem;
-            background: linear-gradient(135deg, #667eea, #f093fb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .welcome p {
-            color: #555;
+            color: #94a3b8;
             font-size: 1.15rem;
             line-height: 1.7;
             max-width: 600px;
@@ -202,12 +149,12 @@
             transform: translateX(-50%);
             width: 40px;
             height: 40px;
-            background: white;
+            background: #334155;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
             transition: top 0.3s ease;
             z-index: 9999;
         }
@@ -219,8 +166,8 @@
         .spinner {
             width: 24px;
             height: 24px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #ff6b35;
+            border: 3px solid #334155;
+            border-top: 3px solid #60a5fa;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -298,7 +245,8 @@
         }
 
         .stats-content {
-            background: white;
+            background: #1e293b;
+            color: #f1f5f9;
             border-radius: 20px;
             padding: 2rem;
             max-width: 600px;
@@ -306,6 +254,7 @@
             max-height: 80vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .stats-header {
@@ -314,16 +263,16 @@
             align-items: center;
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .stats-player-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
             color: white;
             padding: 1.5rem;
             border-radius: 15px;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .stats-row {
@@ -345,7 +294,7 @@
 
         /* Drug Wars Styles */
         #drugwarsPrices tr:nth-child(even) {
-            background: #f8f9fa;
+            background: rgba(255,255,255,0.05);
         }
     </style>
 </head>
@@ -396,7 +345,7 @@
                 </div>
 
                 <div style="text-align: center; margin-bottom: 2rem;">
-                    <h3 style="color: #333; margin-bottom: 1rem;">Choose Game Mode</h3>
+                    <h3 style="color: #f1f5f9; margin-bottom: 1rem;">Choose Game Mode</h3>
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 600px; margin: 0 auto;">
@@ -421,8 +370,8 @@
                     <button onclick="backToModeSelection()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
-                <div style="max-width: 500px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                    <p style="color: #666; text-align: center; margin-bottom: 2rem;">Enter names for both players to track your progress:</p>
+                <div style="max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);">
+                    <p style="color: #94a3b8; text-align: center; margin-bottom: 2rem;">Enter names for both players to track your progress:</p>
 
                     <div style="margin-bottom: 1.5rem;">
                         <label style="display: block; color: #007bff; font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem;">🔵 Player 1 Name:</label>
@@ -436,7 +385,7 @@
 
                     <button onclick="submitPlayerNames()" style="width: 100%; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">Start Game</button>
 
-                    <p style="color: #999; font-size: 0.85rem; text-align: center; margin-top: 1rem;">You can change names later from the game screen</p>
+                    <p style="color: #64748b; font-size: 0.85rem; text-align: center; margin-top: 1rem;">You can change names later from the game screen</p>
                 </div>
             </div>
 
@@ -449,7 +398,7 @@
 
                 <!-- Player Selector for Competitive Mode -->
                 <div id="bingoPlayerSelector" style="display: none; text-align: center; margin-bottom: 1rem;">
-                    <p style="color: #666; margin-bottom: 0.5rem; font-size: 0.9rem;">I am:</p>
+                    <p style="color: #94a3b8; margin-bottom: 0.5rem; font-size: 0.9rem;">I am:</p>
                     <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap;">
                         <button id="selectPlayer1" onclick="selectPlayer(1)" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3); min-width: 120px;">🔵 <span id="player1ButtonName">Player 1</span></button>
                         <button id="selectPlayer2" onclick="selectPlayer(2)" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3); min-width: 120px; opacity: 0.5;">🔴 <span id="player2ButtonName">Player 2</span></button>
@@ -473,13 +422,13 @@
                     </div>
 
                     <!-- Current Theme Indicator -->
-                    <div id="currentThemeIndicator" style="text-align: center; margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    <div id="currentThemeIndicator" style="text-align: center; margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">
                         Current theme: <span id="currentThemeName" style="font-weight: bold; color: #667eea;"></span>
                     </div>
 
-                    <div id="bingoInstructions" style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 2rem;">
-                        <h3 style="color: #333; margin-bottom: 1rem;">How to Play:</h3>
-                        <ul style="color: #666; line-height: 1.8;">
+                    <div id="bingoInstructions" style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin-top: 2rem; border: 1px solid rgba(255,255,255,0.1);">
+                        <h3 style="color: #f1f5f9; margin-bottom: 1rem;">How to Play:</h3>
+                        <ul style="color: #94a3b8; line-height: 1.8;">
                             <li>Tap a square when you spot that item on your road trip</li>
                             <li>Get 5 in a row (horizontal, vertical, or diagonal) to win!</li>
                             <li>⭐ BLACKOUT: Fill all 25 squares for an epic win!</li>
@@ -496,7 +445,7 @@
             <div id="bingoStatsModal" class="stats-modal">
                 <div class="stats-content">
                     <div class="stats-header">
-                        <h2 style="color: #333; margin: 0;">📊 Bingo Statistics</h2>
+                        <h2 style="color: #f1f5f9; margin: 0;">📊 Bingo Statistics</h2>
                         <button onclick="closeBingoStats()" style="background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold;">✕ Close</button>
                     </div>
                     <div id="bingoStatsContent">
@@ -512,10 +461,10 @@
             <div id="themeSelectorModal" class="stats-modal">
                 <div class="stats-content">
                     <div class="stats-header">
-                        <h2 style="color: #333; margin: 0;">🎨 Choose Bingo Theme</h2>
+                        <h2 style="color: #f1f5f9; margin: 0;">🎨 Choose Bingo Theme</h2>
                         <button onclick="closeThemeSelector()" style="background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold;">✕ Close</button>
                     </div>
-                    <p style="text-align: center; color: #666; margin-bottom: 1.5rem;">Select a theme for your bingo card:</p>
+                    <p style="text-align: center; color: #94a3b8; margin-bottom: 1.5rem;">Select a theme for your bingo card:</p>
                     <div id="themeSelectorContent" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                         <!-- Theme cards will be rendered here -->
                     </div>
@@ -543,12 +492,12 @@
                     <button onclick="showHome()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                <div style="background: rgba(255,255,255,0.05); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1);">
                     <div style="text-align: center; margin-bottom: 1.5rem;">
                         <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="plateProgress">0 / 64</h3>
-                        <p style="font-size: 1.1rem;">Total Plates Collected</p>
-                        <div style="background: white; height: 20px; border-radius: 10px; overflow: hidden; margin-top: 1rem;">
-                            <div id="plateProgressBar" style="background: #28a745; height: 100%; width: 0%; transition: width 0.3s;"></div>
+                        <p style="font-size: 1.1rem; color: #94a3b8;">Total Plates Collected</p>
+                        <div style="background: rgba(255,255,255,0.1); height: 20px; border-radius: 10px; overflow: hidden; margin-top: 1rem;">
+                            <div id="plateProgressBar" style="background: #60a5fa; height: 100%; width: 0%; transition: width 0.3s;"></div>
                         </div>
                     </div>
 
@@ -567,13 +516,13 @@
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
                     <!-- US States Section -->
                     <div>
-                        <h3 style="color: #ff6b35; margin-bottom: 1rem; font-size: 1.5rem;">🇺🇸 United States</h3>
+                        <h3 style="color: #60a5fa; margin-bottom: 1rem; font-size: 1.5rem;">🇺🇸 United States</h3>
                         <div id="usStates"></div>
                     </div>
 
                     <!-- Canadian Provinces Section -->
                     <div>
-                        <h3 style="color: #ff6b35; margin-bottom: 1rem; font-size: 1.5rem;">🇨🇦 Canada</h3>
+                        <h3 style="color: #60a5fa; margin-bottom: 1rem; font-size: 1.5rem;">🇨🇦 Canada</h3>
                         <div id="canadaProvinces"></div>
                     </div>
                 </div>
@@ -587,127 +536,127 @@
                 </div>
 
                 <div class="feature-grid">
-                    <div class="feature-card" onclick="launchBattleship()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="feature-card" onclick="launchBattleship()">
                         <h3>⚓ Battleship</h3>
                         <p>Pass-and-play naval combat game</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchConnectFour()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="feature-card" onclick="launchConnectFour()">
                         <h3>🔴 Connect 4</h3>
                         <p>Drop discs and connect four in a row</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchGuessWho()" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <div class="feature-card" onclick="launchGuessWho()">
                         <h3>🕵️ Guess Who</h3>
                         <p>Figure out the mystery person</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchDotsAndBoxes()" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="feature-card" onclick="launchDotsAndBoxes()">
                         <h3>📦 Dots and Boxes</h3>
                         <p>Connect dots to capture boxes</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchTicTacToe()" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                    <div class="feature-card" onclick="launchTicTacToe()">
                         <h3>⭕ Tic Tac Toe</h3>
                         <p>Classic X's and O's strategy</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchTrash()" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                    <div class="feature-card" onclick="launchTrash()">
                         <h3>🗑️ Trash</h3>
                         <p>Fast-paced card game</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchWouldYouRather()" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+                    <div class="feature-card" onclick="launchWouldYouRather()">
                         <h3>🤔 Would You Rather</h3>
                         <p>Funny and tough choices</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchOthello()" style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);">
+                    <div class="feature-card" onclick="launchOthello()">
                         <h3>⚫ Othello</h3>
                         <p>Flip discs to dominate the board</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchMinesweeper()" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
+                    <div class="feature-card" onclick="launchMinesweeper()">
                         <h3>💣 Minesweeper</h3>
                         <p>Clear the grid without hitting mines</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchWar()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <div class="feature-card" onclick="launchWar()">
                         <h3>🎴 War</h3>
                         <p>Classic card battle - highest card wins!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchJoust()" style="background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);">
+                    <div class="feature-card" onclick="launchJoust()">
                         <h3>🦤 Joust</h3>
                         <p>Ride your ostrich to defeat enemy riders!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchTunnelRunner()" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <div class="feature-card" onclick="launchTunnelRunner()">
                         <h3>🚀 Tunnel Runner</h3>
                         <p>Fly your rocket through the tunnel!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchDownhillSkier()" style="background: linear-gradient(135deg, #00b4d8 0%, #90e0ef 100%);">
+                    <div class="feature-card" onclick="launchDownhillSkier()">
                         <h3>⛷️ Downhill Skier</h3>
                         <p>Ski down the mountain avoiding trees!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchPacman()" style="background: linear-gradient(135deg, #FFFF00 0%, #FFD700 100%); color: #000;">
+                    <div class="feature-card" onclick="launchPacman()">
                         <h3>🟡 Pac-Man</h3>
                         <p>Eat dots and avoid ghosts in the maze!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchGalaxian()" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+                    <div class="feature-card" onclick="launchGalaxian()">
                         <h3>🚀 Galaxian</h3>
                         <p>Classic 1979 space shooter arcade game!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchGalaga()" style="background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);">
+                    <div class="feature-card" onclick="launchGalaga()">
                         <h3>👾 Galaga</h3>
                         <p>1981 sequel with tractor beam & dual fighters!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchCentipede()" style="background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);">
+                    <div class="feature-card" onclick="launchCentipede()">
                         <h3>🐛 Centipede</h3>
                         <p>Classic 1980 Atari arcade shooter!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchAsteroids()" style="background: linear-gradient(135deg, #1a1a2e 0%, #4a4e69 100%);">
+                    <div class="feature-card" onclick="launchAsteroids()">
                         <h3>🚀 Asteroids</h3>
                         <p>Classic 1979 vector arcade game!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchQix()" style="background: linear-gradient(135deg, #0066cc 0%, #00ccff 100%);">
+                    <div class="feature-card" onclick="launchQix()">
                         <h3>🎨 Qix</h3>
                         <p>Classic 1981 drawing puzzle game!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchDrugWars()" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
+                    <div class="feature-card" onclick="launchDrugWars()">
                         <h3>💊 Drug Wars</h3>
                         <p>Classic 1984 drug dealing economic strategy game!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchBreakout()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <div class="feature-card" onclick="launchBreakout()">
                         <h3>🧱 Breakout</h3>
                         <p>Classic 1976 brick breaking arcade game!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchFrogger()" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+                    <div class="feature-card" onclick="launchFrogger()">
                         <h3>🐸 Frogger</h3>
                         <p>Classic 1981 arcade game - hop to safety!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchCavernsOfMars()" style="background: linear-gradient(135deg, #ff6b35 0%, #8B0000 100%);">
+                    <div class="feature-card" onclick="launchCavernsOfMars()">
                         <h3>🔴 Caverns of Mars</h3>
                         <p>Classic 1981 vertical shooter - descend into Mars!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchSnake()" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">
+                    <div class="feature-card" onclick="launchSnake()">
                         <h3>🐍 Snake</h3>
                         <p>Classic arcade game - eat and grow!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launch2048()" style="background: linear-gradient(135deg, #edc22e 0%, #f59563 100%);">
+                    <div class="feature-card" onclick="launch2048()">
                         <h3>🔢 2048</h3>
                         <p>Slide and combine tiles to reach 2048!</p>
                     </div>
@@ -837,7 +786,7 @@
                 </div>
                 <div style="text-align: center; max-width: 100%; overflow: hidden;">
                     <canvas id="galaxianCanvas" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
-                    <div style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    <div style="margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">
                         <p><strong>Arrow Keys / A-D</strong> to move | <strong>Space</strong> to shoot</p>
                         <p style="margin-top: 0.5rem;">💡 Diving enemies are worth 2x points!</p>
                     </div>
@@ -862,7 +811,7 @@
                 </div>
                 <div style="text-align: center; max-width: 100%; overflow: hidden;">
                     <canvas id="galagaCanvas" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
-                    <div style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    <div style="margin-top: 1rem; color: #94a3b8; font-size: 0.9rem;">
                         <p><strong>Arrow Keys / A-D</strong> to move | <strong>Space</strong> to shoot (auto-fire!)</p>
                         <p style="margin-top: 0.5rem;">✨ <strong>Boss Galaga</strong> can capture your ship - rescue it for <strong>Dual Fighter</strong> mode!</p>
                         <p style="margin-top: 0.25rem;">🎯 Every 3rd stage is a <strong>Challenge Stage</strong></p>
@@ -1044,11 +993,11 @@
                 </div>
 
                 <!-- Status Bar -->
-                <div style="background: #f0f0f0; padding: 0.75rem; margin-bottom: 1rem; font-family: monospace; font-size: 1rem; text-align: center;">
-                    <strong>Score: <span id="froggerScore" style="color: #27ae60;">0</span></strong> |
-                    <strong>Lives: <span id="froggerLives" style="color: #e74c3c;">3</span></strong> |
-                    <strong>Level: <span id="froggerLevel" style="color: #3498db;">1</span></strong> |
-                    <strong>Time: <span id="froggerTime" style="color: #f39c12;">60</span></strong>
+                <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; margin-bottom: 1rem; font-family: monospace; font-size: 1rem; text-align: center; border-radius: 10px; color: #f1f5f9; border: 1px solid rgba(255,255,255,0.1);">
+                    <strong>Score: <span id="froggerScore" style="color: #4ade80;">0</span></strong> |
+                    <strong>Lives: <span id="froggerLives" style="color: #f87171;">3</span></strong> |
+                    <strong>Level: <span id="froggerLevel" style="color: #60a5fa;">1</span></strong> |
+                    <strong>Time: <span id="froggerTime" style="color: #fbbf24;">60</span></strong>
                 </div>
 
                 <!-- Game Canvas -->
@@ -1057,8 +1006,8 @@
                 </div>
 
                 <!-- Instructions -->
-                <div style="background: white; padding: 1rem; border: 1px solid #ddd; font-size: 0.9rem;">
-                    <strong>How to Play:</strong>
+                <div style="background: rgba(255,255,255,0.05); padding: 1rem; border: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; border-radius: 10px; color: #94a3b8;">
+                    <strong style="color: #f1f5f9;">How to Play:</strong>
                     <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
                         <li>Guide 6 frogs safely to their homes at the top</li>
                         <li><strong>Road:</strong> Dodge cars, trucks, and buses</li>
@@ -1066,7 +1015,7 @@
                         <li>Watch out for diving turtles and crocodile mouths</li>
                         <li>Bonus points for catching flies and lady frogs!</li>
                     </ul>
-                    <strong>Controls:</strong> Arrow keys or touch buttons to hop
+                    <strong style="color: #f1f5f9;">Controls:</strong> Arrow keys or touch buttons to hop
                 </div>
 
                 <!-- Mobile Touch Controls - Directional Pad Layout -->
@@ -1085,12 +1034,12 @@
 
                 <!-- Game Over Screen -->
                 <div id="froggerGameOverScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000;">
-                    <div style="background: white; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center;">
-                        <h2 style="margin-top: 0; color: #2c3e50;">GAME OVER</h2>
-                        <p style="font-size: 1.2rem; margin: 1rem 0;">🐸 Better luck next time, frogger!</p>
-                        <p style="font-size: 2rem; margin: 1.5rem 0; color: #27ae60;">Final Score: <strong id="froggerFinalScore">0</strong></p>
-                        <button onclick="froggerRestart()" style="background: #27ae60; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold; margin-right: 1rem;">🔄 Play Again</button>
-                        <button onclick="exitFrogger()" style="background: #95a5a6; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">🏠 Menu</button>
+                    <div style="background: #1e293b; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+                        <h2 style="margin-top: 0; color: #f1f5f9;">GAME OVER</h2>
+                        <p style="font-size: 1.2rem; margin: 1rem 0; color: #94a3b8;">🐸 Better luck next time, frogger!</p>
+                        <p style="font-size: 2rem; margin: 1.5rem 0; color: #60a5fa;">Final Score: <strong id="froggerFinalScore">0</strong></p>
+                        <button onclick="froggerRestart()" style="background: #334155; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold; margin-right: 1rem;">🔄 Play Again</button>
+                        <button onclick="exitFrogger()" style="background: #475569; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">🏠 Menu</button>
                     </div>
                 </div>
             </div>
@@ -1536,8 +1485,8 @@
             document.getElementById('bingoTitle').textContent = '🏁 Competitive Bingo';
             document.getElementById('bingoPlayerSelector').style.display = 'block';
             document.getElementById('bingoInstructions').innerHTML = `
-                <h3 style="color: #333; margin-bottom: 1rem;">How to Play:</h3>
-                <ul style="color: #666; line-height: 1.8;">
+                <h3 style="color: #f1f5f9; margin-bottom: 1rem;">How to Play:</h3>
+                <ul style="color: #94a3b8; line-height: 1.8;">
                     <li>Select your player number above before marking squares</li>
                     <li>When you spot an item, click it to mark it with your checkmark</li>
                     <li>${player1Name}: BLUE ✓ in upper right corner</li>
@@ -1584,8 +1533,8 @@
             document.getElementById('bingoTitle').textContent = '🤝 Team Bingo';
             document.getElementById('bingoPlayerSelector').style.display = 'none';
             document.getElementById('bingoInstructions').innerHTML = `
-                <h3 style="color: #333; margin-bottom: 1rem;">How to Play:</h3>
-                <ul style="color: #666; line-height: 1.8;">
+                <h3 style="color: #f1f5f9; margin-bottom: 1rem;">How to Play:</h3>
+                <ul style="color: #94a3b8; line-height: 1.8;">
                     <li>Work together to spot items on your road trip</li>
                     <li>Anyone can mark any square when you see it</li>
                     <li>Get 5 in a row together to win as a team!</li>
@@ -2014,7 +1963,7 @@
 
             if (Object.keys(stats).length === 0) {
                 content.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: #666;">
+                    <div style="text-align: center; padding: 2rem; color: #94a3b8;">
                         <p style="font-size: 1.2rem;">No statistics yet!</p>
                         <p style="margin-top: 0.5rem;">Play some games to start tracking your wins.</p>
                     </div>
@@ -2078,25 +2027,25 @@
             // Render theme cards
             content.innerHTML = Object.entries(BINGO_THEMES).map(([key, theme]) => {
                 const isSelected = key === currentTheme;
-                const borderStyle = isSelected ? 'border: 3px solid #28a745;' : 'border: 2px solid #e9ecef;';
-                const selectedBadge = isSelected ? '<div style="position: absolute; top: 10px; right: 10px; background: #28a745; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">ACTIVE</div>' : '';
+                const borderStyle = isSelected ? 'border: 2px solid #60a5fa;' : 'border: 1px solid rgba(255,255,255,0.1);';
+                const selectedBadge = isSelected ? '<div style="position: absolute; top: 10px; right: 10px; background: #60a5fa; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">ACTIVE</div>' : '';
 
                 return `
                     <div onclick="selectTheme('${key}')" style="
                         position: relative;
-                        background: white;
+                        background: rgba(255,255,255,0.05);
                         ${borderStyle}
                         border-radius: 15px;
                         padding: 1.5rem;
                         text-align: center;
                         cursor: pointer;
                         transition: all 0.2s;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                    " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)';">
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                    " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.3)'; this.style.background='rgba(255,255,255,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.2)'; this.style.background='rgba(255,255,255,0.05)';">
                         ${selectedBadge}
                         <div style="font-size: 3rem; margin-bottom: 0.5rem;">${theme.icon}</div>
-                        <h3 style="color: #333; margin-bottom: 0.5rem;">${theme.name}</h3>
-                        <p style="color: #666; font-size: 0.9rem;">${theme.items.length} items</p>
+                        <h3 style="color: #f1f5f9; margin-bottom: 0.5rem;">${theme.name}</h3>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">${theme.items.length} items</p>
                     </div>
                 `;
             }).join('');
