@@ -15,21 +15,23 @@
         loaded: false
     };
 
-    // Sprite positions in enemy-sprites.png (approximate pixel positions)
-    // Pterror sprites are in rows 2-3, each color has 2 animation frames
+    // Sprite positions in enemy-sprites.png (measured from image)
+    // Pterrors are in 2 rows - blue/green on row 1, red/purple/yellow on row 2
     const SPRITE_CONFIG = {
         pterror: {
-            frameWidth: 32,
-            frameHeight: 24,
-            // Y position where pterrors start
-            baseY: 80,
-            // Colors and their X offsets (each color has 2 frames)
+            frameWidth: 40,
+            frameHeight: 32,
+            // Row 1 pterrors (blue, green) - y position
+            row1Y: 152,
+            // Row 2 pterrors (red, purple, yellow) - y position
+            row2Y: 200,
+            // Colors and their positions
             colors: {
-                blue: { x: 0 },
-                green: { x: 64 },
-                red: { x: 128 },
-                purple: { x: 192 },
-                yellow: { x: 256 }
+                blue: { x: 0, y: 152 },
+                green: { x: 80, y: 152 },
+                red: { x: 0, y: 200 },
+                purple: { x: 80, y: 200 },
+                yellow: { x: 160, y: 200 }
             }
         }
     };
@@ -222,7 +224,7 @@
                 const frame = Math.floor(gameState.animFrame / 8) % 2; // Animate wings
 
                 const srcX = colorConfig.x + (frame * config.frameWidth);
-                const srcY = config.baseY;
+                const srcY = colorConfig.y;
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
@@ -444,7 +446,7 @@
 
                 const frame = Math.floor(gameState.animFrame / 8) % 2; // Animate wings
                 const srcX = spriteColor.x + (frame * config.frameWidth);
-                const srcY = config.baseY;
+                const srcY = spriteColor.y;
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
@@ -529,7 +531,7 @@
 
                 const frame = Math.floor(gameState.animFrame / 6) % 2; // Faster wing animation
                 const srcX = spriteColor.x + (frame * config.frameWidth);
-                const srcY = config.baseY;
+                const srcY = spriteColor.y;
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
