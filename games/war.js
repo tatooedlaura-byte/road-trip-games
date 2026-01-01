@@ -464,7 +464,8 @@
     function showModeSelection() {
         const content = document.getElementById('warContent');
         content.innerHTML = `
-            <div class="war-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh;">
+            <div class="war-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; position: relative;">
+                <button class="war-back-btn" onclick="exitWar()">← Back</button>
                 <h1 class="war-title" style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎴 War</h1>
                 <p style="color: #888; margin-bottom: 2rem;">Choose your game mode</p>
 
@@ -493,8 +494,6 @@
                         </div>
                     </button>
                 </div>
-
-                <button class="war-btn secondary" style="margin-top: 2rem;" onclick="exitWar()">← Back to Games</button>
             </div>
         `;
     }

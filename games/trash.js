@@ -408,7 +408,8 @@
     function showModeSelection() {
         const content = document.getElementById('trashContent');
         content.innerHTML = `
-            <div class="trash-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh;">
+            <div class="trash-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; position: relative;">
+                <button class="trash-back-btn" onclick="exitTrash()">← Back</button>
                 <h1 class="trash-title" style="font-size: 2.5rem; margin-bottom: 0.5rem;">🗑️ Trash</h1>
                 <p style="color: #888; margin-bottom: 2rem;">Choose your game mode</p>
 
@@ -429,8 +430,6 @@
                         </div>
                     </button>
                 </div>
-
-                <button class="trash-btn secondary" style="margin-top: 2rem;" onclick="exitTrash()">← Back to Games</button>
             </div>
         `;
     }
