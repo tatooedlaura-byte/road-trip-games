@@ -11,32 +11,27 @@
 
     // Sprite assets
     const assets = {
-        sprites: null,
+        birdSprite: null,
         loaded: false
     };
 
     // Set to true to use original triangle shapes instead of sprites
-    const USE_FALLBACK_GRAPHICS = true; // DEBUG: Force fallback until sprites work
+    const USE_FALLBACK_GRAPHICS = false; // Set to false to use sprites
 
-    // Sprite positions in enemy-sprites.png (measured from image)
-    // Pterrors are in 2 rows - blue/green on row 1, red/purple/yellow on row 2
+    // Sprite config for bird-animated.png
+    // 11 columns x 8 rows, each cell 48x32 pixels
+    // Flying animation is in rows 5-7 (y = 160, 192, 224)
     const SPRITE_CONFIG = {
-        pterror: {
-            frameWidth: 40,
-            frameHeight: 32,
-            // Row 1 pterrors (blue, green) - y position
-            row1Y: 152,
-            // Row 2 pterrors (red, purple, yellow) - y position
-            row2Y: 200,
-            // Colors and their positions
-            colors: {
-                blue: { x: 0, y: 152 },
-                green: { x: 80, y: 152 },
-                red: { x: 0, y: 200 },
-                purple: { x: 80, y: 200 },
-                yellow: { x: 160, y: 200 }
-            }
-        }
+        frameWidth: 48,
+        frameHeight: 32,
+        // Flying animation frames (row 5-6, multiple columns)
+        flyFrames: [
+            { x: 0, y: 160 },   // Flying frame 1
+            { x: 48, y: 160 },  // Flying frame 2
+            { x: 96, y: 160 },  // Flying frame 3
+            { x: 0, y: 192 },   // Flying frame 4
+            { x: 48, y: 192 }   // Flying frame 5
+        ]
     };
 
     let gameState = {
@@ -61,17 +56,18 @@
 
     // Load sprite assets
     function loadAssets(callback) {
-        assets.sprites = new Image();
-        assets.sprites.onload = () => {
+        assets.birdSprite = new Image();
+        assets.birdSprite.onload = () => {
             assets.loaded = true;
+            console.log('Bird sprite loaded successfully');
             callback();
         };
-        assets.sprites.onerror = () => {
-            console.warn('Failed to load sprites, using fallback rendering');
+        assets.birdSprite.onerror = (e) => {
+            console.warn('Failed to load bird sprite:', e);
             assets.loaded = false;
             callback();
         };
-        assets.sprites.src = 'assets/joust/enemy-sprites.png';
+        assets.birdSprite.src = 'assets/joust/bird-animated.png';
     }
 
     // Platform layouts for different waves
@@ -221,25 +217,27 @@
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
             // Try to draw sprite (unless fallback is forced)
-            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.sprites) {
-                const config = SPRITE_CONFIG.pterror;
-                const colorConfig = config.colors.yellow; // Player is yellow
-                const frame = Math.floor(gameState.animFrame / 8) % 2; // Animate wings
-
-                const srcX = colorConfig.x + (frame * config.frameWidth);
-                const srcY = colorConfig.y;
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.birdSprite) {
+                const frameIndex = Math.floor(gameState.animFrame / 6) % SPRITE_CONFIG.flyFrames.length;
+                const frame = SPRITE_CONFIG.flyFrames[frameIndex];
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
                     ctx.scale(-1, 1);
                 }
 
-                // Draw scaled up sprite
+                // Tint yellow for player (draw with golden overlay)
                 ctx.drawImage(
-                    assets.sprites,
-                    srcX, srcY, config.frameWidth, config.frameHeight,
+                    assets.birdSprite,
+                    frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
+
+                // Add golden tint overlay
+                ctx.globalCompositeOperation = 'source-atop';
+                ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+                ctx.globalCompositeOperation = 'source-over';
             } else {
                 // Fallback: Draw simple directional sprite (larger)
                 ctx.fillStyle = '#FFD700'; // Gold color for player
@@ -436,32 +434,34 @@
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
             // Try to draw sprite (unless fallback is forced)
-            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.sprites) {
-                const config = SPRITE_CONFIG.pterror;
-                // Map enemy types to sprite colors
-                let spriteColor;
-                switch(this.type) {
-                    case 'shadow': spriteColor = config.colors.purple; break;
-                    case 'hunter': spriteColor = config.colors.blue; break;
-                    case 'bounder':
-                    default: spriteColor = config.colors.red; break;
-                }
-
-                const frame = Math.floor(gameState.animFrame / 8) % 2; // Animate wings
-                const srcX = spriteColor.x + (frame * config.frameWidth);
-                const srcY = spriteColor.y;
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.birdSprite) {
+                const frameIndex = Math.floor(gameState.animFrame / 6) % SPRITE_CONFIG.flyFrames.length;
+                const frame = SPRITE_CONFIG.flyFrames[frameIndex];
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
                     ctx.scale(-1, 1);
                 }
 
-                // Draw scaled up sprite
+                // Draw bird sprite
                 ctx.drawImage(
-                    assets.sprites,
-                    srcX, srcY, config.frameWidth, config.frameHeight,
+                    assets.birdSprite,
+                    frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
+
+                // Add color tint based on enemy type
+                ctx.globalCompositeOperation = 'source-atop';
+                let tintColor;
+                switch(this.type) {
+                    case 'shadow': tintColor = 'rgba(128, 0, 128, 0.4)'; break; // Purple
+                    case 'hunter': tintColor = 'rgba(0, 0, 255, 0.3)'; break; // Blue (less tint - already blue)
+                    case 'bounder':
+                    default: tintColor = 'rgba(255, 0, 0, 0.4)'; break; // Red
+                }
+                ctx.fillStyle = tintColor;
+                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+                ctx.globalCompositeOperation = 'source-over';
             } else {
                 // Fallback: Draw triangle enemy with type-specific color
                 ctx.fillStyle = this.color;
@@ -527,14 +527,10 @@
             ctx.save();
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
 
-            // Try to draw sprite (use green pterror for pterodactyl - distinct from enemies)
-            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.sprites) {
-                const config = SPRITE_CONFIG.pterror;
-                const spriteColor = config.colors.green; // Green for pterodactyl boss
-
-                const frame = Math.floor(gameState.animFrame / 6) % 2; // Faster wing animation
-                const srcX = spriteColor.x + (frame * config.frameWidth);
-                const srcY = spriteColor.y;
+            // Try to draw sprite (use green tinted bird for pterodactyl)
+            if (!USE_FALLBACK_GRAPHICS && assets.loaded && assets.birdSprite) {
+                const frameIndex = Math.floor(gameState.animFrame / 4) % SPRITE_CONFIG.flyFrames.length; // Faster animation
+                const frame = SPRITE_CONFIG.flyFrames[frameIndex];
 
                 // Flip horizontally if facing left
                 if (this.direction === -1) {
@@ -543,10 +539,16 @@
 
                 // Draw larger sprite for pterodactyl
                 ctx.drawImage(
-                    assets.sprites,
-                    srcX, srcY, config.frameWidth, config.frameHeight,
+                    assets.birdSprite,
+                    frame.x, frame.y, SPRITE_CONFIG.frameWidth, SPRITE_CONFIG.frameHeight,
                     -this.width / 2, -this.height / 2, this.width, this.height
                 );
+
+                // Add green/dark tint for pterodactyl
+                ctx.globalCompositeOperation = 'source-atop';
+                ctx.fillStyle = 'rgba(0, 100, 0, 0.5)';
+                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+                ctx.globalCompositeOperation = 'source-over';
 
                 // Add menacing red eye glow
                 ctx.shadowColor = '#ff0000';
