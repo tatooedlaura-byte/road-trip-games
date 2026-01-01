@@ -16,7 +16,7 @@
     };
 
     // Set to true to use original triangle shapes instead of sprites
-    const USE_FALLBACK_GRAPHICS = false;
+    const USE_FALLBACK_GRAPHICS = true;
 
     // Sprite config for enemy-sprites.png pterrors
     // Each pterror has 2 animation frames, roughly 38x26 pixels each
