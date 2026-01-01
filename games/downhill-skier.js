@@ -18,6 +18,8 @@
     let keys = {};
 
     // Sprite assets from Kenney's Tiny Ski pack
+    // Note: Sprites disabled - hand-drawn graphics look better at scale
+    const USE_SPRITES = false;
     const sprites = {
         tree: null,
         treeDark: null,
@@ -571,8 +573,8 @@
                 ctx.ellipse(obstacle.x - mogulSize * 0.2, obstacle.y - mogulSize * 0.2, mogulSize * 0.4, mogulSize * 0.2, 0, 0, Math.PI * 2);
                 ctx.fill();
             } else if (obstacle.type === 'tree') {
-                // Draw tree using sprite if available
-                if (sprites.loaded && sprites.tree) {
+                // Draw tree using sprite if available (disabled - hand-drawn looks better)
+                if (USE_SPRITES && sprites.loaded && sprites.tree) {
                     // Scale sprite based on tree size (16px original, scale to obstacle.size * 2)
                     const scale = (obstacle.size * 2) / 16;
                     const drawWidth = 16 * scale;
@@ -656,8 +658,8 @@
     // Draw slalom gates
     function drawGates() {
         for (let gate of gates) {
-            // Use sprites if available
-            if (sprites.loaded && sprites.flagRed && sprites.flagBlue) {
+            // Use sprites if available (disabled - hand-drawn looks better)
+            if (USE_SPRITES && sprites.loaded && sprites.flagRed && sprites.flagBlue) {
                 const flagScale = 3; // Scale 16px sprites to 48px
                 const flagSize = 16 * flagScale;
 
@@ -737,8 +739,8 @@
         }
         ctx.rotate(tilt);
 
-        // Draw skier sprite if available
-        if (sprites.loaded && sprites.skier) {
+        // Draw skier sprite if available (disabled - hand-drawn looks better)
+        if (USE_SPRITES && sprites.loaded && sprites.skier) {
             // Scale 16px sprite to skier size
             const scale = 2.5;
             const drawSize = 16 * scale;
