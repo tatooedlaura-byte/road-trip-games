@@ -999,9 +999,28 @@
                     box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.5);
                 "></canvas>
 
+                <!-- Touch Controls -->
+                <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem;">
+                    <button id="tunnelBtnUp" style="
+                        width: 80px;
+                        height: 80px;
+                        background: linear-gradient(135deg, #00d4ff 0%, #0984e3 100%);
+                        color: white;
+                        border: none;
+                        border-radius: 50%;
+                        font-size: 2rem;
+                        cursor: pointer;
+                        touch-action: manipulation;
+                        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    ">🚀</button>
+                </div>
+
                 <div style="text-align: center; color: #888; font-size: 0.9rem;">
                     <p style="margin: 0.5rem 0;"><strong style="color: #74b9ff;">Desktop:</strong> Click or press Space to fly up</p>
-                    <p style="margin: 0.5rem 0;"><strong style="color: #74b9ff;">Mobile:</strong> Tap screen to fly up</p>
+                    <p style="margin: 0.5rem 0;"><strong style="color: #74b9ff;">Mobile:</strong> Tap the 🚀 button or screen to fly up</p>
                 </div>
             </div>
         `;
@@ -1026,6 +1045,14 @@
 
         gameCanvas.addEventListener('click', handleTap);
         gameCanvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleTap();
+        });
+
+        // Touch control button
+        const btnUp = document.getElementById('tunnelBtnUp');
+        btnUp.addEventListener('click', handleTap);
+        btnUp.addEventListener('touchstart', (e) => {
             e.preventDefault();
             handleTap();
         });
