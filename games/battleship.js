@@ -12,13 +12,13 @@
                 font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
                 max-width: 600px;
                 margin: 0 auto;
-                padding: 0.75rem;
+                padding: 0.5rem;
             }
 
             .bs-card {
                 background: linear-gradient(145deg, #0c1929 0%, #1a3a5c 100%);
-                border-radius: 20px;
-                padding: 1.25rem;
+                border-radius: 16px;
+                padding: 0.75rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
             }
@@ -48,12 +48,12 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 0.75rem;
-                padding: 0.875rem;
+                gap: 0.5rem;
+                padding: 0.5rem;
                 background: linear-gradient(135deg, rgba(0,217,255,0.2) 0%, rgba(0,153,204,0.1) 100%);
                 border: 2px solid rgba(0,217,255,0.4);
-                border-radius: 12px;
-                margin-bottom: 1rem;
+                border-radius: 10px;
+                margin-bottom: 0.5rem;
             }
 
             .bs-phase-indicator.attack {
@@ -62,14 +62,14 @@
             }
 
             .bs-phase-text {
-                font-size: 1.1rem;
+                font-size: 0.9rem;
                 font-weight: 600;
             }
 
             .bs-grid-wrapper {
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 0.5rem;
                 align-items: center;
             }
 
@@ -80,10 +80,10 @@
             .bs-grid-label {
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
-                margin-bottom: 0.5rem;
+                gap: 0.35rem;
+                margin-bottom: 0.25rem;
                 font-weight: 600;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
 
             .bs-grid-label.attack {
@@ -96,8 +96,8 @@
 
             .bs-grid-container {
                 background: linear-gradient(180deg, #0a2a4a 0%, #0d3d6b 100%);
-                border-radius: 10px;
-                padding: 6px;
+                border-radius: 8px;
+                padding: 4px;
                 box-shadow: inset 0 2px 10px rgba(0,0,0,0.4);
                 max-width: 100%;
                 overflow-x: auto;
@@ -212,16 +212,16 @@
             }
 
             .bs-btn {
-                padding: 0.75rem 1.25rem;
+                padding: 0.5rem 1rem;
                 border: none;
-                border-radius: 10px;
-                font-size: 0.95rem;
+                border-radius: 8px;
+                font-size: 0.85rem;
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.2s ease;
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
+                gap: 0.4rem;
             }
 
             .bs-btn:active {
@@ -261,8 +261,8 @@
 
             .bs-buttons {
                 display: flex;
-                gap: 0.75rem;
-                margin-top: 1.25rem;
+                gap: 0.5rem;
+                margin-top: 0.5rem;
                 flex-wrap: wrap;
                 justify-content: center;
             }
