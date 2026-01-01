@@ -358,7 +358,8 @@
         gameOver: false,
         winner: null,
         winningCombo: null,
-        scores: { X: 0, O: 0, draws: 0 }
+        scores: { X: 0, O: 0, draws: 0 },
+        playerNames: ['Player 1', 'Player 2']
     };
 
     function launchTicTacToe() {
@@ -369,7 +370,8 @@
             gameOver: false,
             winner: null,
             winningCombo: null,
-            scores: { X: 0, O: 0, draws: 0 }
+            scores: { X: 0, O: 0, draws: 0 },
+            playerNames: ['Player 1', 'Player 2']
         };
 
         document.getElementById('gamesMenu').style.display = 'none';
@@ -419,6 +421,58 @@
 
     function startGame(mode) {
         state.mode = mode;
+        showNameEntry();
+    }
+
+    function showNameEntry() {
+        const content = document.getElementById('tictactoeContent');
+        const isAI = state.mode === 'ai';
+
+        content.innerHTML = `
+            <div class="ttt-container">
+                <div class="ttt-card">
+                    <button class="ttt-back-btn" onclick="window.tictactoe.showSetup()">← Back</button>
+                    <div class="ttt-header">
+                        <h1 class="ttt-title">Tic Tac Toe</h1>
+                        <p class="ttt-subtitle">${isAI ? 'Enter your name' : 'Enter player names'}</p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0;">
+                        <div>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: #e94560; font-weight: bold; margin-bottom: 0.5rem;">
+                                <span class="ttt-score-symbol x" style="width: 24px; height: 24px; font-size: 1rem;">X</span>
+                                ${isAI ? 'Your Name' : 'Player 1 (X)'}
+                            </label>
+                            <input type="text" id="tttPlayer1Name" class="ttt-input" placeholder="Enter name" value="${state.playerNames[0] === 'Player 1' ? '' : state.playerNames[0]}">
+                        </div>
+                        ${!isAI ? `
+                        <div>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: #0099ff; font-weight: bold; margin-bottom: 0.5rem;">
+                                <span class="ttt-score-symbol o" style="width: 24px; height: 24px; font-size: 1rem;">O</span>
+                                Player 2 (O)
+                            </label>
+                            <input type="text" id="tttPlayer2Name" class="ttt-input" placeholder="Enter name" value="${state.playerNames[1] === 'Player 2' ? '' : state.playerNames[1]}">
+                        </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="ttt-buttons">
+                        <button class="ttt-btn ttt-btn-primary" onclick="window.tictactoe.startWithNames()">Start Game</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        setTimeout(() => document.getElementById('tttPlayer1Name')?.focus(), 100);
+    }
+
+    function startWithNames() {
+        const player1Input = document.getElementById('tttPlayer1Name')?.value.trim();
+        const player2Input = state.mode === 'ai' ? 'Computer' : document.getElementById('tttPlayer2Name')?.value.trim();
+
+        state.playerNames[0] = player1Input || 'Player 1';
+        state.playerNames[1] = player2Input || 'Player 2';
+
         state.board = Array(9).fill(null);
         state.currentPlayer = 'X';
         state.gameOver = false;
@@ -439,16 +493,13 @@
                 turnText = "It's a Draw!";
                 turnClass = 'draw';
             } else {
-                const winnerName = isAI ? (state.winner === 'X' ? 'You Win!' : 'Computer Wins!') : `${state.winner} Wins!`;
-                turnText = `🎉 ${winnerName} 🎉`;
+                const winnerName = state.winner === 'X' ? state.playerNames[0] : state.playerNames[1];
+                turnText = `🎉 ${winnerName} Wins! 🎉`;
                 turnClass += ' winner';
             }
         } else {
-            if (isAI) {
-                turnText = state.currentPlayer === 'X' ? "Your Turn (X)" : "Computer's Turn (O)";
-            } else {
-                turnText = `${state.currentPlayer}'s Turn`;
-            }
+            const currentName = state.currentPlayer === 'X' ? state.playerNames[0] : state.playerNames[1];
+            turnText = `${currentName}'s Turn (${state.currentPlayer})`;
         }
 
         content.innerHTML = `
@@ -459,7 +510,7 @@
                         <div class="ttt-score">
                             <div class="ttt-score-symbol x">X</div>
                             <div class="ttt-score-value">${state.scores.X}</div>
-                            <div class="ttt-score-label">${isAI ? 'You' : 'Player 1'}</div>
+                            <div class="ttt-score-label">${state.playerNames[0]}</div>
                         </div>
                         <div class="ttt-score-divider">
                             <div class="ttt-score-divider-label">Draws</div>
@@ -468,7 +519,7 @@
                         <div class="ttt-score">
                             <div class="ttt-score-symbol o">O</div>
                             <div class="ttt-score-value">${state.scores.O}</div>
-                            <div class="ttt-score-label">${isAI ? 'Computer' : 'Player 2'}</div>
+                            <div class="ttt-score-label">${state.playerNames[1]}</div>
                         </div>
                     </div>
 
@@ -650,7 +701,9 @@
     window.tictactoe = {
         start: startGame,
         move: makeMove,
-        newGame: newGame
+        newGame: newGame,
+        showSetup: showSetup,
+        startWithNames: startWithNames
     };
 
 })();
