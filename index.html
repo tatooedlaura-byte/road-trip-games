@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.122.0';</script>
+    <script>window.APP_VERSION = '1.122.1';</script>
 
     <style>
         * {
@@ -352,7 +352,7 @@
             <div id="bingoModeSelection" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2>🎯 Travel Bingo</h2>
-                    <button onclick="showHome()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="showHome()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
                 <div style="text-align: center; margin-bottom: 2rem;">
@@ -360,13 +360,13 @@
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 600px; margin: 0 auto;">
-                    <div onclick="startCompetitiveMode()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; padding: 2rem; border-radius: 15px; text-align: center; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div onclick="startCompetitiveMode()" style="background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); color: white; padding: 2rem; border-radius: 15px; text-align: center; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                         <h3 style="font-size: 2rem; margin-bottom: 1rem;">🏁 Competitive</h3>
                         <p style="opacity: 0.9; margin-bottom: 0.5rem;">Same card, different colors</p>
                         <p style="opacity: 0.9;">Race to get 5 in a row first!</p>
                     </div>
 
-                    <div onclick="startTeamMode()" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 2rem; border-radius: 15px; text-align: center; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div onclick="startTeamMode()" style="background: linear-gradient(135deg, #86efac 0%, #4ade80 100%); color: white; padding: 2rem; border-radius: 15px; text-align: center; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                         <h3 style="font-size: 2rem; margin-bottom: 1rem;">🤝 Team</h3>
                         <p style="opacity: 0.9; margin-bottom: 0.5rem;">Work together</p>
                         <p style="opacity: 0.9;">Get bingo as a team!</p>
@@ -378,7 +378,7 @@
             <div id="bingoNameEntry" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2>🏁 Enter Player Names</h2>
-                    <button onclick="backToModeSelection()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="backToModeSelection()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
                 <div style="max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);">
@@ -390,11 +390,11 @@
                     </div>
 
                     <div style="margin-bottom: 2rem;">
-                        <label style="display: block; color: #e74c3c; font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem;">🔴 Player 2 Name:</label>
-                        <input type="text" id="player2NameInput" placeholder="Enter Player 2's name" maxlength="20" style="width: 100%; padding: 0.75rem; border: 2px solid #e74c3c; border-radius: 10px; font-size: 1rem; box-sizing: border-box;">
+                        <label style="display: block; color: #c4b5fd; font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem;">🟣 Player 2 Name:</label>
+                        <input type="text" id="player2NameInput" placeholder="Enter Player 2's name" maxlength="20" style="width: 100%; padding: 0.75rem; border: 2px solid #a78bfa; border-radius: 10px; font-size: 1rem; box-sizing: border-box;">
                     </div>
 
-                    <button onclick="submitPlayerNames()" style="width: 100%; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">Start Game</button>
+                    <button onclick="submitPlayerNames()" style="width: 100%; background: linear-gradient(135deg, #86efac 0%, #4ade80 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">Start Game</button>
 
                     <p style="color: #64748b; font-size: 0.85rem; text-align: center; margin-top: 1rem;">You can change names later from the game screen</p>
                 </div>
@@ -404,7 +404,7 @@
             <div id="travelBingo" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2 id="bingoTitle">🎯 Travel Bingo</h2>
-                    <button onclick="backToModeSelection()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="backToModeSelection()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
                 <!-- Player Selector for Competitive Mode -->
@@ -412,12 +412,12 @@
                     <p style="color: #94a3b8; margin-bottom: 0.5rem; font-size: 0.9rem;">I am:</p>
                     <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap;">
                         <button id="selectPlayer1" onclick="selectPlayer(1)" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3); min-width: 120px;">🔵 <span id="player1ButtonName">Player 1</span></button>
-                        <button id="selectPlayer2" onclick="selectPlayer(2)" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3); min-width: 120px; opacity: 0.5;">🔴 <span id="player2ButtonName">Player 2</span></button>
+                        <button id="selectPlayer2" onclick="selectPlayer(2)" style="background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3); min-width: 120px; opacity: 0.5;">🔴 <span id="player2ButtonName">Player 2</span></button>
                         <button onclick="showNameEntry()" style="background: #6c757d; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">✏️ Change Names</button>
                     </div>
                 </div>
 
-                <div id="bingoWinMessage" style="display: none; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; text-align: center; animation: pulse 1s infinite;">
+                <div id="bingoWinMessage" style="display: none; background: linear-gradient(135deg, #86efac 0%, #4ade80 100%); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; text-align: center; animation: pulse 1s infinite;">
                     <h2 style="font-size: 3rem; margin-bottom: 1rem;">🎉 BINGO! 🎉</h2>
                     <p id="bingoWinText" style="font-size: 1.5rem;">You got 5 in a row!</p>
                 </div>
@@ -427,8 +427,8 @@
 
                     <div style="margin-top: 2rem; text-align: center;">
                         <button onclick="showThemeSelector()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">🎨 Choose Theme</button>
-                        <button onclick="generateNewBingoCard()" style="background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; margin-left: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">🔄 New Card</button>
-                        <button onclick="resetBingoCard()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; margin-left: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">↺ Clear Marks</button>
+                        <button onclick="generateNewBingoCard()" style="background: linear-gradient(135deg, #86efac 0%, #4ade80 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; margin-left: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">🔄 New Card</button>
+                        <button onclick="resetBingoCard()" style="background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; margin-left: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">↺ Clear Marks</button>
                         <button onclick="showBingoStats()" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: bold; margin-left: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">📊 Stats</button>
                     </div>
 
@@ -457,7 +457,7 @@
                 <div class="stats-content">
                     <div class="stats-header">
                         <h2 style="color: #f1f5f9; margin: 0;">📊 Bingo Statistics</h2>
-                        <button onclick="closeBingoStats()" style="background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold;">✕ Close</button>
+                        <button onclick="closeBingoStats()" style="background: #8b5cf6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold;">✕ Close</button>
                     </div>
                     <div id="bingoStatsContent">
                         <!-- Stats will be rendered here -->
@@ -473,7 +473,7 @@
                 <div class="stats-content">
                     <div class="stats-header">
                         <h2 style="color: #f1f5f9; margin: 0;">🎨 Choose Bingo Theme</h2>
-                        <button onclick="closeThemeSelector()" style="background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold;">✕ Close</button>
+                        <button onclick="closeThemeSelector()" style="background: #8b5cf6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold;">✕ Close</button>
                     </div>
                     <p style="text-align: center; color: #94a3b8; margin-bottom: 1.5rem;">Select a theme for your bingo card:</p>
                     <div id="themeSelectorContent" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
@@ -486,7 +486,7 @@
             <div id="travelFacts" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2>📍 Travel Facts</h2>
-                    <button onclick="exitTravelFacts()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitTravelFacts()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
                 <!-- State Selector (shown initially) -->
@@ -500,7 +500,7 @@
             <div id="plateTracker" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2>🚙 License Plate Tracker</h2>
-                    <button onclick="showHome()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="showHome()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
                 <div style="background: rgba(255,255,255,0.05); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1);">
@@ -543,7 +543,7 @@
             <div id="gamesMenu" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2>🎮 Road Trip Games</h2>
-                    <button onclick="showHome()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="showHome()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
                 <div class="feature-grid">
@@ -678,7 +678,7 @@
             <!-- Pac-Man Game Section (hidden by default) -->
             <div id="pacmanGame" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <button onclick="exitPacman()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitPacman()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0;">🟡 Pac-Man</h2>
                     <div style="width: 120px;"></div>
                 </div>
@@ -715,7 +715,7 @@
 
             <div id="minesweeperGame" style="display: none; margin: -2rem; padding: 0.5rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
-                    <button onclick="exitMinesweeper()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitMinesweeper()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0;">💣 Minesweeper</h2>
                     <div style="width: 100px;"></div>
                 </div>
@@ -739,7 +739,7 @@
             <!-- Would You Rather Game Section (hidden by default) -->
             <div id="wouldYouRatherGame" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <button onclick="exitWouldYouRatherToMenu()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitWouldYouRatherToMenu()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0;">🤔 Would You Rather</h2>
                     <div style="width: 120px;"></div>
                 </div>
@@ -791,7 +791,7 @@
             <!-- Galaxian Game Section (hidden by default) -->
             <div id="galaxianGame" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <button onclick="exitGalaxian()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitGalaxian()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0;">🚀 Galaxian</h2>
                     <div style="width: 120px;"></div>
                 </div>
@@ -805,7 +805,7 @@
 
                 <!-- Mobile Touch Controls - Standardized Layout -->
                 <div id="galaxianControls" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2rem; padding: 0 1rem;">
-                    <button id="galaxianBtnFire" style="width: 90px; height: 90px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">FIRE</button>
+                    <button id="galaxianBtnFire" style="width: 90px; height: 90px; background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); color: white; border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">FIRE</button>
                     <div style="display: flex; gap: 0.5rem;">
                         <button id="galaxianBtnLeft" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">◀</button>
                         <button id="galaxianBtnRight" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▶</button>
@@ -816,7 +816,7 @@
             <!-- Galaga Game Section (hidden by default) -->
             <div id="galagaGame" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <button onclick="exitGalaga()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitGalaga()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0;">👾 Galaga</h2>
                     <div style="width: 120px;"></div>
                 </div>
@@ -831,7 +831,7 @@
 
                 <!-- Mobile Touch Controls - Standardized Layout -->
                 <div id="galagaControls" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2rem; padding: 0 1rem;">
-                    <button id="galagaBtnFire" style="width: 90px; height: 90px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">FIRE</button>
+                    <button id="galagaBtnFire" style="width: 90px; height: 90px; background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); color: white; border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">FIRE</button>
                     <div style="display: flex; gap: 0.5rem;">
                         <button id="galagaBtnLeft" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">◀</button>
                         <button id="galagaBtnRight" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▶</button>
@@ -1000,7 +1000,7 @@
             <!-- Frogger Game Section (hidden by default) -->
             <div id="froggerGame" style="display: none;">
                 <div style="margin-bottom: 1rem;">
-                    <button onclick="exitFrogger()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitFrogger()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                 </div>
 
                 <!-- Status Bar -->
@@ -1058,28 +1058,28 @@
             <!-- Caverns of Mars Game Section (hidden by default) -->
             <div id="cavernsOfMarsGame" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="exitCavernsOfMars()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitCavernsOfMars()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0;">🔴 Caverns of Mars</h2>
                     <div style="width: 120px;"></div>
                 </div>
                 <div style="text-align: center; margin-bottom: 1rem;">
-                    <div style="background: rgba(255,107,53,0.1); border-left: 4px solid #ff6b35; padding: 1rem; margin: 0 auto; max-width: 600px; text-align: left;">
-                        <strong style="color: #ff6b35;">🎮 Controls:</strong><br>
+                    <div style="background: rgba(255,107,53,0.1); border-left: 4px solid #60a5fa; padding: 1rem; margin: 0 auto; max-width: 600px; text-align: left;">
+                        <strong style="color: #60a5fa;">🎮 Controls:</strong><br>
                         <strong>Arrow Keys</strong> or <strong>A/D</strong> - Move left/right<br>
                         <strong>SPACE</strong> or <strong>Click/Tap</strong> - Fire (slows descent but uses fuel!)<br><br>
-                        <strong style="color: #ff6b35;">🎯 Mission:</strong><br>
+                        <strong style="color: #60a5fa;">🎯 Mission:</strong><br>
                         Descend into Mars, shoot yellow fuel tanks to refill, destroy enemies, plant reactor bomb at bottom, then ESCAPE before it explodes!
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <canvas id="cavernsCanvas" style="max-width: 100%; border: 2px solid #ff6b35; border-radius: 10px;"></canvas>
+                    <canvas id="cavernsCanvas" style="max-width: 100%; border: 2px solid #60a5fa; border-radius: 10px;"></canvas>
                 </div>
             </div>
 
             <!-- Snake Game Section (hidden by default) -->
             <div id="snakeGame" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <button onclick="exitSnake()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exitSnake()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0;">🐍 Snake</h2>
                     <div style="width: 120px;"></div>
                 </div>
@@ -1089,7 +1089,7 @@
             <!-- 2048 Game Section (hidden by default) -->
             <div id="game2048" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <button onclick="exit2048()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
+                    <button onclick="exit2048()" style="background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0;">🔢 2048</h2>
                     <div style="width: 120px;"></div>
                 </div>
@@ -1722,7 +1722,7 @@
                     }
                     if (p2Marked) {
                         // Red checkmark in upper left
-                        checkmarks += '<div style="position: absolute; top: 2px; left: 2px; color: #e74c3c; font-size: clamp(1rem, 3vw, 1.5rem); font-weight: bold; line-height: 1;">✓</div>';
+                        checkmarks += '<div style="position: absolute; top: 2px; left: 2px; color: #c4b5fd; font-size: clamp(1rem, 3vw, 1.5rem); font-weight: bold; line-height: 1;">✓</div>';
                     }
 
                     return `
