@@ -986,16 +986,18 @@
                         <p style="color: #ccc; margin-bottom: 20px;">Add letters without completing a word!</p>
                     </div>
 
-                    <div style="display: flex; flex-direction: column; gap: 15px; max-width: 300px; margin: 0 auto;">
+                    <div style="display: flex; flex-direction: column; gap: 15px; max-width: 320px; margin: 0 auto;">
                         <button onclick="window.ghostGame.startGame(true)"
-                                style="padding: 20px; font-size: 1.2rem; background: #3d5c3d; color: #fff;
+                                style="padding: 15px 20px; text-align: left; background: #3d5c3d; color: #fff;
                                        border: none; border-radius: 10px; cursor: pointer;">
-                            🤖 vs Computer
+                            <div style="font-size: 1.2rem; margin-bottom: 5px;">🤖 vs Computer</div>
+                            <div style="font-size: 0.85rem; color: #aaa;">Play against an AI opponent</div>
                         </button>
                         <button onclick="window.ghostGame.startGame(false)"
-                                style="padding: 20px; font-size: 1.2rem; background: #3d3d5c; color: #fff;
+                                style="padding: 15px 20px; text-align: left; background: #3d3d5c; color: #fff;
                                        border: none; border-radius: 10px; cursor: pointer;">
-                            👥 2 Players
+                            <div style="font-size: 1.2rem; margin-bottom: 5px;">👥 2 Players</div>
+                            <div style="font-size: 0.85rem; color: #aaa;">Pass and play with a friend</div>
                         </button>
                     </div>
 
@@ -1026,15 +1028,20 @@
         const isComputerTurn = state.vsComputer && state.currentPlayer === 2 && !state.gameOver;
         const player1Label = 'You';
         const player2Label = state.vsComputer ? 'Computer' : 'Player 2';
+        const modeLabel = state.vsComputer ? '🤖 vs Computer' : '👥 2 Players';
 
         container.innerHTML = `
             <div style="padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <button onclick="exitGhost()" style="background: #8b5cf6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: bold;">← Back</button>
                     <h2 style="margin: 0; color: #fff;">👻 Ghost</h2>
                     <button onclick="window.ghostGame.toggleRules()"
                             style="background: #3d3d5c; color: #fff; border: none; border-radius: 50%;
                                    width: 32px; height: 32px; font-size: 1.2rem; cursor: pointer;">?</button>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 15px; color: #888; font-size: 0.9rem;">
+                    ${modeLabel}
                 </div>
 
                 ${state.showRules ? `
