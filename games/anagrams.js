@@ -685,7 +685,7 @@
         container.innerHTML = `
             <div class="ana-container">
                 <div class="ana-card">
-                    <button class="ana-back-btn" onclick="showHome()">← Back</button>
+                    <button class="ana-back-btn" onclick="exitAnagrams()">← Back</button>
 
                     <div class="ana-header">
                         <h1 class="ana-title">🔀 Anagrams</h1>
@@ -910,5 +910,11 @@
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('anagramsGame').style.display = 'block';
         init();
+    };
+
+    window.exitAnagrams = function() {
+        stopTimer();
+        document.getElementById('anagramsGame').style.display = 'none';
+        document.getElementById('gamesMenu').style.display = 'block';
     };
 })();

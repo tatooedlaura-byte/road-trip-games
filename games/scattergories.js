@@ -409,7 +409,7 @@
         container.innerHTML = `
             <div class="scat-container">
                 <div class="scat-card">
-                    <button class="scat-back-btn" onclick="showHome()">← Back</button>
+                    <button class="scat-back-btn" onclick="exitScattergories()">← Back</button>
 
                     <div class="scat-header">
                         <h1 class="scat-title">🎲 Scattergories</h1>
@@ -606,5 +606,11 @@
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('scattergoriesGame').style.display = 'block';
         init();
+    };
+
+    window.exitScattergories = function() {
+        stopTimer();
+        document.getElementById('scattergoriesGame').style.display = 'none';
+        document.getElementById('gamesMenu').style.display = 'block';
     };
 })();

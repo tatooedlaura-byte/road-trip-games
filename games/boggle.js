@@ -707,7 +707,7 @@
         container.innerHTML = `
             <div class="bog-container">
                 <div class="bog-card">
-                    <button class="bog-back-btn" onclick="showHome()">← Back</button>
+                    <button class="bog-back-btn" onclick="exitBoggle()">← Back</button>
 
                     <div class="bog-header">
                         <h1 class="bog-title">🎲 Boggle</h1>
@@ -914,5 +914,11 @@
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('boggleGame').style.display = 'block';
         init();
+    };
+
+    window.exitBoggle = function() {
+        stopTimer();
+        document.getElementById('boggleGame').style.display = 'none';
+        document.getElementById('gamesMenu').style.display = 'block';
     };
 })();
