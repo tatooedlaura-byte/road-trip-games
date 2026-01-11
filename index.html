@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.133.0';</script>
+    <script>window.APP_VERSION = '1.134.0';</script>
 
     <style>
         * {
@@ -717,6 +717,11 @@
                         <p>Find words in a grid of letters</p>
                     </div>
 
+                    <div class="feature-card" onclick="launchAnagrams()">
+                        <h3>🔀 Anagrams</h3>
+                        <p>Make words from scrambled letters</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchWouldYouRather()">
                         <h3>🤔 Would You Rather</h3>
                         <p>Funny and tough choices</p>
@@ -834,6 +839,11 @@
             <!-- Boggle Game Section (hidden by default) -->
             <div id="boggleGame" style="display: none;">
                 <div id="boggleContent"></div>
+            </div>
+
+            <!-- Anagrams Game Section (hidden by default) -->
+            <div id="anagramsGame" style="display: none;">
+                <div id="anagramsContent"></div>
             </div>
 
             <!-- Guess Who Game Section (hidden by default) -->
@@ -2269,5 +2279,6 @@
     <script src="games/wordle.js?v=1.130.0"></script>
     <script src="games/scattergories.js?v=1.132.0"></script>
     <script src="games/boggle.js?v=1.133.0"></script>
+    <script src="games/anagrams.js?v=1.134.0"></script>
 </body>
 </html>
