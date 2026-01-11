@@ -28,7 +28,7 @@
                 position: absolute;
                 top: 0.5rem;
                 left: 0.5rem;
-                background: rgba(255,255,255,0.15);
+                background: rgba(75, 85, 99, 0.9);
                 border: none;
                 color: white;
                 padding: 0.5rem 1rem;
@@ -41,7 +41,7 @@
             }
 
             .bs-back-btn:hover {
-                background: rgba(255,255,255,0.25);
+                background: rgba(100, 116, 139, 0.9);
             }
 
             .bs-header {

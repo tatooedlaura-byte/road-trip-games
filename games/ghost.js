@@ -1338,7 +1338,7 @@
             container.innerHTML = `
                 <div style="padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <button onclick="exitGhost()" style="background: #8b5cf6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: bold;">← Back</button>
+                        <button onclick="exitGhost()" style="background: rgba(75, 85, 99, 0.9); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; touch-action: manipulation;">← Back</button>
                         <h2 style="margin: 0; color: #fff;">👻 Ghost</h2>
                         <div style="width: 60px;"></div>
                     </div>
@@ -1394,7 +1394,7 @@
         container.innerHTML = `
             <div style="padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <button onclick="exitGhost()" style="background: #8b5cf6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: bold;">← Back</button>
+                    <button onclick="exitGhost()" style="background: rgba(75, 85, 99, 0.9); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; touch-action: manipulation;">← Back</button>
                     <h2 style="margin: 0; color: #fff;">👻 Ghost</h2>
                     <button onclick="window.ghostGame.toggleRules()"
                             style="background: #3d3d5c; color: #fff; border: none; border-radius: 50%;

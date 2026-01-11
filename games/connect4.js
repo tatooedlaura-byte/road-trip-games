@@ -26,20 +26,22 @@
 
             .c4-back-btn {
                 position: absolute;
-                top: 0.75rem;
-                left: 0.75rem;
-                background: rgba(255,255,255,0.15);
+                top: 0.5rem;
+                left: 0.5rem;
+                background: rgba(75, 85, 99, 0.9);
                 border: none;
                 color: white;
-                padding: 0.4rem 0.7rem;
+                padding: 0.5rem 1rem;
                 border-radius: 8px;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 cursor: pointer;
-                z-index: 10;
+                z-index: 100;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
             }
 
             .c4-back-btn:hover {
-                background: rgba(255,255,255,0.25);
+                background: rgba(75, 85, 99, 1);
             }
 
             .c4-header {
