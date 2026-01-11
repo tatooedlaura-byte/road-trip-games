@@ -1548,9 +1548,12 @@
                 </div>
             `;
             await loadDictionary();
+            console.log('Dictionary load complete, dictionaryLoaded:', dictionaryLoaded);
         }
 
+        console.log('About to call renderGame');
         renderGame();
+        console.log('renderGame completed');
     }
 
     // Back to mode selection
