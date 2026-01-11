@@ -1040,10 +1040,14 @@
                                    width: 32px; height: 32px; font-size: 1.2rem; cursor: pointer;">?</button>
                 </div>
 
-                <div style="text-align: center; margin-bottom: 15px;">
+                <div style="text-align: center; margin-bottom: 15px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
                     <span style="background: ${state.vsComputer ? '#3d5c3d' : '#5c3d5c'}; color: #fff;
-                                 padding: 6px 14px; border-radius: 20px; font-size: 1rem; font-weight: bold;">
+                                 padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: bold;">
                         ${modeLabel}
+                    </span>
+                    <span style="background: ${state.lenientMode ? '#3d5c5c' : '#5c4d3d'}; color: #fff;
+                                 padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: bold;">
+                        ${state.lenientMode ? '📖 Lenient' : '⚡ Strict'}
                     </span>
                 </div>
 
