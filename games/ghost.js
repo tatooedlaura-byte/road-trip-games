@@ -876,11 +876,13 @@
         // Check if this creates a losing state
         const loserName = state.currentPlayer === 1 ? 'You' : (state.vsComputer ? 'Computer' : 'Player 2');
         const otherName = state.currentPlayer === 1 ? (state.vsComputer ? 'Computer' : 'Player 2') : 'You';
+        let roundEnded = false;
 
         if (isLosingState(newLetters)) {
             state.message = `"${newLetters}" is a complete word! ${loserName} lose${state.currentPlayer === 1 ? '' : 's'} this round.`;
             state.messageType = 'error';
             addGhostLetter(state.currentPlayer);
+            roundEnded = true;
             if (!state.gameOver) {
                 setTimeout(newRound, 2500);
             }
@@ -897,13 +899,9 @@
 
         renderGame();
 
-        // Trigger computer turn if needed (includes challenge decisions)
-        if (state.vsComputer && state.currentPlayer === 2 && !state.gameOver) {
+        // Trigger computer turn if needed (but not if round just ended)
+        if (!roundEnded && state.vsComputer && state.currentPlayer === 2 && !state.gameOver && !state.challengeMode) {
             doComputerTurn();
-        }
-        // Also trigger if computer needs to decide on a challenge
-        if (state.vsComputer && state.challengeMode && state.currentPlayer === 1 && !state.gameOver) {
-            // Computer just played, now player can challenge - handled by UI
         }
     }
 
