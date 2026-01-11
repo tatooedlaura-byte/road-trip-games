@@ -532,6 +532,39 @@
         }
     }
 
+    function handleKeydown(e) {
+        if (!gameActive) return;
+
+        const key = e.key.toUpperCase();
+
+        // Enter to submit
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            submitWord();
+            return;
+        }
+
+        // Backspace to remove last letter
+        if (e.key === 'Backspace') {
+            e.preventDefault();
+            if (currentWord.length > 0) {
+                unselectLetter(currentWord.length - 1);
+            }
+            return;
+        }
+
+        // Letter keys - find first available matching letter
+        if (/^[A-Z]$/.test(key)) {
+            e.preventDefault();
+            for (let i = 0; i < currentLetters.length; i++) {
+                if (currentLetters[i] === key && !selectedIndices.includes(i)) {
+                    selectLetter(i);
+                    break;
+                }
+            }
+        }
+    }
+
     let selectedIndices = [];
     let currentWord = [];
 
@@ -762,6 +795,9 @@
         hintsUsed = 0;
         gameActive = true;
 
+        // Add keyboard support
+        document.addEventListener('keydown', handleKeydown);
+
         allValidWords = findAllValidWords(sourceWord);
 
         container.innerHTML = `
@@ -833,6 +869,7 @@
     function endGame() {
         stopTimer();
         gameActive = false;
+        document.removeEventListener('keydown', handleKeydown);
 
         const score = calculateScore();
         const missedWords = allValidWords.filter(w => !foundWords.has(w)).slice(0, 40);
@@ -914,6 +951,7 @@
 
     window.exitAnagrams = function() {
         stopTimer();
+        document.removeEventListener('keydown', handleKeydown);
         document.getElementById('anagramsGame').style.display = 'none';
         document.getElementById('gamesMenu').style.display = 'block';
     };
