@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.129.2';</script>
+    <script>window.APP_VERSION = '1.130.0';</script>
 
     <style>
         * {
@@ -677,6 +677,11 @@
                         <p>Transform words one letter at a time</p>
                     </div>
 
+                    <div class="feature-card" onclick="launchWordle()">
+                        <h3>🟩 Wordle</h3>
+                        <p>Guess the 5-letter word in 6 tries!</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchGhost()">
                         <h3>👻 Ghost</h3>
                         <p>Add letters, don't complete the word!</p>
@@ -784,6 +789,11 @@
             <!-- Ghost Game Section (hidden by default) -->
             <div id="ghostGame" style="display: none;">
                 <div id="ghostContent"></div>
+            </div>
+
+            <!-- Wordle Game Section (hidden by default) -->
+            <div id="wordleGame" style="display: none;">
+                <div id="wordleContent"></div>
             </div>
 
             <!-- Guess Who Game Section (hidden by default) -->
@@ -2216,5 +2226,6 @@
     <script src="games/word-ladder.js?v=1.127.2"></script>
     <script src="games/spelling-bee.js?v=1.128.3"></script>
     <script src="games/ghost.js?v=1.128.23"></script>
+    <script src="games/wordle.js?v=1.130.0"></script>
 </body>
 </html>

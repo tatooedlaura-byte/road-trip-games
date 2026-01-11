@@ -72,11 +72,11 @@
 
 ### Word Games
 
-- [ ] Wordle Clone
+- [x] Wordle Clone
   - Guess a 5-letter word in 6 tries
   - Color feedback (green = correct, yellow = wrong position, gray = not in word)
-  - Daily word or unlimited play mode
-  - Quick, addictive rounds
+  - Unlimited play mode
+  - Uses Scrabble dictionary for valid guesses
 
 - [ ] Mad Libs
   - Fill in blanks with word types (noun, verb, adjective, etc.)
