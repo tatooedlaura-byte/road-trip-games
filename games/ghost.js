@@ -1539,21 +1539,20 @@
 
         // Show loading state while dictionary loads
         if (!dictionaryLoaded) {
-            const container = document.getElementById('ghostGame');
-            container.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; color: #cdd6f4;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
-                    <div style="font-size: 1.2rem;">Loading dictionary...</div>
-                    <div style="font-size: 0.9rem; color: #6c7086; margin-top: 0.5rem;">266,000+ words</div>
-                </div>
-            `;
+            const content = document.getElementById('ghostContent');
+            if (content) {
+                content.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; color: #cdd6f4;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+                        <div style="font-size: 1.2rem;">Loading dictionary...</div>
+                        <div style="font-size: 0.9rem; color: #6c7086; margin-top: 0.5rem;">266,000+ words</div>
+                    </div>
+                `;
+            }
             await loadDictionary();
-            console.log('Dictionary load complete, dictionaryLoaded:', dictionaryLoaded);
         }
 
-        console.log('About to call renderGame');
         renderGame();
-        console.log('renderGame completed');
     }
 
     // Back to mode selection
