@@ -95,17 +95,19 @@
   - NYT-style puzzle
   - Score based on word length
   - Find the pangram (uses all 7 letters)
+  - Uses Scrabble dictionary (177k words)
 
 - [ ] Hangman
   - Classic word guessing game
   - Themed categories (states, cities, landmarks, animals, etc.)
   - Solo vs AI or pass-and-play mode
 
-- [ ] Ghost
+- [x] Ghost
   - Players take turns adding letters
   - Try not to complete a word
   - Challenge if you think opponent bluffed
-  - Great for 2+ players
+  - vs Computer or 2-player mode
+  - Uses Scrabble dictionary (177k words)
 
 - [x] Word Ladder
   - Transform one word into another
