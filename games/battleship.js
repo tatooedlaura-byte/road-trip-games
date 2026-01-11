@@ -31,11 +31,13 @@
                 background: rgba(255,255,255,0.15);
                 border: none;
                 color: white;
-                padding: 0.4rem 0.7rem;
+                padding: 0.5rem 1rem;
                 border-radius: 8px;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 cursor: pointer;
-                z-index: 10;
+                z-index: 100;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
             }
 
             .bs-back-btn:hover {
