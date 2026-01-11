@@ -576,6 +576,21 @@
         selectedCells = [];
         updateGridDisplay();
         updateCurrentWord();
+        lastKeyMatches = [];
+        lastKeyIndex = -1;
+    }
+
+    // Track matching cells for cycling through duplicates
+    let lastKeyMatches = [];
+    let lastKeyIndex = -1;
+
+    function getCellLetter(row, col) {
+        return grid[row][col].toUpperCase().replace('QU', 'Q');
+    }
+
+    function cellMatchesKey(row, col, key) {
+        const cellLetter = getCellLetter(row, col);
+        return cellLetter === key || (key === 'Q' && grid[row][col] === 'Qu');
     }
 
     function handleKeydown(e) {
@@ -597,6 +612,8 @@
                 selectedCells.pop();
                 updateGridDisplay();
                 updateCurrentWord();
+                lastKeyMatches = [];
+                lastKeyIndex = -1;
             }
             return;
         }
@@ -612,26 +629,53 @@
         if (/^[A-Z]$/.test(key)) {
             e.preventDefault();
 
-            // If no cells selected, find any cell with this letter
+            // If no cells selected, find all cells with this letter
             if (selectedCells.length === 0) {
+                const matches = [];
                 for (let row = 0; row < gridSize; row++) {
                     for (let col = 0; col < gridSize; col++) {
-                        const cellLetter = grid[row][col].toUpperCase().replace('QU', 'Q');
-                        if (cellLetter === key || (key === 'Q' && grid[row][col] === 'Qu')) {
-                            selectCell(row, col);
-                            return;
+                        if (cellMatchesKey(row, col, key)) {
+                            matches.push({ row, col });
                         }
                     }
                 }
+
+                if (matches.length > 0) {
+                    // Check if pressing same key again to cycle
+                    if (lastKeyMatches.length > 0 && selectedCells.length === 0) {
+                        // We just cycled and cleared, start fresh
+                    }
+                    lastKeyMatches = matches;
+                    lastKeyIndex = 0;
+                    selectCell(matches[0].row, matches[0].col);
+                }
             } else {
-                // Find adjacent cell with this letter
+                // Find all adjacent cells with this letter
                 const lastCell = selectedCells[selectedCells.length - 1];
+                const lastCellLetter = getCellLetter(lastCell.row, lastCell.col);
+
+                // Check if pressing same key to cycle through alternatives
+                if (lastKeyMatches.length > 1 && cellMatchesKey(lastCell.row, lastCell.col, key)) {
+                    // Cycle to next match
+                    lastKeyIndex = (lastKeyIndex + 1) % lastKeyMatches.length;
+                    const nextMatch = lastKeyMatches[lastKeyIndex];
+
+                    // Remove current last cell and add the new one
+                    selectedCells.pop();
+                    selectedCells.push(nextMatch);
+                    updateGridDisplay();
+                    updateCurrentWord();
+                    return;
+                }
+
+                // Find all adjacent unselected cells with this letter
                 const directions = [
                     [-1, -1], [-1, 0], [-1, 1],
                     [0, -1],          [0, 1],
                     [1, -1], [1, 0], [1, 1]
                 ];
 
+                const matches = [];
                 for (const [dr, dc] of directions) {
                     const newRow = lastCell.row + dr;
                     const newCol = lastCell.col + dc;
@@ -644,12 +688,16 @@
                             continue;
                         }
 
-                        const cellLetter = grid[newRow][newCol].toUpperCase().replace('QU', 'Q');
-                        if (cellLetter === key || (key === 'Q' && grid[newRow][newCol] === 'Qu')) {
-                            selectCell(newRow, newCol);
-                            return;
+                        if (cellMatchesKey(newRow, newCol, key)) {
+                            matches.push({ row: newRow, col: newCol });
                         }
                     }
+                }
+
+                if (matches.length > 0) {
+                    lastKeyMatches = matches;
+                    lastKeyIndex = 0;
+                    selectCell(matches[0].row, matches[0].col);
                 }
             }
         }
