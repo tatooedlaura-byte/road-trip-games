@@ -1040,8 +1040,11 @@
                                    width: 32px; height: 32px; font-size: 1.2rem; cursor: pointer;">?</button>
                 </div>
 
-                <div style="text-align: center; margin-bottom: 15px; color: #888; font-size: 0.9rem;">
-                    ${modeLabel}
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <span style="background: ${state.vsComputer ? '#3d5c3d' : '#5c3d5c'}; color: #fff;
+                                 padding: 6px 14px; border-radius: 20px; font-size: 1rem; font-weight: bold;">
+                        ${modeLabel}
+                    </span>
                 </div>
 
                 ${state.showRules ? `
