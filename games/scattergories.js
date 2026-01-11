@@ -603,11 +603,8 @@
     };
 
     window.launchScattergories = function() {
-        const gameContainer = document.getElementById('scattergoriesGame');
-        if (gameContainer) {
-            document.querySelectorAll('.game-section').forEach(s => s.style.display = 'none');
-            gameContainer.style.display = 'block';
-            init();
-        }
+        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('scattergoriesGame').style.display = 'block';
+        init();
     };
 })();

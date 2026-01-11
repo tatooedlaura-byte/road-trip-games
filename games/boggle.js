@@ -911,11 +911,8 @@
     };
 
     window.launchBoggle = function() {
-        const gameContainer = document.getElementById('boggleGame');
-        if (gameContainer) {
-            document.querySelectorAll('.game-section').forEach(s => s.style.display = 'none');
-            gameContainer.style.display = 'block';
-            init();
-        }
+        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('boggleGame').style.display = 'block';
+        init();
     };
 })();

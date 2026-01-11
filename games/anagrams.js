@@ -907,11 +907,8 @@
     };
 
     window.launchAnagrams = function() {
-        const gameContainer = document.getElementById('anagramsGame');
-        if (gameContainer) {
-            document.querySelectorAll('.game-section').forEach(s => s.style.display = 'none');
-            gameContainer.style.display = 'block';
-            init();
-        }
+        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('anagramsGame').style.display = 'block';
+        init();
     };
 })();
