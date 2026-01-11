@@ -394,9 +394,12 @@
         document.head.appendChild(style);
     }
 
-    // Word list - words 4+ letters using common letters
-    // This is a curated list that works well for spelling bee puzzles
-    const WORDS = new Set([
+    // Word list - loaded from Scrabble dictionary
+    let WORDS = new Set();
+    let dictionaryLoaded = false;
+
+    // Fallback word list (small subset for offline)
+    const FALLBACK_WORDS = [
         // 4-letter words
         'able','ably','ache','acid','acme','acne','acre','aged','aide','airy','akin',
         'ally','also','amid','anti','arch','area','aria','army','aunt','auto','avid',
@@ -848,7 +851,25 @@
         'yokel','yokes','yolks','young','yours','youth','yucky','yules','yummy','zappy',
         'zappy','zebra','zeros','zesty','zilch','zincs','zingy','zippy','zombi','zonal',
         'zoned','zoner','zones','zooms'
-    ]);
+    ];
+
+    // Load dictionary from external file
+    async function loadDictionary() {
+        if (dictionaryLoaded) return;
+
+        try {
+            const response = await fetch('./data/ghost-words.txt?v=' + (window.APP_VERSION || '1'));
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            const text = await response.text();
+            const words = text.split('\n').filter(w => w.trim().length >= 4);
+            WORDS = new Set(words.map(w => w.trim().toLowerCase()));
+            dictionaryLoaded = true;
+        } catch (error) {
+            console.warn('Using fallback dictionary for Spelling Bee');
+            WORDS = new Set(FALLBACK_WORDS);
+            dictionaryLoaded = true;
+        }
+    }
 
     // Pre-defined puzzles: center letter + 6 outer letters
     // Each puzzle has been verified to have valid words including at least one pangram
@@ -1083,9 +1104,24 @@
         return arr;
     }
 
-    function launchSpellingBee() {
+    async function launchSpellingBee() {
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('spellingBeeGame').style.display = 'block';
+
+        // Show loading state while dictionary loads
+        if (!dictionaryLoaded) {
+            const content = document.getElementById('spellingBeeContent');
+            if (content) {
+                content.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; color: #cdd6f4;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🐝</div>
+                        <div style="font-size: 1.2rem;">Loading dictionary...</div>
+                    </div>
+                `;
+            }
+            await loadDictionary();
+        }
+
         startNewGame();
     }
 
