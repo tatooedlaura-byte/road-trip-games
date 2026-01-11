@@ -633,7 +633,7 @@
         content.innerHTML = `
             <div class="bs-container">
                 <div class="bs-card">
-                    <button class="bs-back-btn" onclick="showSetup()">← Back</button>
+                    <button class="bs-back-btn" id="bsBackBtn">← Back</button>
                     <div class="bs-header">
                         <h1 class="bs-title">Player Names</h1>
                         <p class="bs-subtitle">${state.isAI ? 'Enter your name' : 'Enter player names'}</p>
@@ -652,12 +652,15 @@
                     ` : ''}
 
                     <div class="bs-buttons">
-                        <button class="bs-btn bs-btn-primary" onclick="startWithNames()">Start Game</button>
+                        <button class="bs-btn bs-btn-primary" id="bsStartBtn">Start Game</button>
                     </div>
                 </div>
             </div>
         `;
 
+        // Attach event listeners (more reliable on mobile)
+        document.getElementById('bsBackBtn').addEventListener('click', showSetup);
+        document.getElementById('bsStartBtn').addEventListener('click', startWithNames);
         setTimeout(() => document.getElementById('player1Name')?.focus(), 100);
     }
 
