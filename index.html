@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.131.0';</script>
+    <script>window.APP_VERSION = '1.132.0';</script>
 
     <style>
         * {
@@ -707,6 +707,11 @@
                         <p>Guess the 5-letter word in 6 tries!</p>
                     </div>
 
+                    <div class="feature-card" onclick="launchScattergories()">
+                        <h3>🎲 Scattergories</h3>
+                        <p>Name things starting with a letter</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchWouldYouRather()">
                         <h3>🤔 Would You Rather</h3>
                         <p>Funny and tough choices</p>
@@ -814,6 +819,11 @@
             <!-- Wordle Game Section (hidden by default) -->
             <div id="wordleGame" style="display: none;">
                 <div id="wordleContent"></div>
+            </div>
+
+            <!-- Scattergories Game Section (hidden by default) -->
+            <div id="scattergoriesGame" style="display: none;">
+                <div id="scattergoriesContent"></div>
             </div>
 
             <!-- Guess Who Game Section (hidden by default) -->
@@ -2247,5 +2257,6 @@
     <script src="games/spelling-bee.js?v=1.128.3"></script>
     <script src="games/ghost.js?v=1.128.23"></script>
     <script src="games/wordle.js?v=1.130.0"></script>
+    <script src="games/scattergories.js?v=1.132.0"></script>
 </body>
 </html>
