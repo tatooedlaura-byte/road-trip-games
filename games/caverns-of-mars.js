@@ -999,6 +999,12 @@
 
         resizeCanvas();
 
+        // Attach back button listener
+        const backBtn = document.getElementById('cavernsBackBtn');
+        if (backBtn) {
+            backBtn.addEventListener('click', exitCavernsOfMars);
+        }
+
         // Start game loop
         lastTime = performance.now();
         gameLoopId = requestAnimationFrame(gameLoop);
