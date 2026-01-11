@@ -639,8 +639,125 @@
         winner: null,
         lenientMode: true, // If true, only lose when word can't continue
         showRules: false,
-        challengeMode: false
+        challengeMode: false,
+        vsComputer: false,
+        modeSelected: false
     };
+
+    // AI: Find all possible next letters that lead to valid words
+    function getValidNextLetters(prefix) {
+        prefix = prefix.toLowerCase();
+        const validLetters = new Set();
+        for (const word of WORDS) {
+            if (word.startsWith(prefix) && word.length > prefix.length) {
+                validLetters.add(word[prefix.length].toUpperCase());
+            }
+        }
+        return Array.from(validLetters);
+    }
+
+    // AI: Check if adding this letter would lose (complete a word that can't continue)
+    function wouldLose(prefix, letter) {
+        const newPrefix = (prefix + letter).toLowerCase();
+        if (state.lenientMode) {
+            return isCompleteWord(newPrefix) && !hasWordsStartingWith(newPrefix);
+        } else {
+            return isCompleteWord(newPrefix);
+        }
+    }
+
+    // AI: Check if adding this letter forces opponent to eventually lose
+    function forcesOpponentLoss(prefix, letter, depth = 0) {
+        if (depth > 6) return false; // Limit search depth
+        const newPrefix = (prefix + letter).toLowerCase();
+
+        // If this completes a word and opponent can't continue, we lose
+        if (wouldLose(prefix, letter)) return false;
+
+        // Get all valid next moves for opponent
+        const opponentMoves = getValidNextLetters(newPrefix);
+        if (opponentMoves.length === 0) return false;
+
+        // Check if ALL opponent moves lead to them losing eventually
+        for (const oppLetter of opponentMoves) {
+            if (wouldLose(newPrefix, oppLetter)) {
+                continue; // Good - opponent would lose with this move
+            }
+            // Check if opponent has a safe move
+            const theirMoves = getValidNextLetters(newPrefix + oppLetter.toLowerCase());
+            if (theirMoves.length > 0) {
+                return false; // Opponent has escape routes
+            }
+        }
+        return opponentMoves.length > 0;
+    }
+
+    // AI: Pick the best letter
+    function computerPickLetter() {
+        const prefix = state.currentLetters.toLowerCase();
+        const validLetters = getValidNextLetters(prefix);
+
+        if (validLetters.length === 0) {
+            // No valid moves - pick random letter (will be challenged)
+            return 'ETAOINSHRDLU'[Math.floor(Math.random() * 12)];
+        }
+
+        // Filter out letters that would make us lose immediately
+        const safeMoves = validLetters.filter(l => !wouldLose(prefix, l));
+
+        if (safeMoves.length === 0) {
+            // All moves lose - pick one that at least extends the game
+            return validLetters[Math.floor(Math.random() * validLetters.length)];
+        }
+
+        // Look for moves that force opponent to lose
+        const winningMoves = safeMoves.filter(l => forcesOpponentLoss(prefix, l));
+        if (winningMoves.length > 0) {
+            return winningMoves[Math.floor(Math.random() * winningMoves.length)];
+        }
+
+        // Prefer moves that lead to longer words (more chances for opponent to mess up)
+        const movesWithLongWords = safeMoves.filter(l => {
+            const newPrefix = prefix + l.toLowerCase();
+            for (const word of WORDS) {
+                if (word.startsWith(newPrefix) && word.length >= newPrefix.length + 4) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        if (movesWithLongWords.length > 0) {
+            return movesWithLongWords[Math.floor(Math.random() * movesWithLongWords.length)];
+        }
+
+        // Just pick a random safe move
+        return safeMoves[Math.floor(Math.random() * safeMoves.length)];
+    }
+
+    // AI: Decide whether to challenge
+    function computerShouldChallenge() {
+        const prefix = state.currentLetters.toLowerCase();
+        const validWord = findWordWithPrefix(prefix);
+        // Challenge if no valid word exists
+        return validWord === null;
+    }
+
+    // Trigger computer turn
+    function doComputerTurn() {
+        if (state.gameOver || state.currentPlayer !== 2 || !state.vsComputer) return;
+
+        setTimeout(() => {
+            if (state.challengeMode) {
+                // Computer decides whether to challenge
+                const shouldChallenge = computerShouldChallenge();
+                handleChallenge(shouldChallenge);
+            } else {
+                const letter = computerPickLetter();
+                addLetter(letter);
+            }
+        }, 1000); // 1 second delay to feel natural
+    }
 
     // Check if a string is a complete word (4+ letters)
     function isCompleteWord(str) {
@@ -713,6 +830,8 @@
 
     // Reset entire game
     function resetGame() {
+        const keepVsComputer = state.vsComputer;
+        const keepLenient = state.lenientMode;
         state = {
             currentLetters: '',
             currentPlayer: 1,
@@ -722,11 +841,26 @@
             messageType: '',
             gameOver: false,
             winner: null,
-            lenientMode: state.lenientMode,
+            lenientMode: keepLenient,
             showRules: false,
-            challengeMode: false
+            challengeMode: false,
+            vsComputer: keepVsComputer,
+            modeSelected: true
         };
         renderGame();
+    }
+
+    // Start game with selected mode
+    function startGame(vsComputer) {
+        state.vsComputer = vsComputer;
+        state.modeSelected = true;
+        renderGame();
+    }
+
+    // Get player name based on mode
+    function getPlayerName(player) {
+        if (player === 1) return 'You';
+        return state.vsComputer ? 'Computer' : 'Player 2';
     }
 
     // Handle letter input
@@ -740,8 +874,11 @@
         state.currentLetters = newLetters;
 
         // Check if this creates a losing state
+        const loserName = state.currentPlayer === 1 ? 'You' : (state.vsComputer ? 'Computer' : 'Player 2');
+        const otherName = state.currentPlayer === 1 ? (state.vsComputer ? 'Computer' : 'Player 2') : 'You';
+
         if (isLosingState(newLetters)) {
-            state.message = `"${newLetters}" is a complete word! Player ${state.currentPlayer} loses this round.`;
+            state.message = `"${newLetters}" is a complete word! ${loserName} lose${state.currentPlayer === 1 ? '' : 's'} this round.`;
             state.messageType = 'error';
             addGhostLetter(state.currentPlayer);
             if (!state.gameOver) {
@@ -749,7 +886,7 @@
             }
         } else if (newLetters.length >= 4 && !hasWordsStartingWith(newLetters.toLowerCase())) {
             // No words exist with this prefix - can be challenged
-            state.message = `No words start with "${newLetters}". Player ${state.currentPlayer === 1 ? 2 : 1} can challenge!`;
+            state.message = `No words start with "${newLetters}". ${otherName} can challenge!`;
             state.messageType = 'warning';
             state.challengeMode = true;
         } else {
@@ -759,6 +896,15 @@
         }
 
         renderGame();
+
+        // Trigger computer turn if needed (includes challenge decisions)
+        if (state.vsComputer && state.currentPlayer === 2 && !state.gameOver) {
+            doComputerTurn();
+        }
+        // Also trigger if computer needs to decide on a challenge
+        if (state.vsComputer && state.challengeMode && state.currentPlayer === 1 && !state.gameOver) {
+            // Computer just played, now player can challenge - handled by UI
+        }
     }
 
     // Handle challenge
@@ -767,18 +913,20 @@
 
         const challenger = state.currentPlayer === 1 ? 2 : 1;
         const challenged = state.currentPlayer;
+        const challengerName = challenger === 1 ? 'You' : (state.vsComputer ? 'Computer' : 'Player 2');
+        const challengedName = challenged === 1 ? 'You' : (state.vsComputer ? 'Computer' : 'Player 2');
 
         if (challenging) {
             // The previous player is being challenged to name a word
             const validWord = findWordWithPrefix(state.currentLetters.toLowerCase());
             if (validWord) {
                 // Challenger loses - there was a valid word
-                state.message = `Challenge failed! "${validWord}" starts with "${state.currentLetters}". Player ${challenger} loses this round.`;
+                state.message = `Challenge failed! "${validWord}" starts with "${state.currentLetters}". ${challengerName} lose${challenger === 1 ? '' : 's'} this round.`;
                 state.messageType = 'error';
                 addGhostLetter(challenger);
             } else {
                 // Challenged player loses - no valid word
-                state.message = `Challenge successful! No words start with "${state.currentLetters}". Player ${challenged} loses this round.`;
+                state.message = `Challenge successful! No words start with "${state.currentLetters}". ${challengedName} lose${challenged === 1 ? '' : 's'} this round.`;
                 state.messageType = 'success';
                 addGhostLetter(challenged);
             }
@@ -814,7 +962,7 @@
         const container = document.getElementById('ghostContent');
         if (!container) return;
 
-        const ghostDisplay = (letters, player) => {
+        const ghostDisplay = (letters) => {
             let display = '';
             for (let i = 0; i < 5; i++) {
                 if (i < letters.length) {
@@ -825,6 +973,61 @@
             }
             return display;
         };
+
+        // Mode selection screen
+        if (!state.modeSelected) {
+            container.innerHTML = `
+                <div style="padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <button onclick="exitGhost()" style="background: #8b5cf6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: bold;">← Back</button>
+                        <h2 style="margin: 0; color: #fff;">👻 Ghost</h2>
+                        <div style="width: 60px;"></div>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <p style="color: #ccc; margin-bottom: 20px;">Add letters without completing a word!</p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 15px; max-width: 300px; margin: 0 auto;">
+                        <button onclick="window.ghostGame.startGame(true)"
+                                style="padding: 20px; font-size: 1.2rem; background: #3d5c3d; color: #fff;
+                                       border: none; border-radius: 10px; cursor: pointer;">
+                            🤖 vs Computer
+                        </button>
+                        <button onclick="window.ghostGame.startGame(false)"
+                                style="padding: 20px; font-size: 1.2rem; background: #3d3d5c; color: #fff;
+                                       border: none; border-radius: 10px; cursor: pointer;">
+                            👥 2 Players
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 30px; text-align: center;">
+                        <button onclick="window.ghostGame.toggleRules()"
+                                style="background: transparent; color: #888; border: 1px solid #555;
+                                       padding: 8px 16px; border-radius: 6px; cursor: pointer;">
+                            ${state.showRules ? 'Hide Rules' : 'Show Rules'}
+                        </button>
+                    </div>
+
+                    ${state.showRules ? `
+                        <div style="background: #2d2d44; border-radius: 10px; padding: 15px; margin-top: 20px; font-size: 0.9rem; color: #ccc;">
+                            <strong style="color: #fff;">How to Play:</strong><br><br>
+                            1. Players take turns adding ONE letter<br>
+                            2. Letters must build toward a real word<br>
+                            3. Don't complete a word (4+ letters)!<br>
+                            4. Challenge if you think opponent bluffed<br>
+                            5. Lose a round = get a letter (G-H-O-S-T)<br>
+                            6. Spell GHOST = you're out!
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            return;
+        }
+
+        const isComputerTurn = state.vsComputer && state.currentPlayer === 2 && !state.gameOver;
+        const player1Label = 'You';
+        const player2Label = state.vsComputer ? 'Computer' : 'Player 2';
 
         container.innerHTML = `
             <div style="padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
@@ -852,20 +1055,22 @@
                 <div style="display: flex; justify-content: space-around; margin-bottom: 25px;">
                     <div style="text-align: center; padding: 15px; background: ${state.currentPlayer === 1 && !state.gameOver ? '#3d5c3d' : '#2d2d44'};
                                 border-radius: 10px; min-width: 120px;">
-                        <div style="font-size: 0.9rem; color: #aaa; margin-bottom: 5px;">Player 1</div>
-                        <div style="font-size: 1.5rem; letter-spacing: 3px;">${ghostDisplay(state.player1Ghost, 1)}</div>
+                        <div style="font-size: 0.9rem; color: #aaa; margin-bottom: 5px;">${player1Label}</div>
+                        <div style="font-size: 1.5rem; letter-spacing: 3px;">${ghostDisplay(state.player1Ghost)}</div>
                     </div>
                     <div style="text-align: center; padding: 15px; background: ${state.currentPlayer === 2 && !state.gameOver ? '#3d5c3d' : '#2d2d44'};
                                 border-radius: 10px; min-width: 120px;">
-                        <div style="font-size: 0.9rem; color: #aaa; margin-bottom: 5px;">Player 2</div>
-                        <div style="font-size: 1.5rem; letter-spacing: 3px;">${ghostDisplay(state.player2Ghost, 2)}</div>
+                        <div style="font-size: 0.9rem; color: #aaa; margin-bottom: 5px;">${player2Label}</div>
+                        <div style="font-size: 1.5rem; letter-spacing: 3px;">${ghostDisplay(state.player2Ghost)}</div>
                     </div>
                 </div>
 
                 ${state.gameOver ? `
-                    <div style="text-align: center; padding: 30px; background: #2d4d2d; border-radius: 15px; margin-bottom: 20px;">
-                        <div style="font-size: 2rem; margin-bottom: 10px;">🏆</div>
-                        <div style="font-size: 1.5rem; color: #4ade80; font-weight: bold;">Player ${state.winner} Wins!</div>
+                    <div style="text-align: center; padding: 30px; background: ${state.winner === 1 ? '#2d4d2d' : '#4d2d2d'}; border-radius: 15px; margin-bottom: 20px;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">${state.winner === 1 ? '🏆' : '😢'}</div>
+                        <div style="font-size: 1.5rem; color: ${state.winner === 1 ? '#4ade80' : '#f87171'}; font-weight: bold;">
+                            ${state.winner === 1 ? 'You Win!' : (state.vsComputer ? 'Computer Wins!' : 'Player 2 Wins!')}
+                        </div>
                     </div>
                 ` : `
                     <div style="text-align: center; margin-bottom: 20px;">
@@ -883,7 +1088,11 @@
                         </div>
                     ` : ''}
 
-                    ${state.challengeMode ? `
+                    ${isComputerTurn ? `
+                        <div style="text-align: center; margin-bottom: 20px; color: #fbbf24; font-size: 1.1rem;">
+                            🤖 Computer is thinking...
+                        </div>
+                    ` : state.challengeMode ? `
                         <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
                             <button onclick="window.ghostGame.handleChallenge(true)"
                                     style="padding: 12px 25px; font-size: 1rem; background: #e74c3c; color: #fff;
@@ -898,7 +1107,7 @@
                         </div>
                     ` : `
                         <div style="text-align: center; margin-bottom: 15px; color: #4ade80; font-size: 1.1rem;">
-                            Player ${state.currentPlayer}'s turn - add a letter!
+                            Your turn - add a letter!
                         </div>
 
                         <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; max-width: 350px; margin: 0 auto 20px;">
@@ -915,7 +1124,7 @@
                 `}
 
                 <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <button onclick="window.ghostGame.resetGame()"
+                    <button onclick="window.ghostGame.backToMenu()"
                             style="padding: 10px 20px; font-size: 0.9rem; background: #e74c3c; color: #fff;
                                    border: none; border-radius: 8px; cursor: pointer;">
                         New Game
@@ -948,10 +1157,27 @@
             winner: null,
             lenientMode: true,
             showRules: false,
-            challengeMode: false
+            challengeMode: false,
+            vsComputer: false,
+            modeSelected: false
         };
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('ghostGame').style.display = 'block';
+        renderGame();
+    }
+
+    // Back to mode selection
+    function backToMenu() {
+        state.modeSelected = false;
+        state.currentLetters = '';
+        state.currentPlayer = 1;
+        state.player1Ghost = '';
+        state.player2Ghost = '';
+        state.message = '';
+        state.messageType = '';
+        state.gameOver = false;
+        state.winner = null;
+        state.challengeMode = false;
         renderGame();
     }
 
@@ -968,7 +1194,9 @@
         handleChallenge,
         resetGame,
         toggleRules,
-        toggleMode
+        toggleMode,
+        startGame,
+        backToMenu
     };
     window.launchGhost = launchGhost;
     window.exitGhost = exitGhost;
