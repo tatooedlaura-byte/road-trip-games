@@ -1545,7 +1545,7 @@
                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; color: #cdd6f4;">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
                         <div style="font-size: 1.2rem;">Loading dictionary...</div>
-                        <div style="font-size: 0.9rem; color: #6c7086; margin-top: 0.5rem;">266,000+ words</div>
+                        <div style="font-size: 0.9rem; color: #6c7086; margin-top: 0.5rem;">Scrabble dictionary</div>
                     </div>
                 `;
             }
