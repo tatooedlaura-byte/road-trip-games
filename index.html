@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.126.3';</script>
+    <script>window.APP_VERSION = '1.128.3';</script>
 
     <style>
         * {
@@ -647,6 +647,11 @@
                         <p>Classic arcade game - eat and grow!</p>
                     </div>
 
+                    <div class="feature-card" onclick="launchSpellingBee()">
+                        <h3>🐝 Spelling Bee</h3>
+                        <p>Make words from 7 letters</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchTicTacToe()">
                         <h3>⭕ Tic Tac Toe</h3>
                         <p>Classic X's and O's strategy</p>
@@ -665,6 +670,11 @@
                     <div class="feature-card" onclick="launchWar()">
                         <h3>🎴 War</h3>
                         <p>Classic card battle - highest card wins!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchWordLadder()">
+                        <h3>🪜 Word Ladder</h3>
+                        <p>Transform words one letter at a time</p>
                     </div>
 
                     <div class="feature-card" onclick="launchWouldYouRather()">
@@ -754,6 +764,16 @@
             <!-- Tic Tac Toe Game Section (hidden by default) -->
             <div id="tictactoeGame" style="display: none;">
                 <div id="tictactoeContent"></div>
+            </div>
+
+            <!-- Word Ladder Game Section (hidden by default) -->
+            <div id="wordLadderGame" style="display: none;">
+                <div id="wordLadderContent"></div>
+            </div>
+
+            <!-- Spelling Bee Game Section (hidden by default) -->
+            <div id="spellingBeeGame" style="display: none;">
+                <div id="spellingBeeContent"></div>
             </div>
 
             <!-- Guess Who Game Section (hidden by default) -->
@@ -2183,5 +2203,7 @@
         <script src="games/caverns-of-mars.js?v=1.4.0"></script>
     <script src="games/snake.js?v=1.0.0"></script>
     <script src="games/2048.js?v=1.0.0"></script>
+    <script src="games/word-ladder.js?v=1.127.2"></script>
+    <script src="games/spelling-bee.js?v=1.128.3"></script>
 </body>
 </html>
