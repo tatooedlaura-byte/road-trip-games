@@ -2,8 +2,27 @@
 (function() {
     'use strict';
 
-    // Word list for validation (4+ letter words)
-    const WORDS = new Set([
+    // Word list for validation (4+ letter words) - loaded from external file
+    let WORDS = new Set();
+    let dictionaryLoaded = false;
+    let dictionaryLoading = false;
+
+    // Load dictionary from external file
+    async function loadDictionary() {
+        if (dictionaryLoaded || dictionaryLoading) return;
+        dictionaryLoading = true;
+
+        try {
+            const response = await fetch('./data/ghost-words.txt?v=' + (window.APP_VERSION || '1'));
+            const text = await response.text();
+            const words = text.split('\n').filter(w => w.trim().length >= 4);
+            WORDS = new Set(words.map(w => w.trim().toLowerCase()));
+            dictionaryLoaded = true;
+            console.log(`Ghost dictionary loaded: ${WORDS.size} words`);
+        } catch (error) {
+            console.error('Failed to load Ghost dictionary:', error);
+            // Fallback to a minimal set
+            WORDS = new Set([
         'abandon','abandons','abilities','ability','able','ables','about','abouts','above','aboves',
         'absence','absences','abuse','abuses','academies','academy','account','accounts','achieve',
         'achieves','acid','acids','acquire','acquires','actor','actors','acute','acutes','address',
@@ -962,7 +981,11 @@
         'zealands','zebra','zebras','zero','zeros','zesties','zesty','zilch','zilches','zinc','zincs',
         'zingies','zingy','zippies','zippy','zombie','zombies','zonal','zonals','zone','zoned','zones',
         'zoning','zonings','zoom','zooms'
-    ]);
+            ]);
+            dictionaryLoaded = true;
+        }
+        dictionaryLoading = false;
+    }
 
     // Game state
     let state = {
@@ -1494,7 +1517,7 @@
     }
 
     // Launch the game
-    function launchGhost() {
+    async function launchGhost() {
         state = {
             currentLetters: '',
             currentPlayer: 1,
@@ -1512,6 +1535,20 @@
         };
         document.getElementById('gamesMenu').style.display = 'none';
         document.getElementById('ghostGame').style.display = 'block';
+
+        // Show loading state while dictionary loads
+        if (!dictionaryLoaded) {
+            const container = document.getElementById('ghostGame');
+            container.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; color: #cdd6f4;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+                    <div style="font-size: 1.2rem;">Loading dictionary...</div>
+                    <div style="font-size: 0.9rem; color: #6c7086; margin-top: 0.5rem;">266,000+ words</div>
+                </div>
+            `;
+            await loadDictionary();
+        }
+
         renderGame();
     }
 
