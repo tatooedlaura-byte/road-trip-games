@@ -578,6 +578,91 @@
         updateCurrentWord();
     }
 
+    function handleKeydown(e) {
+        if (!gameActive) return;
+
+        const key = e.key.toUpperCase();
+
+        // Enter submits the word
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            submitWord();
+            return;
+        }
+
+        // Backspace removes last letter
+        if (e.key === 'Backspace') {
+            e.preventDefault();
+            if (selectedCells.length > 0) {
+                selectedCells.pop();
+                updateGridDisplay();
+                updateCurrentWord();
+            }
+            return;
+        }
+
+        // Escape clears selection
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            clearSelection();
+            return;
+        }
+
+        // Letter keys - find matching cell
+        if (/^[A-Z]$/.test(key)) {
+            e.preventDefault();
+
+            // If no cells selected, find any cell with this letter
+            if (selectedCells.length === 0) {
+                for (let row = 0; row < gridSize; row++) {
+                    for (let col = 0; col < gridSize; col++) {
+                        const cellLetter = grid[row][col].toUpperCase().replace('QU', 'Q');
+                        if (cellLetter === key || (key === 'Q' && grid[row][col] === 'Qu')) {
+                            selectCell(row, col);
+                            return;
+                        }
+                    }
+                }
+            } else {
+                // Find adjacent cell with this letter
+                const lastCell = selectedCells[selectedCells.length - 1];
+                const directions = [
+                    [-1, -1], [-1, 0], [-1, 1],
+                    [0, -1],          [0, 1],
+                    [1, -1], [1, 0], [1, 1]
+                ];
+
+                for (const [dr, dc] of directions) {
+                    const newRow = lastCell.row + dr;
+                    const newCol = lastCell.col + dc;
+
+                    if (newRow >= 0 && newRow < gridSize &&
+                        newCol >= 0 && newCol < gridSize) {
+
+                        // Check if already selected
+                        if (selectedCells.some(c => c.row === newRow && c.col === newCol)) {
+                            continue;
+                        }
+
+                        const cellLetter = grid[newRow][newCol].toUpperCase().replace('QU', 'Q');
+                        if (cellLetter === key || (key === 'Q' && grid[newRow][newCol] === 'Qu')) {
+                            selectCell(newRow, newCol);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function setupKeyboardListener() {
+        document.addEventListener('keydown', handleKeydown);
+    }
+
+    function removeKeyboardListener() {
+        document.removeEventListener('keydown', handleKeydown);
+    }
+
     function getWordScore(word) {
         const len = word.length;
         if (len >= 8) return 11;
@@ -830,11 +915,13 @@
         `;
 
         startTimer();
+        setupKeyboardListener();
     }
 
     function confirmQuit() {
         if (confirm('Quit game? Your progress will be lost.')) {
             stopTimer();
+            removeKeyboardListener();
             gameActive = false;
             showMenu();
         }
@@ -842,6 +929,7 @@
 
     function endGame() {
         stopTimer();
+        removeKeyboardListener();
         gameActive = false;
 
         // Find all valid words for comparison
@@ -918,6 +1006,7 @@
 
     window.exitBoggle = function() {
         stopTimer();
+        removeKeyboardListener();
         document.getElementById('boggleGame').style.display = 'none';
         document.getElementById('gamesMenu').style.display = 'block';
     };
