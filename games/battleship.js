@@ -47,6 +47,7 @@
             .bs-header {
                 text-align: center;
                 margin-bottom: 1.25rem;
+                padding-top: 2rem;
             }
 
             .bs-title {
@@ -1214,6 +1215,7 @@
     // Expose functions
     window.launchBattleship = launchBattleship;
     window.exitBattleship = exitBattleship;
+    window.showSetup = showSetup;
     window.selectPassAndPlay = selectPassAndPlay;
     window.selectVsAI = selectVsAI;
     window.startWithNames = startWithNames;
