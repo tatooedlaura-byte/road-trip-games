@@ -1047,7 +1047,7 @@
                     </span>
                     <span style="background: ${state.lenientMode ? '#3d5c5c' : '#5c4d3d'}; color: #fff;
                                  padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: bold;">
-                        ${state.lenientMode ? '📖 Lenient' : '⚡ Strict'}
+                        ${state.lenientMode ? 'Lenient' : 'Strict'}
                     </span>
                 </div>
 
