@@ -5,27 +5,9 @@
     // Word list for validation (4+ letter words) - loaded from external file
     let WORDS = new Set();
     let dictionaryLoaded = false;
-    let dictionaryLoadPromise = null;
 
-    // Load dictionary from external file
-    async function loadDictionary() {
-        if (dictionaryLoaded) return;
-        if (dictionaryLoadPromise) return dictionaryLoadPromise;
-
-        dictionaryLoadPromise = (async () => {
-            try {
-                console.log('Fetching Ghost dictionary...');
-                const response = await fetch('./data/ghost-words.txt?v=' + (window.APP_VERSION || '1'));
-                if (!response.ok) throw new Error('Failed to fetch: ' + response.status);
-                const text = await response.text();
-                const words = text.split('\n').filter(w => w.trim().length >= 4);
-                WORDS = new Set(words.map(w => w.trim().toLowerCase()));
-                dictionaryLoaded = true;
-                console.log(`Ghost dictionary loaded: ${WORDS.size} words`);
-            } catch (error) {
-                console.error('Failed to load Ghost dictionary:', error);
-            // Fallback to a minimal set
-            WORDS = new Set([
+    // Fallback dictionary (used if external load fails)
+    const FALLBACK_WORDS = [
         'abandon','abandons','abilities','ability','able','ables','about','abouts','above','aboves',
         'absence','absences','abuse','abuses','academies','academy','account','accounts','achieve',
         'achieves','acid','acids','acquire','acquires','actor','actors','acute','acutes','address',
@@ -984,12 +966,26 @@
         'zealands','zebra','zebras','zero','zeros','zesties','zesty','zilch','zilches','zinc','zincs',
         'zingies','zingy','zippies','zippy','zombie','zombies','zonal','zonals','zone','zoned','zones',
         'zoning','zonings','zoom','zooms'
-                ]);
-                dictionaryLoaded = true;
-            }
-        })();
+    ];
 
-        return dictionaryLoadPromise;
+    // Load dictionary from external file
+    async function loadDictionary() {
+        if (dictionaryLoaded) return;
+
+        try {
+            console.log('Fetching Ghost dictionary...');
+            const response = await fetch('./data/ghost-words.txt?v=' + (window.APP_VERSION || '1'));
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            const text = await response.text();
+            const words = text.split('\n').filter(w => w.trim().length >= 4);
+            WORDS = new Set(words.map(w => w.trim().toLowerCase()));
+            dictionaryLoaded = true;
+            console.log('Ghost dictionary loaded:', WORDS.size, 'words');
+        } catch (error) {
+            console.error('Failed to load dictionary, using fallback:', error);
+            WORDS = new Set(FALLBACK_WORDS);
+            dictionaryLoaded = true;
+        }
     }
 
     // Game state
