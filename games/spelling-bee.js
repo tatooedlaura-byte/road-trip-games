@@ -203,6 +203,11 @@
                 transform: scale(0.95);
             }
 
+            .sb-hex.swiped {
+                transform: scale(1.1);
+                transition: transform 0.1s ease;
+            }
+
             .sb-hex.center {
                 background: linear-gradient(135deg, #ffd200 0%, #f7971e 100%);
                 color: #1a1a2e;
