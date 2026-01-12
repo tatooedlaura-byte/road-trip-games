@@ -24,7 +24,6 @@
         console.log('showTravelFacts called');
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.querySelector('.roadmap').style.display = 'none';
         document.getElementById('travelFacts').style.display = 'block';
 
         // Show loading message
@@ -193,7 +192,6 @@
         document.getElementById('travelFacts').style.display = 'none';
         document.querySelector('.welcome').style.display = 'block';
         document.querySelector('.feature-grid').style.display = 'grid';
-        document.querySelector('.roadmap').style.display = 'block';
     };
 
 })();
