@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.136.0';</script>
+    <script>window.APP_VERSION = '1.137.0';</script>
 
     <style>
         * {
@@ -357,14 +357,24 @@
                     <p>Learn about each state you're traveling through</p>
                 </div>
 
-                <div class="feature-card" onclick="showGamesMenu()">
-                    <h3>🎮 Games</h3>
-                    <p>Play fun games to pass the time on long drives</p>
+                <div class="feature-card" onclick="showArcadeMenu()">
+                    <h3>🕹️ Arcade</h3>
+                    <p>Classic retro action games</p>
+                </div>
+
+                <div class="feature-card" onclick="showStrategyMenu()">
+                    <h3>🎯 Strategy</h3>
+                    <p>Board games, puzzles, and cards</p>
                 </div>
 
                 <div class="feature-card" onclick="showWordGamesMenu()">
                     <h3>📝 Word Games</h3>
                     <p>Test your vocabulary with word puzzles</p>
+                </div>
+
+                <div class="feature-card" onclick="showPartyMenu()">
+                    <h3>🎉 Party</h3>
+                    <p>Fun social games for groups</p>
                 </div>
 
                 <div class="feature-card" onclick="showTravelBingo()">
@@ -564,27 +574,17 @@
                 </div>
             </div>
 
-            <!-- Games Menu Section (hidden by default) -->
-            <div id="gamesMenu" style="display: none;">
+            <!-- Arcade Games Menu Section (hidden by default) -->
+            <div id="arcadeMenu" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h2 style="color: #a5b4fc;">🎮 Road Trip Games</h2>
+                    <h2 style="color: #a5b4fc;">🕹️ Arcade Games</h2>
                     <button onclick="showHome()" class="game-back-btn">← Back</button>
                 </div>
 
                 <div class="feature-grid">
-                    <div class="feature-card" onclick="launch2048()">
-                        <h3>🔢 2048</h3>
-                        <p>Slide and combine tiles to reach 2048!</p>
-                    </div>
-
                     <div class="feature-card" onclick="launchAsteroids()">
                         <h3>🚀 Asteroids</h3>
                         <p>Classic 1979 vector arcade game!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchBattleship()">
-                        <h3>⚓ Battleship</h3>
-                        <p>Pass-and-play naval combat game</p>
                     </div>
 
                     <div class="feature-card" onclick="launchBreakout()">
@@ -602,24 +602,9 @@
                         <p>Classic 1980 Atari arcade shooter!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchConnectFour()">
-                        <h3>🔴 Connect 4</h3>
-                        <p>Drop discs and connect four in a row</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchDotsAndBoxes()">
-                        <h3>📦 Dots and Boxes</h3>
-                        <p>Connect dots to capture boxes</p>
-                    </div>
-
                     <div class="feature-card" onclick="launchDownhillSkier()">
                         <h3>⛷️ Downhill Skier</h3>
                         <p>Ski down the mountain avoiding trees!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchDrugWars()">
-                        <h3>💊 Drug Wars</h3>
-                        <p>Classic 1984 drug dealing economic strategy game!</p>
                     </div>
 
                     <div class="feature-card" onclick="launchFrogger()">
@@ -637,24 +622,9 @@
                         <p>Classic 1979 space shooter arcade game!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchGuessWho()">
-                        <h3>🕵️ Guess Who</h3>
-                        <p>Figure out the mystery person</p>
-                    </div>
-
                     <div class="feature-card" onclick="launchJoust()">
                         <h3>🦤 Joust</h3>
                         <p>Ride your ostrich to defeat enemy riders!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchMinesweeper()">
-                        <h3>💣 Minesweeper</h3>
-                        <p>Clear the grid without hitting mines</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchOthello()">
-                        <h3>⚫ Othello</h3>
-                        <p>Flip discs to dominate the board</p>
                     </div>
 
                     <div class="feature-card" onclick="launchPacman()">
@@ -672,6 +642,56 @@
                         <p>Classic arcade game - eat and grow!</p>
                     </div>
 
+                    <div class="feature-card" onclick="launchTunnelRunner()">
+                        <h3>🚀 Tunnel Runner</h3>
+                        <p>Fly your rocket through the tunnel!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy Games Menu Section (hidden by default) -->
+            <div id="strategyMenu" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="color: #a5b4fc;">🎯 Strategy Games</h2>
+                    <button onclick="showHome()" class="game-back-btn">← Back</button>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="launch2048()">
+                        <h3>🔢 2048</h3>
+                        <p>Slide and combine tiles to reach 2048!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchBattleship()">
+                        <h3>⚓ Battleship</h3>
+                        <p>Pass-and-play naval combat game</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchConnectFour()">
+                        <h3>🔴 Connect 4</h3>
+                        <p>Drop discs and connect four in a row</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchDotsAndBoxes()">
+                        <h3>📦 Dots and Boxes</h3>
+                        <p>Connect dots to capture boxes</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchGuessWho()">
+                        <h3>🕵️ Guess Who</h3>
+                        <p>Figure out the mystery person</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchMinesweeper()">
+                        <h3>💣 Minesweeper</h3>
+                        <p>Clear the grid without hitting mines</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchOthello()">
+                        <h3>⚫ Othello</h3>
+                        <p>Flip discs to dominate the board</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchTicTacToe()">
                         <h3>⭕ Tic Tac Toe</h3>
                         <p>Classic X's and O's strategy</p>
@@ -682,21 +702,30 @@
                         <p>Fast-paced card game</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchTunnelRunner()">
-                        <h3>🚀 Tunnel Runner</h3>
-                        <p>Fly your rocket through the tunnel!</p>
-                    </div>
-
                     <div class="feature-card" onclick="launchWar()">
                         <h3>🎴 War</h3>
                         <p>Classic card battle - highest card wins!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Party Games Menu Section (hidden by default) -->
+            <div id="partyMenu" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="color: #a5b4fc;">🎉 Party Games</h2>
+                    <button onclick="showHome()" class="game-back-btn">← Back</button>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="launchDrugWars()">
+                        <h3>💊 Drug Wars</h3>
+                        <p>Classic 1984 economic strategy game!</p>
                     </div>
 
                     <div class="feature-card" onclick="launchWouldYouRather()">
                         <h3>🤔 Would You Rather</h3>
                         <p>Funny and tough choices</p>
                     </div>
-
                 </div>
             </div>
 
@@ -1373,30 +1402,50 @@
         // Load saved progress from localStorage
         let collectedPlates = JSON.parse(localStorage.getItem('collectedPlates') || '{}');
 
+        function hideAllMenus() {
+            document.getElementById('arcadeMenu').style.display = 'none';
+            document.getElementById('strategyMenu').style.display = 'none';
+            document.getElementById('partyMenu').style.display = 'none';
+            document.getElementById('wordGamesMenu').style.display = 'none';
+        }
+
         function showHome() {
             document.querySelector('.welcome').style.display = 'block';
             document.querySelector('.feature-grid').style.display = 'grid';
             document.getElementById('plateTracker').style.display = 'none';
             document.getElementById('travelBingo').style.display = 'none';
-            document.getElementById('gamesMenu').style.display = 'none';
-            document.getElementById('wordGamesMenu').style.display = 'none';
+            hideAllMenus();
         }
 
-        function showGamesMenu() {
+        function showArcadeMenu() {
             document.querySelector('.welcome').style.display = 'none';
             document.querySelector('.feature-grid').style.display = 'none';
             document.getElementById('plateTracker').style.display = 'none';
-            document.getElementById('dotsAndBoxesGame').style.display = 'none';
-            document.getElementById('guessWhoGame').style.display = 'none';
-            document.getElementById('gamesMenu').style.display = 'block';
-            document.getElementById('wordGamesMenu').style.display = 'none';
+            hideAllMenus();
+            document.getElementById('arcadeMenu').style.display = 'block';
+        }
+
+        function showStrategyMenu() {
+            document.querySelector('.welcome').style.display = 'none';
+            document.querySelector('.feature-grid').style.display = 'none';
+            document.getElementById('plateTracker').style.display = 'none';
+            hideAllMenus();
+            document.getElementById('strategyMenu').style.display = 'block';
+        }
+
+        function showPartyMenu() {
+            document.querySelector('.welcome').style.display = 'none';
+            document.querySelector('.feature-grid').style.display = 'none';
+            document.getElementById('plateTracker').style.display = 'none';
+            hideAllMenus();
+            document.getElementById('partyMenu').style.display = 'block';
         }
 
         function showWordGamesMenu() {
             document.querySelector('.welcome').style.display = 'none';
             document.querySelector('.feature-grid').style.display = 'none';
             document.getElementById('plateTracker').style.display = 'none';
-            document.getElementById('gamesMenu').style.display = 'none';
+            hideAllMenus();
             document.getElementById('wordGamesMenu').style.display = 'block';
         }
 
