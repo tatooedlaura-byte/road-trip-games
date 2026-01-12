@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.137.1';</script>
+    <script>window.APP_VERSION = '1.138.0';</script>
 
     <style>
         * {
@@ -752,6 +752,16 @@
                         <p>Group 16 words into 4 categories</p>
                     </div>
 
+                    <div class="feature-card" onclick="launchCrossword()">
+                        <h3>📰 Crossword</h3>
+                        <p>Classic crossword puzzles</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchCryptogram()">
+                        <h3>🔐 Cryptogram</h3>
+                        <p>Decode encrypted quotes</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchGhost()">
                         <h3>👻 Ghost</h3>
                         <p>Add letters, don't complete the word!</p>
@@ -775,6 +785,11 @@
                     <div class="feature-card" onclick="launchSpellingBee()">
                         <h3>🐝 Spelling Bee</h3>
                         <p>Make words from 7 letters</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchTextTwist()">
+                        <h3>🌀 Text Twist</h3>
+                        <p>Find the big word to advance!</p>
                     </div>
 
                     <div class="feature-card" onclick="launchWordLadder()">
@@ -918,6 +933,21 @@
             <!-- Letter Boxed Game Section (hidden by default) -->
             <div id="letterBoxedGame" style="display: none;">
                 <div id="letterboxed-container"></div>
+            </div>
+
+            <!-- Crossword Game Section (hidden by default) -->
+            <div id="crosswordGame" style="display: none;">
+                <div id="crossword-container"></div>
+            </div>
+
+            <!-- Cryptogram Game Section (hidden by default) -->
+            <div id="cryptogramGame" style="display: none;">
+                <div id="cryptogram-container"></div>
+            </div>
+
+            <!-- Text Twist Game Section (hidden by default) -->
+            <div id="textTwistGame" style="display: none;">
+                <div id="texttwist-container"></div>
             </div>
 
             <!-- Guess Who Game Section (hidden by default) -->
@@ -2387,5 +2417,8 @@
     <script src="games/connections.js?v=1.135.0"></script>
     <script src="games/hangman.js?v=1.135.0"></script>
     <script src="games/letterboxed.js?v=1.135.0"></script>
+    <script src="games/crossword.js?v=1.138.0"></script>
+    <script src="games/cryptogram.js?v=1.138.0"></script>
+    <script src="games/texttwist.js?v=1.138.0"></script>
 </body>
 </html>
