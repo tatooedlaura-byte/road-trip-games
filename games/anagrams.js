@@ -703,7 +703,7 @@
     function updateFoundWords() {
         const listEl = document.getElementById('anaWordsList');
         if (listEl) {
-            const sorted = Array.from(foundWords).sort((a, b) => b.length - a.length || a.localeCompare(b));
+            const sorted = Array.from(foundWords).sort((a, b) => a.localeCompare(b));
             listEl.innerHTML = sorted.map(w => `
                 <span class="ana-word-tag ${w.length >= sourceWord.length ? 'long' : ''}">${w}</span>
             `).join('');
@@ -873,7 +873,7 @@
 
         const score = calculateScore();
         const missedWords = allValidWords.filter(w => !foundWords.has(w)).slice(0, 40);
-        const foundArr = Array.from(foundWords).sort((a, b) => b.length - a.length);
+        const foundArr = Array.from(foundWords).sort((a, b) => a.localeCompare(b));
         const foundSourceWord = foundWords.has(sourceWord);
 
         const container = document.getElementById('anagramsContent');
