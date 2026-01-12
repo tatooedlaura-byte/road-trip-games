@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.135.1';</script>
+    <script>window.APP_VERSION = '1.136.0';</script>
 
     <style>
         * {
@@ -362,6 +362,11 @@
                     <p>Play fun games to pass the time on long drives</p>
                 </div>
 
+                <div class="feature-card" onclick="showWordGamesMenu()">
+                    <h3>📝 Word Games</h3>
+                    <p>Test your vocabulary with word puzzles</p>
+                </div>
+
                 <div class="feature-card" onclick="showTravelBingo()">
                     <h3>🎯 Travel Bingo</h3>
                     <p>Spot common road trip sights and win!</p>
@@ -572,11 +577,6 @@
                         <p>Slide and combine tiles to reach 2048!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchAnagrams()">
-                        <h3>🔀 Anagrams</h3>
-                        <p>Make words from scrambled letters</p>
-                    </div>
-
                     <div class="feature-card" onclick="launchAsteroids()">
                         <h3>🚀 Asteroids</h3>
                         <p>Classic 1979 vector arcade game!</p>
@@ -585,11 +585,6 @@
                     <div class="feature-card" onclick="launchBattleship()">
                         <h3>⚓ Battleship</h3>
                         <p>Pass-and-play naval combat game</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchBoggle()">
-                        <h3>🔤 Boggle</h3>
-                        <p>Find words in a grid of letters</p>
                     </div>
 
                     <div class="feature-card" onclick="launchBreakout()">
@@ -605,11 +600,6 @@
                     <div class="feature-card" onclick="launchCentipede()">
                         <h3>🐛 Centipede</h3>
                         <p>Classic 1980 Atari arcade shooter!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchConnections()">
-                        <h3>🔗 Connections</h3>
-                        <p>Group 16 words into 4 categories</p>
                     </div>
 
                     <div class="feature-card" onclick="launchConnectFour()">
@@ -647,29 +637,14 @@
                         <p>Classic 1979 space shooter arcade game!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchGhost()">
-                        <h3>👻 Ghost</h3>
-                        <p>Add letters, don't complete the word!</p>
-                    </div>
-
                     <div class="feature-card" onclick="launchGuessWho()">
                         <h3>🕵️ Guess Who</h3>
                         <p>Figure out the mystery person</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchHangman()">
-                        <h3>🪢 Hangman</h3>
-                        <p>Classic word guessing game</p>
-                    </div>
-
                     <div class="feature-card" onclick="launchJoust()">
                         <h3>🦤 Joust</h3>
                         <p>Ride your ostrich to defeat enemy riders!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchLetterBoxed()">
-                        <h3>📦 Letter Boxed</h3>
-                        <p>NYT-style letter square puzzle</p>
                     </div>
 
                     <div class="feature-card" onclick="launchMinesweeper()">
@@ -692,19 +667,9 @@
                         <p>Classic 1981 drawing puzzle game!</p>
                     </div>
 
-                    <div class="feature-card" onclick="launchScattergories()">
-                        <h3>🎲 Scattergories</h3>
-                        <p>Name things starting with a letter</p>
-                    </div>
-
                     <div class="feature-card" onclick="launchSnake()">
                         <h3>🐍 Snake</h3>
                         <p>Classic arcade game - eat and grow!</p>
-                    </div>
-
-                    <div class="feature-card" onclick="launchSpellingBee()">
-                        <h3>🐝 Spelling Bee</h3>
-                        <p>Make words from 7 letters</p>
                     </div>
 
                     <div class="feature-card" onclick="launchTicTacToe()">
@@ -727,6 +692,62 @@
                         <p>Classic card battle - highest card wins!</p>
                     </div>
 
+                    <div class="feature-card" onclick="launchWouldYouRather()">
+                        <h3>🤔 Would You Rather</h3>
+                        <p>Funny and tough choices</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Word Games Menu Section (hidden by default) -->
+            <div id="wordGamesMenu" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="color: #a5b4fc;">📝 Word Games</h2>
+                    <button onclick="showHome()" class="game-back-btn">← Back</button>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="launchAnagrams()">
+                        <h3>🔀 Anagrams</h3>
+                        <p>Make words from scrambled letters</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchBoggle()">
+                        <h3>🔤 Boggle</h3>
+                        <p>Find words in a grid of letters</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchConnections()">
+                        <h3>🔗 Connections</h3>
+                        <p>Group 16 words into 4 categories</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchGhost()">
+                        <h3>👻 Ghost</h3>
+                        <p>Add letters, don't complete the word!</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchHangman()">
+                        <h3>🪢 Hangman</h3>
+                        <p>Classic word guessing game</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchLetterBoxed()">
+                        <h3>📦 Letter Boxed</h3>
+                        <p>NYT-style letter square puzzle</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchScattergories()">
+                        <h3>🎲 Scattergories</h3>
+                        <p>Name things starting with a letter</p>
+                    </div>
+
+                    <div class="feature-card" onclick="launchSpellingBee()">
+                        <h3>🐝 Spelling Bee</h3>
+                        <p>Make words from 7 letters</p>
+                    </div>
+
                     <div class="feature-card" onclick="launchWordLadder()">
                         <h3>🪜 Word Ladder</h3>
                         <p>Transform words one letter at a time</p>
@@ -736,12 +757,6 @@
                         <h3>🟩 Wordle</h3>
                         <p>Guess the 5-letter word in 6 tries!</p>
                     </div>
-
-                    <div class="feature-card" onclick="launchWouldYouRather()">
-                        <h3>🤔 Would You Rather</h3>
-                        <p>Funny and tough choices</p>
-                    </div>
-
                 </div>
             </div>
 
@@ -1364,6 +1379,7 @@
             document.getElementById('plateTracker').style.display = 'none';
             document.getElementById('travelBingo').style.display = 'none';
             document.getElementById('gamesMenu').style.display = 'none';
+            document.getElementById('wordGamesMenu').style.display = 'none';
         }
 
         function showGamesMenu() {
@@ -1373,6 +1389,15 @@
             document.getElementById('dotsAndBoxesGame').style.display = 'none';
             document.getElementById('guessWhoGame').style.display = 'none';
             document.getElementById('gamesMenu').style.display = 'block';
+            document.getElementById('wordGamesMenu').style.display = 'none';
+        }
+
+        function showWordGamesMenu() {
+            document.querySelector('.welcome').style.display = 'none';
+            document.querySelector('.feature-grid').style.display = 'none';
+            document.getElementById('plateTracker').style.display = 'none';
+            document.getElementById('gamesMenu').style.display = 'none';
+            document.getElementById('wordGamesMenu').style.display = 'block';
         }
 
         function showLicensePlateTracker() {
