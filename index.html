@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.137.0';</script>
+    <script>window.APP_VERSION = '1.137.1';</script>
 
     <style>
         * {
@@ -372,9 +372,9 @@
                     <p>Test your vocabulary with word puzzles</p>
                 </div>
 
-                <div class="feature-card" onclick="showPartyMenu()">
-                    <h3>🎉 Party</h3>
-                    <p>Fun social games for groups</p>
+                <div class="feature-card" onclick="showOtherMenu()">
+                    <h3>🎲 Other</h3>
+                    <p>More fun games</p>
                 </div>
 
                 <div class="feature-card" onclick="showTravelBingo()">
@@ -709,10 +709,10 @@
                 </div>
             </div>
 
-            <!-- Party Games Menu Section (hidden by default) -->
-            <div id="partyMenu" style="display: none;">
+            <!-- Other Games Menu Section (hidden by default) -->
+            <div id="otherMenu" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h2 style="color: #a5b4fc;">🎉 Party Games</h2>
+                    <h2 style="color: #a5b4fc;">🎲 Other Games</h2>
                     <button onclick="showHome()" class="game-back-btn">← Back</button>
                 </div>
 
@@ -1405,7 +1405,7 @@
         function hideAllMenus() {
             document.getElementById('arcadeMenu').style.display = 'none';
             document.getElementById('strategyMenu').style.display = 'none';
-            document.getElementById('partyMenu').style.display = 'none';
+            document.getElementById('otherMenu').style.display = 'none';
             document.getElementById('wordGamesMenu').style.display = 'none';
         }
 
@@ -1433,12 +1433,12 @@
             document.getElementById('strategyMenu').style.display = 'block';
         }
 
-        function showPartyMenu() {
+        function showOtherMenu() {
             document.querySelector('.welcome').style.display = 'none';
             document.querySelector('.feature-grid').style.display = 'none';
             document.getElementById('plateTracker').style.display = 'none';
             hideAllMenus();
-            document.getElementById('partyMenu').style.display = 'block';
+            document.getElementById('otherMenu').style.display = 'block';
         }
 
         function showWordGamesMenu() {
