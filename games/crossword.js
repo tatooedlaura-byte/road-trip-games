@@ -245,13 +245,15 @@
             }
 
             .crossword-key {
-                min-width: 28px;
-                height: 40px;
+                flex: 1;
+                min-width: 30px;
+                max-width: 42px;
+                height: 48px;
                 border: none;
                 border-radius: 6px;
                 background: rgba(255,255,255,0.15);
                 color: white;
-                font-size: 1rem;
+                font-size: 1.2rem;
                 font-weight: 600;
                 cursor: pointer;
                 display: flex;
@@ -267,8 +269,9 @@
             }
 
             .crossword-key.wide {
-                min-width: 50px;
-                font-size: 0.8rem;
+                flex: 1.5;
+                max-width: 60px;
+                font-size: 1rem;
             }
         `;
         document.head.appendChild(style);
