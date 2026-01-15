@@ -241,83 +241,103 @@
     // Puzzle sets - each has 4 categories with 4 words each
     const PUZZLES = [
         {
+            // TRAP: MARS/VENUS/MERCURY are planets BUT also candy/razor/element
+            // TRAP: HEARTS/SPADES/CLUBS/DIAMONDS are card suits AND games
             categories: [
-                { name: "PLANETS", color: "#f9df6d", words: ["MERCURY", "VENUS", "MARS", "JUPITER"] },
-                { name: "CARD GAMES", color: "#a0c35a", words: ["POKER", "BRIDGE", "HEARTS", "SPADES"] },
-                { name: "QUEEN SONGS", color: "#b0c4ef", words: ["RADIO", "CHAMPION", "RHAPSODY", "PRESSURE"] },
-                { name: "TYPES OF DANCE", color: "#ba81c5", words: ["SALSA", "SWING", "TAP", "BALLET"] }
+                { name: "PLANETS (NOT CANDY!)", color: "#f9df6d", words: ["EARTH", "SATURN", "NEPTUNE", "URANUS"] },
+                { name: "CANDY BARS (SPACE NAMES)", color: "#a0c35a", words: ["MARS", "MILKY WAY", "STARBURST", "ORBIT"] },
+                { name: "CARD SUITS", color: "#b0c4ef", words: ["HEARTS", "SPADES", "CLUBS", "DIAMONDS"] },
+                { name: "___ QUEEN", color: "#ba81c5", words: ["DAIRY", "DRAG", "BEAUTY", "PROM"] }
             ]
         },
         {
+            // TRAP: APPLE/BLACKBERRY are fruits AND tech, AMAZON is tech AND river
+            // TRAP: ORANGE is fruit AND color
             categories: [
-                { name: "FRUITS", color: "#f9df6d", words: ["APPLE", "BANANA", "ORANGE", "GRAPE"] },
-                { name: "TECH COMPANIES", color: "#a0c35a", words: ["AMAZON", "GOOGLE", "MICROSOFT", "NETFLIX"] },
-                { name: "BODY PARTS", color: "#b0c4ef", words: ["HEAD", "SHOULDER", "KNEE", "ELBOW"] },
-                { name: "WEATHER", color: "#ba81c5", words: ["THUNDER", "LIGHTNING", "TORNADO", "HURRICANE"] }
+                { name: "FRUITS (ALSO TECH!)", color: "#f9df6d", words: ["APPLE", "BLACKBERRY", "ORANGE", "LIME"] },
+                { name: "TECH (ALSO OTHER THINGS)", color: "#a0c35a", words: ["AMAZON", "GOOGLE", "ORACLE", "UBER"] },
+                { name: "COLORS (ALSO FRUITS!)", color: "#b0c4ef", words: ["PEACH", "PLUM", "CHERRY", "LEMON"] },
+                { name: "RIVERS", color: "#ba81c5", words: ["NILE", "THAMES", "SEINE", "DANUBE"] }
             ]
         },
         {
+            // TRAP: MUSHROOM/OLIVE are pizza toppings AND other things
+            // TRAP: ROCK/COUNTRY/BLUES/JAZZ are music AND other meanings
             categories: [
-                { name: "PIZZA TOPPINGS", color: "#f9df6d", words: ["PEPPERONI", "MUSHROOM", "OLIVE", "SAUSAGE"] },
-                { name: "MUSIC GENRES", color: "#a0c35a", words: ["ROCK", "JAZZ", "BLUES", "COUNTRY"] },
-                { name: "DOG BREEDS", color: "#b0c4ef", words: ["POODLE", "BEAGLE", "BOXER", "HUSKY"] },
-                { name: "COFFEE DRINKS", color: "#ba81c5", words: ["LATTE", "MOCHA", "ESPRESSO", "CAPPUCCINO"] }
+                { name: "PIZZA TOPPINGS", color: "#f9df6d", words: ["PEPPERONI", "MUSHROOM", "ANCHOVY", "SAUSAGE"] },
+                { name: "MUSIC (ALSO FEELINGS)", color: "#a0c35a", words: ["ROCK", "SOUL", "BLUES", "FUNK"] },
+                { name: "THINGS THAT SWING", color: "#b0c4ef", words: ["BAT", "PENDULUM", "MOOD", "DOOR"] },
+                { name: "___ DOG", color: "#ba81c5", words: ["HOT", "TOP", "PRAIRIE", "CORN"] }
             ]
         },
         {
+            // TRAP: APOLLO is Greek god AND space mission
+            // TRAP: NIKE is Greek goddess AND shoe brand
             categories: [
-                { name: "BREAKFAST FOODS", color: "#f9df6d", words: ["PANCAKE", "WAFFLE", "OMELET", "BACON"] },
-                { name: "GREEK GODS", color: "#a0c35a", words: ["ZEUS", "APOLLO", "ATHENA", "HERMES"] },
-                { name: "BOARD GAMES", color: "#b0c4ef", words: ["MONOPOLY", "SCRABBLE", "CLUE", "RISK"] },
-                { name: "CAR BRANDS", color: "#ba81c5", words: ["TOYOTA", "HONDA", "FORD", "TESLA"] }
+                { name: "GREEK GODS (ALSO BRANDS)", color: "#f9df6d", words: ["NIKE", "AMAZON", "ATLAS", "HERMES"] },
+                { name: "SPACE MISSIONS", color: "#a0c35a", words: ["APOLLO", "GEMINI", "MERCURY", "VOYAGER"] },
+                { name: "BREAKFAST FOODS", color: "#b0c4ef", words: ["PANCAKE", "WAFFLE", "OMELET", "TOAST"] },
+                { name: "RISK ___", color: "#ba81c5", words: ["TAKER", "FACTOR", "MANAGEMENT", "AVERSE"] }
             ]
         },
         {
+            // TRAP: OAK/MAPLE/PINE are trees AND types of furniture/flooring
+            // TRAP: PUMA is animal AND shoe brand like PENNE sounds like PENNY
             categories: [
-                { name: "TYPES OF PASTA", color: "#f9df6d", words: ["SPAGHETTI", "PENNE", "RAVIOLI", "LINGUINE"] },
-                { name: "MARVEL HEROES", color: "#a0c35a", words: ["SPIDER-MAN", "IRON MAN", "THOR", "HULK"] },
-                { name: "TREES", color: "#b0c4ef", words: ["OAK", "MAPLE", "PINE", "BIRCH"] },
-                { name: "SHOE TYPES", color: "#ba81c5", words: ["SNEAKER", "SANDAL", "BOOT", "LOAFER"] }
+                { name: "TREES (ALSO FLOORING)", color: "#f9df6d", words: ["OAK", "MAPLE", "CHERRY", "WALNUT"] },
+                { name: "SHOE BRANDS (ANIMALS)", color: "#a0c35a", words: ["PUMA", "JAGUAR", "MUSTANG", "COUGAR"] },
+                { name: "MARVEL HEROES", color: "#b0c4ef", words: ["THOR", "HULK", "VISION", "HAWKEYE"] },
+                { name: "___ TREE", color: "#ba81c5", words: ["FAMILY", "PALM", "SHOE", "DECISION"] }
             ]
         },
         {
+            // TRAP: GEORGIA/CAROLINA/VIRGINIA are states AND names
+            // TRAP: FROZEN/TANGLED could be states of being
             categories: [
-                { name: "US STATES", color: "#f9df6d", words: ["TEXAS", "FLORIDA", "CALIFORNIA", "ALASKA"] },
-                { name: "DISNEY MOVIES", color: "#a0c35a", words: ["FROZEN", "MOANA", "TANGLED", "ENCANTO"] },
-                { name: "VEGETABLES", color: "#b0c4ef", words: ["CARROT", "BROCCOLI", "SPINACH", "CELERY"] },
-                { name: "TOOLS", color: "#ba81c5", words: ["HAMMER", "WRENCH", "SCREWDRIVER", "PLIERS"] }
+                { name: "STATES (ALSO NAMES)", color: "#f9df6d", words: ["GEORGIA", "CAROLINA", "VIRGINIA", "MONTANA"] },
+                { name: "DISNEY MOVIES", color: "#a0c35a", words: ["FROZEN", "MOANA", "TANGLED", "BRAVE"] },
+                { name: "HAIR CONDITIONS", color: "#b0c4ef", words: ["CURLY", "STRAIGHT", "WAVY", "FRIZZY"] },
+                { name: "___ STATE", color: "#ba81c5", words: ["SOLID", "GOLDEN", "POLICE", "DREAM"] }
             ]
         },
         {
+            // TRAP: SHARK/DOLPHIN are ocean creatures AND NFL teams
+            // TRAP: Help/Yesterday/Revolution could be common words
             categories: [
-                { name: "OCEAN CREATURES", color: "#f9df6d", words: ["SHARK", "DOLPHIN", "WHALE", "OCTOPUS"] },
-                { name: "BEATLES SONGS", color: "#a0c35a", words: ["YESTERDAY", "HELP", "IMAGINE", "REVOLUTION"] },
-                { name: "SPORTS", color: "#b0c4ef", words: ["TENNIS", "GOLF", "SOCCER", "HOCKEY"] },
-                { name: "ICE CREAM FLAVORS", color: "#ba81c5", words: ["VANILLA", "CHOCOLATE", "STRAWBERRY", "MINT"] }
+                { name: "OCEAN (NFL TEAMS TOO)", color: "#f9df6d", words: ["SHARK", "DOLPHIN", "WHALE", "SEAL"] },
+                { name: "BEATLES SONGS", color: "#a0c35a", words: ["YESTERDAY", "HELP", "REVOLUTION", "MICHELLE"] },
+                { name: "COMMON WORDS (ALSO SONGS)", color: "#b0c4ef", words: ["FAITH", "RESPECT", "IMAGINE", "BELIEVE"] },
+                { name: "___ TANK", color: "#ba81c5", words: ["THINK", "FISH", "GAS", "SEPTIC"] }
             ]
         },
         {
+            // TRAP: GOLD/SILVER/BRONZE are metals AND Olympic medals AND colors
+            // TRAP: HAPPY could be dwarf name or emotion
             categories: [
-                { name: "METALS", color: "#f9df6d", words: ["GOLD", "SILVER", "COPPER", "BRONZE"] },
-                { name: "HARRY POTTER", color: "#a0c35a", words: ["HOGWARTS", "QUIDDITCH", "VOLDEMORT", "DUMBLEDORE"] },
-                { name: "KITCHEN ITEMS", color: "#b0c4ef", words: ["SPATULA", "WHISK", "LADLE", "TONGS"] },
-                { name: "EMOTIONS", color: "#ba81c5", words: ["HAPPY", "ANGRY", "SCARED", "EXCITED"] }
+                { name: "OLYMPIC MEDALS", color: "#f9df6d", words: ["GOLD", "SILVER", "BRONZE", "PLATINUM"] },
+                { name: "SNOW WHITE DWARFS", color: "#a0c35a", words: ["HAPPY", "GRUMPY", "SLEEPY", "DOPEY"] },
+                { name: "HARRY POTTER", color: "#b0c4ef", words: ["HOGWARTS", "QUIDDITCH", "SNAPE", "HAGRID"] },
+                { name: "___ SILENCE", color: "#ba81c5", words: ["RADIO", "GOLDEN", "AWKWARD", "DEAFENING"] }
             ]
         },
         {
+            // TRAP: CARDINAL/ROBIN are birds AND baseball teams AND names
+            // TRAP: MARCH/MAY are months AND verbs/names
             categories: [
-                { name: "BIRDS", color: "#f9df6d", words: ["EAGLE", "SPARROW", "ROBIN", "CARDINAL"] },
-                { name: "SEINFELD CHARACTERS", color: "#a0c35a", words: ["JERRY", "GEORGE", "ELAINE", "KRAMER"] },
-                { name: "DESSERTS", color: "#b0c4ef", words: ["CAKE", "PIE", "COOKIE", "BROWNIE"] },
-                { name: "MONTHS", color: "#ba81c5", words: ["JANUARY", "MARCH", "AUGUST", "DECEMBER"] }
+                { name: "BIRDS (ALSO TEAMS)", color: "#f9df6d", words: ["CARDINAL", "ORIOLE", "BLUE JAY", "ROBIN"] },
+                { name: "MONTHS (ALSO VERBS)", color: "#a0c35a", words: ["MARCH", "MAY", "AUGUST", "SPRING"] },
+                { name: "DESSERTS", color: "#b0c4ef", words: ["CAKE", "PIE", "BROWNIE", "SUNDAE"] },
+                { name: "FIRST NAMES", color: "#ba81c5", words: ["APRIL", "JUNE", "AUTUMN", "SUMMER"] }
             ]
         },
         {
+            // TRAP: ROSE/LILY/DAISY/VIOLET are flowers AND names
+            // TRAP: POUND could be currency or verb
             categories: [
-                { name: "CURRENCIES", color: "#f9df6d", words: ["DOLLAR", "EURO", "POUND", "YEN"] },
-                { name: "STAR WARS", color: "#a0c35a", words: ["YODA", "VADER", "SKYWALKER", "CHEWBACCA"] },
-                { name: "FLOWERS", color: "#b0c4ef", words: ["ROSE", "TULIP", "DAISY", "LILY"] },
-                { name: "INSTRUMENTS", color: "#ba81c5", words: ["PIANO", "GUITAR", "VIOLIN", "DRUMS"] }
+                { name: "CURRENCIES", color: "#f9df6d", words: ["DOLLAR", "EURO", "PESO", "FRANC"] },
+                { name: "FLOWERS (ALSO NAMES)", color: "#a0c35a", words: ["ROSE", "LILY", "DAISY", "VIOLET"] },
+                { name: "VERBS (ALSO NOUNS)", color: "#b0c4ef", words: ["POUND", "MARK", "BILL", "BUCK"] },
+                { name: "___ WARS", color: "#ba81c5", words: ["STAR", "CLONE", "BRIDE", "TURF"] }
             ]
         },
         {
@@ -425,10 +445,89 @@
                 { name: "___ BALL", color: "#ba81c5", words: ["BASKET", "BASE", "FOOT", "CRYSTAL"] }
             ]
         },
+        // === CROSSOVER TRAP PUZZLES - Words fit multiple categories! ===
+        {
+            // TRAP: CARDINAL/RAVEN/FALCON are birds AND NFL teams
+            // TRAP: BRONCO/JAGUAR/MUSTANG are animals AND cars
+            categories: [
+                { name: "NFL TEAMS (ANIMALS)", color: "#f9df6d", words: ["CARDINAL", "RAVEN", "FALCON", "DOLPHIN"] },
+                { name: "CAR MODELS (ANIMALS)", color: "#a0c35a", words: ["BRONCO", "JAGUAR", "MUSTANG", "BEETLE"] },
+                { name: "BIRDS THAT AREN'T NFL TEAMS", color: "#b0c4ef", words: ["SPARROW", "ROBIN", "CROW", "PIGEON"] },
+                { name: "___ FLY", color: "#ba81c5", words: ["BUTTER", "BAR", "FIRE", "HORSE"] }
+            ]
+        },
+        {
+            // TRAP: MARS/JUPITER/SATURN are planets AND Roman gods AND candy/cereals
+            // TRAP: MILKY WAY/GALAXY are space terms AND candy
+            categories: [
+                { name: "CANDY BARS (SPACE WORDS)", color: "#f9df6d", words: ["MARS", "MILKY WAY", "STARBURST", "GALAXY"] },
+                { name: "ACTUAL PLANETS", color: "#a0c35a", words: ["JUPITER", "SATURN", "NEPTUNE", "URANUS"] },
+                { name: "GREEK LETTERS", color: "#b0c4ef", words: ["ALPHA", "BETA", "DELTA", "OMEGA"] },
+                { name: "___ BAR", color: "#ba81c5", words: ["CANDY", "SALAD", "CROW", "HANDLE"] }
+            ]
+        },
+        {
+            // TRAP: AMAZON/APPLE/BLACKBERRY are tech AND other things
+            // TRAP: DELTA is airline, Greek letter, AND river mouth
+            categories: [
+                { name: "TECH GIANTS (OTHER MEANINGS)", color: "#f9df6d", words: ["AMAZON", "APPLE", "ORACLE", "SHELL"] },
+                { name: "MAJOR RIVERS", color: "#a0c35a", words: ["NILE", "THAMES", "SEINE", "DANUBE"] },
+                { name: "AIRLINES", color: "#b0c4ef", words: ["DELTA", "UNITED", "SOUTHWEST", "FRONTIER"] },
+                { name: "TYPES OF FRUIT", color: "#ba81c5", words: ["MANGO", "PAPAYA", "GUAVA", "KIWI"] }
+            ]
+        },
+        {
+            // TRAP: CORONA/BUD/MILLER/COORS are beers but CORONA also means crown/virus/sun
+            // TRAP: JACK/MORGAN/WALKER are whiskey AND first names
+            categories: [
+                { name: "BEER BRANDS", color: "#f9df6d", words: ["CORONA", "BUD", "MILLER", "COORS"] },
+                { name: "WHISKEY BRANDS (FIRST NAMES)", color: "#a0c35a", words: ["JACK", "JIM", "EVAN", "JOHNNY"] },
+                { name: "PARTS OF THE SUN", color: "#b0c4ef", words: ["FLARE", "SPOT", "CORE", "PHOTOSPHERE"] },
+                { name: "___ DANIELS", color: "#ba81c5", words: ["JACK", "STORMY", "SWEET", "DANIEL"] }
+            ]
+        },
+        {
+            // TRAP: PALM/CEDAR/PINE/ASH are trees AND other things (Palm Beach, Cedar Rapids, Pine Sol, ash tray)
+            categories: [
+                { name: "TREES (ALSO CITIES/PRODUCTS)", color: "#f9df6d", words: ["PALM", "CEDAR", "PINE", "ASH"] },
+                { name: "CLEANING PRODUCTS", color: "#a0c35a", words: ["TIDE", "DAWN", "AJAX", "COMET"] },
+                { name: "GREEK GODS (ALSO PLANETS)", color: "#b0c4ef", words: ["APOLLO", "MERCURY", "VENUS", "PLUTO"] },
+                { name: "___ BEACH", color: "#ba81c5", words: ["LONG", "MYRTLE", "SOUTH", "VIRGINIA"] }
+            ]
+        },
+        {
+            // TRAP: BULLS/HEAT/MAGIC/JAZZ are NBA teams but also common words
+            // TRAP: THUNDER/STORM/LIGHTNING are weather AND sports
+            categories: [
+                { name: "NBA TEAMS (COMMON WORDS)", color: "#f9df6d", words: ["BULLS", "HEAT", "MAGIC", "JAZZ"] },
+                { name: "WEATHER PHENOMENA", color: "#a0c35a", words: ["THUNDER", "LIGHTNING", "HAIL", "TORNADO"] },
+                { name: "MUSIC GENRES", color: "#b0c4ef", words: ["ROCK", "BLUES", "SOUL", "FUNK"] },
+                { name: "THINGS THAT ARE HOT", color: "#ba81c5", words: ["FIRE", "PEPPER", "LAVA", "SAUNA"] }
+            ]
+        },
+        {
+            // TRAP: CROWN/SPRITE/TAB/FANTA seem like royalty/fairies but are sodas
+            // TRAP: KING/QUEEN/PRINCE/DUKE are royalty AND band names
+            categories: [
+                { name: "SODA BRANDS", color: "#f9df6d", words: ["CRUSH", "TAB", "SQUIRT", "SURGE"] },
+                { name: "ROYALTY (ALSO BANDS)", color: "#a0c35a", words: ["QUEEN", "PRINCE", "KING", "DUKE"] },
+                { name: "CHESS PIECES", color: "#b0c4ef", words: ["ROOK", "BISHOP", "KNIGHT", "PAWN"] },
+                { name: "___ COLA", color: "#ba81c5", words: ["COCA", "PEPSI", "RC", "CHERRY"] }
+            ]
+        },
+        {
+            // TRAP: Words that are colors AND colleges AND other things
+            categories: [
+                { name: "COLORS (ALSO NAMES)", color: "#f9df6d", words: ["ROSE", "VIOLET", "AMBER", "RUBY"] },
+                { name: "IVIES (ALSO NAMES)", color: "#a0c35a", words: ["CORNELL", "BROWN", "PENN", "YALE"] },
+                { name: "GEMS", color: "#b0c4ef", words: ["EMERALD", "SAPPHIRE", "DIAMOND", "PEARL"] },
+                { name: "___ STONE", color: "#ba81c5", words: ["ROLLING", "STEPPING", "KEY", "MILE"] }
+            ]
+        },
         {
             categories: [
                 { name: "SHADES OF RED", color: "#f9df6d", words: ["CRIMSON", "SCARLET", "MAROON", "BURGUNDY"] },
-                { name: "IVY LEAGUE SCHOOLS", color: "#a0c35a", words: ["HARVARD", "YALE", "PRINCETON", "CORNELL"] },
+                { name: "IVY LEAGUE SCHOOLS", color: "#a0c35a", words: ["HARVARD", "YALE", "PRINCETON", "COLUMBIA"] },
                 { name: "SODA BRANDS", color: "#b0c4ef", words: ["PEPSI", "COKE", "SPRITE", "FANTA"] },
                 { name: "GOLDEN ___", color: "#ba81c5", words: ["GATE", "RETRIEVER", "GLOBE", "RULE"] }
             ]
