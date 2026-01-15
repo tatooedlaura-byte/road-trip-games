@@ -722,7 +722,7 @@
                     <button class="ana-back-btn" onclick="exitAnagrams()">← Back</button>
 
                     <div class="ana-header">
-                        <h1 class="ana-title">🔀 Anagrams</h1>
+                        <h1 class="ana-title">Anagrams</h1>
                     </div>
 
                     <div class="ana-rules">
@@ -882,7 +882,7 @@
             <div class="ana-container">
                 <div class="ana-card">
                     <div class="ana-header">
-                        <h1 class="ana-title">🔀 Results</h1>
+                        <h1 class="ana-title">Results</h1>
                     </div>
 
                     <div class="ana-results">

@@ -412,7 +412,7 @@
                     <button class="scat-back-btn" onclick="exitScattergories()">← Back</button>
 
                     <div class="scat-header">
-                        <h1 class="scat-title">🎲 Scattergories</h1>
+                        <h1 class="scat-title">Scattergories</h1>
                     </div>
 
                     <div class="scat-rules">
@@ -549,7 +549,7 @@
             <div class="scat-container">
                 <div class="scat-card">
                     <div class="scat-header">
-                        <h1 class="scat-title">🎲 Results</h1>
+                        <h1 class="scat-title">Results</h1>
                     </div>
 
                     <div class="scat-results">

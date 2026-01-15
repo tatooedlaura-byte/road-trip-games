@@ -843,7 +843,7 @@
                     <button class="bog-back-btn" onclick="exitBoggle()">← Back</button>
 
                     <div class="bog-header">
-                        <h1 class="bog-title">🎲 Boggle</h1>
+                        <h1 class="bog-title">Boggle</h1>
                     </div>
 
                     <div class="bog-rules">
@@ -992,7 +992,7 @@
             <div class="bog-container">
                 <div class="bog-card">
                     <div class="bog-header">
-                        <h1 class="bog-title">🎲 Time's Up!</h1>
+                        <h1 class="bog-title">Time's Up!</h1>
                     </div>
 
                     <div class="bog-results">
