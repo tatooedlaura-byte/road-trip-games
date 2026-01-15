@@ -22,6 +22,7 @@
             .letterboxed-header {
                 text-align: center;
                 margin-bottom: 1rem;
+                padding-top: 2.5rem;
             }
 
             .letterboxed-header h2 {
