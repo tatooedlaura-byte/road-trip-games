@@ -573,7 +573,7 @@
         {
             categories: [
                 { name: "MELONS", color: "#f9df6d", words: ["HONEYDEW", "CANTALOUPE", "WATERMELON", "CASABA"] },
-                { name: "SCHITT'S CREEK CHARACTERS", color: "#a0c35a", words: ["DAVID", "ALEXIS", "MOIRA", "JOHNNY"] },
+                { name: "DONUT CHAINS", color: "#a0c35a", words: ["DUNKIN", "KRISPY KREME", "TIM HORTONS", "SHIPLEY"] },
                 { name: "BLOOD TYPES", color: "#b0c4ef", words: ["A", "B", "AB", "O"] },
                 { name: "___ CREAM", color: "#ba81c5", words: ["ICE", "SOUR", "WHIPPED", "COLD"] }
             ]
@@ -613,7 +613,7 @@
         {
             categories: [
                 { name: "RICE DISHES", color: "#f9df6d", words: ["RISOTTO", "PAELLA", "JAMBALAYA", "BIRYANI"] },
-                { name: "SUCCESSION CHARACTERS", color: "#a0c35a", words: ["KENDALL", "SHIV", "ROMAN", "LOGAN"] },
+                { name: "BURGER CHAINS", color: "#a0c35a", words: ["MCDONALDS", "BURGER KING", "WENDYS", "FIVE GUYS"] },
                 { name: "TYPES OF JOINTS (BODY)", color: "#b0c4ef", words: ["BALL", "HINGE", "PIVOT", "SADDLE"] },
                 { name: "WORDS AFTER \"HAND\"", color: "#ba81c5", words: ["SHAKE", "STAND", "SOME", "MADE"] }
             ]
@@ -637,7 +637,7 @@
         {
             categories: [
                 { name: "CUTS OF STEAK", color: "#f9df6d", words: ["RIBEYE", "SIRLOIN", "FILET", "T-BONE"] },
-                { name: "WITCHER CHARACTERS", color: "#a0c35a", words: ["GERALT", "YENNEFER", "CIRI", "JASKIER"] },
+                { name: "CANDY BRANDS", color: "#a0c35a", words: ["HERSHEY", "MARS", "NESTLE", "CADBURY"] },
                 { name: "TYPES OF FABRIC", color: "#b0c4ef", words: ["SILK", "COTTON", "LINEN", "WOOL"] },
                 { name: "___ POINT", color: "#ba81c5", words: ["POWER", "TALKING", "BREAKING", "BOILING"] }
             ]
@@ -645,7 +645,7 @@
         {
             categories: [
                 { name: "SEAFOOD", color: "#f9df6d", words: ["LOBSTER", "CRAB", "SHRIMP", "SCALLOP"] },
-                { name: "OZARK CHARACTERS", color: "#a0c35a", words: ["MARTY", "WENDY", "RUTH", "DARLENE"] },
+                { name: "PHONE BRANDS", color: "#a0c35a", words: ["APPLE", "SAMSUNG", "GOOGLE", "MOTOROLA"] },
                 { name: "MUSIC NOTATION", color: "#b0c4ef", words: ["TREBLE", "BASS", "CLEF", "STAFF"] },
                 { name: "WORDS AFTER \"BOOK\"", color: "#ba81c5", words: ["WORM", "END", "MARK", "KEEPER"] }
             ]
@@ -653,7 +653,7 @@
         {
             categories: [
                 { name: "SAUSAGE TYPES", color: "#f9df6d", words: ["BRATWURST", "KIELBASA", "CHORIZO", "ANDOUILLE"] },
-                { name: "GILMORE GIRLS CHARACTERS", color: "#a0c35a", words: ["LORELAI", "RORY", "LUKE", "SOOKIE"] },
+                { name: "SHOE BRANDS", color: "#a0c35a", words: ["NIKE", "ADIDAS", "REEBOK", "CONVERSE"] },
                 { name: "PARTS OF A CELL", color: "#b0c4ef", words: ["NUCLEUS", "MEMBRANE", "CYTOPLASM", "RIBOSOME"] },
                 { name: "___ BOARD", color: "#ba81c5", words: ["CHALK", "CUTTING", "SOUND", "DIVING"] }
             ]
@@ -669,7 +669,7 @@
         {
             categories: [
                 { name: "INDIAN DISHES", color: "#f9df6d", words: ["CURRY", "TIKKA", "KORMA", "VINDALOO"] },
-                { name: "WEST WING CHARACTERS", color: "#a0c35a", words: ["BARTLET", "JOSH", "TOBY", "CJ"] },
+                { name: "FAST FOOD SIDES", color: "#a0c35a", words: ["FRIES", "ONION RINGS", "COLESLAW", "MOZZARELLA STICKS"] },
                 { name: "ELEMENTS (CLASSICAL)", color: "#b0c4ef", words: ["EARTH", "WATER", "FIRE", "AIR"] },
                 { name: "___ DRIVE", color: "#ba81c5", words: ["HARD", "TEST", "SEX", "THUMB"] }
             ]
@@ -677,7 +677,7 @@
         {
             categories: [
                 { name: "ITALIAN DESSERTS", color: "#f9df6d", words: ["TIRAMISU", "PANNA COTTA", "CANNOLI", "GELATO"] },
-                { name: "WIRE CHARACTERS", color: "#a0c35a", words: ["MCNULTY", "OMAR", "BUNK", "STRINGER"] },
+                { name: "SOFT DRINK BRANDS", color: "#a0c35a", words: ["COCA-COLA", "PEPSI", "DR PEPPER", "MOUNTAIN DEW"] },
                 { name: "CHESS OPENINGS", color: "#b0c4ef", words: ["SICILIAN", "FRENCH", "SPANISH", "ITALIAN"] },
                 { name: "WORDS AFTER \"COLD\"", color: "#ba81c5", words: ["FEET", "SHOULDER", "TURKEY", "CASE"] }
             ]
@@ -693,7 +693,7 @@
         {
             categories: [
                 { name: "GREEK FOODS", color: "#f9df6d", words: ["GYRO", "SOUVLAKI", "MOUSSAKA", "SPANAKOPITA"] },
-                { name: "MAD MEN CHARACTERS", color: "#a0c35a", words: ["DON", "PEGGY", "JOAN", "ROGER"] },
+                { name: "STREAMING SERVICES", color: "#a0c35a", words: ["NETFLIX", "HULU", "DISNEY PLUS", "HBO MAX"] },
                 { name: "PUNCTUATION MARKS", color: "#b0c4ef", words: ["COMMA", "COLON", "SEMICOLON", "APOSTROPHE"] },
                 { name: "WORDS BEFORE \"MAN\"", color: "#ba81c5", words: ["IRON", "SPIDER", "BAT", "SUPER"] }
             ]
@@ -701,7 +701,7 @@
         {
             categories: [
                 { name: "DELI MEATS", color: "#f9df6d", words: ["SALAMI", "PROSCIUTTO", "MORTADELLA", "CAPICOLA"] },
-                { name: "DEXTER CHARACTERS", color: "#a0c35a", words: ["DEXTER", "DEBRA", "BATISTA", "MASUKA"] },
+                { name: "SOCIAL MEDIA APPS", color: "#a0c35a", words: ["FACEBOOK", "INSTAGRAM", "TIKTOK", "SNAPCHAT"] },
                 { name: "ROCK TYPES", color: "#b0c4ef", words: ["IGNEOUS", "SEDIMENTARY", "METAMORPHIC", "VOLCANIC"] },
                 { name: "___ SPACE", color: "#ba81c5", words: ["OUTER", "OFFICE", "CRAWL", "PARKING"] }
             ]
@@ -709,7 +709,7 @@
         {
             categories: [
                 { name: "SANDWICHES (INTL)", color: "#f9df6d", words: ["BANH MI", "CUBANO", "GYRO", "SHAWARMA"] },
-                { name: "OFFICE (UK) CHARACTERS", color: "#a0c35a", words: ["DAVID", "TIM", "GARETH", "DAWN"] },
+                { name: "AIRLINE BRANDS", color: "#a0c35a", words: ["DELTA", "UNITED", "SOUTHWEST", "JETBLUE"] },
                 { name: "TYPES OF WAVES", color: "#b0c4ef", words: ["SOUND", "LIGHT", "RADIO", "MICRO"] },
                 { name: "WORDS AFTER \"LAND\"", color: "#ba81c5", words: ["MARK", "LORD", "SLIDE", "FILL"] }
             ]
@@ -717,7 +717,7 @@
         {
             categories: [
                 { name: "SOUP TYPES", color: "#f9df6d", words: ["BISQUE", "CHILI", "GUMBO", "GAZPACHO"] },
-                { name: "DOWNTON ABBEY CHARACTERS", color: "#a0c35a", words: ["MARY", "EDITH", "CARSON", "BATES"] },
+                { name: "CAR RENTAL COMPANIES", color: "#a0c35a", words: ["HERTZ", "ENTERPRISE", "AVIS", "BUDGET"] },
                 { name: "LITERARY DEVICES", color: "#b0c4ef", words: ["METAPHOR", "SIMILE", "IRONY", "HYPERBOLE"] },
                 { name: "___ DREAM", color: "#ba81c5", words: ["PIPE", "DAY", "AMERICAN", "WET"] }
             ]
@@ -725,7 +725,7 @@
         {
             categories: [
                 { name: "COMFORT FOODS", color: "#f9df6d", words: ["MAC AND CHEESE", "MEATLOAF", "POT ROAST", "CASSEROLE"] },
-                { name: "BRIDGERTON CHARACTERS", color: "#a0c35a", words: ["DAPHNE", "SIMON", "ANTHONY", "KATE"] },
+                { name: "HOTEL CHAINS", color: "#a0c35a", words: ["MARRIOTT", "HILTON", "HYATT", "HOLIDAY INN"] },
                 { name: "TYPES OF TAXES", color: "#b0c4ef", words: ["INCOME", "SALES", "PROPERTY", "ESTATE"] },
                 { name: "WORDS BEFORE \"WASH\"", color: "#ba81c5", words: ["BRAIN", "CAR", "WHITE", "HOG"] }
             ]
@@ -741,7 +741,7 @@
         {
             categories: [
                 { name: "STREET FOOD", color: "#f9df6d", words: ["HOT DOG", "PRETZEL", "KEBAB", "FALAFEL"] },
-                { name: "EUPHORIA CHARACTERS", color: "#a0c35a", words: ["RUE", "JULES", "MADDY", "CASSIE"] },
+                { name: "CREDIT CARD BRANDS", color: "#a0c35a", words: ["VISA", "MASTERCARD", "AMEX", "DISCOVER"] },
                 { name: "LOGICAL FALLACIES", color: "#b0c4ef", words: ["STRAW MAN", "AD HOMINEM", "RED HERRING", "SLIPPERY SLOPE"] },
                 { name: "WORDS AFTER \"SIDE\"", color: "#ba81c5", words: ["KICK", "WALK", "SHOW", "BURNS"] }
             ]
@@ -749,7 +749,7 @@
         {
             categories: [
                 { name: "FAIR FOODS", color: "#f9df6d", words: ["FUNNEL CAKE", "CORN DOG", "COTTON CANDY", "CARAMEL APPLE"] },
-                { name: "PEAKY BLINDERS CHARACTERS", color: "#a0c35a", words: ["TOMMY", "ARTHUR", "POLLY", "ALFIE"] },
+                { name: "SPORTS DRINK BRANDS", color: "#a0c35a", words: ["GATORADE", "POWERADE", "BODYARMOR", "PROPEL"] },
                 { name: "ECONOMIC SYSTEMS", color: "#b0c4ef", words: ["CAPITALISM", "SOCIALISM", "COMMUNISM", "FEUDALISM"] },
                 { name: "___ MILK", color: "#ba81c5", words: ["ALMOND", "OAT", "BREAST", "SPILT"] }
             ]
@@ -757,7 +757,7 @@
         {
             categories: [
                 { name: "FOOD TRUCKS", color: "#f9df6d", words: ["TACOS", "BBQ", "SLIDERS", "GRILLED CHEESE"] },
-                { name: "YELLOWSTONE CHARACTERS", color: "#a0c35a", words: ["JOHN", "BETH", "KAYCE", "RIP"] },
+                { name: "BOTTLED WATER BRANDS", color: "#a0c35a", words: ["AQUAFINA", "DASANI", "EVIAN", "FIJI"] },
                 { name: "COMPUTER PARTS", color: "#b0c4ef", words: ["CPU", "GPU", "RAM", "SSD"] },
                 { name: "WORDS BEFORE \"OUT\"", color: "#ba81c5", words: ["BLACK", "BURN", "CHECK", "WASH"] }
             ]
@@ -765,7 +765,7 @@
         {
             categories: [
                 { name: "BAR SNACKS", color: "#f9df6d", words: ["PEANUTS", "PRETZELS", "POPCORN", "CHIPS"] },
-                { name: "FLEABAG CHARACTERS", color: "#a0c35a", words: ["FLEABAG", "CLAIRE", "PRIEST", "BELINDA"] },
+                { name: "CLASSIC TOYS", color: "#a0c35a", words: ["SLINKY", "LEGO", "BARBIE", "FRISBEE"] },
                 { name: "MATHEMATICAL OPERATIONS", color: "#b0c4ef", words: ["ADDITION", "SUBTRACTION", "MULTIPLICATION", "DIVISION"] },
                 { name: "___ CANDY", color: "#ba81c5", words: ["COTTON", "EYE", "EAR", "ARM"] }
             ]
@@ -773,7 +773,7 @@
         {
             categories: [
                 { name: "PICNIC FOODS", color: "#f9df6d", words: ["COLESLAW", "POTATO SALAD", "DEVILED EGGS", "CORNBREAD"] },
-                { name: "WHITE LOTUS CHARACTERS", color: "#a0c35a", words: ["TANYA", "HARPER", "ETHAN", "DAPHNE"] },
+                { name: "MCDONALDS MENU", color: "#a0c35a", words: ["BIG MAC", "MCNUGGETS", "FRIES", "MCFLURRY"] },
                 { name: "INTERNET SLANG", color: "#b0c4ef", words: ["LOL", "BRB", "FOMO", "YOLO"] },
                 { name: "WORDS AFTER \"SWEET\"", color: "#ba81c5", words: ["HEART", "TOOTH", "TALK", "SPOT"] }
             ]
@@ -781,7 +781,7 @@
         {
             categories: [
                 { name: "STADIUM FOODS", color: "#f9df6d", words: ["NACHOS", "PEANUTS", "CRACKER JACK", "BEER"] },
-                { name: "SEVERANCE CHARACTERS", color: "#a0c35a", words: ["MARK", "HELLY", "IRVING", "DYLAN"] },
+                { name: "PLAYGROUND EQUIPMENT", color: "#a0c35a", words: ["SWING", "SLIDE", "SEESAW", "MONKEY BARS"] },
                 { name: "CLOUD TYPES", color: "#b0c4ef", words: ["ALTO", "STRATO", "CIRO", "CUMULO"] },
                 { name: "___ STORM", color: "#ba81c5", words: ["BRAIN", "ICE", "FIRE", "PERFECT"] }
             ]
@@ -789,7 +789,7 @@
         {
             categories: [
                 { name: "MOVIE SNACKS", color: "#f9df6d", words: ["POPCORN", "TWIZZLERS", "RAISINETS", "MILK DUDS"] },
-                { name: "ONLY MURDERS CHARACTERS", color: "#a0c35a", words: ["CHARLES", "OLIVER", "MABEL", "JAN"] },
+                { name: "SCHOOL SUPPLIES", color: "#a0c35a", words: ["PENCIL", "ERASER", "RULER", "GLUE"] },
                 { name: "SEARCH ENGINES", color: "#b0c4ef", words: ["GOOGLE", "BING", "YAHOO", "DUCKDUCKGO"] },
                 { name: "WORDS BEFORE \"WORK\"", color: "#ba81c5", words: ["FRAME", "PATCH", "FIRE", "DREAM"] }
             ]
@@ -797,7 +797,7 @@
         {
             categories: [
                 { name: "CARNIVAL RIDES", color: "#f9df6d", words: ["FERRIS WHEEL", "CAROUSEL", "BUMPER CARS", "TILT-A-WHIRL"] },
-                { name: "ABBOTT ELEMENTARY CHARACTERS", color: "#a0c35a", words: ["JANINE", "GREGORY", "AVA", "BARBARA"] },
+                { name: "GAS STATION BRANDS", color: "#a0c35a", words: ["SHELL", "EXXON", "CHEVRON", "BP"] },
                 { name: "SOCIAL SCIENCES", color: "#b0c4ef", words: ["PSYCHOLOGY", "SOCIOLOGY", "ANTHROPOLOGY", "ECONOMICS"] },
                 { name: "___ COAT", color: "#ba81c5", words: ["OVER", "UNDER", "PET", "TOP"] }
             ]
@@ -805,7 +805,7 @@
         {
             categories: [
                 { name: "AMUSEMENT PARKS", color: "#f9df6d", words: ["DISNEYLAND", "SIX FLAGS", "CEDAR POINT", "UNIVERSAL"] },
-                { name: "BARRY CHARACTERS", color: "#a0c35a", words: ["BARRY", "SALLY", "NOHO HANK", "FUCHES"] },
+                { name: "CEREAL BRANDS", color: "#a0c35a", words: ["CHEERIOS", "FROSTED FLAKES", "LUCKY CHARMS", "FRUIT LOOPS"] },
                 { name: "VITAMINS", color: "#b0c4ef", words: ["A", "C", "D", "E"] },
                 { name: "WORDS AFTER \"BLACK\"", color: "#ba81c5", words: ["SMITH", "MAIL", "LIST", "OUT"] }
             ]
@@ -813,7 +813,7 @@
         {
             categories: [
                 { name: "THEME PARK RIDES", color: "#f9df6d", words: ["SPLASH MOUNTAIN", "SPACE MOUNTAIN", "HAUNTED MANSION", "PIRATES"] },
-                { name: "HACKS CHARACTERS", color: "#a0c35a", words: ["DEBORAH", "AVA", "JIMMY", "MARCUS"] },
+                { name: "COOKIE TYPES", color: "#a0c35a", words: ["CHOCOLATE CHIP", "OATMEAL", "SNICKERDOODLE", "SUGAR"] },
                 { name: "NOBLE GASES", color: "#b0c4ef", words: ["NEON", "ARGON", "KRYPTON", "XENON"] },
                 { name: "___ ROCK", color: "#ba81c5", words: ["PUNK", "HARD", "KID", "SHAM"] }
             ]
@@ -821,7 +821,7 @@
         {
             categories: [
                 { name: "WATER PARK ATTRACTIONS", color: "#f9df6d", words: ["LAZY RIVER", "WAVE POOL", "WATER SLIDE", "SPLASH PAD"] },
-                { name: "RESERVATION DOGS CHARACTERS", color: "#a0c35a", words: ["BEAR", "ELORA", "WILLIE JACK", "CHEESE"] },
+                { name: "LAUNDRY ITEMS", color: "#a0c35a", words: ["DETERGENT", "FABRIC SOFTENER", "DRYER SHEET", "BLEACH"] },
                 { name: "PH SCALE TERMS", color: "#b0c4ef", words: ["ACID", "BASE", "NEUTRAL", "ALKALINE"] },
                 { name: "WORDS BEFORE \"HEAD\"", color: "#ba81c5", words: ["RED", "BONE", "BLOCK", "FIGURE"] }
             ]
@@ -829,7 +829,7 @@
         {
             categories: [
                 { name: "ROLLER COASTER TYPES", color: "#f9df6d", words: ["WOODEN", "STEEL", "INVERTED", "LAUNCHED"] },
-                { name: "WHAT WE DO SHADOWS CHARACTERS", color: "#a0c35a", words: ["NANDOR", "NADJA", "LASZLO", "GUILLERMO"] },
+                { name: "ICE CREAM BRANDS", color: "#a0c35a", words: ["BEN AND JERRYS", "HAAGEN-DAZS", "BREYERS", "BASKIN ROBBINS"] },
                 { name: "DNA BASES", color: "#b0c4ef", words: ["ADENINE", "THYMINE", "GUANINE", "CYTOSINE"] },
                 { name: "___ SCHOOL", color: "#ba81c5", words: ["OLD", "HIGH", "SUNDAY", "BOARDING"] }
             ]
@@ -837,7 +837,7 @@
         {
             categories: [
                 { name: "ARCADE GAMES", color: "#f9df6d", words: ["PAC-MAN", "DONKEY KONG", "SPACE INVADERS", "GALAGA"] },
-                { name: "KILLING EVE CHARACTERS", color: "#a0c35a", words: ["EVE", "VILLANELLE", "CAROLYN", "KONSTANTIN"] },
+                { name: "SODA FLAVORS", color: "#a0c35a", words: ["COLA", "ROOT BEER", "GINGER ALE", "CREAM SODA"] },
                 { name: "METRIC PREFIXES", color: "#b0c4ef", words: ["KILO", "MEGA", "GIGA", "TERA"] },
                 { name: "WORDS AFTER \"CROSS\"", color: "#ba81c5", words: ["WORD", "WALK", "FIT", "BOW"] }
             ]
@@ -845,7 +845,7 @@
         {
             categories: [
                 { name: "BOARD GAME PIECES", color: "#f9df6d", words: ["DICE", "TOKEN", "CARD", "SPINNER"] },
-                { name: "BETTER CALL SAUL CHARACTERS", color: "#a0c35a", words: ["JIMMY", "KIM", "MIKE", "GUS"] },
+                { name: "CHIP BRANDS", color: "#a0c35a", words: ["LAYS", "DORITOS", "PRINGLES", "RUFFLES"] },
                 { name: "ASTRONOMY TERMS", color: "#b0c4ef", words: ["NEBULA", "QUASAR", "PULSAR", "SUPERNOVA"] },
                 { name: "___ PLAY", color: "#ba81c5", words: ["FAIR", "FOUL", "FORE", "HORSE"] }
             ]
@@ -853,7 +853,7 @@
         {
             categories: [
                 { name: "VIDEO GAME CONSOLES", color: "#f9df6d", words: ["PLAYSTATION", "XBOX", "NINTENDO", "SEGA"] },
-                { name: "HANDMAID'S TALE CHARACTERS", color: "#a0c35a", words: ["JUNE", "SERENA", "NICK", "MOIRA"] },
+                { name: "BATHROOM ITEMS", color: "#a0c35a", words: ["TOOTHBRUSH", "SOAP", "TOWEL", "SHAMPOO"] },
                 { name: "FINANCIAL TERMS", color: "#b0c4ef", words: ["ASSET", "LIABILITY", "EQUITY", "REVENUE"] },
                 { name: "WORDS BEFORE \"STAND\"", color: "#ba81c5", words: ["GRAND", "BAND", "NIGHT", "KICK"] }
             ]
@@ -870,7 +870,7 @@
         {
             categories: [
                 { name: "POKER CHIPS COLORS", color: "#f9df6d", words: ["RED", "BLUE", "GREEN", "BLACK"] },
-                { name: "GOONIES CHARACTERS", color: "#a0c35a", words: ["MIKEY", "CHUNK", "DATA", "SLOTH"] },
+                { name: "JUICE BRANDS", color: "#a0c35a", words: ["TROPICANA", "SIMPLY", "MINUTE MAID", "OCEAN SPRAY"] },
                 { name: "PARTS OF SPEECH", color: "#b0c4ef", words: ["NOUN", "VERB", "ADJECTIVE", "ADVERB"] },
                 { name: "WORDS AFTER \"TIME\"", color: "#ba81c5", words: ["LINE", "TABLE", "PIECE", "BOMB"] }
             ]
@@ -926,7 +926,7 @@
         {
             categories: [
                 { name: "BOWLING TERMS", color: "#f9df6d", words: ["STRIKE", "SPARE", "GUTTER", "SPLIT"] },
-                { name: "FOOTLOOSE CHARACTERS", color: "#a0c35a", words: ["REN", "ARIEL", "WILLARD", "RUSTY"] },
+                { name: "FROZEN FOOD BRANDS", color: "#a0c35a", words: ["BIRDS EYE", "STOUFFERS", "LEAN CUISINE", "MARIE CALLENDER"] },
                 { name: "PERSONALITY TYPES", color: "#b0c4ef", words: ["INTROVERT", "EXTROVERT", "AMBIVERT", "OMNIVERT"] },
                 { name: "___ CLUB", color: "#ba81c5", words: ["BOOK", "FIGHT", "GLEE", "BREAKFAST"] }
             ]
@@ -1006,7 +1006,7 @@
         {
             categories: [
                 { name: "LACROSSE TERMS", color: "#f9df6d", words: ["CRADLE", "FACE-OFF", "CLEAR", "RIDE"] },
-                { name: "TROPIC THUNDER CHARACTERS", color: "#a0c35a", words: ["TUGG", "KIRK", "JEFF", "ALPA"] },
+                { name: "ENERGY DRINK BRANDS", color: "#a0c35a", words: ["RED BULL", "MONSTER", "ROCKSTAR", "BANG"] },
                 { name: "LOAN TYPES", color: "#b0c4ef", words: ["MORTGAGE", "AUTO", "STUDENT", "PERSONAL"] },
                 { name: "___ DAY", color: "#ba81c5", words: ["BIRTH", "RAIN", "GAME", "JUDGMENT"] }
             ]
@@ -1030,7 +1030,7 @@
         {
             categories: [
                 { name: "TRACK EVENTS", color: "#f9df6d", words: ["SPRINT", "MARATHON", "STEEPLECHASE", "DECATHLON"] },
-                { name: "BIG LEBOWSKI CHARACTERS", color: "#a0c35a", words: ["DUDE", "WALTER", "DONNY", "MAUDE"] },
+                { name: "TOOTHPASTE BRANDS", color: "#a0c35a", words: ["COLGATE", "CREST", "SENSODYNE", "ARM AND HAMMER"] },
                 { name: "INSURANCE TYPES", color: "#b0c4ef", words: ["LIFE", "HEALTH", "AUTO", "HOME"] },
                 { name: "WORDS AFTER \"GROUND\"", color: "#ba81c5", words: ["ZERO", "HOG", "BREAKING", "FLOOR"] }
             ]
@@ -1062,7 +1062,7 @@
         {
             categories: [
                 { name: "EQUESTRIAN EVENTS", color: "#f9df6d", words: ["DRESSAGE", "JUMPING", "EVENTING", "POLO"] },
-                { name: "CASINO CHARACTERS", color: "#a0c35a", words: ["ACE", "NICKY", "GINGER", "FRANK"] },
+                { name: "TOILET PAPER BRANDS", color: "#a0c35a", words: ["CHARMIN", "COTTONELLE", "SCOTT", "QUILTED NORTHERN"] },
                 { name: "CORPORATE ROLES", color: "#b0c4ef", words: ["CEO", "CFO", "COO", "CTO"] },
                 { name: "WORDS AFTER \"NIGHT\"", color: "#ba81c5", words: ["MARE", "FALL", "LIFE", "CLUB"] }
             ]
@@ -1070,7 +1070,7 @@
         {
             categories: [
                 { name: "WINTER SPORTS", color: "#f9df6d", words: ["SKIING", "SNOWBOARDING", "BOBSLED", "CURLING"] },
-                { name: "SCARFACE CHARACTERS", color: "#a0c35a", words: ["TONY", "MANNY", "ELVIRA", "SOSA"] },
+                { name: "SALAD DRESSING BRANDS", color: "#a0c35a", words: ["HIDDEN VALLEY", "KRAFT", "NEWMANS OWN", "WISHBONE"] },
                 { name: "MEETING TYPES", color: "#b0c4ef", words: ["BOARD", "STAFF", "ANNUAL", "EMERGENCY"] },
                 { name: "___ WEATHER", color: "#ba81c5", words: ["FAIR", "UNDER", "FOUL", "STORMY"] }
             ]
@@ -1086,7 +1086,7 @@
         {
             categories: [
                 { name: "EXTREME SPORTS", color: "#f9df6d", words: ["SKYDIVING", "BUNGEE", "BASE JUMPING", "PARAGLIDING"] },
-                { name: "HEAT CHARACTERS", color: "#a0c35a", words: ["NEIL", "VINCENT", "CHRIS", "NATE"] },
+                { name: "LAUNDRY DETERGENT BRANDS", color: "#a0c35a", words: ["TIDE", "GAIN", "ALL", "PERSIL"] },
                 { name: "AUDIT TYPES", color: "#b0c4ef", words: ["INTERNAL", "EXTERNAL", "FORENSIC", "COMPLIANCE"] },
                 { name: "___ BIRD", color: "#ba81c5", words: ["EARLY", "SNOW", "JAIL", "LADY"] }
             ]
@@ -1094,7 +1094,7 @@
         {
             categories: [
                 { name: "RACKET SPORTS", color: "#f9df6d", words: ["TENNIS", "BADMINTON", "SQUASH", "RACQUETBALL"] },
-                { name: "DEPARTED CHARACTERS", color: "#a0c35a", words: ["BILLY", "COLIN", "COSTELLO", "DIGNAM"] },
+                { name: "PAPER TOWEL BRANDS", color: "#a0c35a", words: ["BOUNTY", "BRAWNY", "VIVA", "SPARKLE"] },
                 { name: "BUDGET CATEGORIES", color: "#b0c4ef", words: ["FIXED", "VARIABLE", "DISCRETIONARY", "SAVINGS"] },
                 { name: "WORDS AFTER \"DEAD\"", color: "#ba81c5", words: ["LINE", "LOCK", "PAN", "BEAT"] }
             ]
@@ -1103,7 +1103,7 @@
         {
             categories: [
                 { name: "BAT SPORTS", color: "#f9df6d", words: ["BASEBALL", "CRICKET", "SOFTBALL", "ROUNDERS"] },
-                { name: "RESERVOIR DOGS CHARACTERS", color: "#a0c35a", words: ["MR PINK", "MR WHITE", "MR BLONDE", "MR ORANGE"] },
+                { name: "DISH SOAP BRANDS", color: "#a0c35a", words: ["DAWN", "PALMOLIVE", "AJAX", "JOY"] },
                 { name: "INVOICE TERMS", color: "#b0c4ef", words: ["NET 30", "COD", "DUE ON RECEIPT", "2/10"] },
                 { name: "___ HOUSE", color: "#ba81c5", words: ["SAFE", "MAD", "HALF-WAY", "CLEARING"] }
             ]
@@ -1111,7 +1111,7 @@
         {
             categories: [
                 { name: "NET SPORTS", color: "#f9df6d", words: ["VOLLEYBALL", "TENNIS", "BADMINTON", "PICKLEBALL"] },
-                { name: "DJANGO CHARACTERS", color: "#a0c35a", words: ["DJANGO", "SCHULTZ", "CANDIE", "STEPHEN"] },
+                { name: "MAYO BRANDS", color: "#a0c35a", words: ["HELLMANNS", "KRAFT", "DUKES", "MIRACLE WHIP"] },
                 { name: "ACCOUNTING PRINCIPLES", color: "#b0c4ef", words: ["GAAP", "IFRS", "ACCRUAL", "CASH"] },
                 { name: "WORDS BEFORE \"SHOT\"", color: "#ba81c5", words: ["MUG", "LONG", "CHEAP", "SNAP"] }
             ]
@@ -1119,7 +1119,7 @@
         {
             categories: [
                 { name: "GOAL SPORTS", color: "#f9df6d", words: ["SOCCER", "HOCKEY", "LACROSSE", "HANDBALL"] },
-                { name: "INGLOURIOUS BASTERDS CHARACTERS", color: "#a0c35a", words: ["ALDO", "HANS", "SHOSANNA", "DONNY"] },
+                { name: "KETCHUP BRANDS", color: "#a0c35a", words: ["HEINZ", "HUNTS", "DEL MONTE", "FRENCH"] },
                 { name: "DEPRECIATION METHODS", color: "#b0c4ef", words: ["STRAIGHT-LINE", "DECLINING", "DOUBLE", "UNITS"] },
                 { name: "___ MARKET", color: "#ba81c5", words: ["BULL", "BEAR", "FLEA", "FARMERS"] }
             ]
@@ -1127,7 +1127,7 @@
         {
             categories: [
                 { name: "PRECISION SPORTS", color: "#f9df6d", words: ["ARCHERY", "DARTS", "BOWLING", "BILLIARDS"] },
-                { name: "KILL BILL CHARACTERS", color: "#a0c35a", words: ["BRIDE", "BILL", "O-REN", "ELLE"] },
+                { name: "MUSTARD BRANDS", color: "#a0c35a", words: ["FRENCHS", "GULDEN", "GREY POUPON", "HEINZ"] },
                 { name: "VALUATION METHODS", color: "#b0c4ef", words: ["DCF", "COMPARABLE", "ASSET", "EARNINGS"] },
                 { name: "WORDS AFTER \"WINDOW\"", color: "#ba81c5", words: ["SHOP", "DRESSING", "PANE", "SEAT"] }
             ]
@@ -1135,7 +1135,7 @@
         {
             categories: [
                 { name: "ADVENTURE SPORTS", color: "#f9df6d", words: ["ROCK CLIMBING", "CAVING", "RAFTING", "ZIPLINING"] },
-                { name: "HATEFUL EIGHT CHARACTERS", color: "#a0c35a", words: ["JOHN", "MARQUIS", "DAISY", "CHRIS"] },
+                { name: "PEANUT BUTTER BRANDS", color: "#a0c35a", words: ["JIF", "SKIPPY", "PETER PAN", "SMUCKERS"] },
                 { name: "INTEREST TYPES", color: "#b0c4ef", words: ["SIMPLE", "COMPOUND", "FIXED", "VARIABLE"] },
                 { name: "___ LINE", color: "#ba81c5", words: ["PUNCH", "HOT", "BREAD", "FRONT"] }
             ]
@@ -1143,7 +1143,7 @@
         {
             categories: [
                 { name: "TEAM SPORTS", color: "#f9df6d", words: ["BASKETBALL", "FOOTBALL", "BASEBALL", "RUGBY"] },
-                { name: "ONCE UPON HOLLYWOOD CHARACTERS", color: "#a0c35a", words: ["RICK", "CLIFF", "SHARON", "RANDY"] },
+                { name: "JELLY BRANDS", color: "#a0c35a", words: ["SMUCKERS", "WELCHS", "KNOTT", "BONNE MAMAN"] },
                 { name: "RATIO TYPES", color: "#b0c4ef", words: ["LIQUIDITY", "PROFITABILITY", "DEBT", "EFFICIENCY"] },
                 { name: "WORDS BEFORE \"WAVE\"", color: "#ba81c5", words: ["HEAT", "COLD", "MICRO", "SHOCK"] }
             ]
@@ -1151,7 +1151,7 @@
         {
             categories: [
                 { name: "INDIVIDUAL SPORTS", color: "#f9df6d", words: ["GOLF", "TENNIS", "BOXING", "SWIMMING"] },
-                { name: "NOTEBOOK CHARACTERS", color: "#a0c35a", words: ["NOAH", "ALLIE", "LON", "ANNE"] },
+                { name: "HOT SAUCE BRANDS", color: "#a0c35a", words: ["TABASCO", "FRANKS", "SRIRACHA", "CHOLULA"] },
                 { name: "COST TYPES", color: "#b0c4ef", words: ["FIXED", "VARIABLE", "SUNK", "OPPORTUNITY"] },
                 { name: "___ MOTHER", color: "#ba81c5", words: ["GRAND", "GOD", "BIRTH", "HOUSE"] }
             ]
@@ -1183,7 +1183,7 @@
         {
             categories: [
                 { name: "DISC SPORTS", color: "#f9df6d", words: ["FRISBEE", "DISC GOLF", "ULTIMATE", "GUTS"] },
-                { name: "GREEN MILE CHARACTERS", color: "#a0c35a", words: ["PAUL", "JOHN", "PERCY", "WILD BILL"] },
+                { name: "BBQ SAUCE BRANDS", color: "#a0c35a", words: ["SWEET BABY RAY", "STUBBS", "KC MASTERPIECE", "BULLS-EYE"] },
                 { name: "PORTER'S FORCES", color: "#b0c4ef", words: ["RIVALRY", "SUPPLIERS", "BUYERS", "SUBSTITUTES"] },
                 { name: "___ DROP", color: "#ba81c5", words: ["NAME", "JAW", "TEAR", "MIC"] }
             ]
@@ -1199,7 +1199,7 @@
         {
             categories: [
                 { name: "STRENGTH SPORTS", color: "#f9df6d", words: ["POWERLIFTING", "WEIGHTLIFTING", "STRONGMAN", "CROSSFIT"] },
-                { name: "INCEPTION CHARACTERS", color: "#a0c35a", words: ["COBB", "ARTHUR", "MAL", "EAMES"] },
+                { name: "PASTA SAUCE BRANDS", color: "#a0c35a", words: ["PREGO", "RAGU", "BERTOLLI", "CLASSICO"] },
                 { name: "EXIT STRATEGIES", color: "#b0c4ef", words: ["IPO", "ACQUISITION", "MERGER", "LIQUIDATION"] },
                 { name: "___ BREAK", color: "#ba81c5", words: ["SPRING", "LUNCH", "COFFEE", "JAIL"] }
             ]
@@ -1207,7 +1207,7 @@
         {
             categories: [
                 { name: "FLEXIBILITY SPORTS", color: "#f9df6d", words: ["YOGA", "PILATES", "GYMNASTICS", "DANCE"] },
-                { name: "INTERSTELLAR CHARACTERS", color: "#a0c35a", words: ["COOPER", "MURPH", "BRAND", "MANN"] },
+                { name: "CRACKER BRANDS", color: "#a0c35a", words: ["RITZ", "TRISCUIT", "CHEEZ-IT", "WHEAT THINS"] },
                 { name: "COMPETITIVE ADVANTAGES", color: "#b0c4ef", words: ["COST", "DIFFERENTIATION", "FOCUS", "NICHE"] },
                 { name: "WORDS BEFORE \"CALL\"", color: "#ba81c5", words: ["WAKE-UP", "CURTAIN", "ROLL", "CLOSE"] }
             ]
@@ -1223,7 +1223,7 @@
         {
             categories: [
                 { name: "SPEED SPORTS", color: "#f9df6d", words: ["SPRINTING", "SPEED SKATING", "DOWNHILL SKI", "LUGE"] },
-                { name: "PRESTIGE CHARACTERS", color: "#a0c35a", words: ["ANGIER", "BORDEN", "CUTTER", "OLIVIA"] },
+                { name: "BREAD BRANDS", color: "#a0c35a", words: ["WONDER", "PEPPERIDGE FARM", "NATURES OWN", "SARA LEE"] },
                 { name: "SEGMENTATION TYPES", color: "#b0c4ef", words: ["DEMOGRAPHIC", "GEOGRAPHIC", "PSYCHOGRAPHIC", "BEHAVIORAL"] },
                 { name: "WORDS AFTER \"BACK\"", color: "#ba81c5", words: ["BONE", "FIRE", "DOOR", "YARD"] }
             ]
@@ -1231,7 +1231,7 @@
         {
             categories: [
                 { name: "AGILITY SPORTS", color: "#f9df6d", words: ["PARKOUR", "FREERUNNING", "OBSTACLE COURSE", "NINJA"] },
-                { name: "MEMENTO CHARACTERS", color: "#a0c35a", words: ["LEONARD", "TEDDY", "NATALIE", "SAMMY"] },
+                { name: "BUTTER BRANDS", color: "#a0c35a", words: ["LAND O LAKES", "KERRYGOLD", "CHALLENGE", "PLUGRA"] },
                 { name: "BRAND ELEMENTS", color: "#b0c4ef", words: ["NAME", "LOGO", "SLOGAN", "MASCOT"] },
                 { name: "___ MAIL", color: "#ba81c5", words: ["AIR", "JUNK", "BLACK", "VOICE"] }
             ]
@@ -1239,7 +1239,7 @@
         {
             categories: [
                 { name: "BALANCE SPORTS", color: "#f9df6d", words: ["SURFING", "SKATEBOARDING", "SLACKLINING", "SNOWBOARDING"] },
-                { name: "DUNKIRK CHARACTERS", color: "#a0c35a", words: ["TOMMY", "FARRIER", "MR DAWSON", "COLLINS"] },
+                { name: "MILK BRANDS", color: "#a0c35a", words: ["HORIZON", "ORGANIC VALLEY", "FAIRLIFE", "LACTAID"] },
                 { name: "CUSTOMER SEGMENTS", color: "#b0c4ef", words: ["MASS", "NICHE", "DIVERSIFIED", "MULTI-SIDED"] },
                 { name: "WORDS BEFORE \"HOUSE\"", color: "#ba81c5", words: ["LIGHT", "DOG", "OPEN", "COFFEE"] }
             ]
@@ -1247,7 +1247,7 @@
         {
             categories: [
                 { name: "THROWING SPORTS", color: "#f9df6d", words: ["SHOT PUT", "DISCUS", "JAVELIN", "HAMMER"] },
-                { name: "1917 CHARACTERS", color: "#a0c35a", words: ["SCHOFIELD", "BLAKE", "MACKENZIE", "LESLIE"] },
+                { name: "YOGURT BRANDS", color: "#a0c35a", words: ["CHOBANI", "YOPLAIT", "DANNON", "OIKOS"] },
                 { name: "VALUE PROPOSITIONS", color: "#b0c4ef", words: ["PERFORMANCE", "CUSTOMIZATION", "DESIGN", "PRICE"] },
                 { name: "___ SHOP", color: "#ba81c5", words: ["COFFEE", "PET", "TALK", "CHOP"] }
             ]
@@ -1255,7 +1255,7 @@
         {
             categories: [
                 { name: "JUMPING SPORTS", color: "#f9df6d", words: ["HIGH JUMP", "LONG JUMP", "TRIPLE JUMP", "POLE VAULT"] },
-                { name: "ARRIVAL CHARACTERS", color: "#a0c35a", words: ["LOUISE", "IAN", "WEBER", "HALPERN"] },
+                { name: "CHEESE BRANDS", color: "#a0c35a", words: ["KRAFT", "SARGENTO", "TILLAMOOK", "CABOT"] },
                 { name: "REVENUE STREAMS", color: "#b0c4ef", words: ["SUBSCRIPTION", "LICENSING", "ADVERTISING", "TRANSACTION"] },
                 { name: "WORDS AFTER \"FIRST\"", color: "#ba81c5", words: ["AID", "CLASS", "HAND", "BORN"] }
             ]
@@ -1263,7 +1263,7 @@
         {
             categories: [
                 { name: "RHYTHM SPORTS", color: "#f9df6d", words: ["FIGURE SKATING", "RHYTHMIC GYMNASTICS", "DANCE", "SYNCHRONIZED SWIMMING"] },
-                { name: "WHIPLASH CHARACTERS", color: "#a0c35a", words: ["ANDREW", "FLETCHER", "JIM", "NICOLE"] },
+                { name: "SALSA BRANDS", color: "#a0c35a", words: ["TOSTITOS", "PACE", "CHI-CHIS", "HERDEZ"] },
                 { name: "KEY RESOURCES", color: "#b0c4ef", words: ["PHYSICAL", "INTELLECTUAL", "HUMAN", "FINANCIAL"] },
                 { name: "___ POOL", color: "#ba81c5", words: ["CAR", "GENE", "DEAD", "MOTOR"] }
             ]
@@ -1271,7 +1271,7 @@
         {
             categories: [
                 { name: "SHOOTING SPORTS", color: "#f9df6d", words: ["RIFLE", "PISTOL", "SKEET", "TRAP"] },
-                { name: "LA LA LAND CHARACTERS", color: "#a0c35a", words: ["MIA", "SEBASTIAN", "KEITH", "GREG"] },
+                { name: "SOUP BRANDS", color: "#a0c35a", words: ["CAMPBELLS", "PROGRESSO", "AMY'S", "PACIFIC"] },
                 { name: "KEY ACTIVITIES", color: "#b0c4ef", words: ["PRODUCTION", "PROBLEM-SOLVING", "PLATFORM", "NETWORK"] },
                 { name: "WORDS BEFORE \"ROAD\"", color: "#ba81c5", words: ["DIRT", "RAIL", "HIGH", "SILK"] }
             ]
@@ -1279,7 +1279,7 @@
         {
             categories: [
                 { name: "FENCING WEAPONS", color: "#f9df6d", words: ["FOIL", "EPEE", "SABRE", "RAPIER"] },
-                { name: "MOONLIGHT CHARACTERS", color: "#a0c35a", words: ["CHIRON", "JUAN", "TERESA", "KEVIN"] },
+                { name: "PIZZA CHAINS", color: "#a0c35a", words: ["DOMINOS", "PIZZA HUT", "PAPA JOHNS", "LITTLE CAESARS"] },
                 { name: "KEY PARTNERSHIPS", color: "#b0c4ef", words: ["STRATEGIC", "COOPETITION", "JOINT VENTURE", "SUPPLIER"] },
                 { name: "___ BELT", color: "#ba81c5", words: ["SEAT", "RUST", "BIBLE", "BLACK"] }
             ]
@@ -1287,7 +1287,7 @@
         {
             categories: [
                 { name: "EQUESTRIAN DISCIPLINES", color: "#f9df6d", words: ["DRESSAGE", "JUMPING", "EVENTING", "REINING"] },
-                { name: "SHAPE OF WATER CHARACTERS", color: "#a0c35a", words: ["ELISA", "GILES", "ZELDA", "STRICKLAND"] },
+                { name: "OFFICE SUPPLIES", color: "#a0c35a", words: ["STAPLER", "PAPERCLIP", "TAPE", "SCISSORS"] },
                 { name: "COST STRUCTURE", color: "#b0c4ef", words: ["VALUE-DRIVEN", "COST-DRIVEN", "FIXED", "VARIABLE"] },
                 { name: "WORDS AFTER \"BLUE\"", color: "#ba81c5", words: ["PRINT", "BIRD", "TOOTH", "COLLAR"] }
             ]
@@ -1295,7 +1295,7 @@
         {
             categories: [
                 { name: "CYCLING EVENTS", color: "#f9df6d", words: ["ROAD RACE", "TIME TRIAL", "TRACK", "BMX"] },
-                { name: "PARASITE CHARACTERS", color: "#a0c35a", words: ["KI-TAEK", "KI-WOO", "DONG-IK", "MOON-GWANG"] },
+                { name: "BREAKFAST CEREALS", color: "#a0c35a", words: ["CORNFLAKES", "RAISIN BRAN", "WHEATIES", "LIFE"] },
                 { name: "BUSINESS MODEL CANVAS", color: "#b0c4ef", words: ["CHANNELS", "RELATIONSHIPS", "SEGMENTS", "PARTNERS"] },
                 { name: "___ FINGER", color: "#ba81c5", words: ["BUTTER", "INDEX", "RING", "TRIGGER"] }
             ]
@@ -1303,7 +1303,7 @@
         {
             categories: [
                 { name: "SKIING DISCIPLINES", color: "#f9df6d", words: ["SLALOM", "DOWNHILL", "GIANT", "SUPER-G"] },
-                { name: "NOMADLAND CHARACTERS", color: "#a0c35a", words: ["FERN", "DAVE", "LINDA", "BOB"] },
+                { name: "COFFEE CHAINS", color: "#a0c35a", words: ["STARBUCKS", "DUNKIN", "PEETS", "CARIBOU"] },
                 { name: "LEAN STARTUP TERMS", color: "#b0c4ef", words: ["MVP", "PIVOT", "ITERATE", "VALIDATE"] },
                 { name: "WORDS BEFORE \"BOOK\"", color: "#ba81c5", words: ["HAND", "TEXT", "POCKET", "GUEST"] }
             ]
@@ -1311,7 +1311,7 @@
         {
             categories: [
                 { name: "SNOWBOARDING STYLES", color: "#f9df6d", words: ["FREESTYLE", "FREERIDE", "ALPINE", "HALFPIPE"] },
-                { name: "CODA CHARACTERS", color: "#a0c35a", words: ["RUBY", "FRANK", "JACKIE", "LEO"] },
+                { name: "DEPARTMENT STORES", color: "#a0c35a", words: ["TARGET", "WALMART", "COSTCO", "KOHLS"] },
                 { name: "AGILE TERMS", color: "#b0c4ef", words: ["SPRINT", "SCRUM", "BACKLOG", "STANDUP"] },
                 { name: "___ MUSIC", color: "#ba81c5", words: ["FACE", "SHEET", "POP", "COUNTRY"] }
             ]
@@ -1319,7 +1319,7 @@
         {
             categories: [
                 { name: "SKATEBOARDING TRICKS", color: "#f9df6d", words: ["KICKFLIP", "OLLIE", "GRIND", "MANUAL"] },
-                { name: "EVERYTHING EVERYWHERE CHARACTERS", color: "#a0c35a", words: ["EVELYN", "WAYMOND", "JOY", "DEIRDRE"] },
+                { name: "DRUGSTORE CHAINS", color: "#a0c35a", words: ["CVS", "WALGREENS", "RITE AID", "DUANE READE"] },
                 { name: "SCRUM ROLES", color: "#b0c4ef", words: ["PRODUCT OWNER", "SCRUM MASTER", "DEVELOPER", "STAKEHOLDER"] },
                 { name: "WORDS AFTER \"HARD\"", color: "#ba81c5", words: ["WARE", "BALL", "SHIP", "COVER"] }
             ]
@@ -1327,7 +1327,7 @@
         {
             categories: [
                 { name: "SURFING MANEUVERS", color: "#f9df6d", words: ["CUTBACK", "BOTTOM TURN", "TUBE RIDE", "AERIAL"] },
-                { name: "TAR CHARACTERS", color: "#a0c35a", words: ["LYDIA", "SHARON", "KRISTA", "FRANCESCA"] },
+                { name: "HARDWARE STORES", color: "#a0c35a", words: ["HOME DEPOT", "LOWES", "ACE", "MENARDS"] },
                 { name: "KANBAN ELEMENTS", color: "#b0c4ef", words: ["BOARD", "CARD", "COLUMN", "WIP LIMIT"] },
                 { name: "___ BREAD", color: "#ba81c5", words: ["CORN", "BANANA", "SHORT", "WHITE"] }
             ]
@@ -1335,7 +1335,7 @@
         {
             categories: [
                 { name: "CLIMBING GRADES", color: "#f9df6d", words: ["BOULDER", "SPORT", "TRAD", "TOP ROPE"] },
-                { name: "BANSHEES CHARACTERS", color: "#a0c35a", words: ["PADRAIC", "COLM", "SIOBHAN", "DOMINIC"] },
+                { name: "GROCERY STORES", color: "#a0c35a", words: ["KROGER", "SAFEWAY", "PUBLIX", "TRADER JOES"] },
                 { name: "DEVOPS PRACTICES", color: "#b0c4ef", words: ["CI", "CD", "MONITORING", "INFRASTRUCTURE"] },
                 { name: "WORDS BEFORE \"RAIN\"", color: "#ba81c5", words: ["ACID", "BRAIN", "PURPLE", "CHAMPAGNE"] }
             ]
