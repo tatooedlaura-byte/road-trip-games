@@ -76,6 +76,7 @@
             .scat-header {
                 text-align: center;
                 margin-bottom: 1rem;
+                padding-top: 2.5rem;
             }
 
             .scat-title {
