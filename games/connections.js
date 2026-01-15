@@ -13,10 +13,13 @@
                 max-width: 500px;
                 margin: 0 auto;
                 padding: 1rem;
+                padding-top: 3rem;
                 background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
                 border-radius: 20px;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
+                box-sizing: border-box;
+                overflow-x: hidden;
             }
 
             .connections-header {
@@ -95,13 +98,17 @@
                 background: rgba(255,255,255,0.1);
                 border: 2px solid rgba(255,255,255,0.2);
                 color: white;
-                padding: 1rem 0.5rem;
+                padding: 0.6rem 0.25rem;
                 border-radius: 8px;
-                font-size: 0.75rem;
+                font-size: 0.65rem;
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.2s ease;
                 text-transform: uppercase;
+                word-break: break-word;
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .connections-word:hover:not(:disabled) {
