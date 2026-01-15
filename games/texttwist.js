@@ -227,6 +227,26 @@
                 color: #ffd93d;
             }
 
+            .texttwist-message.bonus {
+                color: #00d9ff;
+            }
+
+            .texttwist-bonus-words {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.3rem;
+                justify-content: center;
+                margin-top: 0.5rem;
+            }
+
+            .texttwist-bonus-words span {
+                background: rgba(0, 217, 255, 0.2);
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                color: #00d9ff;
+            }
+
             .texttwist-gameover {
                 text-align: center;
                 padding: 1.5rem;
@@ -299,6 +319,7 @@
     let currentPuzzle = null;
     let currentWord = '';
     let foundWords = new Set();
+    let bonusWords = new Set();
     let selectedIndices = [];
     let shuffledLetters = [];
     let timeRemaining = 120;
@@ -306,12 +327,47 @@
     let gameOver = false;
     let level = 1;
     let totalScore = 0;
+    let bonusScore = 0;
     let message = '';
     let messageType = '';
+    let dictionary = new Set();
 
-    function init() {
+    // Load dictionary for bonus word validation
+    async function loadDictionary() {
+        if (dictionary.size > 0) return;
+
+        try {
+            const response = await fetch('./data/ghost-words.txt');
+            const text = await response.text();
+            const words = text.split('\n').map(w => w.trim().toUpperCase()).filter(w => w.length >= 3);
+            dictionary = new Set(words);
+            console.log(`Loaded ${dictionary.size} words for Text Twist`);
+        } catch (error) {
+            console.error('Failed to load dictionary:', error);
+        }
+    }
+
+    // Check if a word can be made from available letters
+    function canMakeWord(word, availableLetters) {
+        const letterCount = {};
+        for (const letter of availableLetters) {
+            letterCount[letter] = (letterCount[letter] || 0) + 1;
+        }
+
+        for (const letter of word) {
+            if (!letterCount[letter] || letterCount[letter] === 0) {
+                return false;
+            }
+            letterCount[letter]--;
+        }
+        return true;
+    }
+
+    async function init() {
         level = 1;
         totalScore = 0;
+        bonusScore = 0;
+        await loadDictionary();
         startNewRound();
     }
 
@@ -320,6 +376,7 @@
         shuffledLetters = shuffleArray([...currentPuzzle.letters]);
         currentWord = '';
         foundWords = new Set();
+        bonusWords = new Set();
         selectedIndices = [];
         timeRemaining = 120;
         gameOver = false;
@@ -390,7 +447,7 @@
             return;
         }
 
-        if (foundWords.has(currentWord)) {
+        if (foundWords.has(currentWord) || bonusWords.has(currentWord)) {
             message = 'Already found!';
             messageType = 'error';
             clearWord();
@@ -398,6 +455,7 @@
         }
 
         if (currentPuzzle.words.includes(currentWord)) {
+            // It's a puzzle word
             foundWords.add(currentWord);
             totalScore += currentWord.length * 10;
             message = `+${currentWord.length * 10} points!`;
@@ -413,6 +471,14 @@
             if (foundWords.size === currentPuzzle.words.length) {
                 endGame(true, true);
             }
+        } else if (dictionary.has(currentWord) && canMakeWord(currentWord, currentPuzzle.letters.split(''))) {
+            // It's a valid bonus word from the dictionary
+            bonusWords.add(currentWord);
+            const bonus = currentWord.length * 5;
+            bonusScore += bonus;
+            totalScore += bonus;
+            message = `Bonus word! +${bonus} points!`;
+            messageType = 'bonus';
         } else {
             message = 'Not a valid word';
             messageType = 'error';
@@ -472,6 +538,7 @@
                     <span>Level: <strong>${level}</strong></span>
                     <span>Score: <strong>${totalScore}</strong></span>
                     <span>Found: <strong>${foundWords.size}/${currentPuzzle.words.length}</strong></span>
+                    ${bonusWords.size > 0 ? `<span>Bonus: <strong style="color: #00d9ff;">${bonusWords.size}</strong></span>` : ''}
                 </div>
 
                 ${!gameOver ? `
@@ -518,6 +585,7 @@
                     <div class="texttwist-gameover ${foundBigWord ? 'won' : 'lost'}">
                         <h3>${foundBigWord ? 'Level Complete!' : 'Time\'s Up!'}</h3>
                         <p>Words found: ${foundWords.size}/${currentPuzzle.words.length}</p>
+                        ${bonusWords.size > 0 ? `<p>Bonus words: ${bonusWords.size}</p>` : ''}
                         <p>Score: ${totalScore}</p>
 
                         ${!foundBigWord ? `
@@ -536,6 +604,15 @@
                             </div>
                         </div>
 
+                        ${bonusWords.size > 0 ? `
+                            <div class="texttwist-missed">
+                                <h4>Your bonus words:</h4>
+                                <div class="texttwist-bonus-words">
+                                    ${[...bonusWords].map(w => `<span>${w}</span>`).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+
                         <div style="margin-top: 1rem;">
                             <button class="tt-btn primary" onclick="window.TextTwistGame.newGame()">Play Again</button>
                         </div>
@@ -548,6 +625,7 @@
     function newGame() {
         level = 1;
         totalScore = 0;
+        bonusScore = 0;
         startNewRound();
     }
 
