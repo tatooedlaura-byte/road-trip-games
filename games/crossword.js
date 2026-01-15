@@ -227,6 +227,49 @@
                 color: #60a5fa;
                 margin-bottom: 0.25rem;
             }
+
+            .crossword-keyboard {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                margin-top: 1rem;
+                padding: 0.5rem;
+                background: rgba(0,0,0,0.2);
+                border-radius: 12px;
+            }
+
+            .crossword-keyboard-row {
+                display: flex;
+                justify-content: center;
+                gap: 4px;
+            }
+
+            .crossword-key {
+                min-width: 28px;
+                height: 40px;
+                border: none;
+                border-radius: 6px;
+                background: rgba(255,255,255,0.15);
+                color: white;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.1s ease;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .crossword-key:active {
+                background: rgba(96, 165, 250, 0.5);
+                transform: scale(0.95);
+            }
+
+            .crossword-key.wide {
+                min-width: 50px;
+                font-size: 0.8rem;
+            }
         `;
         document.head.appendChild(style);
     }
@@ -631,6 +674,26 @@
                     <button class="cw-btn secondary" onclick="window.CrosswordGame.checkAnswers()">Check</button>
                     <button class="cw-btn secondary" onclick="window.CrosswordGame.newPuzzle()">New Puzzle</button>
                 </div>
+
+                <div class="crossword-keyboard">
+                    <div class="crossword-keyboard-row">
+                        ${['Q','W','E','R','T','Y','U','I','O','P'].map(k =>
+                            `<button class="crossword-key" onclick="window.CrosswordGame.inputLetter('${k}')">${k}</button>`
+                        ).join('')}
+                    </div>
+                    <div class="crossword-keyboard-row">
+                        ${['A','S','D','F','G','H','J','K','L'].map(k =>
+                            `<button class="crossword-key" onclick="window.CrosswordGame.inputLetter('${k}')">${k}</button>`
+                        ).join('')}
+                    </div>
+                    <div class="crossword-keyboard-row">
+                        <button class="crossword-key wide" onclick="window.CrosswordGame.deleteLetter()">⌫</button>
+                        ${['Z','X','C','V','B','N','M'].map(k =>
+                            `<button class="crossword-key" onclick="window.CrosswordGame.inputLetter('${k}')">${k}</button>`
+                        ).join('')}
+                        <button class="crossword-key wide" onclick="window.CrosswordGame.toggleDirection()">↔️</button>
+                    </div>
+                </div>
             </div>
         `;
     }
@@ -698,13 +761,21 @@
         }
     }
 
+    function toggleDirection() {
+        direction = direction === 'across' ? 'down' : 'across';
+        render();
+    }
+
     // Expose functions
     window.CrosswordGame = {
         init,
         selectCell,
         selectClue,
         checkAnswers,
-        newPuzzle
+        newPuzzle,
+        inputLetter,
+        deleteLetter,
+        toggleDirection
     };
 
     window.launchCrossword = function() {
