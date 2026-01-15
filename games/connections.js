@@ -359,6 +359,143 @@
                 { name: "BABY ANIMALS", color: "#b0c4ef", words: ["PUPPY", "KITTEN", "CALF", "FOAL"] },
                 { name: "ELEMENTS OF ART", color: "#ba81c5", words: ["LINE", "SHAPE", "TEXTURE", "SPACE"] }
             ]
+        },
+        // TRICKY PUZZLES WITH OVERLAPPING WORDS AND WORDPLAY
+        {
+            categories: [
+                { name: "CANDY BARS", color: "#f9df6d", words: ["MILKY WAY", "SNICKERS", "TWIX", "PAYDAY"] },
+                { name: "ROMAN GODS (ALSO PLANETS!)", color: "#a0c35a", words: ["JUPITER", "MARS", "VENUS", "NEPTUNE"] },
+                { name: "LUXURY CAR BRANDS", color: "#b0c4ef", words: ["JAGUAR", "LINCOLN", "INFINITI", "LEXUS"] },
+                { name: "___ WARS", color: "#ba81c5", words: ["STAR", "CLONE", "CIVIL", "STORAGE"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "CITRUS FRUITS", color: "#f9df6d", words: ["LEMON", "LIME", "ORANGE", "GRAPEFRUIT"] },
+                { name: "ALSO TECH COMPANIES", color: "#a0c35a", words: ["APPLE", "AMAZON", "BLACKBERRY", "ORACLE"] },
+                { name: "US STATE CAPITALS", color: "#b0c4ef", words: ["PHOENIX", "DENVER", "AUSTIN", "ATLANTA"] },
+                { name: "___ LIGHT", color: "#ba81c5", words: ["FLASH", "MOON", "DAY", "HIGH"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "POKER TERMS", color: "#f9df6d", words: ["FOLD", "RAISE", "BLUFF", "CALL"] },
+                { name: "WEATHER PHENOMENA", color: "#a0c35a", words: ["FOG", "HAIL", "SLEET", "DRIZZLE"] },
+                { name: "THINGS AT A WEDDING", color: "#b0c4ef", words: ["BRIDE", "GROOM", "VEIL", "BOUQUET"] },
+                { name: "___ BLUE", color: "#ba81c5", words: ["BABY", "SKY", "NAVY", "FEELING"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "DANCE MOVES", color: "#f9df6d", words: ["TWIST", "SHUFFLE", "SLIDE", "SPIN"] },
+                { name: "PARTS OF A BOOK", color: "#a0c35a", words: ["SPINE", "COVER", "INDEX", "CHAPTER"] },
+                { name: "POOL TABLE ITEMS", color: "#b0c4ef", words: ["CUE", "CHALK", "POCKET", "RACK"] },
+                { name: "ANIMALS = CAR MODELS", color: "#ba81c5", words: ["MUSTANG", "BEETLE", "IMPALA", "PINTO"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "BREAKFAST ITEMS", color: "#f9df6d", words: ["TOAST", "CEREAL", "JUICE", "YOGURT"] },
+                { name: "SOCIAL MEDIA", color: "#a0c35a", words: ["TWITTER", "INSTAGRAM", "SNAPCHAT", "TIKTOK"] },
+                { name: "TYPES OF JACKETS", color: "#b0c4ef", words: ["BLAZER", "PARKA", "WINDBREAKER", "BOMBER"] },
+                { name: "CONTAIN \"CAT\"", color: "#ba81c5", words: ["SCATTER", "LOCATE", "EDUCATION", "VACATION"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "FARM ANIMALS", color: "#f9df6d", words: ["COW", "PIG", "CHICKEN", "SHEEP"] },
+                { name: "STRING INSTRUMENTS", color: "#a0c35a", words: ["GUITAR", "VIOLIN", "CELLO", "BANJO"] },
+                { name: "KITCHEN APPLIANCES", color: "#b0c4ef", words: ["BLENDER", "TOASTER", "MICROWAVE", "DISHWASHER"] },
+                { name: "___ HOUSE", color: "#ba81c5", words: ["WHITE", "FULL", "OPERA", "GREEN"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "THINGS WITH KEYS", color: "#f9df6d", words: ["PIANO", "KEYBOARD", "LOCK", "MAP"] },
+                { name: "SCHOOL THINGS", color: "#a0c35a", words: ["DESK", "LOCKER", "CAFETERIA", "PRINCIPAL"] },
+                { name: "FILM GENRES", color: "#b0c4ef", words: ["HORROR", "COMEDY", "DRAMA", "THRILLER"] },
+                { name: "HOT ___", color: "#ba81c5", words: ["DOG", "SHOT", "TUB", "HEAD"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "TRACK & FIELD EVENTS", color: "#f9df6d", words: ["JAVELIN", "DISCUS", "HURDLES", "RELAY"] },
+                { name: "ROCK BANDS (ALSO WORDS!)", color: "#a0c35a", words: ["QUEEN", "RUSH", "KISS", "HEART"] },
+                { name: "CARD GAME TERMS", color: "#b0c4ef", words: ["TRUMP", "DEALER", "WILD", "ANTE"] },
+                { name: "___ BALL", color: "#ba81c5", words: ["BASKET", "BASE", "FOOT", "CRYSTAL"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "SHADES OF RED", color: "#f9df6d", words: ["CRIMSON", "SCARLET", "MAROON", "BURGUNDY"] },
+                { name: "IVY LEAGUE SCHOOLS", color: "#a0c35a", words: ["HARVARD", "YALE", "PRINCETON", "CORNELL"] },
+                { name: "SODA BRANDS", color: "#b0c4ef", words: ["PEPSI", "COKE", "SPRITE", "FANTA"] },
+                { name: "GOLDEN ___", color: "#ba81c5", words: ["GATE", "RETRIEVER", "GLOBE", "RULE"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "CHESS PIECES", color: "#f9df6d", words: ["KNIGHT", "BISHOP", "ROOK", "PAWN"] },
+                { name: "SHAKESPEARE PLAYS", color: "#a0c35a", words: ["HAMLET", "OTHELLO", "MACBETH", "TEMPEST"] },
+                { name: "TYPES OF BREAD", color: "#b0c4ef", words: ["SOURDOUGH", "BRIOCHE", "FOCACCIA", "CIABATTA"] },
+                { name: "___ KING", color: "#ba81c5", words: ["BURGER", "LION", "STEPHEN", "DRAG"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "PARTS OF A TREE", color: "#f9df6d", words: ["TRUNK", "BRANCH", "ROOT", "BARK"] },
+                { name: "THINGS IN A WALLET", color: "#a0c35a", words: ["CASH", "LICENSE", "RECEIPT", "CREDIT"] },
+                { name: "GYMNASTICS MOVES", color: "#b0c4ef", words: ["FLIP", "TUMBLE", "VAULT", "SPLIT"] },
+                { name: "WORDS BEFORE \"PRINT\"", color: "#ba81c5", words: ["BLUE", "FINE", "FINGER", "FOOT"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "THINGS THAT DRIP", color: "#f9df6d", words: ["FAUCET", "CANDLE", "NOSE", "ICICLE"] },
+                { name: "UNITS OF TIME", color: "#a0c35a", words: ["SECOND", "MINUTE", "HOUR", "DECADE"] },
+                { name: "NYC BOROUGHS", color: "#b0c4ef", words: ["BRONX", "QUEENS", "BROOKLYN", "MANHATTAN"] },
+                { name: "DOUBLE ___", color: "#ba81c5", words: ["DUTCH", "DOWN", "TAKE", "AGENT"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "CAMPING EQUIPMENT", color: "#f9df6d", words: ["TENT", "SLEEPING BAG", "FLASHLIGHT", "COOLER"] },
+                { name: "TYPES OF TESTS", color: "#a0c35a", words: ["BLOOD", "DRIVING", "PREGNANCY", "STRESS"] },
+                { name: "WAYS TO COOK EGGS", color: "#b0c4ef", words: ["SCRAMBLED", "POACHED", "FRIED", "BOILED"] },
+                { name: "WORDS AFTER \"BREAK\"", color: "#ba81c5", words: ["FAST", "THROUGH", "DOWN", "DANCE"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "THINGS WITH STRINGS", color: "#f9df6d", words: ["KITE", "PUPPET", "GUITAR", "BALLOON"] },
+                { name: "AWARDS SHOWS", color: "#a0c35a", words: ["OSCAR", "GRAMMY", "EMMY", "TONY"] },
+                { name: "PHONE PARTS", color: "#b0c4ef", words: ["SCREEN", "BATTERY", "SPEAKER", "CAMERA"] },
+                { name: "ALSO MEN'S NAMES", color: "#ba81c5", words: ["JACK", "BILL", "BOB", "JOHN"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "PIZZA CHAIN RESTAURANTS", color: "#f9df6d", words: ["DOMINOS", "PAPA JOHNS", "PIZZA HUT", "LITTLE CAESARS"] },
+                { name: "PARTS OF AN AIRPLANE", color: "#a0c35a", words: ["WING", "COCKPIT", "TAIL", "FUSELAGE"] },
+                { name: "THINGS THAT BLOOM", color: "#b0c4ef", words: ["FLOWER", "ROMANCE", "ALGAE", "TALENT"] },
+                { name: "SILENT LETTERS", color: "#ba81c5", words: ["KNIGHT", "PSALM", "GNOME", "WRECK"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "BASKETBALL POSITIONS", color: "#f9df6d", words: ["POINT", "SHOOTING", "CENTER", "FORWARD"] },
+                { name: "TOOTH TYPES", color: "#a0c35a", words: ["MOLAR", "CANINE", "INCISOR", "WISDOM"] },
+                { name: "DISNEY PRINCESSES", color: "#b0c4ef", words: ["ARIEL", "BELLE", "JASMINE", "MULAN"] },
+                { name: "WORDS BEFORE \"RUNNER\"", color: "#ba81c5", words: ["BLADE", "FRONT", "ROAD", "GUN"] }
+            ]
+        },
+        {
+            categories: [
+                { name: "THINGS IN A FIRST AID KIT", color: "#f9df6d", words: ["BANDAGE", "GAUZE", "TAPE", "SCISSORS"] },
+                { name: "TYPES OF MARKETS", color: "#a0c35a", words: ["STOCK", "FLEA", "SUPER", "BLACK"] },
+                { name: "POKER HAND RANKINGS", color: "#b0c4ef", words: ["FLUSH", "STRAIGHT", "PAIR", "FULL HOUSE"] },
+                { name: "WORDS AFTER \"FIRE\"", color: "#ba81c5", words: ["TRUCK", "FLY", "PLACE", "WORKS"] }
+            ]
         }
     ];
 
