@@ -535,7 +535,7 @@
     };
 
     window.launchHangman = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('hangmanGame').style.display = 'block';
         addKeyboardListener();
         init();
@@ -544,6 +544,6 @@
     window.exitHangman = function() {
         removeKeyboardListener();
         document.getElementById('hangmanGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
     };
 })();

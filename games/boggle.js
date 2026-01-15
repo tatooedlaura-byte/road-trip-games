@@ -1047,7 +1047,7 @@
     };
 
     window.launchBoggle = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('boggleGame').style.display = 'block';
         init();
     };
@@ -1056,6 +1056,6 @@
         stopTimer();
         removeKeyboardListener();
         document.getElementById('boggleGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
     };
 })();

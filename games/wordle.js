@@ -619,7 +619,7 @@
 
     // Launch game
     async function launchWordle() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('wordleGame').style.display = 'block';
 
         if (!dictionaryLoaded) {
@@ -642,7 +642,7 @@
     // Exit game
     function exitWordle() {
         document.getElementById('wordleGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
         document.removeEventListener('keydown', handleKeydown);
     }
 

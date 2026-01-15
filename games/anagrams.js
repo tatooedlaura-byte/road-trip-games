@@ -944,7 +944,7 @@
     };
 
     window.launchAnagrams = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('anagramsGame').style.display = 'block';
         init();
     };
@@ -953,6 +953,6 @@
         stopTimer();
         document.removeEventListener('keydown', handleKeydown);
         document.getElementById('anagramsGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
     };
 })();

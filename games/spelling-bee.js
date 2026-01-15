@@ -1106,7 +1106,7 @@
     }
 
     async function launchSpellingBee() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('spellingBeeGame').style.display = 'block';
 
         // Show loading state while dictionary loads
@@ -1128,7 +1128,7 @@
 
     function exitSpellingBee() {
         document.getElementById('spellingBeeGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
     }
 
     function startNewGame() {

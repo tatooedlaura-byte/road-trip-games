@@ -603,7 +603,7 @@
     };
 
     window.launchScattergories = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('scattergoriesGame').style.display = 'block';
         init();
     };
@@ -611,6 +611,6 @@
     window.exitScattergories = function() {
         stopTimer();
         document.getElementById('scattergoriesGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
     };
 })();

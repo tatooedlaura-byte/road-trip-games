@@ -769,14 +769,14 @@
             messageType: null
         };
 
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('wordLadderGame').style.display = 'block';
         showSetup();
     }
 
     function exitWordLadder() {
         document.getElementById('wordLadderGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
     }
 
     function showSetup() {

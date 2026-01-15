@@ -569,13 +569,13 @@
     };
 
     window.launchConnections = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('connectionsGame').style.display = 'block';
         init();
     };
 
     window.exitConnections = function() {
         document.getElementById('connectionsGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
     };
 })();

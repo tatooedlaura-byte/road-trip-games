@@ -1534,7 +1534,7 @@
             vsComputer: false,
             modeSelected: false
         };
-        document.getElementById('gamesMenu').style.display = 'none';
+        document.getElementById('wordGamesMenu').style.display = 'none';
         document.getElementById('ghostGame').style.display = 'block';
 
         // Show loading state while dictionary loads
@@ -1573,7 +1573,7 @@
     // Exit back to menu
     function exitGhost() {
         document.getElementById('ghostGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('wordGamesMenu').style.display = 'block';
     }
 
     // Expose to window
