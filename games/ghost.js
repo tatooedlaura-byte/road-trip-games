@@ -1059,8 +1059,8 @@
         const validLetters = getValidNextLetters(prefix);
 
         if (validLetters.length === 0) {
-            // No valid moves - pick random letter (will be challenged)
-            return 'ETAOINSHRDLU'[Math.floor(Math.random() * 12)];
+            // No valid moves - computer should concede
+            return null;
         }
 
         // Filter out letters that would make us lose immediately
@@ -1115,7 +1115,18 @@
                 handleChallenge(shouldChallenge);
             } else {
                 const letter = computerPickLetter();
-                addLetter(letter);
+                if (letter === null) {
+                    // No valid moves - computer concedes the round
+                    state.message = 'Computer has no valid moves and concedes the round!';
+                    state.messageType = 'success';
+                    addGhostLetter(2);
+                    renderGame();
+                    if (!state.gameOver) {
+                        setTimeout(newRound, 2500);
+                    }
+                } else {
+                    addLetter(letter);
+                }
             }
         }, 1000); // 1 second delay to feel natural
     }
@@ -1448,8 +1459,9 @@
                 ` : `
                     <div style="text-align: center; margin-bottom: 20px;">
                         <div style="font-size: 0.9rem; color: #aaa; margin-bottom: 10px;">Current Letters</div>
-                        <div style="font-size: 3rem; color: #fff; font-weight: bold; letter-spacing: 8px;
-                                    min-height: 60px; background: #2d2d44; border-radius: 10px; padding: 15px;">
+                        <div style="font-size: ${state.currentLetters.length > 10 ? '1.5rem' : state.currentLetters.length > 6 ? '2rem' : '3rem'}; color: #fff; font-weight: bold; letter-spacing: ${state.currentLetters.length > 10 ? '2px' : state.currentLetters.length > 6 ? '4px' : '8px'};
+                                    min-height: 60px; background: #2d2d44; border-radius: 10px; padding: 15px;
+                                    word-break: break-all; overflow-wrap: break-word;">
                             ${state.currentLetters || '<span style="color: #555;">...</span>'}
                         </div>
                     </div>
