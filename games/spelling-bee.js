@@ -1151,6 +1151,7 @@
             foundWords: [],
             score: 0,
             maxScore: maxScore,
+            highScore: parseInt(localStorage.getItem('spellingBeeHighScore')) || 0,
             message: '',
             messageType: '',
             validWords: validWords
