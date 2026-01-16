@@ -328,6 +328,7 @@
     let level = 1;
     let totalScore = 0;
     let bonusScore = 0;
+    let highScore = parseInt(localStorage.getItem('textTwistHighScore')) || 0;
     let message = '';
     let messageType = '';
     let dictionary = new Set();
@@ -491,6 +492,12 @@
         stopTimer();
         gameOver = true;
 
+        // Update high score if beaten
+        if (totalScore > highScore) {
+            highScore = totalScore;
+            localStorage.setItem('textTwistHighScore', highScore);
+        }
+
         if (won && !allFound) {
             // Found big word, can advance
             level++;
@@ -537,8 +544,8 @@
                 <div class="texttwist-stats">
                     <span>Level: <strong>${level}</strong></span>
                     <span>Score: <strong>${totalScore}</strong></span>
+                    <span>Best: <strong style="color: #f9df6d;">${highScore}</strong></span>
                     <span>Found: <strong>${foundWords.size}/${currentPuzzle.words.length}</strong></span>
-                    ${bonusWords.size > 0 ? `<span>Bonus: <strong style="color: #00d9ff;">${bonusWords.size}</strong></span>` : ''}
                 </div>
 
                 ${!gameOver ? `
@@ -587,6 +594,7 @@
                         <p>Words found: ${foundWords.size}/${currentPuzzle.words.length}</p>
                         ${bonusWords.size > 0 ? `<p>Bonus words: ${bonusWords.size}</p>` : ''}
                         <p>Score: ${totalScore}</p>
+                        ${totalScore >= highScore && totalScore > 0 ? `<p style="color: #f9df6d; font-weight: bold;">🏆 NEW HIGH SCORE! 🏆</p>` : `<p>Best: ${highScore}</p>`}
 
                         ${!foundBigWord ? `
                             <div class="texttwist-missed">

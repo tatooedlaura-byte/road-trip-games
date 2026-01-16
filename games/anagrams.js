@@ -27,6 +27,7 @@
     let timeRemaining = 0;
     let gameActive = false;
     let hintsUsed = 0;
+    let highScore = parseInt(localStorage.getItem('anagramsHighScore')) || 0;
 
     let gameSettings = {
         wordLength: 7,
@@ -814,12 +815,12 @@
                             <div class="ana-stat-label">Points</div>
                         </div>
                         <div class="ana-stat">
-                            <div class="ana-stat-value" id="anaWordCount">0</div>
-                            <div class="ana-stat-label">Words</div>
+                            <div class="ana-stat-value" style="color: #f9df6d;">${highScore}</div>
+                            <div class="ana-stat-label">Best</div>
                         </div>
                         <div class="ana-stat">
-                            <div class="ana-stat-value">${allValidWords.length}</div>
-                            <div class="ana-stat-label">Possible</div>
+                            <div class="ana-stat-value" id="anaWordCount">0</div>
+                            <div class="ana-stat-label">Words</div>
                         </div>
                     </div>
 
@@ -873,6 +874,12 @@
         document.removeEventListener('keydown', handleKeydown);
 
         const score = calculateScore();
+        const isNewHighScore = score > highScore;
+        if (isNewHighScore) {
+            highScore = score;
+            localStorage.setItem('anagramsHighScore', highScore);
+        }
+
         const missedWords = allValidWords.filter(w => !foundWords.has(w)).slice(0, 40);
         const foundArr = Array.from(foundWords).sort((a, b) => a.localeCompare(b));
         const foundSourceWord = foundWords.has(sourceWord);
@@ -895,6 +902,7 @@
 
                         <div class="ana-stat-label">Your Score</div>
                         <div class="ana-score">${score}</div>
+                        ${isNewHighScore ? `<div style="color: #f9df6d; font-weight: bold; margin-bottom: 0.5rem;">🏆 NEW HIGH SCORE! 🏆</div>` : `<div style="color: #888; margin-bottom: 0.5rem;">Best: ${highScore}</div>`}
                         <div style="color: #888; margin-bottom: 1rem;">
                             ${foundWords.size} of ${allValidWords.length} words found
                         </div>

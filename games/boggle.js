@@ -28,6 +28,7 @@
     let timeRemaining = 0;
     let gameActive = false;
     let allValidWords = [];
+    let highScore = parseInt(localStorage.getItem('boggleHighScore')) || 0;
 
     const SCORING = {
         3: 1, 4: 1, 5: 2, 6: 3, 7: 5, 8: 11
@@ -930,6 +931,10 @@
                             <div class="bog-stat-label">Points</div>
                         </div>
                         <div class="bog-stat">
+                            <div class="bog-stat-value" style="color: #f9df6d;">${highScore}</div>
+                            <div class="bog-stat-label">Best</div>
+                        </div>
+                        <div class="bog-stat">
                             <div class="bog-stat-value" id="bogWordCount">0</div>
                             <div class="bog-stat-label">Words</div>
                         </div>
@@ -984,6 +989,12 @@
         findAllValidWords();
 
         const score = calculateTotalScore();
+        const isNewHighScore = score > highScore;
+        if (isNewHighScore) {
+            highScore = score;
+            localStorage.setItem('boggleHighScore', highScore);
+        }
+
         const missedWords = allValidWords.filter(w => !foundWords.has(w)).slice(0, 50);
         const foundArr = Array.from(foundWords).sort((a, b) => b.length - a.length);
 
@@ -998,6 +1009,7 @@
                     <div class="bog-results">
                         <div class="bog-stat-label">Your Score</div>
                         <div class="bog-score">${score}</div>
+                        ${isNewHighScore ? `<div style="color: #f9df6d; font-weight: bold; margin-bottom: 0.5rem;">🏆 NEW HIGH SCORE! 🏆</div>` : `<div style="color: #888; margin-bottom: 0.5rem;">Best: ${highScore}</div>`}
                         <div style="color: #888; margin-bottom: 1rem;">
                             ${foundWords.size} words found | ${allValidWords.length} possible
                         </div>

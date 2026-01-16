@@ -1042,6 +1042,7 @@
         foundWords: [],
         score: 0,
         maxScore: 0,
+        highScore: parseInt(localStorage.getItem('spellingBeeHighScore')) || 0,
         message: '',
         messageType: '',
         validWords: [],
@@ -1214,6 +1215,12 @@
             state.foundWords.push(word);
             state.foundWords.sort();
 
+            // Update high score if beaten
+            if (state.score > state.highScore) {
+                state.highScore = state.score;
+                localStorage.setItem('spellingBeeHighScore', state.highScore);
+            }
+
             if (isPangram(word, allLetters)) {
                 state.message = `PANGRAM! +${points}`;
                 state.messageType = 'pangram';
@@ -1302,12 +1309,16 @@
                             <div class="sb-stat-label">Points</div>
                         </div>
                         <div class="sb-stat">
+                            <div class="sb-stat-value">${state.highScore}</div>
+                            <div class="sb-stat-label">Best</div>
+                        </div>
+                        <div class="sb-stat">
                             <div class="sb-stat-value">${state.foundWords.length}</div>
                             <div class="sb-stat-label">Words</div>
                         </div>
                         <div class="sb-stat">
                             <div class="sb-stat-value">${state.validWords.length - state.foundWords.length}</div>
-                            <div class="sb-stat-label">Remaining</div>
+                            <div class="sb-stat-label">Left</div>
                         </div>
                     </div>
 
