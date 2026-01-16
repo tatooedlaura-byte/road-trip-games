@@ -987,24 +987,20 @@
         const content = document.getElementById('tunnelRunnerContent');
 
         content.innerHTML = `
-            <div class="game-container">
-                <div class="game-card">
-                    <canvas id="tunnelCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="border: 2px solid #00d4ff; border-radius: 10px; max-width: 100%; height: auto; background: #0a0a1a; cursor: pointer; touch-action: none;"></canvas>
+            <canvas id="tunnelCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="border: 2px solid #00d4ff; border-radius: 10px; max-width: 100%; height: auto; background: #0a0a1a; cursor: pointer; touch-action: none;"></canvas>
 
-                    <!-- Touch Controls -->
-                    <div style="display: flex; justify-content: center; margin-top: 0.5rem;">
-                        <button id="tunnelBtnUp" class="game-btn game-btn-primary" style="width: 70px; height: 70px; border-radius: 50%; font-size: 1.5rem;">UP</button>
-                    </div>
+            <!-- Touch Controls -->
+            <div style="display: flex; justify-content: center; margin-top: 0.5rem;">
+                <button id="tunnelBtnUp" class="game-btn game-btn-primary" style="width: 70px; height: 70px; border-radius: 50%; font-size: 1.5rem;">UP</button>
+            </div>
 
-                    <div class="game-rules">
-                        <h4>How to Play:</h4>
-                        <ul>
-                            <li>Click/tap or press Space to fly up</li>
-                            <li>Navigate through the tunnel</li>
-                            <li>Collect coins for bonus points!</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="game-rules">
+                <h4>How to Play:</h4>
+                <ul>
+                    <li>Click/tap or press Space to fly up</li>
+                    <li>Navigate through the tunnel</li>
+                    <li>Collect coins for bonus points!</li>
+                </ul>
             </div>
         `;
 

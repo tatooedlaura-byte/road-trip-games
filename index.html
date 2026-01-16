@@ -1268,24 +1268,30 @@
             </div>
 
             <!-- Tunnel Runner Game Section (hidden by default) -->
-            <div id="tunnelRunnerGame" style="display: none; position: relative; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-radius: 1rem; padding: 1rem; min-height: 500px;">
-                <button onclick="exitTunnelRunnerToMenu()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
-                <div id="tunnelRunnerContent"></div>
+            <div id="tunnelRunnerGame" style="display: none;">
+                <div class="game-container">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <button onclick="exitTunnelRunnerToMenu()" class="game-back-btn">← Back</button>
+                            <h2 class="game-title">Tunnel Runner</h2>
+                            <div></div>
+                        </div>
+                        <div id="tunnelRunnerContent"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- Downhill Skier Game Section (hidden by default) -->
             <div id="downhillSkierGame" style="display: none;">
-                <div style="background: linear-gradient(135deg, #0c1929 0%, #1a3a5c 50%, #0d2137 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
-                    <!-- Back Button -->
-                    <button onclick="exitDownhillSkierToMenu()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
-
-                    <!-- Title -->
-                    <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
-                        <h1 style="font-size: 1.8rem; color: #67e8f9; text-shadow: 0 0 20px rgba(103, 232, 249, 0.5); margin: 0;">⛷️ Downhill Skier</h1>
-                        <p style="color: #888; font-size: 0.8rem; margin-top: 0.25rem;">Alpine Adventure</p>
+                <div class="game-container">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <button onclick="exitDownhillSkierToMenu()" class="game-back-btn">← Back</button>
+                            <h2 class="game-title">Downhill Skier</h2>
+                            <div></div>
+                        </div>
+                        <div id="downhillSkierContent"></div>
                     </div>
-
-                    <div id="downhillSkierContent"></div>
                 </div>
             </div>
 
@@ -1360,15 +1366,13 @@
 
             <!-- Drug Wars Game Section (hidden by default) -->
             <div id="drugwarsGame" style="display: none;">
-                <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
-                    <!-- Back Button -->
-                    <button onclick="exitDrugWars()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
-
-                    <!-- Title -->
-                    <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
-                        <h1 style="font-size: 1.8rem; color: #a855f7; text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); margin: 0;">💊 Drug Wars</h1>
-                        <p style="color: #888; font-size: 0.8rem; margin-top: 0.25rem;">NYC 1984</p>
-                    </div>
+                <div class="game-container">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <button onclick="exitDrugWars()" class="game-back-btn">← Back</button>
+                            <h2 class="game-title">Drug Wars</h2>
+                            <div></div>
+                        </div>
 
                     <!-- Stats Grid -->
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
@@ -1434,6 +1438,7 @@
                         <div style="color: #60a5fa; font-weight: bold; margin-bottom: 0.75rem; font-size: 1rem;">🚇 Travel to:</div>
                         <div id="drugwarsLocations" style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

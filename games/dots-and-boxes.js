@@ -50,12 +50,15 @@
 
         const app = document.getElementById('dotsAndBoxesContent');
         app.innerHTML = `
-            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
-                <button onclick="exitDotsAndBoxes()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="exitDotsAndBoxes()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Dots & Boxes</h2>
+                        <div></div>
+                    </div>
 
-                <div style="text-align: center; padding-top: 2rem; max-width: 400px; margin: 0 auto;">
-                    <h1 style="font-size: 2rem; color: #22d3ee; text-shadow: 0 0 20px rgba(34, 211, 238, 0.5); margin: 0 0 0.5rem 0;">📦 Dots & Boxes</h1>
-                    <p style="color: #888; margin-bottom: 2rem;">Choose your game mode</p>
+                    <p style="color: #888; margin-bottom: 1.5rem; text-align: center;">Choose your game mode</p>
 
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
                         <button onclick="startDotsAndBoxes('pass-and-play')" style="background: linear-gradient(145deg, #667eea, #764ba2); color: white; border: none; padding: 1.2rem 1.5rem; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: bold; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); transition: all 0.2s ease;">
@@ -75,9 +78,9 @@
                         </button>
                     </div>
 
-                    <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
-                        <h4 style="margin: 0 0 0.5rem 0; color: #22d3ee;">How to Play:</h4>
-                        <ul style="margin: 0; padding-left: 1.5rem; color: #9ca3af; font-size: 0.85rem; line-height: 1.6;">
+                    <div class="game-rules">
+                        <h4>How to Play:</h4>
+                        <ul>
                             <li>Take turns drawing lines between dots</li>
                             <li>Complete a box to capture it and score a point</li>
                             <li>When you complete a box, you get another turn!</li>
@@ -101,27 +104,30 @@
         const isAI = dotsState.gameMode === 'vs-ai';
 
         app.innerHTML = `
-            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
-                <button onclick="launchDotsAndBoxes()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchDotsAndBoxes()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Dots & Boxes</h2>
+                        <div></div>
+                    </div>
 
-                <div style="text-align: center; padding-top: 2rem; max-width: 400px; margin: 0 auto;">
-                    <h1 style="font-size: 1.8rem; color: #22d3ee; text-shadow: 0 0 20px rgba(34, 211, 238, 0.5); margin: 0 0 0.5rem 0;">📦 Dots & Boxes</h1>
-                    <p style="color: #888; margin-bottom: 2rem;">${isAI ? 'Enter your name' : 'Enter player names'}</p>
+                    <p style="color: #888; margin-bottom: 1.5rem; text-align: center;">${isAI ? 'Enter your name' : 'Enter player names'}</p>
 
                     <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
                         <div style="text-align: left;">
                             <label style="display: block; color: ${COLORS[0]}; font-weight: bold; margin-bottom: 0.5rem; font-size: 0.9rem;">Player 1 (Cyan)</label>
-                            <input type="text" id="dotsPlayer1Name" placeholder="Enter name" value="${playerNames[0] === 'Player 1' ? '' : playerNames[0]}" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 2px solid ${COLORS[0]}; background: rgba(34, 211, 238, 0.1); color: white; font-size: 1rem; box-sizing: border-box;">
+                            <input type="text" id="dotsPlayer1Name" placeholder="Enter name" value="${playerNames[0] === 'Player 1' ? '' : playerNames[0]}" class="game-input" style="border-color: ${COLORS[0]}; background: rgba(34, 211, 238, 0.1);">
                         </div>
                         ${!isAI ? `
                         <div style="text-align: left;">
                             <label style="display: block; color: ${COLORS[1]}; font-weight: bold; margin-bottom: 0.5rem; font-size: 0.9rem;">Player 2 (Pink)</label>
-                            <input type="text" id="dotsPlayer2Name" placeholder="Enter name" value="${playerNames[1] === 'Player 2' ? '' : playerNames[1]}" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 2px solid ${COLORS[1]}; background: rgba(244, 114, 182, 0.1); color: white; font-size: 1rem; box-sizing: border-box;">
+                            <input type="text" id="dotsPlayer2Name" placeholder="Enter name" value="${playerNames[1] === 'Player 2' ? '' : playerNames[1]}" class="game-input" style="border-color: ${COLORS[1]}; background: rgba(244, 114, 182, 0.1);">
                         </div>
                         ` : ''}
                     </div>
 
-                    <button onclick="startDotsGame()" style="background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; width: 100%;">Start Game</button>
+                    <button onclick="startDotsGame()" class="game-btn game-btn-primary" style="width: 100%;">Start Game</button>
                 </div>
             </div>
         `;
@@ -161,13 +167,12 @@
         }
 
         app.innerHTML = `
-            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
-                <button onclick="launchDotsAndBoxes()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
-
-                <div style="max-width: 400px; margin: 0 auto; padding-top: 2rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <h2 style="margin: 0; font-size: 1.3rem; color: #22d3ee; text-shadow: 0 0 15px rgba(34, 211, 238, 0.5);">📦 Dots & Boxes</h2>
-                        <button onclick="startDotsAndBoxes('${dotsState.gameMode}')" style="background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: bold;">New Game</button>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchDotsAndBoxes()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Dots & Boxes</h2>
+                        <button onclick="startDotsAndBoxes('${dotsState.gameMode}')" class="game-btn game-btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">New Game</button>
                     </div>
 
                     <!-- Score Display -->
@@ -191,7 +196,7 @@
 
                     ${dotsState.gameOver ? `
                         <div style="text-align: center; padding: 1.5rem; background: ${dotsState.scores[0] > dotsState.scores[1] ? COLORS[0] : dotsState.scores[1] > dotsState.scores[0] ? COLORS[1] : '#6b7280'}22; border: 2px solid ${dotsState.scores[0] > dotsState.scores[1] ? COLORS[0] : dotsState.scores[1] > dotsState.scores[0] ? COLORS[1] : '#6b7280'}; color: white; border-radius: 12px; margin-top: 1rem; font-size: 1.2rem; font-weight: bold; box-shadow: 0 0 20px ${dotsState.scores[0] > dotsState.scores[1] ? GLOW_COLORS[0] : dotsState.scores[1] > dotsState.scores[0] ? GLOW_COLORS[1] : 'rgba(107, 114, 128, 0.5)'};">
-                            ${dotsState.scores[0] > dotsState.scores[1] ? '🎉 ' + playerNames[0] + ' Wins!' : dotsState.scores[1] > dotsState.scores[0] ? (dotsState.gameMode === 'vs-ai' ? '🤖 Computer Wins!' : '🎉 ' + playerNames[1] + ' Wins!') : '🤝 It\'s a Tie!'}
+                            ${dotsState.scores[0] > dotsState.scores[1] ? playerNames[0] + ' Wins!' : dotsState.scores[1] > dotsState.scores[0] ? (dotsState.gameMode === 'vs-ai' ? 'Computer Wins!' : playerNames[1] + ' Wins!') : 'It\'s a Tie!'}
                         </div>
                     ` : ''}
                 </div>

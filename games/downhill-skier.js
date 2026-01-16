@@ -1026,33 +1026,29 @@
         const content = document.getElementById('downhillSkierContent');
 
         content.innerHTML = `
-            <div class="game-container">
-                <div class="game-card">
-                    <canvas id="skierCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="border: 2px solid rgba(103, 232, 249, 0.5); border-radius: 10px; max-width: 100%; height: auto; background: linear-gradient(180deg, #87ceeb 0%, #e0f0ff 100%); cursor: pointer; touch-action: none;"></canvas>
+            <canvas id="skierCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="border: 2px solid rgba(103, 232, 249, 0.5); border-radius: 10px; max-width: 100%; height: auto; background: linear-gradient(180deg, #87ceeb 0%, #e0f0ff 100%); cursor: pointer; touch-action: none;"></canvas>
 
-                    <!-- Mode Selection Buttons (shown initially) -->
-                    <div id="modeButtons" style="display: flex; gap: 1rem; margin-top: 0.5rem; justify-content: center;">
-                        <button id="btnDownhill" class="game-btn game-btn-primary" style="padding: 1rem; min-width: 120px;">
-                            <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">DOWNHILL</div>
-                            <div style="font-size: 0.75rem; opacity: 0.9;">Go for distance!</div>
-                        </button>
-                        <button id="btnSlalom" class="game-btn game-btn-danger" style="padding: 1rem; min-width: 120px;">
-                            <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">SLALOM</div>
-                            <div style="font-size: 0.75rem; opacity: 0.9;">Race the clock!</div>
-                        </button>
-                    </div>
+            <!-- Mode Selection Buttons (shown initially) -->
+            <div id="modeButtons" style="display: flex; gap: 1rem; margin-top: 0.5rem; justify-content: center;">
+                <button id="btnDownhill" class="game-btn game-btn-primary" style="padding: 1rem; min-width: 120px;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">DOWNHILL</div>
+                    <div style="font-size: 0.75rem; opacity: 0.9;">Go for distance!</div>
+                </button>
+                <button id="btnSlalom" class="game-btn game-btn-danger" style="padding: 1rem; min-width: 120px;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">SLALOM</div>
+                    <div style="font-size: 0.75rem; opacity: 0.9;">Race the clock!</div>
+                </button>
+            </div>
 
-                    <div id="gameInfo" class="game-rules" style="display: none;">
-                        <p style="margin: 0.5rem 0;">Controls: Arrow keys, swipe, or buttons</p>
-                        <p style="margin: 0.5rem 0;">Goal: <span id="goalText"></span></p>
-                    </div>
+            <div id="gameInfo" class="game-rules" style="display: none;">
+                <p style="margin: 0.5rem 0;">Controls: Arrow keys, swipe, or buttons</p>
+                <p style="margin: 0.5rem 0;">Goal: <span id="goalText"></span></p>
+            </div>
 
-                    <!-- Left/Right Control Buttons (hidden initially) -->
-                    <div id="controlButtons" style="display: none; gap: 0.5rem; margin-top: 0.5rem; justify-content: center;">
-                        <button id="btnSkiLeft" class="game-dpad-btn" style="width: 70px; height: 70px;">◀</button>
-                        <button id="btnSkiRight" class="game-dpad-btn" style="width: 70px; height: 70px;">▶</button>
-                    </div>
-                </div>
+            <!-- Left/Right Control Buttons (hidden initially) -->
+            <div id="controlButtons" style="display: none; gap: 0.5rem; margin-top: 0.5rem; justify-content: center;">
+                <button id="btnSkiLeft" class="game-dpad-btn" style="width: 70px; height: 70px;">◀</button>
+                <button id="btnSkiRight" class="game-dpad-btn" style="width: 70px; height: 70px;">▶</button>
             </div>
         `;
 
