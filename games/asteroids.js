@@ -688,7 +688,7 @@
     window.launchAsteroids = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('asteroidsGame').style.display = 'block';
 
         showAsteroidsGame();
@@ -804,7 +804,7 @@
         document.removeEventListener('keyup', handleKeyUp);
 
         document.getElementById('asteroidsGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
     };
 
     window.restartAsteroids = function() {

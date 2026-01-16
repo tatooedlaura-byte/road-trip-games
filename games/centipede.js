@@ -981,7 +981,7 @@
         // Show game section
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('centipedeGame').style.display = 'block';
 
         // Initialize canvas
@@ -1136,6 +1136,6 @@
         document.removeEventListener('keyup', handleKeyUp);
 
         document.getElementById('centipedeGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
     };
 })();

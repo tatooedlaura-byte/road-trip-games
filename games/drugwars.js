@@ -573,20 +573,20 @@
     // Export functions to window
     window.launchDrugWars = function() {
         // Hide games menu and show day selection modal
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('drugwarsDaySelectModal').style.display = 'flex';
     };
 
     window.drugWarsStartGame = function(totalDays) {
         document.getElementById('drugwarsDaySelectModal').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('drugwarsGame').style.display = 'block';
         initGame(totalDays);
     };
 
     window.exitDrugWars = function() {
         document.getElementById('drugwarsGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('otherMenu').style.display = 'block';
     };
 
     window.drugWarsTravel = travel;

@@ -1027,7 +1027,7 @@
 
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('tunnelRunnerGame').style.display = 'block';
 
         gameCanvas = document.getElementById('tunnelCanvas');
@@ -1072,6 +1072,6 @@
         }
 
         document.getElementById('tunnelRunnerGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
     };
 })();

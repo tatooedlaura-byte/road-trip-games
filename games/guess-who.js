@@ -125,7 +125,7 @@
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
         document.getElementById('plateTracker').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
 
         // Show Guess Who game
         document.getElementById('guessWhoGame').style.display = 'block';

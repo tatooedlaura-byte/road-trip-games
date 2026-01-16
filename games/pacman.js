@@ -928,7 +928,7 @@
 
     // Launch game
     window.launchPacman = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('pacmanGame').style.display = 'block';
 
         if (!animationFrameId) {
@@ -962,7 +962,7 @@
     // Exit game
     window.exitPacman = function() {
         document.getElementById('pacmanGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
 
         // Clean up button event listeners
         const btnUp = document.getElementById('btnUp');

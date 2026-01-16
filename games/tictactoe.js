@@ -376,14 +376,14 @@
             playerNames: ['Player 1', 'Player 2']
         };
 
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('tictactoeGame').style.display = 'block';
         showSetup();
     }
 
     function exitTicTacToe() {
         document.getElementById('tictactoeGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('strategyMenu').style.display = 'block';
     }
 
     function showSetup() {

@@ -921,7 +921,7 @@
 
     // Launch Minesweeper
     window.launchMinesweeper = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('minesweeperGame').style.display = 'block';
         initGame();
     };
@@ -931,7 +931,7 @@
         stopTimer();
         closeEndScreen();
         document.getElementById('minesweeperGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('strategyMenu').style.display = 'block';
     };
 
 })();

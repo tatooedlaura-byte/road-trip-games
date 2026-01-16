@@ -573,14 +573,14 @@
             aiState: null
         };
 
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('battleshipGame').style.display = 'block';
         showSetup();
     }
 
     function exitBattleship() {
         document.getElementById('battleshipGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('strategyMenu').style.display = 'block';
     }
 
     function showSetup() {

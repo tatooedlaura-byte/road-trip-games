@@ -963,7 +963,7 @@
     window.launchJoust = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('joustGame').style.display = 'block';
 
         showJoustGame();
@@ -1100,7 +1100,7 @@
         document.removeEventListener('keyup', handleKeyUp);
 
         document.getElementById('joustGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
     };
 
     window.restartJoust = function() {

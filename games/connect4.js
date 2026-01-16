@@ -459,14 +459,14 @@
             lastMove: null
         };
 
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('connect4Game').style.display = 'block';
         showSetup();
     }
 
     function exitConnect4() {
         document.getElementById('connect4Game').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('strategyMenu').style.display = 'block';
     }
 
     function showSetup() {

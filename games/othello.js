@@ -582,14 +582,14 @@
     }
 
     function launchOthello() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('othelloGame').style.display = 'block';
         showSetup();
     }
 
     function exitOthello() {
         document.getElementById('othelloGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('strategyMenu').style.display = 'block';
     }
 
     function showSetup() {

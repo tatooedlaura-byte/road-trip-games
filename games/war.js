@@ -456,7 +456,7 @@
     }
 
     function launchWar() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('warGame').style.display = 'block';
         showModeSelection();
     }
@@ -505,7 +505,7 @@
 
     function exitWar() {
         document.getElementById('warGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('strategyMenu').style.display = 'block';
     }
 
     function initializeGame() {

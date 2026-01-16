@@ -619,7 +619,7 @@
     window.launch2048 = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('game2048').style.display = 'block';
 
         document.addEventListener('keydown', handleKeyDown);
@@ -639,6 +639,6 @@
         close2048Modal();
 
         document.getElementById('game2048').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('strategyMenu').style.display = 'block';
     };
 })();

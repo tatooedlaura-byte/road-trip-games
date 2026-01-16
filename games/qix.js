@@ -658,7 +658,7 @@
     window.launchQix = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('qixGame').style.display = 'block';
 
         showQixGame();
@@ -811,7 +811,7 @@
         document.removeEventListener('keyup', handleKeyUp);
 
         document.getElementById('qixGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
     };
 
     window.restartQix = function() {

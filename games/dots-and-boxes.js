@@ -45,7 +45,7 @@
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
         document.getElementById('plateTracker').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('dotsAndBoxesGame').style.display = 'block';
 
         const app = document.getElementById('dotsAndBoxesContent');

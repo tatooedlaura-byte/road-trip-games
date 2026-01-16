@@ -400,7 +400,7 @@
     }
 
     function launchTrash() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('trashGame').style.display = 'block';
         showModeSelection();
     }
@@ -492,7 +492,7 @@
 
     function exitTrash() {
         document.getElementById('trashGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('strategyMenu').style.display = 'block';
     }
 
     function initializeGame() {

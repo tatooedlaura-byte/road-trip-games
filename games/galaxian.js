@@ -708,7 +708,7 @@
 
     // Launch Galaxian
     window.launchGalaxian = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('galaxianGame').style.display = 'block';
         initGame();
         setupMobileControls();
@@ -720,7 +720,7 @@
             cancelAnimationFrame(gameState.animationId);
         }
         document.getElementById('galaxianGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
     };
 
 })();

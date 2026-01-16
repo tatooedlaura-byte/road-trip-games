@@ -733,7 +733,7 @@
 
     // Export functions to window
     window.launchFrogger = function() {
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('froggerGame').style.display = 'block';
         initGame();
         setupMobileControls();
@@ -745,7 +745,7 @@
         }
         stopTimer();
         document.getElementById('froggerGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
     };
 
     window.froggerRestart = function() {

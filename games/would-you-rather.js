@@ -508,7 +508,7 @@
     window.launchWouldYouRather = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('wouldYouRatherGame').style.display = 'block';
         showCategorySelection();
     };
@@ -524,7 +524,7 @@
 
     window.exitWouldYouRatherToMenu = function() {
         document.getElementById('wouldYouRatherGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('otherMenu').style.display = 'block';
     };
 
 })();

@@ -966,7 +966,7 @@
         // Show game section
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'none';
+        if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('cavernsOfMarsGame').style.display = 'block';
 
         // Initialize canvas
@@ -1032,7 +1032,7 @@
 
         // Hide game section
         document.getElementById('cavernsOfMarsGame').style.display = 'none';
-        document.getElementById('gamesMenu').style.display = 'block';
+        document.getElementById('arcadeMenu').style.display = 'block';
 
         // Clear canvas reference
         canvas = null;
