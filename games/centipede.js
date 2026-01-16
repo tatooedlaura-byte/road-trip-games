@@ -943,36 +943,30 @@
         const content = document.getElementById('centipedeContent');
 
         content.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 0.5rem;">
-                    <button onclick="exitCentipedeToMenu()" style="width: 50px; height: 50px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">←</button>
-                    <h2 style="margin: 0;">🐛 Centipede</h2>
-                    <div style="width: 50px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="exitCentipedeToMenu()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Centipede</h2>
+                        <div style="width: 50px;"></div>
+                    </div>
 
-                <canvas id="centipedeCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="
-                    border: 4px solid #00ff00;
-                    border-radius: 10px;
-                    max-width: 100%;
-                    height: auto;
-                    background: #000000;
-                "></canvas>
+                    <canvas id="centipedeCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="border: 2px solid #00ff00; border-radius: 10px; max-width: 100%; height: auto; background: #000000;"></canvas>
 
-                <!-- Mobile Touch Controls - Standardized Layout -->
-                <div id="centipedeControls" style="display: flex; justify-content: space-between; width: 100%; max-width: 350px; align-items: flex-end; margin-top: 0.5rem;">
-                    <button id="centipedeBtnFire" style="width: 80px; height: 80px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; border-radius: 50%; font-size: 1.1rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">FIRE</button>
-                    <div style="display: grid; grid-template-columns: repeat(3, 60px); grid-template-rows: repeat(3, 60px); gap: 4px;">
-                        <div style="grid-column: 2;"></div>
-                        <button id="centipedeBtnUp" style="grid-column: 2; width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▲</button>
-                        <div></div>
-
-                        <button id="centipedeBtnLeft" style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">◀</button>
-                        <div></div>
-                        <button id="centipedeBtnRight" style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▶</button>
-
-                        <div></div>
-                        <button id="centipedeBtnDown" style="grid-column: 2; width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▼</button>
-                        <div></div>
+                    <!-- Mobile Touch Controls -->
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-end; margin-top: 0.5rem;">
+                        <button id="centipedeBtnFire" class="game-btn game-btn-danger" style="width: 70px; height: 70px; border-radius: 50%; font-size: 0.9rem;">FIRE</button>
+                        <div class="game-dpad">
+                            <div></div>
+                            <button id="centipedeBtnUp" class="game-dpad-btn">▲</button>
+                            <div></div>
+                            <button id="centipedeBtnLeft" class="game-dpad-btn">◀</button>
+                            <div class="game-dpad-btn game-dpad-center"></div>
+                            <button id="centipedeBtnRight" class="game-dpad-btn">▶</button>
+                            <div></div>
+                            <button id="centipedeBtnDown" class="game-dpad-btn">▼</button>
+                            <div></div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -667,54 +667,39 @@
     function showQixGame() {
         const content = document.getElementById('qixContent');
         content.innerHTML = `
-            <div style="text-align: center;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="exitQix()" class="game-back-btn">
-                        ← Back
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🎨 Qix</h2>
-                    <button onclick="restartQix()" style="background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
-                        🔄 Play Again
-                    </button>
-                </div>
-
-                <canvas id="qixCanvas" width="800" height="600" style="border: 4px solid #333; border-radius: 10px; background: #000; max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
-
-                <!-- Mobile Controls -->
-                <div style="display: flex; justify-content: center; margin-top: 1rem;">
-                    <div style="display: grid; grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(3, 80px); gap: 8px;">
-                        <div></div>
-                        <button id="qixUpBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                            ⬆️
-                        </button>
-                        <div></div>
-
-                        <button id="qixLeftBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                            ⬅️
-                        </button>
-                        <div></div>
-                        <button id="qixRightBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                            ➡️
-                        </button>
-
-                        <div></div>
-                        <button id="qixDownBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                            ⬇️
-                        </button>
-                        <div></div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="exitQix()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Qix</h2>
+                        <button onclick="restartQix()" class="game-btn game-btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Play Again</button>
                     </div>
-                </div>
 
-                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 2rem;">
-                    <h4 style="color: #333; margin-bottom: 1rem;">How to Play:</h4>
-                    <ul style="color: #666; text-align: left; line-height: 1.8;">
-                        <li>🎯 <strong>Objective:</strong> Claim 75% of the playfield to complete each level</li>
-                        <li>⬆️⬇️⬅️➡️ <strong>Controls:</strong> Hold arrow keys to move</li>
-                        <li>💎 Move along the blue edge, then move INTO the black area to start drawing</li>
-                        <li>🎨 Draw back to any edge to claim the area (side without the Qix gets filled)</li>
-                        <li>☠️ <strong>The Qix:</strong> Don't let it touch your incomplete lines!</li>
-                        <li>🏆 Bonus: Every 1% above 75% = 1,000 bonus points!</li>
-                    </ul>
+                    <canvas id="qixCanvas" width="800" height="600" style="border: 2px solid #333; border-radius: 10px; background: #000; max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
+
+                    <!-- Mobile Controls -->
+                    <div style="display: flex; justify-content: center; margin-top: 0.5rem;">
+                        <div class="game-dpad">
+                            <div></div>
+                            <button id="qixUpBtn" class="game-dpad-btn">▲</button>
+                            <div></div>
+                            <button id="qixLeftBtn" class="game-dpad-btn">◀</button>
+                            <div class="game-dpad-btn game-dpad-center"></div>
+                            <button id="qixRightBtn" class="game-dpad-btn">▶</button>
+                            <div></div>
+                            <button id="qixDownBtn" class="game-dpad-btn">▼</button>
+                            <div></div>
+                        </div>
+                    </div>
+
+                    <div class="game-rules">
+                        <h4>How to Play:</h4>
+                        <ul>
+                            <li>Claim 75% of the playfield to advance</li>
+                            <li>Draw lines from edge to edge</li>
+                            <li>Don't let the Qix touch your lines!</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         `;

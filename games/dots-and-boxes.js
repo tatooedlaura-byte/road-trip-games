@@ -51,7 +51,7 @@
         const app = document.getElementById('dotsAndBoxesContent');
         app.innerHTML = `
             <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
-                <button onclick="showGamesMenu()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
+                <button onclick="exitDotsAndBoxes()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
 
                 <div style="text-align: center; padding-top: 2rem; max-width: 400px; margin: 0 auto;">
                     <h1 style="font-size: 2rem; color: #22d3ee; text-shadow: 0 0 20px rgba(34, 211, 238, 0.5); margin: 0 0 0.5rem 0;">📦 Dots & Boxes</h1>
@@ -468,5 +468,11 @@
         }
         return null;
     }
+
+    // Exit back to strategy menu
+    window.exitDotsAndBoxes = function() {
+        document.getElementById('dotsAndBoxesGame').style.display = 'none';
+        document.getElementById('strategyMenu').style.display = 'block';
+    };
 
 })();

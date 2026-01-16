@@ -972,48 +972,33 @@
     function showJoustGame() {
         const content = document.getElementById('joustContent');
         content.innerHTML = `
-            <div style="text-align: center;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="exitJoust()" class="game-back-btn">
-                        ← Back
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🦤 Joust</h2>
-                    <button onclick="restartJoust()" style="background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
-                        🔄 Play Again
-                    </button>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="exitJoust()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Joust</h2>
+                        <button onclick="restartJoust()" class="game-btn game-btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Play Again</button>
+                    </div>
 
-                <div style="position: relative; max-width: 800px; margin: 0 auto;">
-                    <canvas id="joustCanvas" width="800" height="600" style="border: 4px solid #333; border-radius: 10px; background: #000; max-width: 100%; height: auto; display: block;"></canvas>
+                    <canvas id="joustCanvas" width="800" height="600" style="border: 2px solid #333; border-radius: 10px; background: #000; max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
 
                     <!-- Mobile Controls -->
-                    <div style="display: flex; gap: 0.5rem; justify-content: space-between; align-items: flex-end; margin-top: 1rem; max-width: 100%;">
-                        <button id="joustFlapBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #28a745 0%, #218838 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.1rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                            FLAP
-                        </button>
+                    <div style="display: flex; gap: 0.5rem; justify-content: space-between; align-items: flex-end; margin-top: 0.5rem;">
+                        <button id="joustFlapBtn" class="game-btn game-btn-success" style="width: 70px; height: 70px; border-radius: 50%; font-size: 0.9rem;">FLAP</button>
                         <div style="display: flex; gap: 0.5rem;">
-                            <button id="joustLeftBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                                ◀
-                            </button>
-                            <button id="joustRightBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 2rem; font-weight: bold; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                                ▶
-                            </button>
+                            <button id="joustLeftBtn" class="game-dpad-btn" style="width: 70px; height: 70px;">◀</button>
+                            <button id="joustRightBtn" class="game-dpad-btn" style="width: 70px; height: 70px;">▶</button>
                         </div>
                     </div>
-                </div>
 
-                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    <h4 style="color: #333; margin-bottom: 1rem;">How to Play:</h4>
-                    <ul style="color: #666; text-align: left; line-height: 1.8;">
-                        <li>🦤 Ride your ostrich and joust enemy riders!</li>
-                        <li>🪽 TAP flap button or press spacebar to fly - tap repeatedly for height!</li>
-                        <li>⚔️ Defeat enemies by hitting them from ABOVE</li>
-                        <li>🥚 Collect eggs (250 pts) before they hatch into new enemies</li>
-                        <li>🦖 PTERODACTYL spawns after 45 seconds - instant death!</li>
-                        <li>🎨 Enemy types: Red Bounder (100), Blue Hunter (200), Purple Shadow (300)</li>
-                        <li>🌋 Don't touch the lava at the bottom!</li>
-                        <li>💀 Get hit from below = Lose a life!</li>
-                    </ul>
+                    <div class="game-rules">
+                        <h4>How to Play:</h4>
+                        <ul>
+                            <li>Tap FLAP to fly - defeat enemies from above</li>
+                            <li>Collect eggs (250 pts) before they hatch</li>
+                            <li>Avoid the lava and pterodactyl!</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         `;

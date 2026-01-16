@@ -987,40 +987,23 @@
         const content = document.getElementById('tunnelRunnerContent');
 
         content.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding-top: 2rem;">
-                <canvas id="tunnelCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="
-                    border: 3px solid #00d4ff;
-                    border-radius: 12px;
-                    max-width: 100%;
-                    height: auto;
-                    background: #0a0a1a;
-                    cursor: pointer;
-                    touch-action: none;
-                    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.5);
-                "></canvas>
+            <div class="game-container">
+                <div class="game-card">
+                    <canvas id="tunnelCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="border: 2px solid #00d4ff; border-radius: 10px; max-width: 100%; height: auto; background: #0a0a1a; cursor: pointer; touch-action: none;"></canvas>
 
-                <!-- Touch Controls -->
-                <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem;">
-                    <button id="tunnelBtnUp" style="
-                        width: 80px;
-                        height: 80px;
-                        background: linear-gradient(135deg, #00d4ff 0%, #0984e3 100%);
-                        color: white;
-                        border: none;
-                        border-radius: 50%;
-                        font-size: 2rem;
-                        cursor: pointer;
-                        touch-action: manipulation;
-                        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    ">🚀</button>
-                </div>
+                    <!-- Touch Controls -->
+                    <div style="display: flex; justify-content: center; margin-top: 0.5rem;">
+                        <button id="tunnelBtnUp" class="game-btn game-btn-primary" style="width: 70px; height: 70px; border-radius: 50%; font-size: 1.5rem;">UP</button>
+                    </div>
 
-                <div style="text-align: center; color: #888; font-size: 0.9rem;">
-                    <p style="margin: 0.5rem 0;"><strong style="color: #74b9ff;">Desktop:</strong> Click or press Space to fly up</p>
-                    <p style="margin: 0.5rem 0;"><strong style="color: #74b9ff;">Mobile:</strong> Tap the 🚀 button or screen to fly up</p>
+                    <div class="game-rules">
+                        <h4>How to Play:</h4>
+                        <ul>
+                            <li>Click/tap or press Space to fly up</li>
+                            <li>Navigate through the tunnel</li>
+                            <li>Collect coins for bonus points!</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         `;

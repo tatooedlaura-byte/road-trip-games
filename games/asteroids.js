@@ -697,45 +697,40 @@
     function showAsteroidsGame() {
         const content = document.getElementById('asteroidsContent');
         content.innerHTML = `
-            <div style="text-align: center;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="exitAsteroids()" class="game-back-btn">
-                        ← Back
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🚀 Asteroids</h2>
-                    <button onclick="restartAsteroids()" style="background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
-                        🔄 Play Again
-                    </button>
-                </div>
-
-                <canvas id="asteroidsCanvas" width="800" height="600" style="border: 4px solid #333; border-radius: 10px; background: #000; max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
-
-                <!-- Mobile Controls - Standardized Layout -->
-                <div style="display: flex; gap: 0.5rem; justify-content: space-between; align-items: flex-end; margin-top: 1rem; max-width: 100%;">
-                    <!-- Left side: Fire and Thrust stacked -->
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <button id="astFireBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; border-radius: 50%; font-size: 1.1rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">FIRE</button>
-                        <button id="astThrustBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #28a745 0%, #218838 100%); color: white; border: none; border-radius: 50%; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">🚀</button>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="exitAsteroids()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Asteroids</h2>
+                        <button onclick="restartAsteroids()" class="game-btn game-btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Play Again</button>
                     </div>
 
-                    <!-- Right side: Directional controls -->
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button id="astLeftBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">◀</button>
-                        <button id="astRightBtn" style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▶</button>
-                    </div>
-                </div>
+                    <canvas id="asteroidsCanvas" width="800" height="600" style="border: 2px solid #333; border-radius: 10px; background: #000; max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
 
-                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 2rem;">
-                    <h4 style="color: #333; margin-bottom: 1rem;">How to Play:</h4>
-                    <ul style="color: #666; text-align: left; line-height: 1.8;">
-                        <li>🎯 <strong>Objective:</strong> Destroy all asteroids to advance to the next level</li>
-                        <li>🪨 Large asteroids break into medium (20 pts), medium into small (50 pts), small destroyed (100 pts)</li>
-                        <li>🛸 UFOs appear and shoot at you - destroy them for bonus points!</li>
-                        <li>⚡ <strong>Hyperspace:</strong> Emergency teleport (risky - 10% chance of self-destruct!)</li>
-                        <li>🔫 Hold fire button for continuous automatic shooting!</li>
-                        <li>🎮 Rotate left/right to aim your ship</li>
-                        <li>💡 Screen wraps - everything that goes off one edge appears on the opposite side</li>
-                    </ul>
+                    <!-- Mobile Controls -->
+                    <div style="display: flex; gap: 0.5rem; justify-content: space-between; align-items: flex-end; margin-top: 0.5rem;">
+                        <!-- Left side: Fire and Thrust stacked -->
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <button id="astFireBtn" class="game-btn game-btn-danger" style="width: 70px; height: 70px; border-radius: 50%; font-size: 0.9rem;">FIRE</button>
+                            <button id="astThrustBtn" class="game-btn game-btn-success" style="width: 70px; height: 70px; border-radius: 50%; font-size: 1.2rem;">UP</button>
+                        </div>
+
+                        <!-- Right side: Directional controls -->
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button id="astLeftBtn" class="game-dpad-btn" style="width: 70px; height: 70px;">◀</button>
+                            <button id="astRightBtn" class="game-dpad-btn" style="width: 70px; height: 70px;">▶</button>
+                        </div>
+                    </div>
+
+                    <div class="game-rules">
+                        <h4>How to Play:</h4>
+                        <ul>
+                            <li>Destroy all asteroids to advance</li>
+                            <li>Large (20 pts) → Medium (50 pts) → Small (100 pts)</li>
+                            <li>Hold fire for continuous shooting</li>
+                            <li>Screen wraps around edges</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         `;

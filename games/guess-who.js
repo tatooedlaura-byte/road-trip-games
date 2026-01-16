@@ -134,9 +134,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="showGamesMenu()" class="game-back-btn">
-                        ← Back
-                    </button>
+                    <button onclick="exitGuessWho()" class="game-back-btn">← Back</button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
                     <div style="width: 80px;"></div>
                 </div>
@@ -774,6 +772,12 @@
         }
 
         renderGame();
+    };
+
+    // Exit back to other games menu
+    window.exitGuessWho = function() {
+        document.getElementById('guessWhoGame').style.display = 'none';
+        document.getElementById('otherMenu').style.display = 'block';
     };
 
 })();
