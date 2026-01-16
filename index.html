@@ -1154,13 +1154,17 @@
                 <div id="connect4Content"></div>
             </div>
 
-            <div id="minesweeperGame" style="display: none; margin: -2rem; padding: 0.5rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
-                    <button onclick="exitMinesweeper()" class="game-back-btn">← Back</button>
-                    <h2 class="game-title">💣 Minesweeper</h2>
-                    <div style="width: 100px;"></div>
+            <div id="minesweeperGame" style="display: none;">
+                <div class="game-container">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <button onclick="exitMinesweeper()" class="game-back-btn">← Back</button>
+                            <h2 class="game-title">Minesweeper</h2>
+                            <div></div>
+                        </div>
+                        <div id="minesweeperContent"></div>
+                    </div>
                 </div>
-                <div id="minesweeperContent"></div>
             </div>
 
             <div id="warGame" style="display: none;">
@@ -1755,6 +1759,8 @@
         let collectedPlates = JSON.parse(localStorage.getItem('collectedPlates') || '{}');
 
         function hideAllMenus() {
+            document.querySelector('.welcome').style.display = 'none';
+            document.querySelector('.feature-grid').style.display = 'none';
             document.getElementById('arcadeMenu').style.display = 'none';
             document.getElementById('strategyMenu').style.display = 'none';
             document.getElementById('otherMenu').style.display = 'none';
