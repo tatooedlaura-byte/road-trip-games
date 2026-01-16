@@ -763,10 +763,12 @@
         renderGame();
     };
 
-    // Exit back to other games menu
+    // Exit back to home
     window.exitGuessWho = function() {
         document.getElementById('guessWhoGame').style.display = 'none';
-        document.getElementById('otherMenu').style.display = 'block';
+        if (typeof showHome === 'function') {
+            showHome();
+        }
     };
 
 })();
