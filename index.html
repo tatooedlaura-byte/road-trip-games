@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.138.28';</script>
+    <script>window.APP_VERSION = '1.138.29';</script>
 
     <style>
         * {
@@ -1557,22 +1557,21 @@
 
             <!-- Caverns of Mars Game Section (hidden by default) -->
             <div id="cavernsOfMarsGame" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.5rem;">
-                    <button id="cavernsBackBtn" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0; color: white;">Caverns of Mars</h2>
-                    <div style="width: 80px;"></div>
-                </div>
-                <div style="text-align: center; margin-bottom: 1rem;">
-                    <div style="background: rgba(255,107,53,0.15); border-left: 4px solid #60a5fa; padding: 1rem; margin: 0 auto; max-width: 600px; text-align: left; color: #e0e0e0; border-radius: 8px;">
-                        <strong style="color: #60a5fa;">Controls:</strong><br>
-                        <span style="color: #ccc;"><strong style="color: #fff;">Arrow Keys</strong> or <strong style="color: #fff;">A/D</strong> - Move left/right<br>
-                        <strong style="color: #fff;">SPACE</strong> or <strong style="color: #fff;">Click/Tap</strong> - Fire (slows descent but uses fuel!)</span><br><br>
-                        <strong style="color: #60a5fa;">Mission:</strong><br>
-                        <span style="color: #ccc;">Descend into Mars, shoot yellow fuel tanks to refill, destroy enemies, plant reactor bomb at bottom, then ESCAPE before it explodes!</span>
+                <div class="game-card">
+                    <div class="game-header">
+                        <button id="cavernsBackBtn" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">🔴 Caverns of Mars</h2>
                     </div>
-                </div>
-                <div style="text-align: center;">
-                    <canvas id="cavernsCanvas" style="max-width: 100%; border: 2px solid #60a5fa; border-radius: 10px;"></canvas>
+                    <div class="game-rules">
+                        <h4>Controls</h4>
+                        <p><strong>Arrow Keys / A/D</strong> - Move left/right<br>
+                        <strong>SPACE / Click/Tap</strong> - Fire (uses fuel!)</p>
+                        <h4>Mission</h4>
+                        <p>Descend into Mars, shoot fuel tanks to refill, plant reactor bomb at bottom, then ESCAPE!</p>
+                    </div>
+                    <div class="game-canvas-wrap">
+                        <canvas id="cavernsCanvas" style="border: 2px solid #a5b4fc;"></canvas>
+                    </div>
                 </div>
             </div>
 
