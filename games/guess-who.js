@@ -132,14 +132,14 @@
 
         const app = document.getElementById('guessWhoContent');
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="exitGuessWho()" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <div style="width: 80px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="exitGuessWho()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <div></div>
+                    </div>
 
-                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                     <h3 style="text-align: center; margin-bottom: 1.5rem;">Select Game Mode</h3>
 
                     <button onclick="startGuessWho('pass-and-play')" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 1.5rem; border-radius: 12px; cursor: pointer; font-size: 1.2rem; margin-bottom: 1rem; font-weight: bold;">
@@ -194,16 +194,14 @@
     function showNameInput() {
         const app = document.getElementById('guessWhoContent');
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" class="game-back-btn">
-                        ← Back
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <div style="width: 80px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchGuessWho()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <div></div>
+                    </div>
 
-                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                     <h3 style="text-align: center; margin-bottom: 1.5rem;">Enter Player Names</h3>
 
                     <div style="margin-bottom: 1.5rem;">
@@ -251,14 +249,13 @@
         const otherPlayerName = isPlayer2Pick ? guessWhoState.player1Name : guessWhoState.player2Name;
 
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" class="game-back-btn">
-                        ← Menu
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <div style="width: 80px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchGuessWho()" class="game-back-btn">← Menu</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <div></div>
+                    </div>
 
                 <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1rem;">
                     <h3 style="text-align: center; margin-bottom: 1.5rem;">
@@ -302,14 +299,13 @@
     function showPassDeviceToStartGame() {
         const app = document.getElementById('guessWhoContent');
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" class="game-back-btn">
-                        ← Menu
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <div style="width: 80px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchGuessWho()" class="game-back-btn">← Menu</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <div></div>
+                    </div>
 
                 <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <div style="font-size: 5rem; margin-bottom: 2rem;">🔄</div>
@@ -334,14 +330,13 @@
     function showPassDeviceScreen() {
         const app = document.getElementById('guessWhoContent');
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" class="game-back-btn">
-                        ← Menu
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <div style="width: 80px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchGuessWho()" class="game-back-btn">← Menu</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <div></div>
+                    </div>
 
                 <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <div style="font-size: 5rem; margin-bottom: 2rem;">🔄</div>
@@ -368,16 +363,13 @@
         const activeEliminated = guessWhoState.currentPlayer === 'player1' ? guessWhoState.myEliminated : guessWhoState.opponentEliminated;
 
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 1000px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" class="game-back-btn">
-                        ← Menu
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <button onclick="startGuessWho('${guessWhoState.gameMode}')" style="background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
-                        New Game
-                    </button>
-                </div>
+            <div class="game-container" style="max-width: 1000px;">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchGuessWho()" class="game-back-btn">← Menu</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <button onclick="startGuessWho('${guessWhoState.gameMode}')" class="game-btn game-btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">New Game</button>
+                    </div>
 
                 ${!guessWhoState.gameOver ? `
                     <div style="text-align: center; padding: 1rem; background: #43e97b; color: white; border-radius: 8px; margin-bottom: 1rem; font-size: 1.2rem; font-weight: bold;">
@@ -513,14 +505,13 @@
         const answeringPlayerName = getPlayerName(answeringPlayer);
 
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" class="game-back-btn">
-                        ← Menu
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <div style="width: 80px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchGuessWho()" class="game-back-btn">← Menu</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <div></div>
+                    </div>
 
                 <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <div style="font-size: 5rem; margin-bottom: 2rem;">🔄</div>
@@ -548,14 +539,13 @@
         const mySecret = askingPlayer === 'player1' ? guessWhoState.opponentSecret : guessWhoState.mySecret;
 
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" class="game-back-btn">
-                        ← Menu
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <div style="width: 80px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchGuessWho()" class="game-back-btn">← Menu</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <div></div>
+                    </div>
 
                 <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
                     <h3 style="color: #333; font-size: 1.5rem; margin-bottom: 2rem;">${answeringPlayerName}, answer this question:</h3>
@@ -622,14 +612,13 @@
         const otherPlayerName = getPlayerName(otherPlayer);
 
         app.innerHTML = `
-            <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" class="game-back-btn">
-                        ← Menu
-                    </button>
-                    <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
-                    <div style="width: 80px;"></div>
-                </div>
+            <div class="game-container">
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="launchGuessWho()" class="game-back-btn">← Menu</button>
+                        <h2 class="game-title">Guess Who</h2>
+                        <div></div>
+                    </div>
 
                 <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; min-height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <div style="font-size: 5rem; margin-bottom: 2rem;">🔄</div>
