@@ -134,7 +134,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="showGamesMenu()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="showGamesMenu()" class="game-back-btn">
                         ← Back
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
@@ -198,7 +198,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="launchGuessWho()" class="game-back-btn">
                         ← Back
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
@@ -255,7 +255,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="launchGuessWho()" class="game-back-btn">
                         ← Menu
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
@@ -306,7 +306,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="launchGuessWho()" class="game-back-btn">
                         ← Menu
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
@@ -338,7 +338,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="launchGuessWho()" class="game-back-btn">
                         ← Menu
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
@@ -372,7 +372,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 1000px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="launchGuessWho()" class="game-back-btn">
                         ← Menu
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
@@ -517,7 +517,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="launchGuessWho()" class="game-back-btn">
                         ← Menu
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
@@ -552,7 +552,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="launchGuessWho()" class="game-back-btn">
                         ← Menu
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>
@@ -626,7 +626,7 @@
         app.innerHTML = `
             <div style="padding: 1rem; max-width: 800px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="launchGuessWho()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="launchGuessWho()" class="game-back-btn">
                         ← Menu
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🕵️ Guess Who</h2>

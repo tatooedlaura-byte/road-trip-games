@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.138.24';</script>
+    <script>window.APP_VERSION = '1.138.25';</script>
 
     <style>
         * {
@@ -45,6 +45,121 @@
         .game-back-btn:active {
             background: rgba(55, 65, 81, 0.9);
         }
+
+        /* Unified Game Container Styles */
+        .game-container {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0.5rem;
+        }
+
+        .game-card {
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            color: white;
+            position: relative;
+        }
+
+        .game-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 1rem;
+            padding-top: 0.25rem;
+        }
+
+        .game-header .game-back-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .game-subtitle {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            text-align: center;
+            margin-top: 0.25rem;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-stat {
+            text-align: center;
+        }
+
+        .game-stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #a5b4fc;
+        }
+
+        .game-stat-label {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .game-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+        }
+
+        .game-btn-primary {
+            background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 100%);
+            color: #1a1a2e;
+        }
+
+        .game-btn-primary:hover {
+            box-shadow: 0 4px 15px rgba(165,180,252,0.4);
+        }
+
+        .game-btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .game-btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .game-message {
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            min-height: 1.5rem;
+        }
+
+        .game-message.error { color: #f87171; }
+        .game-message.success { color: #4ade80; }
+        .game-message.info { color: #60a5fa; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -394,7 +509,7 @@
 
             <!-- Travel Bingo Mode Selection -->
             <div id="bingoModeSelection" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 style="color: #a5b4fc;">🎯 Travel Bingo</h2>
                     <button onclick="showHome()" class="game-back-btn">← Back</button>
                 </div>
@@ -420,7 +535,7 @@
 
             <!-- Travel Bingo Name Entry (hidden by default) -->
             <div id="bingoNameEntry" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 style="color: #a5b4fc;">🏁 Enter Player Names</h2>
                     <button onclick="backToModeSelection()" class="game-back-btn">← Back</button>
                 </div>
@@ -446,7 +561,7 @@
 
             <!-- Travel Bingo Game Section (hidden by default) -->
             <div id="travelBingo" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 id="bingoTitle">🎯 Travel Bingo</h2>
                     <button onclick="backToModeSelection()" class="game-back-btn">← Back</button>
                 </div>
@@ -528,7 +643,7 @@
 
             <!-- Travel Facts Section (hidden by default) -->
             <div id="travelFacts" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 style="color: #a5b4fc;">📍 Travel Facts</h2>
                     <button onclick="exitTravelFacts()" class="game-back-btn">← Back</button>
                 </div>
@@ -542,7 +657,7 @@
 
             <!-- License Plate Tracker Section (hidden by default) -->
             <div id="plateTracker" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 style="color: #a5b4fc;">🚙 License Plate Tracker</h2>
                     <button onclick="showHome()" class="game-back-btn">← Back</button>
                 </div>
@@ -585,7 +700,7 @@
 
             <!-- Arcade Games Menu Section (hidden by default) -->
             <div id="arcadeMenu" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 style="color: #a5b4fc;">🕹️ Arcade Games</h2>
                     <button onclick="showHome()" class="game-back-btn">← Back</button>
                 </div>
@@ -660,7 +775,7 @@
 
             <!-- Strategy Games Menu Section (hidden by default) -->
             <div id="strategyMenu" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 style="color: #a5b4fc;">🎯 Strategy Games</h2>
                     <button onclick="showHome()" class="game-back-btn">← Back</button>
                 </div>
@@ -720,7 +835,7 @@
 
             <!-- Other Games Menu Section (hidden by default) -->
             <div id="otherMenu" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 style="color: #a5b4fc;">🎲 Other Games</h2>
                     <button onclick="showHome()" class="game-back-btn">← Back</button>
                 </div>
@@ -740,7 +855,7 @@
 
             <!-- Word Games Menu Section (hidden by default) -->
             <div id="wordGamesMenu" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <h2 style="color: #a5b4fc;">📝 Word Games</h2>
                     <button onclick="showHome()" class="game-back-btn">← Back</button>
                 </div>
@@ -815,10 +930,9 @@
 
             <!-- Pac-Man Game Section (hidden by default) -->
             <div id="pacmanGame" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <button onclick="exitPacman()" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0;">🟡 Pac-Man</h2>
-                    <div style="width: 120px;"></div>
+                    <h2 class="game-title">🟡 Pac-Man</h2>
                 </div>
                 <div style="text-align: center;">
                     <canvas id="pacmanCanvas"></canvas>
@@ -854,7 +968,7 @@
             <div id="minesweeperGame" style="display: none; margin: -2rem; padding: 0.5rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
                     <button onclick="exitMinesweeper()" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0;">💣 Minesweeper</h2>
+                    <h2 class="game-title">💣 Minesweeper</h2>
                     <div style="width: 100px;"></div>
                 </div>
                 <div id="minesweeperContent"></div>
@@ -876,10 +990,9 @@
 
             <!-- Would You Rather Game Section (hidden by default) -->
             <div id="wouldYouRatherGame" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <button onclick="exitWouldYouRatherToMenu()" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0;">🤔 Would You Rather</h2>
-                    <div style="width: 120px;"></div>
+                    <h2 class="game-title">🤔 Would You Rather</h2>
                 </div>
                 <div id="wouldYouRatherContent"></div>
             </div>
@@ -971,7 +1084,7 @@
 
             <!-- Tunnel Runner Game Section (hidden by default) -->
             <div id="tunnelRunnerGame" style="display: none; position: relative; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-radius: 1rem; padding: 1rem; min-height: 500px;">
-                <button onclick="exitTunnelRunnerToMenu()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; z-index: 100;">← Back</button>
+                <button onclick="exitTunnelRunnerToMenu()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
                 <div id="tunnelRunnerContent"></div>
             </div>
 
@@ -979,7 +1092,7 @@
             <div id="downhillSkierGame" style="display: none;">
                 <div style="background: linear-gradient(135deg, #0c1929 0%, #1a3a5c 50%, #0d2137 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
                     <!-- Back Button -->
-                    <button onclick="exitDownhillSkierToMenu()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
+                    <button onclick="exitDownhillSkierToMenu()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
 
                     <!-- Title -->
                     <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
@@ -993,10 +1106,9 @@
 
             <!-- Galaxian Game Section (hidden by default) -->
             <div id="galaxianGame" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <button onclick="exitGalaxian()" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0;">🚀 Galaxian</h2>
-                    <div style="width: 120px;"></div>
+                    <h2 class="game-title">🚀 Galaxian</h2>
                 </div>
                 <div style="text-align: center; max-width: 100%; overflow: hidden;">
                     <canvas id="galaxianCanvas" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
@@ -1018,10 +1130,9 @@
 
             <!-- Galaga Game Section (hidden by default) -->
             <div id="galagaGame" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <button onclick="exitGalaga()" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0;">👾 Galaga</h2>
-                    <div style="width: 120px;"></div>
+                    <h2 class="game-title">👾 Galaga</h2>
                 </div>
                 <div style="text-align: center; max-width: 100%; overflow: hidden;">
                     <canvas id="galagaCanvas" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
@@ -1061,7 +1172,7 @@
             <div id="drugwarsGame" style="display: none;">
                 <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
                     <!-- Back Button -->
-                    <button onclick="exitDrugWars()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
+                    <button onclick="exitDrugWars()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
 
                     <!-- Title -->
                     <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
@@ -1141,7 +1252,7 @@
             <div id="breakoutGame" style="display: none;">
                 <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
                     <!-- Back Button -->
-                    <button onclick="exitBreakout()" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(75, 85, 99, 0.8); color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; z-index: 10;">← Back</button>
+                    <button onclick="exitBreakout()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
 
                     <!-- Title and Pause -->
                     <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
@@ -1281,20 +1392,18 @@
 
             <!-- Snake Game Section (hidden by default) -->
             <div id="snakeGame" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <button onclick="exitSnake()" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0;">🐍 Snake</h2>
-                    <div style="width: 120px;"></div>
+                    <h2 class="game-title">🐍 Snake</h2>
                 </div>
                 <div id="snakeContent"></div>
             </div>
 
             <!-- 2048 Game Section (hidden by default) -->
             <div id="game2048" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="game-header">
                     <button onclick="exit2048()" class="game-back-btn">← Back</button>
-                    <h2 style="margin: 0;">🔢 2048</h2>
-                    <div style="width: 120px;"></div>
+                    <h2 class="game-title">🔢 2048</h2>
                 </div>
                 <div id="game2048Content"></div>
             </div>
@@ -1318,7 +1427,7 @@
                     📅 90 Days (Long)
                 </button>
             </div>
-            <button onclick="document.getElementById('drugwarsDaySelectModal').style.display='none'; document.getElementById('gamesMenu').style.display='block';" style="background: rgba(255,255,255,0.1); color: #888; border: 1px solid rgba(255,255,255,0.2); padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; margin-top: 1.5rem;">← Back</button>
+            <button onclick="document.getElementById('drugwarsDaySelectModal').style.display='none'; document.getElementById('otherMenu').style.display='block';" style="background: rgba(255,255,255,0.1); color: #888; border: 1px solid rgba(255,255,255,0.2); padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; margin-top: 1.5rem;">← Back</button>
         </div>
     </div>
 

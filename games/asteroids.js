@@ -699,7 +699,7 @@
         content.innerHTML = `
             <div style="text-align: center;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button onclick="exitAsteroids()" style="background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                    <button onclick="exitAsteroids()" class="game-back-btn">
                         ← Back
                     </button>
                     <h2 style="margin: 0; font-size: 1.5rem;">🚀 Asteroids</h2>
