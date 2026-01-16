@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.138.27';</script>
+    <script>window.APP_VERSION = '1.138.28';</script>
 
     <style>
         * {
@@ -160,6 +160,190 @@
         .game-message.error { color: #f87171; }
         .game-message.success { color: #4ade80; }
         .game-message.info { color: #60a5fa; }
+
+        /* Additional button variants */
+        .game-btn-danger {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            color: white;
+        }
+        .game-btn-danger:hover {
+            box-shadow: 0 4px 15px rgba(248,113,113,0.4);
+        }
+
+        .game-btn-success {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: #1a1a2e;
+        }
+        .game-btn-success:hover {
+            box-shadow: 0 4px 15px rgba(74,222,128,0.4);
+        }
+
+        .game-btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        .game-btn-large {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* Button groups */
+        .game-btn-group {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+        }
+
+        /* D-Pad Controls */
+        .game-dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 55px);
+            grid-template-rows: repeat(3, 55px);
+            gap: 5px;
+            justify-content: center;
+            margin: 0.5rem auto;
+        }
+
+        .game-dpad-btn {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            touch-action: manipulation;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-dpad-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .game-dpad-center {
+            background: rgba(255,255,255,0.1);
+            cursor: default;
+        }
+
+        /* Canvas wrapper */
+        .game-canvas-wrap {
+            display: flex;
+            justify-content: center;
+            margin: 0.5rem 0;
+        }
+
+        .game-canvas-wrap canvas {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        /* Rules/instructions */
+        .game-rules {
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .game-rules h4 {
+            margin: 0 0 0.5rem 0;
+            color: #a5b4fc;
+            font-size: 0.9rem;
+        }
+
+        .game-rules p, .game-rules ul {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .game-rules ul {
+            padding-left: 1.2rem;
+        }
+
+        /* Game over overlay */
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            z-index: 50;
+        }
+
+        .game-overlay-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #a5b4fc;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-overlay-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Input field */
+        .game-input {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .game-input:focus {
+            border-color: #a5b4fc;
+        }
+
+        .game-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Score highlight */
+        .game-score-highlight {
+            color: #fbbf24;
+            font-weight: 700;
+        }
+
+        /* New game button - consistent styling */
+        .game-new-btn {
+            display: block;
+            margin: 1rem auto 0;
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 100%);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .game-new-btn:hover {
+            box-shadow: 0 4px 15px rgba(165,180,252,0.4);
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -938,21 +1122,17 @@
                     <canvas id="pacmanCanvas"></canvas>
                 </div>
 
-                <!-- Mobile Touch Controls - Standardized Layout -->
-                <div id="pacmanControls" style="display: flex; justify-content: center; align-items: center; margin-top: 0.5rem; padding: 0 1rem;">
-                    <div style="display: grid; grid-template-columns: repeat(3, 60px); grid-template-rows: repeat(3, 60px); gap: 5px;">
-                        <div style="grid-column: 2;"></div>
-                        <button id="btnUp" style="grid-column: 2; width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▲</button>
-                        <div></div>
-
-                        <button id="btnLeft" style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">◀</button>
-                        <div></div>
-                        <button id="btnRight" style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▶</button>
-
-                        <div></div>
-                        <button id="btnDown" style="grid-column: 2; width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 1.5rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▼</button>
-                        <div></div>
-                    </div>
+                <!-- Mobile Touch Controls -->
+                <div id="pacmanControls" class="game-dpad">
+                    <div></div>
+                    <button id="btnUp" class="game-dpad-btn">▲</button>
+                    <div></div>
+                    <button id="btnLeft" class="game-dpad-btn">◀</button>
+                    <div class="game-dpad-btn game-dpad-center"></div>
+                    <button id="btnRight" class="game-dpad-btn">▶</button>
+                    <div></div>
+                    <button id="btnDown" class="game-dpad-btn">▼</button>
+                    <div></div>
                 </div>
             </div>
 
@@ -1250,121 +1430,127 @@
 
             <!-- Breakout Game Section (hidden by default) -->
             <div id="breakoutGame" style="display: none;">
-                <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100%; padding: 1rem; border-radius: 12px; position: relative;">
-                    <!-- Back Button -->
-                    <button onclick="exitBreakout()" class="game-back-btn" style="position: absolute; top: 0.75rem; left: 0.75rem;">← Back</button>
-
-                    <!-- Title and Pause -->
-                    <div style="text-align: center; padding-top: 0.5rem; margin-bottom: 1rem;">
-                        <h1 style="font-size: 1.8rem; color: #f39c12; text-shadow: 0 0 20px rgba(243, 156, 18, 0.5); margin: 0;">🧱 Breakout</h1>
-                        <button onclick="breakoutPause()" style="background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; cursor: pointer; margin-top: 0.5rem; font-size: 0.8rem;">⏸️ Pause (P)</button>
+                <div class="game-card" style="position: relative;">
+                    <div class="game-header">
+                        <button onclick="exitBreakout()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">🧱 Breakout</h2>
+                    </div>
+                    <div class="game-btn-group">
+                        <button onclick="breakoutPause()" class="game-btn game-btn-secondary game-btn-small">⏸️ Pause (P)</button>
                     </div>
 
-                    <!-- Status Bar -->
-                    <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem;">
-                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 0.7rem; color: #888;">SCORE</div>
-                            <div id="breakoutScore" style="font-size: 1.3rem; font-weight: bold; color: #4ade80;">0</div>
+                    <div class="game-stats">
+                        <div class="game-stat">
+                            <div class="game-stat-label">SCORE</div>
+                            <div id="breakoutScore" class="game-stat-value" style="color: #4ade80;">0</div>
                         </div>
-                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 0.7rem; color: #888;">LIVES</div>
-                            <div id="breakoutLives" style="font-size: 1.3rem; font-weight: bold; color: #f87171;">3</div>
+                        <div class="game-stat">
+                            <div class="game-stat-label">LIVES</div>
+                            <div id="breakoutLives" class="game-stat-value" style="color: #f87171;">3</div>
                         </div>
-                        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 0.7rem; color: #888;">LEVEL</div>
-                            <div id="breakoutLevel" style="font-size: 1.3rem; font-weight: bold; color: #60a5fa;">1</div>
+                        <div class="game-stat">
+                            <div class="game-stat-label">LEVEL</div>
+                            <div id="breakoutLevel" class="game-stat-value">1</div>
                         </div>
                     </div>
 
-                    <!-- Message Area -->
-                    <div id="breakoutMessage" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.2)); padding: 0.75rem; margin-bottom: 1rem; display: none; border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 8px; text-align: center; font-weight: bold; color: #fde68a;"></div>
+                    <div id="breakoutMessage" class="game-message" style="display: none;"></div>
 
-                    <!-- Game Canvas -->
-                    <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
-                        <canvas id="breakoutCanvas" width="800" height="600" style="border: 3px solid #f39c12; border-radius: 8px; background: #0a0a15; max-width: 100%; height: auto; box-shadow: 0 0 30px rgba(243, 156, 18, 0.3);"></canvas>
+                    <div class="game-canvas-wrap">
+                        <canvas id="breakoutCanvas" width="800" height="600" style="border: 2px solid #a5b4fc; background: #0a0a15;"></canvas>
                     </div>
 
-                    <!-- Instructions -->
-                    <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; color: #9ca3af; border: 1px solid rgba(255,255,255,0.1);">
-                        <strong style="color: #d1d5db;">Controls:</strong> Arrow keys / Mouse / Touch buttons to move | Space / Click to launch | P to pause
+                    <div class="game-rules">
+                        <strong>Controls:</strong> Arrow keys / Mouse / Touch buttons to move | Space / Click to launch | P to pause
                     </div>
 
-                    <!-- Mobile Touch Controls -->
-                    <div id="breakoutControls" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding: 0 1rem;">
-                        <button id="breakoutBtnLaunch" style="width: 80px; height: 80px; background: linear-gradient(145deg, #f39c12, #d97706); color: white; border: none; border-radius: 50%; font-size: 0.8rem; cursor: pointer; touch-action: manipulation; font-weight: bold; box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);">LAUNCH</button>
-                        <div style="display: flex; gap: 0.75rem;">
-                            <button id="breakoutBtnLeft" style="width: 70px; height: 70px; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 15px; font-size: 1.8rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);">◀</button>
-                            <button id="breakoutBtnRight" style="width: 70px; height: 70px; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 15px; font-size: 1.8rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);">▶</button>
+                    <div class="game-btn-group" style="justify-content: space-between;">
+                        <button id="breakoutBtnLaunch" class="game-btn game-btn-primary" style="border-radius: 50%; width: 70px; height: 70px; font-size: 0.75rem;">LAUNCH</button>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button id="breakoutBtnLeft" class="game-dpad-btn">◀</button>
+                            <button id="breakoutBtnRight" class="game-dpad-btn">▶</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Game Over Screen -->
-                <div id="breakoutGameOverScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000;">
-                    <div style="background: linear-gradient(145deg, #1a1a2e, #0f0f1e); border: 3px solid #f39c12; padding: 2.5rem; border-radius: 20px; max-width: 400px; text-align: center; box-shadow: 0 0 50px rgba(243, 156, 18, 0.4);">
-                        <h2 id="breakoutGameOverTitle" style="margin-top: 0; color: #f39c12; font-size: 2rem; text-shadow: 0 0 20px rgba(243, 156, 18, 0.5);">GAME OVER</h2>
-                        <p id="breakoutGameOverMessage" style="font-size: 1rem; margin: 1rem 0; color: #9ca3af;">Better luck next time!</p>
-                        <p style="font-size: 1.5rem; margin: 1.5rem 0; color: #4ade80;">Final Score: <strong id="breakoutFinalScore">0</strong></p>
-                        <button onclick="breakoutRestart()" style="background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; margin: 0.3rem;">🔄 Play Again</button>
-                        <button onclick="exitBreakout()" style="background: linear-gradient(145deg, #4b5563, #374151); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; margin: 0.3rem;">🏠 Menu</button>
+                <div id="breakoutGameOverScreen" class="game-overlay" style="display: none; position: fixed; border-radius: 0;">
+                    <div class="game-card" style="max-width: 350px; text-align: center;">
+                        <h2 id="breakoutGameOverTitle" class="game-overlay-title">GAME OVER</h2>
+                        <p id="breakoutGameOverMessage" class="game-overlay-subtitle">Better luck next time!</p>
+                        <p style="font-size: 1.3rem; margin: 1rem 0;">Final Score: <strong id="breakoutFinalScore" class="game-score-highlight">0</strong></p>
+                        <div class="game-btn-group">
+                            <button onclick="breakoutRestart()" class="game-btn game-btn-success">🔄 Play Again</button>
+                            <button onclick="exitBreakout()" class="game-btn game-btn-secondary">🏠 Menu</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Frogger Game Section (hidden by default) -->
             <div id="froggerGame" style="display: none;">
-                <div style="margin-bottom: 1rem;">
-                    <button onclick="exitFrogger()" class="game-back-btn">← Back</button>
-                </div>
+                <div class="game-card">
+                    <div class="game-header">
+                        <button onclick="exitFrogger()" class="game-back-btn">← Back</button>
+                        <h2 class="game-title">🐸 Frogger</h2>
+                    </div>
 
-                <!-- Status Bar -->
-                <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; margin-bottom: 1rem; font-family: monospace; font-size: 1rem; text-align: center; border-radius: 10px; color: #f1f5f9; border: 1px solid rgba(255,255,255,0.1);">
-                    <strong>Score: <span id="froggerScore" style="color: #4ade80;">0</span></strong> |
-                    <strong>Lives: <span id="froggerLives" style="color: #f87171;">3</span></strong> |
-                    <strong>Level: <span id="froggerLevel" style="color: #60a5fa;">1</span></strong> |
-                    <strong>Time: <span id="froggerTime" style="color: #fbbf24;">60</span></strong>
-                </div>
+                    <div class="game-stats">
+                        <div class="game-stat">
+                            <div class="game-stat-label">SCORE</div>
+                            <div id="froggerScore" class="game-stat-value" style="color: #4ade80;">0</div>
+                        </div>
+                        <div class="game-stat">
+                            <div class="game-stat-label">LIVES</div>
+                            <div id="froggerLives" class="game-stat-value" style="color: #f87171;">3</div>
+                        </div>
+                        <div class="game-stat">
+                            <div class="game-stat-label">LEVEL</div>
+                            <div id="froggerLevel" class="game-stat-value">1</div>
+                        </div>
+                        <div class="game-stat">
+                            <div class="game-stat-label">TIME</div>
+                            <div id="froggerTime" class="game-stat-value" style="color: #fbbf24;">60</div>
+                        </div>
+                    </div>
 
-                <!-- Game Canvas -->
-                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
-                    <canvas id="froggerCanvas" width="650" height="520" style="border: 3px solid #2c3e50; background: #1a1a1a; max-width: 100%; height: auto;"></canvas>
-                </div>
+                    <div class="game-canvas-wrap">
+                        <canvas id="froggerCanvas" width="650" height="520" style="border: 2px solid #a5b4fc; background: #1a1a1a;"></canvas>
+                    </div>
 
-                <!-- Instructions -->
-                <div style="background: rgba(255,255,255,0.05); padding: 1rem; border: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; border-radius: 10px; color: #94a3b8;">
-                    <strong style="color: #f1f5f9;">How to Play:</strong>
-                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                        <li>Guide 6 frogs safely to their homes at the top</li>
-                        <li><strong>Road:</strong> Dodge cars, trucks, and buses</li>
-                        <li><strong>River:</strong> Jump on logs and turtles (don't fall in!)</li>
-                        <li>Watch out for diving turtles and crocodile mouths</li>
-                        <li>Bonus points for catching flies and lady frogs!</li>
-                    </ul>
-                    <strong style="color: #f1f5f9;">Controls:</strong> Arrow keys or touch buttons to hop
-                </div>
+                    <div class="game-rules">
+                        <h4>How to Play</h4>
+                        <ul>
+                            <li>Guide 6 frogs safely to their homes at the top</li>
+                            <li><strong>Road:</strong> Dodge cars, trucks, and buses</li>
+                            <li><strong>River:</strong> Jump on logs and turtles</li>
+                        </ul>
+                        <strong>Controls:</strong> Arrow keys or touch buttons to hop
+                    </div>
 
-                <!-- Mobile Touch Controls - Directional Pad Layout -->
-                <div id="froggerControls" style="display: flex; justify-content: center; margin-top: 2rem; padding: 1rem;">
-                    <div style="position: relative; width: 200px; height: 200px;">
-                        <!-- Up button -->
-                        <button id="froggerBtnUp" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▲</button>
-                        <!-- Left button -->
-                        <button id="froggerBtnLeft" style="position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 70px; height: 70px; background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">◀</button>
-                        <!-- Right button -->
-                        <button id="froggerBtnRight" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 70px; height: 70px; background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▶</button>
-                        <!-- Down button -->
-                        <button id="froggerBtnDown" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); color: white; border: none; border-radius: 15px; font-size: 2rem; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">▼</button>
+                    <div id="froggerControls" class="game-dpad">
+                        <div></div>
+                        <button id="froggerBtnUp" class="game-dpad-btn">▲</button>
+                        <div></div>
+                        <button id="froggerBtnLeft" class="game-dpad-btn">◀</button>
+                        <div class="game-dpad-btn game-dpad-center"></div>
+                        <button id="froggerBtnRight" class="game-dpad-btn">▶</button>
+                        <div></div>
+                        <button id="froggerBtnDown" class="game-dpad-btn">▼</button>
+                        <div></div>
                     </div>
                 </div>
 
                 <!-- Game Over Screen -->
-                <div id="froggerGameOverScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000;">
-                    <div style="background: #1e293b; padding: 3rem; border-radius: 15px; max-width: 500px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
-                        <h2 style="margin-top: 0; color: #f1f5f9;">GAME OVER</h2>
-                        <p style="font-size: 1.2rem; margin: 1rem 0; color: #94a3b8;">🐸 Better luck next time, frogger!</p>
-                        <p style="font-size: 2rem; margin: 1.5rem 0; color: #60a5fa;">Final Score: <strong id="froggerFinalScore">0</strong></p>
-                        <button onclick="froggerRestart()" style="background: #334155; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold; margin-right: 1rem;">🔄 Play Again</button>
-                        <button onclick="exitFrogger()" style="background: #475569; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">🏠 Menu</button>
+                <div id="froggerGameOverScreen" class="game-overlay" style="display: none; position: fixed; border-radius: 0;">
+                    <div class="game-card" style="max-width: 350px; text-align: center;">
+                        <h2 class="game-overlay-title">GAME OVER</h2>
+                        <p class="game-overlay-subtitle">🐸 Better luck next time!</p>
+                        <p style="font-size: 1.3rem; margin: 1rem 0;">Final Score: <strong id="froggerFinalScore" class="game-score-highlight">0</strong></p>
+                        <div class="game-btn-group">
+                            <button onclick="froggerRestart()" class="game-btn game-btn-success">🔄 Play Again</button>
+                            <button onclick="exitFrogger()" class="game-btn game-btn-secondary">🏠 Menu</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -65,33 +65,9 @@
                 overflow: hidden;
             }
 
-            .snake-controls {
-                display: grid;
-                grid-template-columns: repeat(3, 65px);
-                grid-template-rows: repeat(3, 65px);
-                gap: 8px;
-            }
 
-            .snake-ctrl-btn {
-                background: linear-gradient(145deg, #4ade80, #22c55e);
-                color: #0a0a1a;
-                border: none;
-                border-radius: 12px;
-                font-size: 1.5rem;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                touch-action: manipulation;
-                box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
-            }
 
-            .snake-ctrl-btn:hover {
-                transform: scale(1.05);
-                box-shadow: 0 6px 20px rgba(74, 222, 128, 0.4);
-            }
 
-            .snake-ctrl-btn:active {
-                transform: scale(0.95);
-            }
 
             .snake-instructions {
                 color: #888;
@@ -456,15 +432,15 @@
                     ` : ''}
                 </div>
 
-                <div class="snake-controls">
+                <div class="game-dpad">
                     <div></div>
-                    <button class="snake-ctrl-btn" onclick="handleSnakeDir('up')">⬆️</button>
+                    <button class="game-dpad-btn" onclick="handleSnakeDir('up')">▲</button>
                     <div></div>
-                    <button class="snake-ctrl-btn" onclick="handleSnakeDir('left')">⬅️</button>
+                    <button class="game-dpad-btn" onclick="handleSnakeDir('left')">◀</button>
+                    <div class="game-dpad-btn game-dpad-center"></div>
+                    <button class="game-dpad-btn" onclick="handleSnakeDir('right')">▶</button>
                     <div></div>
-                    <button class="snake-ctrl-btn" onclick="handleSnakeDir('right')">➡️</button>
-                    <div></div>
-                    <button class="snake-ctrl-btn" onclick="handleSnakeDir('down')">⬇️</button>
+                    <button class="game-dpad-btn" onclick="handleSnakeDir('down')">▼</button>
                     <div></div>
                 </div>
 
