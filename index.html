@@ -64,22 +64,27 @@
         }
 
         .game-header {
-            display: flex;
+            display: grid;
+            grid-template-columns: 70px 1fr 70px;
             align-items: center;
-            justify-content: center;
-            position: relative;
+            gap: 0.5rem;
             margin-bottom: 1rem;
-            padding-top: 0.25rem;
         }
 
         .game-header .game-back-btn {
-            position: absolute;
-            left: 0;
-            top: 0;
+            justify-self: start;
+        }
+
+        .game-header .game-title {
+            justify-self: center;
+        }
+
+        .game-header > :nth-child(3) {
+            justify-self: end;
         }
 
         .game-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin: 0;
             background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
