@@ -33,22 +33,6 @@
                 overflow: hidden;
             }
 
-            .sb-back-btn {
-                position: absolute;
-                top: 0.4rem;
-                left: 0.4rem;
-                background: rgba(75, 85, 99, 0.9);
-                border: none;
-                color: white;
-                padding: 0.4rem 0.8rem;
-                border-radius: 8px;
-                font-size: 0.85rem;
-                cursor: pointer;
-                z-index: 100;
-                touch-action: manipulation;
-            }
-
-            .sb-back-btn:hover {
                 background: rgba(100, 116, 139, 0.9);
             }
 
@@ -1323,7 +1307,7 @@
         content.innerHTML = `
             <div class="sb-container">
                 <div class="sb-card">
-                    <button class="sb-back-btn" onclick="exitSpellingBee()">← Back</button>
+                    <button class="game-back-btn" onclick="exitSpellingBee()">← Back</button>
                     <button class="sb-rules-toggle" onclick="window.spellingbee.toggleRules()">?</button>
 
                     <div class="sb-header">

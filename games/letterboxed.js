@@ -419,7 +419,7 @@
 
         container.innerHTML = `
             <div class="letterboxed-game">
-                <button class="letterboxed-back-btn" onclick="exitLetterBoxed()">← Back</button>
+                <button class="game-back-btn" onclick="exitLetterBoxed()">← Back</button>
                 <div class="letterboxed-header">
                     <h2>Letter Boxed</h2>
                     <p>Use all letters to make words. Each word must start with the last letter of the previous word. Can't use letters from the same side consecutively.</p>

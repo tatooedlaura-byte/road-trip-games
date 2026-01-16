@@ -1479,7 +1479,7 @@
 
         container.innerHTML = `
             <div class="connections-game">
-                <button class="connections-back-btn" onclick="exitConnections()">← Back</button>
+                <button class="game-back-btn" onclick="exitConnections()">← Back</button>
                 <div class="connections-header">
                     <h2>Connections</h2>
                     <p>Find four groups of four related words</p>

@@ -720,7 +720,7 @@
         container.innerHTML = `
             <div class="ana-container">
                 <div class="ana-card">
-                    <button class="ana-back-btn" onclick="exitAnagrams()">← Back</button>
+                    <button class="game-back-btn" onclick="exitAnagrams()">← Back</button>
 
                     <div class="ana-header">
                         <h1 class="ana-title">Anagrams</h1>
@@ -805,7 +805,7 @@
         container.innerHTML = `
             <div class="ana-container">
                 <div class="ana-card">
-                    <button class="ana-back-btn" onclick="window.anagramsGame.confirmQuit()">← Quit</button>
+                    <button class="game-back-btn" onclick="window.anagramsGame.confirmQuit()">← Quit</button>
 
                     <div class="ana-timer" id="anaTimer">${gameSettings.mode === 'zen' ? '∞' : formatTime(gameSettings.timeLimit)}</div>
 

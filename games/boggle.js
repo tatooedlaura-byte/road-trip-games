@@ -841,7 +841,7 @@
         container.innerHTML = `
             <div class="bog-container">
                 <div class="bog-card">
-                    <button class="bog-back-btn" onclick="exitBoggle()">← Back</button>
+                    <button class="game-back-btn" onclick="exitBoggle()">← Back</button>
 
                     <div class="bog-header">
                         <h1 class="bog-title">Boggle</h1>
@@ -921,7 +921,7 @@
         container.innerHTML = `
             <div class="bog-container">
                 <div class="bog-card">
-                    <button class="bog-back-btn" onclick="window.boggleGame.confirmQuit()">← Quit</button>
+                    <button class="game-back-btn" onclick="window.boggleGame.confirmQuit()">← Quit</button>
 
                     <div class="bog-timer" id="bogTimer">${formatTime(gameSettings.timeLimit)}</div>
 

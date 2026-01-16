@@ -401,7 +401,7 @@
 
         container.innerHTML = `
             <div class="hangman-game">
-                <button class="hangman-back-btn" onclick="exitHangman()">← Back</button>
+                <button class="game-back-btn" onclick="exitHangman()">← Back</button>
                 <div class="hangman-header">
                     <h2>Hangman</h2>
                     <div class="hangman-stats">

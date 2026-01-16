@@ -598,7 +598,7 @@
 
         container.innerHTML = `
             <div class="crossword-game">
-                <button class="crossword-back-btn" onclick="exitCrossword()">← Back</button>
+                <button class="game-back-btn" onclick="exitCrossword()">← Back</button>
 
                 <div class="crossword-header">
                     <h2>Crossword</h2>

@@ -415,7 +415,7 @@
 
         container.innerHTML = `
             <div class="cryptogram-game">
-                <button class="cryptogram-back-btn" onclick="exitCryptogram()">← Back</button>
+                <button class="game-back-btn" onclick="exitCryptogram()">← Back</button>
 
                 <div class="cryptogram-header">
                     <h2>Cryptogram</h2>

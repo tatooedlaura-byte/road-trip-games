@@ -410,7 +410,7 @@
         container.innerHTML = `
             <div class="scat-container">
                 <div class="scat-card">
-                    <button class="scat-back-btn" onclick="exitScattergories()">← Back</button>
+                    <button class="game-back-btn" onclick="exitScattergories()">← Back</button>
 
                     <div class="scat-header">
                         <h1 class="scat-title">Scattergories</h1>
@@ -486,7 +486,7 @@
         container.innerHTML = `
             <div class="scat-container">
                 <div class="scat-card">
-                    <button class="scat-back-btn" onclick="window.scattergoriesGame.confirmQuit()">← Quit</button>
+                    <button class="game-back-btn" onclick="window.scattergoriesGame.confirmQuit()">← Quit</button>
 
                     <div class="scat-letter-display">${currentLetter}</div>
                     <div class="scat-timer" id="scatTimer">${formatTime(gameSettings.timeLimit)}</div>

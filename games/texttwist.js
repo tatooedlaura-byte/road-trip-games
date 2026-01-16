@@ -535,7 +535,7 @@
 
         container.innerHTML = `
             <div class="texttwist-game">
-                <button class="texttwist-back-btn" onclick="exitTextTwist()">← Back</button>
+                <button class="game-back-btn" onclick="exitTextTwist()">← Back</button>
 
                 <div class="texttwist-header">
                     <h2>Text Twist</h2>

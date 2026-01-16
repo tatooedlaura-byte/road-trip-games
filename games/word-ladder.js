@@ -785,7 +785,7 @@
         content.innerHTML = `
             <div class="wl-container">
                 <div class="wl-card">
-                    <button class="wl-back-btn" onclick="exitWordLadder()">← Back</button>
+                    <button class="game-back-btn" onclick="exitWordLadder()">← Back</button>
                     <div class="wl-header">
                         <h1 class="wl-title">Word Ladder</h1>
                         <p class="wl-subtitle">Transform one word into another</p>
@@ -878,7 +878,7 @@
         content.innerHTML = `
             <div class="wl-container">
                 <div class="wl-card" style="position: relative; overflow: hidden;">
-                    <button class="wl-back-btn" onclick="exitWordLadder()">← Back</button>
+                    <button class="game-back-btn" onclick="exitWordLadder()">← Back</button>
 
                     <div class="wl-stats">
                         <div class="wl-stat">

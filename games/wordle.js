@@ -354,7 +354,7 @@
 
         container.innerHTML = `
             <div class="wordle-container">
-                <button class="wordle-back-btn" onclick="exitWordle()">← Back</button>
+                <button class="game-back-btn" onclick="exitWordle()">← Back</button>
 
                 <div class="wordle-header">
                     <h2>Wordle</h2>
