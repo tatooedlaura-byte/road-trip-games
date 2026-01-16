@@ -12,29 +12,37 @@
                 font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
                 max-width: 450px;
                 margin: 0 auto;
-                padding: 1rem;
+                padding: 0.5rem;
+                height: 100dvh;
+                max-height: -webkit-fill-available;
+                display: flex;
+                flex-direction: column;
             }
 
             .sb-card {
                 background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
-                border-radius: 20px;
-                padding: 1.5rem;
-                padding-top: 3rem;
+                border-radius: 16px;
+                padding: 0.75rem;
+                padding-top: 2.5rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
                 position: relative;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
             }
 
             .sb-back-btn {
                 position: absolute;
-                top: 0.5rem;
-                left: 0.5rem;
+                top: 0.4rem;
+                left: 0.4rem;
                 background: rgba(75, 85, 99, 0.9);
                 border: none;
                 color: white;
-                padding: 0.5rem 1rem;
+                padding: 0.4rem 0.8rem;
                 border-radius: 8px;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
                 cursor: pointer;
                 z-index: 100;
                 touch-action: manipulation;
@@ -46,13 +54,13 @@
 
             .sb-header {
                 text-align: center;
-                margin-bottom: 1rem;
+                margin-bottom: 0.4rem;
             }
 
             .sb-title {
-                font-size: 2rem;
+                font-size: 1.5rem;
                 font-weight: 700;
-                margin: 0 0 0.5rem 0;
+                margin: 0 0 0.2rem 0;
                 background: linear-gradient(135deg, #ffd200 0%, #f7971e 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
@@ -60,27 +68,28 @@
             }
 
             .sb-subtitle {
-                font-size: 1rem;
+                font-size: 0.85rem;
                 opacity: 0.8;
                 margin: 0;
             }
 
             .sb-rules-toggle {
                 position: absolute;
-                top: 0.75rem;
-                right: 0.75rem;
+                top: 0.5rem;
+                right: 0.5rem;
                 background: rgba(255,255,255,0.15);
                 border: none;
                 color: white;
-                width: 28px;
-                height: 28px;
+                width: 26px;
+                height: 26px;
                 border-radius: 50%;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
                 cursor: pointer;
                 z-index: 10;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                touch-action: manipulation;
             }
 
             .sb-rules-toggle:hover {
@@ -89,40 +98,39 @@
 
             .sb-rules {
                 background: rgba(255,255,255,0.08);
-                border-radius: 12px;
-                padding: 1rem;
-                margin-bottom: 1rem;
+                border-radius: 10px;
+                padding: 0.6rem;
+                margin-bottom: 0.5rem;
             }
 
             .sb-rules h4 {
-                margin: 0 0 0.5rem 0;
-                font-size: 0.95rem;
+                margin: 0 0 0.3rem 0;
+                font-size: 0.85rem;
                 opacity: 0.9;
             }
 
             .sb-rules p {
                 margin: 0;
-                font-size: 0.85rem;
-                line-height: 1.5;
+                font-size: 0.75rem;
+                line-height: 1.4;
                 opacity: 0.75;
             }
 
             .sb-progress {
-                margin-bottom: 1rem;
+                margin-bottom: 0.5rem;
             }
 
             .sb-progress-bar {
-                height: 8px;
+                height: 6px;
                 background: rgba(255,255,255,0.1);
-                border-radius: 4px;
+                border-radius: 3px;
                 overflow: hidden;
-                margin-bottom: 0.5rem;
             }
 
             .sb-progress-fill {
                 height: 100%;
                 background: linear-gradient(90deg, #ffd200 0%, #f7971e 100%);
-                border-radius: 4px;
+                border-radius: 3px;
                 transition: width 0.3s ease;
             }
 
@@ -147,9 +155,9 @@
                 display: flex;
                 justify-content: space-around;
                 background: rgba(255,255,255,0.08);
-                border-radius: 12px;
-                padding: 0.75rem;
-                margin-bottom: 1rem;
+                border-radius: 10px;
+                padding: 0.4rem;
+                margin-bottom: 0.4rem;
             }
 
             .sb-stat {
@@ -157,43 +165,53 @@
             }
 
             .sb-stat-value {
-                font-size: 1.3rem;
+                font-size: 1.1rem;
                 font-weight: 700;
                 color: #ffd200;
             }
 
             .sb-stat-label {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
                 opacity: 0.7;
+            }
+
+            .sb-game-area {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                min-height: 0;
             }
 
             .sb-honeycomb {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                margin: 1.5rem 0;
-                gap: 0.3rem;
+                margin: 0.5rem 0;
+                gap: 0.2rem;
             }
 
             .sb-hex-row {
                 display: flex;
-                gap: 0.4rem;
+                gap: 0.3rem;
             }
 
             .sb-hex {
-                width: 60px;
-                height: 68px;
+                width: 54px;
+                height: 62px;
                 background: rgba(255,255,255,0.15);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 1.5rem;
+                font-size: 1.4rem;
                 font-weight: 700;
                 text-transform: uppercase;
                 cursor: pointer;
                 transition: all 0.15s ease;
                 clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
                 user-select: none;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
             }
 
             .sb-hex:hover {
@@ -221,15 +239,15 @@
 
             .sb-input-area {
                 text-align: center;
-                margin: 1rem 0;
+                margin: 0.3rem 0;
             }
 
             .sb-current-word {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
-                min-height: 2.5rem;
+                min-height: 2rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -242,7 +260,7 @@
             .sb-cursor {
                 display: inline-block;
                 width: 2px;
-                height: 1.5rem;
+                height: 1.3rem;
                 background: white;
                 animation: blink 1s infinite;
                 margin-left: 2px;
@@ -255,19 +273,20 @@
 
             .sb-buttons {
                 display: flex;
-                gap: 0.5rem;
+                gap: 0.4rem;
                 justify-content: center;
-                margin-top: 1rem;
+                margin: 0.4rem 0;
             }
 
             .sb-btn {
-                padding: 0.7rem 1.2rem;
+                padding: 0.5rem 1rem;
                 border: none;
-                border-radius: 25px;
-                font-size: 0.9rem;
+                border-radius: 20px;
+                font-size: 0.85rem;
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.2s ease;
+                touch-action: manipulation;
             }
 
             .sb-btn:active {
@@ -286,7 +305,8 @@
             .sb-btn-shuffle {
                 background: rgba(255,255,255,0.15);
                 color: white;
-                font-size: 1.8rem;
+                font-size: 1.5rem;
+                padding: 0.3rem 0.8rem;
             }
 
             .sb-btn-shuffle:hover {
@@ -296,7 +316,7 @@
             .sb-btn-enter {
                 background: linear-gradient(135deg, #ffd200 0%, #f7971e 100%);
                 color: #1a1a2e;
-                padding: 0.7rem 1.5rem;
+                padding: 0.5rem 1.2rem;
             }
 
             .sb-btn-enter:hover {
@@ -305,10 +325,10 @@
 
             .sb-message {
                 text-align: center;
-                padding: 0.5rem;
-                font-size: 0.9rem;
+                padding: 0.2rem;
+                font-size: 0.85rem;
                 font-weight: 500;
-                min-height: 1.5rem;
+                min-height: 1.2rem;
                 transition: opacity 0.3s ease;
             }
 
@@ -322,38 +342,38 @@
 
             .sb-message.pangram {
                 color: #ffd200;
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
 
             .sb-found-words {
-                margin-top: 1rem;
                 background: rgba(255,255,255,0.08);
-                border-radius: 12px;
-                padding: 1rem;
-                max-height: 150px;
+                border-radius: 10px;
+                padding: 0.5rem;
+                max-height: 80px;
                 overflow-y: auto;
+                flex-shrink: 0;
             }
 
             .sb-found-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 0.5rem;
-                font-size: 0.85rem;
+                margin-bottom: 0.3rem;
+                font-size: 0.75rem;
                 opacity: 0.8;
             }
 
             .sb-found-list {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.4rem;
+                gap: 0.3rem;
             }
 
             .sb-found-word {
                 background: rgba(255,255,255,0.1);
-                padding: 0.25rem 0.5rem;
+                padding: 0.15rem 0.4rem;
                 border-radius: 4px;
-                font-size: 0.8rem;
+                font-size: 0.7rem;
                 text-transform: uppercase;
             }
 
@@ -364,33 +384,61 @@
 
             .sb-win {
                 text-align: center;
-                padding: 1.5rem;
+                padding: 1rem;
                 background: linear-gradient(135deg, rgba(255,210,0,0.2) 0%, rgba(247,151,30,0.1) 100%);
-                border-radius: 15px;
-                margin: 1rem 0;
+                border-radius: 12px;
+                margin: 0.5rem 0;
             }
 
             .sb-win-title {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
                 font-weight: 700;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.3rem;
                 color: #ffd200;
             }
 
+            .sb-footer {
+                display: flex;
+                justify-content: center;
+                padding-top: 0.4rem;
+                flex-shrink: 0;
+            }
+
             .sb-new-game-btn {
-                margin-top: 1rem;
-                padding: 0.75rem 1.5rem;
+                padding: 0.5rem 1.2rem;
                 background: linear-gradient(135deg, #ffd200 0%, #f7971e 100%);
                 color: #1a1a2e;
                 border: none;
-                border-radius: 25px;
-                font-size: 1rem;
+                border-radius: 20px;
+                font-size: 0.85rem;
                 font-weight: 600;
                 cursor: pointer;
+                touch-action: manipulation;
             }
 
             .sb-new-game-btn:hover {
                 box-shadow: 0 4px 15px rgba(255,210,0,0.4);
+            }
+
+            /* Larger screens can have bigger elements */
+            @media (min-height: 700px) {
+                .sb-hex {
+                    width: 60px;
+                    height: 68px;
+                    font-size: 1.5rem;
+                }
+                .sb-honeycomb {
+                    gap: 0.3rem;
+                }
+                .sb-hex-row {
+                    gap: 0.4rem;
+                }
+                .sb-current-word {
+                    font-size: 1.8rem;
+                }
+                .sb-found-words {
+                    max-height: 120px;
+                }
             }
         `;
         document.head.appendChild(style);
@@ -1323,34 +1371,36 @@
                         </div>
                     </div>
 
-                    <div class="sb-input-area">
-                        <div class="sb-current-word">
-                            ${wordDisplay}<span class="sb-cursor"></span>
+                    <div class="sb-game-area">
+                        <div class="sb-input-area">
+                            <div class="sb-current-word">
+                                ${wordDisplay}<span class="sb-cursor"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="sb-message ${state.messageType}">${state.message}</div>
+                        <div class="sb-message ${state.messageType}">${state.message}</div>
 
-                    <div class="sb-honeycomb">
-                        <div class="sb-hex-row">
-                            <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[0]}')">${state.letters[0]}</div>
-                            <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[1]}')">${state.letters[1]}</div>
+                        <div class="sb-honeycomb">
+                            <div class="sb-hex-row">
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[0]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[0]}')">${state.letters[0]}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[1]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[1]}')">${state.letters[1]}</div>
+                            </div>
+                            <div class="sb-hex-row">
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[2]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[2]}')">${state.letters[2]}</div>
+                                <div class="sb-hex center" onclick="window.spellingbee.addLetter('${state.centerLetter}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.centerLetter}')">${state.centerLetter}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[3]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[3]}')">${state.letters[3]}</div>
+                            </div>
+                            <div class="sb-hex-row">
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[4]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[4]}')">${state.letters[4]}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[5]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[5]}')">${state.letters[5]}</div>
+                            </div>
                         </div>
-                        <div class="sb-hex-row">
-                            <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[2]}')">${state.letters[2]}</div>
-                            <div class="sb-hex center" onclick="window.spellingbee.addLetter('${state.centerLetter}')">${state.centerLetter}</div>
-                            <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[3]}')">${state.letters[3]}</div>
-                        </div>
-                        <div class="sb-hex-row">
-                            <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[4]}')">${state.letters[4]}</div>
-                            <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[5]}')">${state.letters[5]}</div>
-                        </div>
-                    </div>
 
-                    <div class="sb-buttons">
-                        <button class="sb-btn sb-btn-delete" onclick="window.spellingbee.deleteLetter()">Delete</button>
-                        <button class="sb-btn sb-btn-shuffle" onclick="window.spellingbee.shuffleLetters()">⟳</button>
-                        <button class="sb-btn sb-btn-enter" onclick="window.spellingbee.submitWord()">Enter</button>
+                        <div class="sb-buttons">
+                            <button class="sb-btn sb-btn-delete" onclick="window.spellingbee.deleteLetter()">Delete</button>
+                            <button class="sb-btn sb-btn-shuffle" onclick="window.spellingbee.shuffleLetters()">⟳</button>
+                            <button class="sb-btn sb-btn-enter" onclick="window.spellingbee.submitWord()">Enter</button>
+                        </div>
                     </div>
 
                     <div class="sb-found-words">
@@ -1366,7 +1416,9 @@
                         </div>
                     </div>
 
-                    <button class="sb-new-game-btn" onclick="window.spellingbee.newGame()">New Puzzle</button>
+                    <div class="sb-footer">
+                        <button class="sb-new-game-btn" onclick="window.spellingbee.newGame()">New Puzzle</button>
+                    </div>
                 </div>
             </div>
         `;

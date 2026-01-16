@@ -134932,8 +134932,6 @@ rotiform
 rotis
 rotisserie
 rotisseries
-rotl
-rotls
 roto
 rotogravure
 rotogravures

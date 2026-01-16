@@ -1077,19 +1077,37 @@
             return winningMoves[Math.floor(Math.random() * winningMoves.length)];
         }
 
-        // Prefer moves that lead to longer words (more chances for opponent to mess up)
-        const movesWithLongWords = safeMoves.filter(l => {
+        // Score moves by how many words they lead to (prefer common paths over obscure ones)
+        const moveScores = safeMoves.map(l => {
             const newPrefix = prefix + l.toLowerCase();
+            let wordCount = 0;
+            let hasLongWord = false;
             for (const word of WORDS) {
-                if (word.startsWith(newPrefix) && word.length >= newPrefix.length + 4) {
-                    return true;
+                if (word.startsWith(newPrefix) && word.length > newPrefix.length) {
+                    wordCount++;
+                    if (word.length >= newPrefix.length + 4) {
+                        hasLongWord = true;
+                    }
                 }
             }
-            return false;
+            return { letter: l, wordCount, hasLongWord };
         });
 
-        if (movesWithLongWords.length > 0) {
-            return movesWithLongWords[Math.floor(Math.random() * movesWithLongWords.length)];
+        // Sort by: 1) has long words, 2) most word options
+        moveScores.sort((a, b) => {
+            if (a.hasLongWord !== b.hasLongWord) return b.hasLongWord - a.hasLongWord;
+            return b.wordCount - a.wordCount;
+        });
+
+        // Pick from the top moves (those with most options)
+        const bestScore = moveScores[0];
+        if (bestScore.wordCount > 0) {
+            // Pick from moves that have at least half as many options as the best
+            const goodMoves = moveScores.filter(m =>
+                m.hasLongWord === bestScore.hasLongWord &&
+                m.wordCount >= bestScore.wordCount * 0.5
+            );
+            return goodMoves[Math.floor(Math.random() * goodMoves.length)].letter;
         }
 
         // Just pick a random safe move
