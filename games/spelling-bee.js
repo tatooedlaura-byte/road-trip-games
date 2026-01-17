@@ -41,7 +41,7 @@
 
             .sb-header {
                 text-align: center;
-                margin-top: 0.5rem;
+                margin-top: 1rem;
                 margin-bottom: 0.4rem;
             }
 
