@@ -33,6 +33,12 @@
                 overflow: hidden;
             }
 
+            .sb-card .game-back-btn {
+                position: absolute;
+                top: 0.5rem;
+                left: 0.5rem;
+            }
+
             .sb-header {
                 text-align: center;
                 margin-bottom: 0.4rem;
