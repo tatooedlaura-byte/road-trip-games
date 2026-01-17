@@ -347,7 +347,7 @@
                 const status = keyboardStatus[key] || '';
                 const display = key === 'enter' ? 'ENTER' : (key === 'back' ? '⌫' : key.toUpperCase());
                 const wide = key === 'enter' || key === 'back' ? ' wide' : '';
-                keyboardHTML += `<button class="wordle-key ${status}${wide}" onclick="window.wordleGame.keyPress('${key}')">${display}</button>`;
+                keyboardHTML += `<button class="wordle-key ${status}${wide}" data-key="${key}">${display}</button>`;
             }
             keyboardHTML += '</div>';
         }
@@ -528,6 +528,10 @@
                     padding: 0 8px;
                     text-transform: uppercase;
                     transition: background-color 0.1s;
+                    touch-action: manipulation;
+                    -webkit-tap-highlight-color: transparent;
+                    user-select: none;
+                    -webkit-user-select: none;
                 }
 
                 .wordle-key.wide {
@@ -591,6 +595,25 @@
                 }
             </style>
         `;
+
+        // Add touch event listeners for faster keyboard response
+        container.querySelectorAll('.wordle-key').forEach(btn => {
+            const key = btn.dataset.key;
+            let touched = false;
+
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                touched = true;
+                keyPress(key);
+            }, { passive: false });
+
+            btn.addEventListener('click', (e) => {
+                if (!touched) {
+                    keyPress(key);
+                }
+                touched = false;
+            });
+        });
     }
 
     // Handle key press

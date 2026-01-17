@@ -54,7 +54,7 @@
                 background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
                 border-radius: 20px;
                 padding: 1.5rem;
-                padding-top: 3rem;
+                padding-top: 2rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
                 position: relative;
@@ -414,11 +414,16 @@
                 background: rgba(255,255,255,0.1);
                 border: none;
                 color: white;
-                padding: 0.5rem;
+                width: 44px;
+                height: 44px;
                 border-radius: 50%;
                 cursor: pointer;
                 font-size: 1.2rem;
                 margin-left: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
             }
 
             .ana-shuffle-btn:hover {

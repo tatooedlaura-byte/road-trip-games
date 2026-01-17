@@ -19,7 +19,7 @@
                 background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
                 border-radius: 20px;
                 padding: 1.5rem;
-                padding-top: 3rem;
+                padding-top: 2rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
                 position: relative;

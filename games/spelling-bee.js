@@ -23,7 +23,7 @@
                 background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
                 border-radius: 16px;
                 padding: 0.75rem;
-                padding-top: 2.5rem;
+                padding-top: 2rem;
                 box-shadow: 0 10px 40px rgba(0,0,0,0.4);
                 color: white;
                 position: relative;
@@ -31,9 +31,6 @@
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
-            }
-
-                background: rgba(100, 116, 139, 0.9);
             }
 
             .sb-header {
