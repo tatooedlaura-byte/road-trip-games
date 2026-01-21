@@ -195,7 +195,7 @@ ctx.font = `bold ${fontSize}px Arial`;
 - [x] Downhill Skier (v1.143.0) - mode select/arrow buttons, dynamic sizing, scaled text
 
 ### Games Still Needing Mobile Update
-- [ ] Frogger
+- [x] Frogger (v1.144.0) - D-pad controls, dynamic grid sizing, street/river layout
 - [ ] Snake
 - [ ] Space Invaders
 - [ ] Tetris

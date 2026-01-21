@@ -2,12 +2,44 @@
 (function() {
     'use strict';
 
-    // Game constants
-    const CANVAS_WIDTH = 650;
-    const CANVAS_HEIGHT = 520;
-    const TILE_SIZE = 40;
+    // Dynamic canvas sizing
+    let CANVAS_WIDTH = 650;
+    let CANVAS_HEIGHT = 520;
+    let TILE_SIZE = 40;
+    let scaleFactor = 1;
+
+    // Grid constants (fixed)
     const COLS = 13;
     const ROWS = 13;
+
+    // Resize canvas to fill wrapper
+    function resizeCanvas() {
+        const wrapper = document.getElementById('froggerCanvasWrapper');
+        if (!wrapper || !gameState.canvas) return;
+
+        let w = wrapper.clientWidth;
+        let h = wrapper.clientHeight;
+
+        if (w === 0 || h === 0) {
+            w = window.innerWidth;
+            h = window.innerHeight - 150;
+        }
+
+        // Calculate tile size to fit grid in available space
+        const tileW = Math.floor(w / COLS);
+        const tileH = Math.floor(h / ROWS);
+        TILE_SIZE = Math.min(tileW, tileH);
+
+        // Set canvas to exact grid size
+        CANVAS_WIDTH = TILE_SIZE * COLS;
+        CANVAS_HEIGHT = TILE_SIZE * ROWS;
+
+        gameState.canvas.width = CANVAS_WIDTH;
+        gameState.canvas.height = CANVAS_HEIGHT;
+
+        // Scale factor for text and other elements
+        scaleFactor = TILE_SIZE / 40; // 40 was original tile size
+    }
 
     // Lane configuration
     const ROAD_LANES = [7, 8, 9, 10, 11]; // Rows with vehicles
@@ -245,52 +277,33 @@
 
     // Setup mobile touch controls
     function setupMobileControls() {
-        const btnUp = document.getElementById('froggerBtnUp');
-        const btnDown = document.getElementById('froggerBtnDown');
-        const btnLeft = document.getElementById('froggerBtnLeft');
-        const btnRight = document.getElementById('froggerBtnRight');
+        function setupButton(id, direction) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
 
-        if (btnUp) {
-            btnUp.addEventListener('touchstart', (e) => {
+            btn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                if (!gameState.gameOver) queueMove('up');
-            });
-            btnUp.addEventListener('click', (e) => {
+                if (!gameState.gameOver) queueMove(direction);
+            }, { passive: false });
+
+            btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                if (!gameState.gameOver) queueMove('up');
+                if (!gameState.gameOver) queueMove(direction);
             });
         }
 
-        if (btnDown) {
-            btnDown.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (!gameState.gameOver) queueMove('down');
-            });
-            btnDown.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!gameState.gameOver) queueMove('down');
-            });
-        }
+        setupButton('froggerBtnUp', 'up');
+        setupButton('froggerBtnDown', 'down');
+        setupButton('froggerBtnLeft', 'left');
+        setupButton('froggerBtnRight', 'right');
 
-        if (btnLeft) {
-            btnLeft.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (!gameState.gameOver) queueMove('left');
-            });
-            btnLeft.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!gameState.gameOver) queueMove('left');
-            });
-        }
-
-        if (btnRight) {
-            btnRight.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (!gameState.gameOver) queueMove('right');
-            });
-            btnRight.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!gameState.gameOver) queueMove('right');
+        // NEW button handler
+        const btnNew = document.getElementById('froggerBtnNew');
+        if (btnNew) {
+            btnNew.addEventListener('click', () => {
+                document.getElementById('froggerGameOverScreen').style.display = 'none';
+                resetGame();
+                startTimer();
             });
         }
     }
@@ -734,16 +747,28 @@
     // Export functions to window
     window.launchFrogger = function() {
         if (typeof hideAllMenus === 'function') hideAllMenus();
-        document.getElementById('froggerGame').style.display = 'block';
-        initGame();
-        setupMobileControls();
+
+        // Show fullscreen game section
+        document.getElementById('froggerGame').style.display = 'flex';
+
+        // Double RAF for layout to settle
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                initGame();
+                resizeCanvas();
+                setupMobileControls();
+                window.addEventListener('resize', resizeCanvas);
+            });
+        });
     };
 
     window.exitFrogger = function() {
         if (gameState.animationId) {
             cancelAnimationFrame(gameState.animationId);
+            gameState.animationId = null;
         }
         stopTimer();
+        window.removeEventListener('resize', resizeCanvas);
         document.getElementById('froggerGame').style.display = 'none';
         document.getElementById('arcadeMenu').style.display = 'block';
     };

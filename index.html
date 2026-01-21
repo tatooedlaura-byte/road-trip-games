@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.143.2';</script>
+    <script>window.APP_VERSION = '1.144.0';</script>
 
     <style>
         * {
@@ -1594,69 +1594,68 @@
                 </div>
             </div>
 
-            <!-- Frogger Game Section (hidden by default) -->
-            <div id="froggerGame" style="display: none;">
-                <div class="game-card">
-                    <div class="game-header">
-                        <button onclick="exitFrogger()" class="game-back-btn">← Back</button>
-                        <h2 class="game-title">🐸 Frogger</h2>
+            <!-- Frogger Game Section (fullscreen) -->
+            <div id="froggerGame" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; height: 100dvh; background: #1a1a1a; z-index: 1000; flex-direction: column;">
+                <!-- Top bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0.5rem; background: rgba(0,0,0,0.8); flex-shrink: 0;">
+                    <button onclick="exitFrogger()" style="padding: 0.4rem 0.6rem; font-size: 0.75rem; background: linear-gradient(145deg, #4b5563, #374151); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">← Back</button>
+                    <div style="display: flex; gap: 0.8rem; align-items: center;">
+                        <span style="color: #4ade80; font-size: 0.75rem;"><span id="froggerScore">0</span>pts</span>
+                        <span style="color: #f87171; font-size: 0.75rem;">❤️<span id="froggerLives">3</span></span>
+                        <span style="color: white; font-size: 0.75rem;">L<span id="froggerLevel">1</span></span>
+                        <span style="color: #fbbf24; font-size: 0.75rem;">⏱<span id="froggerTime">60</span></span>
+                    </div>
+                    <button onclick="document.getElementById('froggerHelp').style.display='flex'" style="padding: 0.4rem 0.7rem; font-size: 0.85rem; background: linear-gradient(145deg, #6366f1, #4f46e5); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">?</button>
+                </div>
+
+                <!-- Canvas wrapper -->
+                <div id="froggerCanvasWrapper" style="flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #1a1a1a;">
+                    <canvas id="froggerCanvas" style="display: block; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;"></canvas>
+                </div>
+
+                <!-- Control buttons - D-pad layout -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); flex-shrink: 0; background: rgba(0,0,0,0.7);">
+                    <!-- Left: placeholder -->
+                    <div style="width: 50px;"></div>
+
+                    <!-- Center: D-pad -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;">
+                        <div></div>
+                        <button id="froggerBtnUp" style="padding: 0.8rem 1rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▲</button>
+                        <div></div>
+                        <button id="froggerBtnLeft" style="padding: 0.8rem 1rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
+                        <button id="froggerBtnNew" style="padding: 0.5rem; font-size: 0.6rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">NEW</button>
+                        <button id="froggerBtnRight" style="padding: 0.8rem 1rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
+                        <div></div>
+                        <button id="froggerBtnDown" style="padding: 0.8rem 1rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▼</button>
+                        <div></div>
                     </div>
 
-                    <div class="game-stats">
-                        <div class="game-stat">
-                            <div class="game-stat-label">SCORE</div>
-                            <div id="froggerScore" class="game-stat-value" style="color: #4ade80;">0</div>
-                        </div>
-                        <div class="game-stat">
-                            <div class="game-stat-label">LIVES</div>
-                            <div id="froggerLives" class="game-stat-value" style="color: #f87171;">3</div>
-                        </div>
-                        <div class="game-stat">
-                            <div class="game-stat-label">LEVEL</div>
-                            <div id="froggerLevel" class="game-stat-value">1</div>
-                        </div>
-                        <div class="game-stat">
-                            <div class="game-stat-label">TIME</div>
-                            <div id="froggerTime" class="game-stat-value" style="color: #fbbf24;">60</div>
-                        </div>
-                    </div>
+                    <!-- Right: placeholder -->
+                    <div style="width: 50px;"></div>
+                </div>
 
-                    <div class="game-canvas-wrap">
-                        <canvas id="froggerCanvas" width="650" height="520" style="border: 2px solid #a5b4fc; background: #1a1a1a;"></canvas>
-                    </div>
-
-                    <div class="game-rules">
-                        <h4>How to Play</h4>
-                        <ul>
-                            <li>Guide 6 frogs safely to their homes at the top</li>
-                            <li><strong>Road:</strong> Dodge cars, trucks, and buses</li>
-                            <li><strong>River:</strong> Jump on logs and turtles</li>
-                        </ul>
-                        <strong>Controls:</strong> Arrow keys or touch buttons to hop
-                    </div>
-
-                    <div id="froggerControls" class="game-dpad">
-                        <div></div>
-                        <button id="froggerBtnUp" class="game-dpad-btn">▲</button>
-                        <div></div>
-                        <button id="froggerBtnLeft" class="game-dpad-btn">◀</button>
-                        <div class="game-dpad-btn game-dpad-center"></div>
-                        <button id="froggerBtnRight" class="game-dpad-btn">▶</button>
-                        <div></div>
-                        <button id="froggerBtnDown" class="game-dpad-btn">▼</button>
-                        <div></div>
+                <!-- Help Modal -->
+                <div id="froggerHelp" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 100;">
+                    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; max-width: 90%; max-height: 80%; overflow-y: auto; color: white;">
+                        <h3 style="color: #4ade80; margin-bottom: 1rem;">How to Play</h3>
+                        <p style="margin-bottom: 0.8rem; font-size: 0.9rem;"><b>Goal:</b> Guide 6 frogs to the lily pads!</p>
+                        <p style="margin-bottom: 0.8rem; font-size: 0.9rem;"><b>Road:</b> Dodge cars, trucks, buses</p>
+                        <p style="margin-bottom: 0.8rem; font-size: 0.9rem;"><b>River:</b> Hop on logs and turtles</p>
+                        <p style="margin-bottom: 0.8rem; font-size: 0.9rem;"><b>Controls:</b> D-pad to hop</p>
+                        <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #fbbf24;"><b>Watch the timer!</b></p>
+                        <button onclick="document.getElementById('froggerHelp').style.display='none'" style="width: 100%; padding: 0.8rem; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 8px; font-weight: bold; -webkit-user-select: none; -webkit-touch-callout: none;">Got it!</button>
                     </div>
                 </div>
 
                 <!-- Game Over Screen -->
-                <div id="froggerGameOverScreen" class="game-overlay" style="display: none; position: fixed; border-radius: 0;">
-                    <div class="game-card" style="max-width: 350px; text-align: center;">
-                        <h2 class="game-overlay-title">GAME OVER</h2>
-                        <p class="game-overlay-subtitle">🐸 Better luck next time!</p>
-                        <p style="font-size: 1.3rem; margin: 1rem 0;">Final Score: <strong id="froggerFinalScore" class="game-score-highlight">0</strong></p>
-                        <div class="game-btn-group">
-                            <button onclick="froggerRestart()" class="game-btn game-btn-success">🔄 Play Again</button>
-                            <button onclick="exitFrogger()" class="game-btn game-btn-secondary">🏠 Menu</button>
+                <div id="froggerGameOverScreen" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 100;">
+                    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; max-width: 90%; text-align: center; color: white;">
+                        <h3 style="color: #f87171; margin-bottom: 1rem; font-size: 1.5rem;">GAME OVER</h3>
+                        <p style="margin-bottom: 0.5rem; font-size: 1.2rem;">Score: <span id="froggerFinalScore" style="color: #4ade80; font-weight: bold;">0</span></p>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                            <button onclick="froggerRestart()" style="flex: 1; padding: 0.8rem; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 8px; font-weight: bold; -webkit-user-select: none; -webkit-touch-callout: none;">Play Again</button>
+                            <button onclick="exitFrogger()" style="flex: 1; padding: 0.8rem; background: linear-gradient(145deg, #4b5563, #374151); color: white; border: none; border-radius: 8px; font-weight: bold; -webkit-user-select: none; -webkit-touch-callout: none;">Menu</button>
                         </div>
                     </div>
                 </div>
