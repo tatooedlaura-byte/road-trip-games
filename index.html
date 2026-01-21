@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.140.3';</script>
+    <script>window.APP_VERSION = '1.141.0';</script>
 
     <style>
         * {
@@ -1581,21 +1581,43 @@
             </div>
 
             <!-- Caverns of Mars Game Section (hidden by default) -->
-            <div id="cavernsOfMarsGame" style="display: none;">
-                <div class="game-card">
-                    <div class="game-header">
-                        <button id="cavernsBackBtn" class="game-back-btn">← Back</button>
-                        <h2 class="game-title">🔴 Caverns of Mars</h2>
+            <div id="cavernsOfMarsGame" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; height: 100dvh; background: #000; z-index: 1000; flex-direction: column;">
+                <!-- Top bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0.5rem; background: rgba(0,0,0,0.7); flex-shrink: 0; gap: 0.3rem; flex-wrap: nowrap;">
+                    <button onclick="exitCavernsOfMars()" style="padding: 0.3rem 0.5rem; font-size: 0.7rem; background: #374151; color: white; border: none; border-radius: 4px; white-space: nowrap;">← Back</button>
+                    <span style="color: #ff6b35; font-weight: bold; font-size: 0.8rem; white-space: nowrap;">🔴 Caverns</span>
+                    <div style="display: flex; gap: 0.5rem; font-size: 0.6rem; color: #9ca3af;">
+                        <span><span style="color: #4ade80;" id="cavernsScore">0</span> pts</span>
+                        <span><span style="color: #fbbf24;" id="cavernsFuel">100</span> fuel</span>
+                        <span><span style="color: #f87171;" id="cavernsHealth">100</span> hp</span>
                     </div>
-                    <div class="game-rules">
-                        <h4>Controls</h4>
-                        <p><strong>Arrow Keys / A/D</strong> - Move left/right<br>
-                        <strong>SPACE / Click/Tap</strong> - Fire (uses fuel!)</p>
-                        <h4>Mission</h4>
-                        <p>Descend into Mars, shoot fuel tanks to refill, plant reactor bomb at bottom, then ESCAPE!</p>
+                    <button onclick="document.getElementById('cavernsHelpModal').style.display='flex'" style="padding: 0.2rem 0.5rem; font-size: 0.7rem; background: #4b5563; color: white; border: none; border-radius: 4px;">?</button>
+                </div>
+
+                <!-- Canvas wrapper - fills remaining space -->
+                <div id="cavernsCanvasWrapper" style="flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                    <canvas id="cavernsCanvas" style="display: block; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;"></canvas>
+                </div>
+
+                <!-- Control buttons -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); flex-shrink: 0; background: rgba(0,0,0,0.5);">
+                    <button id="cavernsBtnFire" style="padding: 1rem 1.5rem; font-size: 0.9rem; font-weight: bold; background: linear-gradient(145deg, #ef4444, #dc2626); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">🔥 FIRE</button>
+                    <button onclick="restartCaverns()" style="padding: 0.5rem 0.8rem; font-size: 0.7rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">NEW</button>
+                    <div style="display: flex; gap: 0.3rem;">
+                        <button id="cavernsBtnLeft" style="padding: 1.2rem 1.8rem; font-size: 1.6rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
+                        <button id="cavernsBtnRight" style="padding: 1.2rem 1.8rem; font-size: 1.6rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
                     </div>
-                    <div class="game-canvas-wrap">
-                        <canvas id="cavernsCanvas" style="border: 2px solid #a5b4fc;"></canvas>
+                </div>
+
+                <!-- Help Modal -->
+                <div id="cavernsHelpModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center;" onclick="this.style.display='none'">
+                    <div style="background: #1f2937; padding: 1.5rem; border-radius: 12px; max-width: 300px; text-align: center; color: white;">
+                        <h3 style="margin: 0 0 1rem; color: #ff6b35;">How to Play</h3>
+                        <p style="font-size: 0.85rem; margin: 0.5rem 0;">Use ◀ ▶ buttons or arrow keys to move</p>
+                        <p style="font-size: 0.85rem; margin: 0.5rem 0;">Hold FIRE to slow descent & shoot</p>
+                        <p style="font-size: 0.85rem; margin: 0.5rem 0; color: #fbbf24;">Shoot yellow fuel tanks to refuel!</p>
+                        <p style="font-size: 0.85rem; margin: 0.5rem 0; color: #ef4444;">Reach the reactor, plant bomb, then ESCAPE!</p>
+                        <button onclick="event.stopPropagation(); document.getElementById('cavernsHelpModal').style.display='none'" style="margin-top: 1rem; padding: 0.5rem 1.5rem; background: #4f46e5; color: white; border: none; border-radius: 6px; font-size: 0.9rem;">Got it!</button>
                     </div>
                 </div>
             </div>

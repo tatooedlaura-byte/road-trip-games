@@ -8,9 +8,10 @@
     let ctx = null;
     let gameLoopId = null;
 
-    // Game constants
-    const GAME_WIDTH = 600;
-    const GAME_HEIGHT = 700;
+    // Game constants - will be recalculated based on canvas size
+    let GAME_WIDTH = 600;
+    let GAME_HEIGHT = 700;
+    let scaleFactor = 1;
     const SHIP_WIDTH = 30;
     const SHIP_HEIGHT = 30;
     const CAVE_WIDTH = 300;
@@ -451,34 +452,43 @@
     }
 
     function drawMenu() {
+        const titleSize = Math.max(20, Math.min(36, GAME_WIDTH / 12));
+        const subtitleSize = Math.max(12, Math.min(16, GAME_WIDTH / 25));
+        const textSize = Math.max(10, Math.min(14, GAME_WIDTH / 30));
+        const btnWidth = Math.min(200, GAME_WIDTH * 0.7);
+        const btnHeight = Math.max(35, 40 * scaleFactor);
+        const startY = GAME_HEIGHT * 0.12;
+
         ctx.fillStyle = '#ff6b35';
-        ctx.font = 'bold 36px Arial';
+        ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('CAVERNS OF MARS', GAME_WIDTH / 2, 100);
+        ctx.fillText('CAVERNS OF MARS', GAME_WIDTH / 2, startY);
 
         ctx.fillStyle = '#fff';
-        ctx.font = '16px Arial';
-        ctx.fillText('A tribute to the 1981 Atari classic', GAME_WIDTH / 2, 140);
-        ctx.fillText('by Greg Christensen', GAME_WIDTH / 2, 160);
+        ctx.font = `${subtitleSize}px Arial`;
+        ctx.fillText('A tribute to the 1981 Atari classic', GAME_WIDTH / 2, startY + titleSize * 1.2);
 
-        ctx.font = '20px Arial';
-        ctx.fillText('Select Difficulty:', GAME_WIDTH / 2, 220);
+        ctx.font = `${subtitleSize}px Arial`;
+        ctx.fillText('Select Difficulty:', GAME_WIDTH / 2, startY + titleSize * 2.5);
 
         // Difficulty buttons
-        drawButton('EASY (3 Sections)', GAME_WIDTH / 2 - 100, 260, 200, 40, gameState.difficulty === 'easy');
-        drawButton('MEDIUM (4 Sections)', GAME_WIDTH / 2 - 100, 320, 200, 40, gameState.difficulty === 'medium');
-        drawButton('HARD (6 Sections)', GAME_WIDTH / 2 - 100, 380, 200, 40, gameState.difficulty === 'hard');
+        const btnX = GAME_WIDTH / 2 - btnWidth / 2;
+        const btnStartY = startY + titleSize * 3.2;
+        const btnGap = btnHeight + 15;
+
+        drawButton('EASY (3 Sections)', btnX, btnStartY, btnWidth, btnHeight, gameState.difficulty === 'easy');
+        drawButton('MEDIUM (4 Sections)', btnX, btnStartY + btnGap, btnWidth, btnHeight, gameState.difficulty === 'medium');
+        drawButton('HARD (6 Sections)', btnX, btnStartY + btnGap * 2, btnWidth, btnHeight, gameState.difficulty === 'hard');
 
         ctx.fillStyle = '#f7931e';
-        ctx.font = '14px Arial';
-        ctx.fillText('Controls:', GAME_WIDTH / 2, 460);
-        ctx.fillText('Arrow Keys or A/D: Move', GAME_WIDTH / 2, 485);
-        ctx.fillText('SPACE or Click: Fire (slows descent)', GAME_WIDTH / 2, 510);
-        ctx.fillText('Shoot fuel tanks to refill!', GAME_WIDTH / 2, 535);
+        ctx.font = `${textSize}px Arial`;
+        const infoY = btnStartY + btnGap * 3 + 20;
+        ctx.fillText('Tap difficulty to start', GAME_WIDTH / 2, infoY);
+        ctx.fillText('Use buttons below to play', GAME_WIDTH / 2, infoY + textSize * 1.5);
 
         ctx.fillStyle = '#fff';
-        ctx.font = '12px Arial';
-        ctx.fillText(`High Score: ${gameState.highScore}`, GAME_WIDTH / 2, 570);
+        ctx.font = `${textSize}px Arial`;
+        ctx.fillText(`High Score: ${gameState.highScore}`, GAME_WIDTH / 2, infoY + textSize * 3.5);
     }
 
     function drawButton(text, x, y, w, h, highlighted) {
@@ -488,10 +498,11 @@
         ctx.lineWidth = 2;
         ctx.strokeRect(x, y, w, h);
 
+        const fontSize = Math.max(12, Math.min(16, w / 12));
         ctx.fillStyle = '#fff';
-        ctx.font = '16px Arial';
+        ctx.font = `${fontSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText(text, x + w / 2, y + h / 2 + 6);
+        ctx.fillText(text, x + w / 2, y + h / 2 + fontSize / 3);
     }
 
     function drawGame() {
@@ -647,138 +658,113 @@
     }
 
     function drawHUD() {
-        // Background for HUD
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-        ctx.fillRect(0, GAME_HEIGHT - 60, GAME_WIDTH, 60);
+        // Scale HUD elements
+        const barWidth = Math.min(120, GAME_WIDTH * 0.3);
+        const barHeight = Math.max(12, 16 * scaleFactor);
+        const fontSize = Math.max(10, 12 * scaleFactor);
+        const margin = 8;
+
+        // Background for HUD at top
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        ctx.fillRect(0, 0, GAME_WIDTH, barHeight * 2 + margin * 3);
 
         // Fuel bar
         ctx.fillStyle = '#333';
-        ctx.fillRect(10, GAME_HEIGHT - 50, 150, 20);
+        ctx.fillRect(margin, margin, barWidth, barHeight);
         const fuelColor = ship.fuel > 30 ? '#00ff00' : ship.fuel > 15 ? '#ffff00' : '#ff0000';
         ctx.fillStyle = fuelColor;
-        ctx.fillRect(10, GAME_HEIGHT - 50, ship.fuel * 1.5, 20);
+        ctx.fillRect(margin, margin, (ship.fuel / 100) * barWidth, barHeight);
         ctx.strokeStyle = '#fff';
-        ctx.strokeRect(10, GAME_HEIGHT - 50, 150, 20);
+        ctx.lineWidth = 1;
+        ctx.strokeRect(margin, margin, barWidth, barHeight);
         ctx.fillStyle = '#fff';
-        ctx.font = '12px Arial';
+        ctx.font = `${fontSize}px Arial`;
         ctx.textAlign = 'left';
-        ctx.fillText('FUEL', 10, GAME_HEIGHT - 55);
+        ctx.fillText('FUEL', margin + 4, margin + barHeight - 3);
 
         // Health bar
         ctx.fillStyle = '#333';
-        ctx.fillRect(10, GAME_HEIGHT - 25, 150, 20);
+        ctx.fillRect(margin, margin * 2 + barHeight, barWidth, barHeight);
         const healthColor = ship.health > 50 ? '#00ff00' : ship.health > 25 ? '#ffff00' : '#ff0000';
         ctx.fillStyle = healthColor;
-        ctx.fillRect(10, GAME_HEIGHT - 25, ship.health * 1.5, 20);
+        ctx.fillRect(margin, margin * 2 + barHeight, (ship.health / 100) * barWidth, barHeight);
         ctx.strokeStyle = '#fff';
-        ctx.strokeRect(10, GAME_HEIGHT - 25, 150, 20);
+        ctx.strokeRect(margin, margin * 2 + barHeight, barWidth, barHeight);
         ctx.fillStyle = '#fff';
-        ctx.fillText('HEALTH', 10, GAME_HEIGHT - 30);
+        ctx.fillText('HP', margin + 4, margin * 2 + barHeight * 2 - 3);
 
-        // Score
+        // Score and Depth on right
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 16px Arial';
+        ctx.font = `bold ${fontSize}px Arial`;
         ctx.textAlign = 'right';
-        ctx.fillText(`SCORE: ${gameState.score}`, GAME_WIDTH - 10, GAME_HEIGHT - 35);
+        ctx.fillText(`${gameState.score} pts`, GAME_WIDTH - margin, margin + barHeight - 2);
 
-        // Depth
         const depthPercent = Math.min(100, (cave.scrollOffset / cave.totalDepth * 100).toFixed(0));
-        ctx.fillText(`DEPTH: ${depthPercent}%`, GAME_WIDTH - 10, GAME_HEIGHT - 10);
+        ctx.fillText(`${depthPercent}% deep`, GAME_WIDTH - margin, margin * 2 + barHeight * 2 - 2);
 
-        // Draw mobile touch controls
-        drawTouchControls();
+        // Update HTML display elements
+        updateHTMLDisplay();
     }
 
-    function drawTouchControls() {
-        const btnSize = 130;
-        const btnY = GAME_HEIGHT - 200;
-        const margin = 10;
+    function updateHTMLDisplay() {
+        const scoreEl = document.getElementById('cavernsScore');
+        const fuelEl = document.getElementById('cavernsFuel');
+        const healthEl = document.getElementById('cavernsHealth');
+        const depthEl = document.getElementById('cavernsDepth');
 
-        // Fire button (left side)
-        ctx.fillStyle = touchShoot ? 'rgba(255, 100, 100, 0.7)' : 'rgba(255, 100, 100, 0.3)';
-        ctx.beginPath();
-        ctx.arc(margin + btnSize / 2, btnY, btnSize / 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#ff6666';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 20px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('FIRE', margin + btnSize / 2, btnY + 7);
-
-        // Left button (right side)
-        const rightBaseX = GAME_WIDTH - margin - btnSize * 2 - 15;
-        ctx.fillStyle = touchLeft ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.2)';
-        ctx.beginPath();
-        ctx.arc(rightBaseX + btnSize / 2, btnY, btnSize / 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        // Arrow
-        ctx.fillStyle = '#fff';
-        ctx.beginPath();
-        ctx.moveTo(rightBaseX + btnSize / 2 + 20, btnY - 28);
-        ctx.lineTo(rightBaseX + btnSize / 2 - 28, btnY);
-        ctx.lineTo(rightBaseX + btnSize / 2 + 20, btnY + 28);
-        ctx.closePath();
-        ctx.fill();
-
-        // Right button (far right)
-        ctx.fillStyle = touchRight ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.2)';
-        ctx.beginPath();
-        ctx.arc(GAME_WIDTH - margin - btnSize / 2, btnY, btnSize / 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        // Arrow
-        ctx.fillStyle = '#fff';
-        ctx.beginPath();
-        ctx.moveTo(GAME_WIDTH - margin - btnSize / 2 - 20, btnY - 28);
-        ctx.lineTo(GAME_WIDTH - margin - btnSize / 2 + 28, btnY);
-        ctx.lineTo(GAME_WIDTH - margin - btnSize / 2 - 20, btnY + 28);
-        ctx.closePath();
-        ctx.fill();
+        if (scoreEl) scoreEl.textContent = gameState.score;
+        if (fuelEl) fuelEl.textContent = Math.round(ship.fuel);
+        if (healthEl) healthEl.textContent = Math.round(ship.health);
+        if (depthEl) {
+            const depthPercent = Math.min(100, (cave.scrollOffset / cave.totalDepth * 100).toFixed(0));
+            depthEl.textContent = depthPercent + '%';
+        }
     }
 
     function drawVictory() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
         ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
+        const titleSize = Math.max(24, Math.min(48, GAME_WIDTH / 8));
+        const textSize = Math.max(16, Math.min(24, GAME_WIDTH / 16));
+        const smallSize = Math.max(12, Math.min(18, GAME_WIDTH / 22));
+
         ctx.fillStyle = '#00ff00';
-        ctx.font = 'bold 48px Arial';
+        ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('MISSION SUCCESS!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 60);
+        ctx.fillText('MISSION SUCCESS!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - titleSize);
 
         ctx.fillStyle = '#fff';
-        ctx.font = '24px Arial';
-        ctx.fillText(`Final Score: ${gameState.score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2);
-        ctx.fillText(`High Score: ${gameState.highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40);
+        ctx.font = `${textSize}px Arial`;
+        ctx.fillText(`Final Score: ${gameState.score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 0.5);
+        ctx.fillText(`High Score: ${gameState.highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 2);
 
-        ctx.font = '18px Arial';
+        ctx.font = `${smallSize}px Arial`;
         ctx.fillStyle = '#f7931e';
-        ctx.fillText('Click anywhere to return to menu', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 100);
+        ctx.fillText('Tap NEW or screen to play again', GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 4);
     }
 
     function drawGameOver() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
         ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
+        const titleSize = Math.max(24, Math.min(48, GAME_WIDTH / 8));
+        const textSize = Math.max(16, Math.min(24, GAME_WIDTH / 16));
+        const smallSize = Math.max(12, Math.min(18, GAME_WIDTH / 22));
+
         ctx.fillStyle = '#ff0000';
-        ctx.font = 'bold 48px Arial';
+        ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('MISSION FAILED', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 60);
+        ctx.fillText('MISSION FAILED', GAME_WIDTH / 2, GAME_HEIGHT / 2 - titleSize);
 
         ctx.fillStyle = '#fff';
-        ctx.font = '24px Arial';
-        ctx.fillText(`Final Score: ${gameState.score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2);
-        ctx.fillText(`High Score: ${gameState.highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40);
+        ctx.font = `${textSize}px Arial`;
+        ctx.fillText(`Final Score: ${gameState.score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 0.5);
+        ctx.fillText(`High Score: ${gameState.highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 2);
 
-        ctx.font = '18px Arial';
+        ctx.font = `${smallSize}px Arial`;
         ctx.fillStyle = '#f7931e';
-        ctx.fillText('Click anywhere to return to menu', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 100);
+        ctx.fillText('Tap NEW or screen to play again', GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 4);
     }
 
     // Game loop
@@ -822,50 +808,16 @@
         mouseDown = false;
     }
 
-    function checkTouchButtons(x, y) {
-        const btnSize = 130;
-        const btnY = GAME_HEIGHT - 200;
-        const margin = 10;
-
-        // Fire button on left
-        const fireX = margin + btnSize / 2;
-        // Left arrow button (right side of screen)
-        const rightBaseX = GAME_WIDTH - margin - btnSize * 2 - 20;
-        const leftArrowX = rightBaseX + btnSize / 2;
-        // Right arrow button (far right)
-        const rightArrowX = GAME_WIDTH - margin - btnSize / 2;
-
-        const distFire = Math.sqrt(Math.pow(x - fireX, 2) + Math.pow(y - btnY, 2));
-        const distLeft = Math.sqrt(Math.pow(x - leftArrowX, 2) + Math.pow(y - btnY, 2));
-        const distRight = Math.sqrt(Math.pow(x - rightArrowX, 2) + Math.pow(y - btnY, 2));
-
-        return {
-            left: distLeft < btnSize / 2,
-            right: distRight < btnSize / 2,
-            fire: distFire < btnSize / 2
-        };
-    }
-
     function handleTouchStart(e) {
         if (!canvas) return;
         e.preventDefault();
         const rect = canvas.getBoundingClientRect();
 
-        // Check all touches
-        for (let i = 0; i < e.touches.length; i++) {
-            const touch = e.touches[i];
-            const x = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
-            const y = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
-
-            if (gameState.mode === 'descending' || gameState.mode === 'escaping') {
-                const buttons = checkTouchButtons(x, y);
-                if (buttons.left) touchLeft = true;
-                if (buttons.right) touchRight = true;
-                if (buttons.fire) touchShoot = true;
-            }
-
-            mouseX = x;
-            mouseY = y;
+        // Get touch position for menu clicks
+        if (e.touches.length > 0) {
+            const touch = e.touches[0];
+            mouseX = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
+            mouseY = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
         }
 
         mouseDown = true;
@@ -874,30 +826,8 @@
 
     function handleTouchEnd(e) {
         e.preventDefault();
-        // Reset all touch controls when no touches remain
         if (e.touches.length === 0) {
-            touchLeft = false;
-            touchRight = false;
-            touchShoot = false;
             mouseDown = false;
-        } else {
-            // Re-check remaining touches
-            if (!canvas) return;
-            const rect = canvas.getBoundingClientRect();
-            touchLeft = false;
-            touchRight = false;
-            touchShoot = false;
-
-            for (let i = 0; i < e.touches.length; i++) {
-                const touch = e.touches[i];
-                const x = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
-                const y = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
-
-                const buttons = checkTouchButtons(x, y);
-                if (buttons.left) touchLeft = true;
-                if (buttons.right) touchRight = true;
-                if (buttons.fire) touchShoot = true;
-            }
         }
     }
 
@@ -906,37 +836,31 @@
         e.preventDefault();
         const rect = canvas.getBoundingClientRect();
 
-        // Reset and re-check all touches
-        touchLeft = false;
-        touchRight = false;
-        touchShoot = false;
-
-        for (let i = 0; i < e.touches.length; i++) {
-            const touch = e.touches[i];
-            const x = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
-            const y = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
-
-            if (gameState.mode === 'descending' || gameState.mode === 'escaping') {
-                const buttons = checkTouchButtons(x, y);
-                if (buttons.left) touchLeft = true;
-                if (buttons.right) touchRight = true;
-                if (buttons.fire) touchShoot = true;
-            }
-
-            mouseX = x;
-            mouseY = y;
+        if (e.touches.length > 0) {
+            const touch = e.touches[0];
+            mouseX = (touch.clientX - rect.left) * (GAME_WIDTH / rect.width);
+            mouseY = (touch.clientY - rect.top) * (GAME_HEIGHT / rect.height);
         }
     }
 
     function handleClick(x, y) {
         if (gameState.mode === 'menu') {
+            // Calculate button positions (must match drawMenu)
+            const titleSize = Math.max(20, Math.min(36, GAME_WIDTH / 12));
+            const btnWidth = Math.min(200, GAME_WIDTH * 0.7);
+            const btnHeight = Math.max(35, 40 * scaleFactor);
+            const startY = GAME_HEIGHT * 0.12;
+            const btnX = GAME_WIDTH / 2 - btnWidth / 2;
+            const btnStartY = startY + titleSize * 3.2;
+            const btnGap = btnHeight + 15;
+
             // Check difficulty buttons
-            if (x >= GAME_WIDTH / 2 - 100 && x <= GAME_WIDTH / 2 + 100) {
-                if (y >= 260 && y <= 300) {
+            if (x >= btnX && x <= btnX + btnWidth) {
+                if (y >= btnStartY && y <= btnStartY + btnHeight) {
                     startGame('easy');
-                } else if (y >= 320 && y <= 360) {
+                } else if (y >= btnStartY + btnGap && y <= btnStartY + btnGap + btnHeight) {
                     startGame('medium');
-                } else if (y >= 380 && y <= 420) {
+                } else if (y >= btnStartY + btnGap * 2 && y <= btnStartY + btnGap * 2 + btnHeight) {
                     startGame('hard');
                 }
             }
@@ -945,69 +869,109 @@
         }
     }
 
-    // Resize canvas
+    // Resize canvas to fit wrapper
     function resizeCanvas() {
         if (!canvas) return;
 
-        // Set canvas resolution
+        const wrapper = document.getElementById('cavernsCanvasWrapper');
+        if (!wrapper) return;
+
+        let wrapperWidth = wrapper.clientWidth;
+        let wrapperHeight = wrapper.clientHeight;
+
+        // Fallback if wrapper has no size yet
+        if (wrapperWidth === 0 || wrapperHeight === 0) {
+            wrapperWidth = window.innerWidth;
+            wrapperHeight = window.innerHeight - 120;
+        }
+
+        // Use wrapper dimensions
+        GAME_WIDTH = wrapperWidth;
+        GAME_HEIGHT = wrapperHeight;
+
         canvas.width = GAME_WIDTH;
         canvas.height = GAME_HEIGHT;
 
-        // Calculate display size (fit to container, maintain aspect ratio)
-        const container = canvas.parentElement;
-        const maxWidth = Math.min(container.clientWidth - 40, 600); // Max 600px width
-        const aspectRatio = GAME_HEIGHT / GAME_WIDTH;
+        // Calculate scale factor based on original 600x700
+        scaleFactor = Math.min(GAME_WIDTH / 600, GAME_HEIGHT / 700);
+    }
 
-        canvas.style.width = maxWidth + 'px';
-        canvas.style.height = (maxWidth * aspectRatio) + 'px';
+    function setupHTMLControls() {
+        const btnLeft = document.getElementById('cavernsBtnLeft');
+        const btnRight = document.getElementById('cavernsBtnRight');
+        const btnFire = document.getElementById('cavernsBtnFire');
+
+        if (btnLeft) {
+            btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); touchLeft = true; }, { passive: false });
+            btnLeft.addEventListener('touchend', (e) => { e.preventDefault(); touchLeft = false; }, { passive: false });
+            btnLeft.addEventListener('touchcancel', () => { touchLeft = false; });
+            btnLeft.addEventListener('mousedown', (e) => { e.preventDefault(); touchLeft = true; });
+            btnLeft.addEventListener('mouseup', () => { touchLeft = false; });
+            btnLeft.addEventListener('mouseleave', () => { touchLeft = false; });
+        }
+
+        if (btnRight) {
+            btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); touchRight = true; }, { passive: false });
+            btnRight.addEventListener('touchend', (e) => { e.preventDefault(); touchRight = false; }, { passive: false });
+            btnRight.addEventListener('touchcancel', () => { touchRight = false; });
+            btnRight.addEventListener('mousedown', (e) => { e.preventDefault(); touchRight = true; });
+            btnRight.addEventListener('mouseup', () => { touchRight = false; });
+            btnRight.addEventListener('mouseleave', () => { touchRight = false; });
+        }
+
+        if (btnFire) {
+            btnFire.addEventListener('touchstart', (e) => { e.preventDefault(); touchShoot = true; }, { passive: false });
+            btnFire.addEventListener('touchend', (e) => { e.preventDefault(); touchShoot = false; }, { passive: false });
+            btnFire.addEventListener('touchcancel', () => { touchShoot = false; });
+            btnFire.addEventListener('mousedown', (e) => { e.preventDefault(); touchShoot = true; });
+            btnFire.addEventListener('mouseup', () => { touchShoot = false; });
+            btnFire.addEventListener('mouseleave', () => { touchShoot = false; });
+        }
     }
 
     function launchCavernsOfMars() {
         // Show game section
-        document.querySelector('.welcome').style.display = 'none';
-        document.querySelector('.feature-grid').style.display = 'none';
         if (typeof hideAllMenus === 'function') hideAllMenus();
-        document.getElementById('cavernsOfMarsGame').style.display = 'block';
+        const gameEl = document.getElementById('cavernsOfMarsGame');
+        gameEl.style.display = 'flex';
 
-        // Initialize canvas
-        canvas = document.getElementById('cavernsCanvas');
-        ctx = canvas.getContext('2d');
+        // Use double requestAnimationFrame to ensure DOM layout is computed
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                // Initialize canvas
+                canvas = document.getElementById('cavernsCanvas');
+                ctx = canvas.getContext('2d');
 
-        // Reset game state
-        gameState.mode = 'menu';
-        gameState.difficulty = 'medium';
-        gameState.score = 0;
-        gameState.highScore = localStorage.getItem('cavernsHighScore') || 0;
+                // Reset game state
+                gameState.mode = 'menu';
+                gameState.difficulty = 'medium';
+                gameState.score = 0;
+                gameState.highScore = localStorage.getItem('cavernsHighScore') || 0;
 
-        // Disable text selection and context menu on canvas
-        canvas.style.userSelect = 'none';
-        canvas.style.webkitUserSelect = 'none';
-        canvas.style.touchAction = 'none';
-        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
-        canvas.addEventListener('selectstart', (e) => e.preventDefault());
+                // Disable text selection and context menu on canvas
+                canvas.style.userSelect = 'none';
+                canvas.style.webkitUserSelect = 'none';
+                canvas.style.touchAction = 'manipulation';
 
-        // Setup event listeners
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('keyup', handleKeyUp);
-        canvas.addEventListener('mousemove', handleMouseMove);
-        canvas.addEventListener('mousedown', handleMouseDown);
-        canvas.addEventListener('mouseup', handleMouseUp);
-        canvas.addEventListener('touchstart', handleTouchStart);
-        canvas.addEventListener('touchend', handleTouchEnd);
-        canvas.addEventListener('touchmove', handleTouchMove);
-        window.addEventListener('resize', resizeCanvas);
+                // Setup event listeners
+                document.addEventListener('keydown', handleKeyDown);
+                document.addEventListener('keyup', handleKeyUp);
+                canvas.addEventListener('mousemove', handleMouseMove);
+                canvas.addEventListener('mousedown', handleMouseDown);
+                canvas.addEventListener('mouseup', handleMouseUp);
+                canvas.addEventListener('touchstart', handleTouchStart);
+                canvas.addEventListener('touchend', handleTouchEnd);
+                canvas.addEventListener('touchmove', handleTouchMove);
+                window.addEventListener('resize', resizeCanvas);
 
-        resizeCanvas();
+                resizeCanvas();
+                setupHTMLControls();
 
-        // Attach back button listener
-        const backBtn = document.getElementById('cavernsBackBtn');
-        if (backBtn) {
-            backBtn.addEventListener('click', exitCavernsOfMars);
-        }
-
-        // Start game loop
-        lastTime = performance.now();
-        gameLoopId = requestAnimationFrame(gameLoop);
+                // Start game loop
+                lastTime = performance.now();
+                gameLoopId = requestAnimationFrame(gameLoop);
+            });
+        });
     }
 
     function exitCavernsOfMars() {
@@ -1038,9 +1002,18 @@
         canvas = null;
         ctx = null;
 
-        // Reset keys
+        // Reset keys and touch state
         keys = {};
+        touchLeft = false;
+        touchRight = false;
+        touchShoot = false;
     }
+
+    // Restart game from HTML button
+    window.restartCaverns = function() {
+        gameState.mode = 'menu';
+        resetGame();
+    };
 
     // Expose functions to window
     window.launchCavernsOfMars = launchCavernsOfMars;
