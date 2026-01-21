@@ -684,48 +684,103 @@
         }
 
         // Tilt skier based on direction (or tumble if crashed)
-        let tilt = skier.direction * 0.15;
+        let tilt = skier.direction * 0.2;
         if (skier.crashed) {
-            tilt = Math.sin(skier.crashRecoveryTime * 10) * 0.5; // Tumbling effect
+            tilt = Math.sin(skier.crashRecoveryTime * 10) * 0.5;
         }
         ctx.rotate(tilt);
 
-        // Skier body (simple triangle shape)
-        ctx.fillStyle = skier.crashed ? '#ff3333' : '#ff6b6b';
+        const s = scaleFactor; // Scale factor for all measurements
+
+        // Skis (draw first, behind person)
+        ctx.fillStyle = '#1a1a2e';
+        // Left ski
         ctx.beginPath();
-        ctx.moveTo(0, -SKIER_HEIGHT / 2);
-        ctx.lineTo(-SKIER_WIDTH / 2, SKIER_HEIGHT / 2);
-        ctx.lineTo(SKIER_WIDTH / 2, SKIER_HEIGHT / 2);
-        ctx.closePath();
+        ctx.ellipse(-6 * s, SKIER_HEIGHT / 2 + 4 * s, 3 * s, 12 * s, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // Right ski
+        ctx.beginPath();
+        ctx.ellipse(6 * s, SKIER_HEIGHT / 2 + 4 * s, 3 * s, 12 * s, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        // Skier head
-        ctx.fillStyle = '#ffd93d';
+        // Legs (dark pants)
+        ctx.fillStyle = '#1e3a5f';
+        ctx.strokeStyle = '#1e3a5f';
+        ctx.lineWidth = 5 * s;
+        ctx.lineCap = 'round';
+        // Left leg
         ctx.beginPath();
-        ctx.arc(0, -SKIER_HEIGHT / 2 - 5, 6, 0, Math.PI * 2);
+        ctx.moveTo(-3 * s, 4 * s);
+        ctx.lineTo(-6 * s, SKIER_HEIGHT / 2 - 2 * s);
+        ctx.stroke();
+        // Right leg
+        ctx.beginPath();
+        ctx.moveTo(3 * s, 4 * s);
+        ctx.lineTo(6 * s, SKIER_HEIGHT / 2 - 2 * s);
+        ctx.stroke();
+
+        // Torso/jacket
+        ctx.fillStyle = skier.crashed ? '#cc2936' : '#e63946';
+        ctx.beginPath();
+        ctx.ellipse(0, -4 * s, 8 * s, 12 * s, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        // Skis
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 3;
+        // Arms with poles
+        ctx.strokeStyle = skier.crashed ? '#cc2936' : '#e63946';
+        ctx.lineWidth = 4 * s;
+        // Left arm
         ctx.beginPath();
-        ctx.moveTo(-SKIER_WIDTH / 3, SKIER_HEIGHT / 2);
-        ctx.lineTo(-SKIER_WIDTH / 3, SKIER_HEIGHT / 2 + 15);
+        ctx.moveTo(-6 * s, -6 * s);
+        ctx.lineTo(-14 * s, 6 * s);
+        ctx.stroke();
+        // Right arm
+        ctx.beginPath();
+        ctx.moveTo(6 * s, -6 * s);
+        ctx.lineTo(14 * s, 6 * s);
         ctx.stroke();
 
+        // Ski poles
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2 * s;
+        // Left pole
         ctx.beginPath();
-        ctx.moveTo(SKIER_WIDTH / 3, SKIER_HEIGHT / 2);
-        ctx.lineTo(SKIER_WIDTH / 3, SKIER_HEIGHT / 2 + 15);
+        ctx.moveTo(-14 * s, 6 * s);
+        ctx.lineTo(-14 * s, SKIER_HEIGHT / 2 + 8 * s);
         ctx.stroke();
+        // Right pole
+        ctx.beginPath();
+        ctx.moveTo(14 * s, 6 * s);
+        ctx.lineTo(14 * s, SKIER_HEIGHT / 2 + 8 * s);
+        ctx.stroke();
+
+        // Head
+        ctx.fillStyle = '#fcd5ce';
+        ctx.beginPath();
+        ctx.arc(0, -18 * s, 7 * s, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Helmet
+        ctx.fillStyle = '#457b9d';
+        ctx.beginPath();
+        ctx.arc(0, -20 * s, 7 * s, Math.PI, 0);
+        ctx.fill();
+
+        // Goggles
+        ctx.fillStyle = '#f4a261';
+        ctx.fillRect(-6 * s, -19 * s, 12 * s, 4 * s);
+        ctx.fillStyle = '#222';
+        ctx.fillRect(-5 * s, -18 * s, 4 * s, 2 * s);
+        ctx.fillRect(1 * s, -18 * s, 4 * s, 2 * s);
 
         ctx.restore();
 
         // Show "OUCH!" text when crashed
         if (skier.crashed) {
+            const fontSize = Math.max(14, Math.min(24, CANVAS_WIDTH / 20));
             ctx.fillStyle = '#ff0000';
-            ctx.font = 'bold 24px Arial';
+            ctx.font = `bold ${fontSize}px Arial`;
             ctx.textAlign = 'center';
-            ctx.fillText('OUCH!', skier.x + SKIER_WIDTH / 2, skier.y - 30);
+            ctx.fillText('OUCH!', skier.x + SKIER_WIDTH / 2, skier.y - 20 * scaleFactor);
         }
     }
 
