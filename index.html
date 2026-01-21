@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.143.0';</script>
+    <script>window.APP_VERSION = '1.143.1';</script>
 
     <style>
         * {
@@ -1306,23 +1306,20 @@
 
                 <!-- Mode selection buttons (shown initially) -->
                 <div id="skierModeButtons" style="display: flex; justify-content: center; gap: 1rem; padding: 0.5rem 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); flex-shrink: 0; background: rgba(255,255,255,0.5);">
-                    <button id="btnDownhill" style="padding: 0.8rem 1.2rem; font-size: 0.9rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation;">DOWNHILL<br><span style="font-size: 0.7rem; font-weight: normal;">Distance</span></button>
-                    <button id="btnSlalom" style="padding: 0.8rem 1.2rem; font-size: 0.9rem; font-weight: bold; background: linear-gradient(145deg, #ef4444, #dc2626); color: white; border: none; border-radius: 8px; touch-action: manipulation;">SLALOM<br><span style="font-size: 0.7rem; font-weight: normal;">Gates</span></button>
+                    <button id="btnDownhill" style="padding: 0.8rem 1.2rem; font-size: 0.9rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">DOWNHILL<br><span style="font-size: 0.7rem; font-weight: normal;">Distance</span></button>
+                    <button id="btnSlalom" style="padding: 0.8rem 1.2rem; font-size: 0.9rem; font-weight: bold; background: linear-gradient(145deg, #ef4444, #dc2626); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">SLALOM<br><span style="font-size: 0.7rem; font-weight: normal;">Gates</span></button>
                 </div>
 
                 <!-- Control buttons (shown during gameplay) -->
                 <div id="skierControlButtons" style="display: none; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); flex-shrink: 0; background: rgba(255,255,255,0.5);">
-                    <!-- Left: placeholder for balance -->
-                    <div style="width: 60px;"></div>
+                    <!-- Left arrow -->
+                    <button id="btnSkiLeft" style="padding: 0.8rem 1.1rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
 
                     <!-- Center: NEW button -->
-                    <button id="skierBtnNew" style="padding: 0.5rem 0.8rem; font-size: 0.7rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 8px; touch-action: manipulation;">NEW</button>
+                    <button id="skierBtnNew" style="padding: 0.5rem 0.8rem; font-size: 0.7rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">NEW</button>
 
-                    <!-- Right: Direction buttons -->
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button id="btnSkiLeft" style="padding: 0.8rem 1.1rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
-                        <button id="btnSkiRight" style="padding: 0.8rem 1.1rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
-                    </div>
+                    <!-- Right arrow -->
+                    <button id="btnSkiRight" style="padding: 0.8rem 1.1rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
                 </div>
 
                 <!-- Help Modal -->
