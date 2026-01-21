@@ -1370,17 +1370,17 @@
 
                         <div class="sb-honeycomb">
                             <div class="sb-hex-row">
-                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[0]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[0]}')">${state.letters[0]}</div>
-                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[1]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[1]}')">${state.letters[1]}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[0]}')">${state.letters[0]}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[1]}')">${state.letters[1]}</div>
                             </div>
                             <div class="sb-hex-row">
-                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[2]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[2]}')">${state.letters[2]}</div>
-                                <div class="sb-hex center" onclick="window.spellingbee.addLetter('${state.centerLetter}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.centerLetter}')">${state.centerLetter}</div>
-                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[3]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[3]}')">${state.letters[3]}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[2]}')">${state.letters[2]}</div>
+                                <div class="sb-hex center" onclick="window.spellingbee.addLetter('${state.centerLetter}')">${state.centerLetter}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[3]}')">${state.letters[3]}</div>
                             </div>
                             <div class="sb-hex-row">
-                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[4]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[4]}')">${state.letters[4]}</div>
-                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[5]}')" ontouchend="event.preventDefault(); window.spellingbee.addLetter('${state.letters[5]}')">${state.letters[5]}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[4]}')">${state.letters[4]}</div>
+                                <div class="sb-hex" onclick="window.spellingbee.addLetter('${state.letters[5]}')">${state.letters[5]}</div>
                             </div>
                         </div>
 
