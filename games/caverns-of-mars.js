@@ -768,46 +768,46 @@
         ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
         ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-        const titleSize = Math.max(24, Math.min(48, GAME_WIDTH / 8));
-        const textSize = Math.max(16, Math.min(24, GAME_WIDTH / 16));
-        const smallSize = Math.max(12, Math.min(18, GAME_WIDTH / 22));
+        const titleSize = Math.max(18, Math.min(36, GAME_WIDTH / 10));
+        const textSize = Math.max(14, Math.min(20, GAME_WIDTH / 18));
+        const smallSize = Math.max(10, Math.min(14, GAME_WIDTH / 26));
 
         ctx.fillStyle = '#00ff00';
         ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('MISSION SUCCESS!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - titleSize);
+        ctx.fillText('MISSION SUCCESS!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - titleSize * 1.5);
 
         ctx.fillStyle = '#fff';
         ctx.font = `${textSize}px Arial`;
-        ctx.fillText(`Final Score: ${gameState.score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 0.5);
-        ctx.fillText(`High Score: ${gameState.highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 2);
+        ctx.fillText(`Score: ${gameState.score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2);
+        ctx.fillText(`High: ${gameState.highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 1.5);
 
         ctx.font = `${smallSize}px Arial`;
         ctx.fillStyle = '#f7931e';
-        ctx.fillText('Tap NEW or screen to play again', GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 4);
+        ctx.fillText('Tap NEW to play again', GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 3.5);
     }
 
     function drawGameOver() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
         ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-        const titleSize = Math.max(24, Math.min(48, GAME_WIDTH / 8));
-        const textSize = Math.max(16, Math.min(24, GAME_WIDTH / 16));
-        const smallSize = Math.max(12, Math.min(18, GAME_WIDTH / 22));
+        const titleSize = Math.max(18, Math.min(36, GAME_WIDTH / 10));
+        const textSize = Math.max(14, Math.min(20, GAME_WIDTH / 18));
+        const smallSize = Math.max(10, Math.min(14, GAME_WIDTH / 26));
 
         ctx.fillStyle = '#ff0000';
         ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('MISSION FAILED', GAME_WIDTH / 2, GAME_HEIGHT / 2 - titleSize);
+        ctx.fillText('MISSION FAILED', GAME_WIDTH / 2, GAME_HEIGHT / 2 - titleSize * 1.5);
 
         ctx.fillStyle = '#fff';
         ctx.font = `${textSize}px Arial`;
-        ctx.fillText(`Final Score: ${gameState.score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 0.5);
-        ctx.fillText(`High Score: ${gameState.highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 2);
+        ctx.fillText(`Score: ${gameState.score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2);
+        ctx.fillText(`High: ${gameState.highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 1.5);
 
         ctx.font = `${smallSize}px Arial`;
         ctx.fillStyle = '#f7931e';
-        ctx.fillText('Tap NEW or screen to play again', GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 4);
+        ctx.fillText('Tap NEW to play again', GAME_WIDTH / 2, GAME_HEIGHT / 2 + textSize * 3.5);
     }
 
     // Game loop
