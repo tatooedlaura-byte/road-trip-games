@@ -96,11 +96,14 @@
         const wrapper = document.getElementById('breakoutCanvasWrapper');
         if (!wrapper) return;
 
-        const wrapperWidth = wrapper.clientWidth;
-        const wrapperHeight = wrapper.clientHeight;
+        let wrapperWidth = wrapper.clientWidth;
+        let wrapperHeight = wrapper.clientHeight;
 
-        // Safety check - don't resize if wrapper has no size yet
-        if (wrapperWidth === 0 || wrapperHeight === 0) return;
+        // Fallback if wrapper has no size yet - use window dimensions minus some space for controls
+        if (wrapperWidth === 0 || wrapperHeight === 0) {
+            wrapperWidth = window.innerWidth;
+            wrapperHeight = window.innerHeight - 120; // Subtract space for top bar and controls
+        }
 
         // Use wrapper dimensions directly
         CANVAS_WIDTH = wrapperWidth;
@@ -802,10 +805,12 @@
         const gameEl = document.getElementById('breakoutGame');
         gameEl.style.display = 'flex';
 
-        // Use requestAnimationFrame to ensure DOM is ready before sizing
+        // Use double requestAnimationFrame to ensure DOM layout is fully computed
         requestAnimationFrame(() => {
-            initGame();
-            setupMobileControls();
+            requestAnimationFrame(() => {
+                initGame();
+                setupMobileControls();
+            });
         });
     };
 
