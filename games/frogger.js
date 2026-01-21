@@ -762,6 +762,7 @@
                 initGame();
                 resizeCanvas();
                 setupMobileControls();
+                applyHandPreference();
                 window.addEventListener('resize', resizeCanvas);
             });
         });
@@ -783,5 +784,47 @@
         resetGame();
         startTimer();
     };
+
+    // Toggle D-pad between left and right side
+    window.toggleFroggerHand = function() {
+        const leftSide = document.getElementById('froggerLeftSide');
+        const rightSide = document.getElementById('froggerRightSide');
+        const dpad = document.getElementById('froggerDpad');
+        const handBtn = document.getElementById('froggerHandBtn');
+
+        // Check current state
+        const isLeftHanded = localStorage.getItem('froggerLeftHanded') === 'true';
+
+        if (isLeftHanded) {
+            // Switch to right-handed (D-pad on right)
+            rightSide.appendChild(dpad);
+            leftSide.innerHTML = '';
+            leftSide.appendChild(handBtn);
+            localStorage.setItem('froggerLeftHanded', 'false');
+        } else {
+            // Switch to left-handed (D-pad on left)
+            leftSide.appendChild(dpad);
+            rightSide.innerHTML = '';
+            rightSide.appendChild(handBtn);
+            localStorage.setItem('froggerLeftHanded', 'true');
+        }
+    };
+
+    // Apply saved hand preference on load
+    function applyHandPreference() {
+        const isLeftHanded = localStorage.getItem('froggerLeftHanded') === 'true';
+        if (isLeftHanded) {
+            const leftSide = document.getElementById('froggerLeftSide');
+            const rightSide = document.getElementById('froggerRightSide');
+            const dpad = document.getElementById('froggerDpad');
+            const handBtn = document.getElementById('froggerHandBtn');
+
+            if (leftSide && rightSide && dpad && handBtn) {
+                leftSide.appendChild(dpad);
+                rightSide.innerHTML = '';
+                rightSide.appendChild(handBtn);
+            }
+        }
+    }
 
 })();

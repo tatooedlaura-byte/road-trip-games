@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.144.1';</script>
+    <script>window.APP_VERSION = '1.144.2';</script>
 
     <style>
         * {
@@ -1613,21 +1613,29 @@
                     <canvas id="froggerCanvas" style="display: block; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;"></canvas>
                 </div>
 
-                <!-- Control buttons - split layout -->
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); flex-shrink: 0; background: rgba(0,0,0,0.7);">
-                    <!-- Left side: LEFT/RIGHT buttons stacked vertically -->
-                    <div style="display: flex; flex-direction: column; gap: 0.3rem;">
-                        <button id="froggerBtnLeft" style="padding: 0.8rem 1.2rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
-                        <button id="froggerBtnRight" style="padding: 0.8rem 1.2rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
+                <!-- Control buttons - D-pad with hand preference -->
+                <div id="froggerControls" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); flex-shrink: 0; background: rgba(0,0,0,0.7);">
+                    <!-- Left side placeholder (or D-pad if left-handed) -->
+                    <div id="froggerLeftSide" style="min-width: 100px;">
+                        <button id="froggerHandBtn" onclick="toggleFroggerHand()" style="padding: 0.4rem 0.6rem; font-size: 0.65rem; font-weight: bold; background: linear-gradient(145deg, #6366f1, #4f46e5); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">🤚 Switch</button>
                     </div>
 
                     <!-- Center: NEW button -->
                     <button id="froggerBtnNew" style="padding: 0.5rem 0.8rem; font-size: 0.7rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">NEW</button>
 
-                    <!-- Right side: UP/DOWN buttons stacked vertically -->
-                    <div style="display: flex; flex-direction: column; gap: 0.3rem;">
-                        <button id="froggerBtnUp" style="padding: 0.8rem 1.2rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▲</button>
-                        <button id="froggerBtnDown" style="padding: 0.8rem 1.2rem; font-size: 1.3rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▼</button>
+                    <!-- Right side: D-pad (default for right-handed) -->
+                    <div id="froggerRightSide">
+                        <div id="froggerDpad" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;">
+                            <div></div>
+                            <button id="froggerBtnUp" style="padding: 0.7rem 0.9rem; font-size: 1.2rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▲</button>
+                            <div></div>
+                            <button id="froggerBtnLeft" style="padding: 0.7rem 0.9rem; font-size: 1.2rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
+                            <div></div>
+                            <button id="froggerBtnRight" style="padding: 0.7rem 0.9rem; font-size: 1.2rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
+                            <div></div>
+                            <button id="froggerBtnDown" style="padding: 0.7rem 0.9rem; font-size: 1.2rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▼</button>
+                            <div></div>
+                        </div>
                     </div>
                 </div>
 
