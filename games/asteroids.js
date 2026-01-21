@@ -2,8 +2,9 @@
 (function() {
     'use strict';
 
-    const CANVAS_WIDTH = 800;
-    const CANVAS_HEIGHT = 600;
+    // Dynamic canvas size - set on init
+    let CANVAS_WIDTH = 800;
+    let CANVAS_HEIGHT = 600;
     const SHIP_SIZE = 15;
     const BULLET_SPEED = 8;
     const MAX_BULLETS = 4;
@@ -49,7 +50,23 @@
         ufoTimer: 0,
         hyperspaceCooldown: 0,
         fireTimer: 0, // Cooldown between shots
+
     };
+
+    // Load Nipple.js from CDN
+    function loadNippleJs() {
+        return new Promise((resolve, reject) => {
+            if (window.nipplejs) {
+                resolve(window.nipplejs);
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.2/nipplejs.min.js';
+            script.onload = () => resolve(window.nipplejs);
+            script.onerror = () => reject(new Error('Failed to load nipplejs'));
+            document.head.appendChild(script);
+        });
+    }
 
     // Initialize game
     function initGame() {
@@ -73,9 +90,39 @@
     }
 
     function resetShip() {
+        // Find a safe spawn position (not inside an asteroid)
+        let spawnX = CANVAS_WIDTH / 2;
+        let spawnY = CANVAS_HEIGHT / 2;
+        const safeDistance = 80; // Min distance from asteroids
+
+        // Check if center is safe, if not try other positions
+        const isSafe = (x, y) => {
+            for (const ast of gameState.asteroids) {
+                const dx = ast.x - x;
+                const dy = ast.y - y;
+                if (Math.sqrt(dx * dx + dy * dy) < ast.radius + safeDistance) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
+        if (!isSafe(spawnX, spawnY)) {
+            // Try random positions until we find a safe one
+            for (let i = 0; i < 50; i++) {
+                const testX = CANVAS_WIDTH * 0.2 + Math.random() * CANVAS_WIDTH * 0.6;
+                const testY = CANVAS_HEIGHT * 0.2 + Math.random() * CANVAS_HEIGHT * 0.6;
+                if (isSafe(testX, testY)) {
+                    spawnX = testX;
+                    spawnY = testY;
+                    break;
+                }
+            }
+        }
+
         gameState.ship = {
-            x: CANVAS_WIDTH / 2,
-            y: CANVAS_HEIGHT / 2,
+            x: spawnX,
+            y: spawnY,
             vx: 0,
             vy: 0,
             angle: -Math.PI / 2,
@@ -555,27 +602,30 @@
         }
 
         // Draw HUD
+        // Scale HUD to canvas size
+        const hudFont = Math.max(10, Math.min(CANVAS_WIDTH / 25, 16));
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 20px monospace';
+        ctx.font = `bold ${hudFont}px monospace`;
+
         ctx.textAlign = 'left';
-        ctx.fillText(`SCORE: ${gameState.score}`, 20, 30);
+        ctx.fillText(`${gameState.score}`, 8, hudFont + 5);
 
         ctx.textAlign = 'center';
-        ctx.fillText(`LEVEL ${gameState.level}`, CANVAS_WIDTH / 2, 30);
+        ctx.fillText(`L${gameState.level}`, CANVAS_WIDTH / 2, hudFont + 5);
 
-        // Draw lives
+        // Draw lives as small ships
         ctx.textAlign = 'right';
-        ctx.fillText(`LIVES: `, CANVAS_WIDTH - 100, 30);
+        const shipSize = hudFont * 0.4;
         for (let i = 0; i < gameState.lives; i++) {
-            const x = CANVAS_WIDTH - 80 + i * 20;
-            const y = 20;
+            const x = CANVAS_WIDTH - 8 - i * (shipSize * 2.5);
+            const y = hudFont * 0.8;
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(-Math.PI / 2);
             ctx.beginPath();
-            ctx.moveTo(0, -6);
-            ctx.lineTo(-4, 6);
-            ctx.lineTo(4, 6);
+            ctx.moveTo(0, -shipSize);
+            ctx.lineTo(-shipSize * 0.6, shipSize);
+            ctx.lineTo(shipSize * 0.6, shipSize);
             ctx.closePath();
             ctx.stroke();
             ctx.restore();
@@ -586,18 +636,18 @@
             ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
+            // Scale fonts to canvas size
+            const titleSize = Math.min(CANVAS_WIDTH / 8, 36);
+            const textSize = Math.min(CANVAS_WIDTH / 18, 16);
+
             ctx.fillStyle = '#fff';
-            ctx.font = 'bold 48px monospace';
+            ctx.font = `bold ${titleSize}px monospace`;
             ctx.textAlign = 'center';
-            ctx.fillText('ASTEROIDS', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 80);
+            ctx.fillText('ASTEROIDS', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - titleSize * 1.5);
 
-            ctx.font = '24px monospace';
-            ctx.fillText('Press FIRE or tap to start', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20);
-
-            ctx.font = '18px monospace';
-            ctx.fillText('Arrow Keys / WASD to rotate', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 30);
-            ctx.fillText('Hold SPACE/FIRE for continuous fire', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 60);
-            ctx.fillText('SHIFT for Hyperspace (keyboard only)', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 90);
+            ctx.font = `${textSize}px monospace`;
+            ctx.fillText('Tap FIRE to start', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            ctx.fillText('Toggle FIRE for auto-shoot', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + textSize * 1.5);
         }
 
         // Game over screen
@@ -605,17 +655,19 @@
             ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
+            // Scale fonts to canvas size
+            const fontSize = Math.min(CANVAS_WIDTH / 10, 36);
             ctx.fillStyle = '#fff';
-            ctx.font = 'bold 48px monospace';
+            ctx.font = `bold ${fontSize}px monospace`;
             ctx.textAlign = 'center';
-            ctx.fillText('GAME OVER', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 50);
+            ctx.fillText('GAME OVER', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - fontSize);
 
-            ctx.font = '32px monospace';
-            ctx.fillText(`Final Score: ${gameState.score}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 10);
-            ctx.fillText(`Level Reached: ${gameState.level}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 50);
+            ctx.font = `${fontSize * 0.6}px monospace`;
+            ctx.fillText(`Score: ${gameState.score}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + fontSize * 0.3);
+            ctx.fillText(`Level: ${gameState.level}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + fontSize);
 
-            ctx.font = '24px monospace';
-            ctx.fillText('Click "Play Again" to restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 100);
+            ctx.font = `${fontSize * 0.5}px monospace`;
+            ctx.fillText('Tap NEW to restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + fontSize * 2);
         }
     }
 
@@ -688,6 +740,9 @@
     window.launchAsteroids = function() {
         document.querySelector('.welcome').style.display = 'none';
         document.querySelector('.feature-grid').style.display = 'none';
+        // Hide main header for more screen space
+        const mainHeader = document.querySelector('.header');
+        if (mainHeader) mainHeader.style.display = 'none';
         if (typeof hideAllMenus === 'function') hideAllMenus();
         document.getElementById('asteroidsGame').style.display = 'block';
 
@@ -697,94 +752,118 @@
     function showAsteroidsGame() {
         const content = document.getElementById('asteroidsContent');
         content.innerHTML = `
-            <div class="game-container">
-                <div class="game-card">
-                    <div class="game-header">
-                        <button onclick="exitAsteroids()" class="game-back-btn">← Back</button>
-                        <h2 class="game-title">Asteroids</h2>
-                        <button onclick="restartAsteroids()" class="game-btn game-btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Play Again</button>
+            <div style="display: flex; flex-direction: column; height: 100dvh; padding: 0; box-sizing: border-box; background: #1a1a2e; position: relative; overflow: hidden;">
+                <!-- Minimal top bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.25rem; flex-shrink: 0; gap: 0.25rem;">
+                    <button onclick="exitAsteroids()" style="padding: 0.3rem 0.5rem; background: rgba(255,255,255,0.1); border: none; border-radius: 6px; color: white; font-size: 0.75rem; white-space: nowrap;">← Back</button>
+                    <div style="display: flex; align-items: center; gap: 0.25rem; flex-shrink: 1; min-width: 0;">
+                        <span style="color: #ffd700; font-weight: bold; font-size: 0.8rem;">ASTEROIDS</span>
+                        <button id="astHelpBtn" style="width: 20px; height: 20px; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; color: white; font-size: 0.7rem; cursor: pointer; flex-shrink: 0;">?</button>
                     </div>
+                    <div style="width: 50px;"></div>
+                </div>
 
-                    <canvas id="asteroidsCanvas" width="800" height="600" style="border: 2px solid #333; border-radius: 10px; background: #000; max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
-
-                    <!-- Mobile Controls -->
-                    <div style="display: flex; gap: 0.5rem; justify-content: space-between; align-items: flex-end; margin-top: 0.5rem;">
-                        <!-- Left side: Fire and Thrust stacked -->
-                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <button id="astFireBtn" class="game-btn game-btn-danger" style="width: 70px; height: 70px; border-radius: 50%; font-size: 0.9rem;">FIRE</button>
-                            <button id="astThrustBtn" class="game-btn game-btn-success" style="width: 70px; height: 70px; border-radius: 50%; font-size: 1.2rem;">UP</button>
-                        </div>
-
-                        <!-- Right side: Directional controls -->
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button id="astLeftBtn" class="game-dpad-btn" style="width: 70px; height: 70px;">◀</button>
-                            <button id="astRightBtn" class="game-dpad-btn" style="width: 70px; height: 70px;">▶</button>
-                        </div>
+                <!-- Help overlay (hidden by default) -->
+                <div id="astHelpOverlay" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); border: 2px solid #ffd700; border-radius: 12px; padding: 1rem; color: white; z-index: 100; max-width: 280px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <strong style="color: #ffd700;">How to Play</strong>
+                        <button id="astHelpClose" style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">✕</button>
                     </div>
+                    <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.85rem; line-height: 1.5;">
+                        <li>Destroy asteroids to advance</li>
+                        <li>Large: 20 pts → Medium: 50 pts → Small: 100 pts</li>
+                        <li>Tap FIRE to toggle auto-fire</li>
+                        <li>Screen wraps around edges</li>
+                    </ul>
+                </div>
 
-                    <div class="game-rules">
-                        <h4>How to Play:</h4>
-                        <ul>
-                            <li>Destroy all asteroids to advance</li>
-                            <li>Large (20 pts) → Medium (50 pts) → Small (100 pts)</li>
-                            <li>Hold fire for continuous shooting</li>
-                            <li>Screen wraps around edges</li>
-                        </ul>
+                <!-- Canvas - fills available space with small margin -->
+                <div id="astCanvasWrapper" style="flex: 1; min-height: 0; overflow: hidden; margin: 0.25rem;">
+                    <canvas id="asteroidsCanvas" style="border-radius: 8px; background: #000; display: block; width: 100%; height: 100%;"></canvas>
+                </div>
+
+                <!-- Compact controls -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); flex-shrink: 0; background: rgba(0,0,0,0.5);">
+                    <!-- Left side: Action buttons -->
+                    <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                        <button id="astThrustBtn" style="width: 75px; height: 44px; font-size: 0.75rem; font-weight: bold; background: linear-gradient(145deg, #4caf50, #388e3c); border: 2px solid #2e7d32; border-radius: 8px; color: white; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;">▲ THRUST</button>
+                        <button id="astFireBtn" style="width: 75px; height: 44px; font-size: 0.75rem; font-weight: bold; background: linear-gradient(145deg, #f44336, #d32f2f); border: 2px solid #b71c1c; border-radius: 8px; color: white; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;">🔥 FIRE</button>
+                    </div>
+                    <!-- Center: New game button -->
+                    <button onclick="restartAsteroids()" style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-size: 0.75rem; font-weight: bold; touch-action: manipulation;">NEW</button>
+                    <!-- Right side: Direction buttons -->
+                    <div style="display: flex; gap: 0.2rem;">
+                        <button id="astLeftBtn" style="width: 55px; height: 55px; font-size: 1.6rem; font-weight: bold; background: linear-gradient(145deg, #ffc107, #ff9800); border: 2px solid #f57c00; border-radius: 8px; color: #333; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
+                        <button id="astRightBtn" style="width: 55px; height: 55px; font-size: 1.6rem; font-weight: bold; background: linear-gradient(145deg, #ffc107, #ff9800); border: 2px solid #f57c00; border-radius: 8px; color: #333; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
                     </div>
                 </div>
             </div>
         `;
 
-        initGame();
-
         gameState.canvas = document.getElementById('asteroidsCanvas');
         gameState.ctx = gameState.canvas.getContext('2d');
+
+        // Size canvas to fill wrapper
+        const wrapper = document.getElementById('astCanvasWrapper');
+        CANVAS_WIDTH = wrapper.clientWidth;
+        CANVAS_HEIGHT = wrapper.clientHeight;
+        gameState.canvas.width = CANVAS_WIDTH;
+        gameState.canvas.height = CANVAS_HEIGHT;
+
+        initGame();
 
         // Keyboard controls
         document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('keyup', handleKeyUp);
 
-        // Mobile button controls
+        // Simple button controls
         const leftBtn = document.getElementById('astLeftBtn');
         const rightBtn = document.getElementById('astRightBtn');
         const thrustBtn = document.getElementById('astThrustBtn');
         const fireBtn = document.getElementById('astFireBtn');
 
-        leftBtn.addEventListener('touchstart', () => gameState.ship.rotating = -1);
-        leftBtn.addEventListener('touchend', () => gameState.ship.rotating = 0);
+        // Left button
+        leftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); gameState.ship.rotating = -1; });
+        leftBtn.addEventListener('touchend', (e) => { e.preventDefault(); gameState.ship.rotating = 0; });
         leftBtn.addEventListener('mousedown', () => gameState.ship.rotating = -1);
         leftBtn.addEventListener('mouseup', () => gameState.ship.rotating = 0);
+        leftBtn.addEventListener('mouseleave', () => gameState.ship.rotating = 0);
 
-        rightBtn.addEventListener('touchstart', () => gameState.ship.rotating = 1);
-        rightBtn.addEventListener('touchend', () => gameState.ship.rotating = 0);
+        // Right button
+        rightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); gameState.ship.rotating = 1; });
+        rightBtn.addEventListener('touchend', (e) => { e.preventDefault(); gameState.ship.rotating = 0; });
         rightBtn.addEventListener('mousedown', () => gameState.ship.rotating = 1);
         rightBtn.addEventListener('mouseup', () => gameState.ship.rotating = 0);
+        rightBtn.addEventListener('mouseleave', () => gameState.ship.rotating = 0);
 
-        thrustBtn.addEventListener('touchstart', () => gameState.ship.thrusting = true);
-        thrustBtn.addEventListener('touchend', () => gameState.ship.thrusting = false);
+        // Thrust button
+        thrustBtn.addEventListener('touchstart', (e) => { e.preventDefault(); gameState.ship.thrusting = true; });
+        thrustBtn.addEventListener('touchend', (e) => { e.preventDefault(); gameState.ship.thrusting = false; });
         thrustBtn.addEventListener('mousedown', () => gameState.ship.thrusting = true);
         thrustBtn.addEventListener('mouseup', () => gameState.ship.thrusting = false);
+        thrustBtn.addEventListener('mouseleave', () => gameState.ship.thrusting = false);
 
-        fireBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (!gameState.gameStarted && !gameState.gameOver) {
-                gameState.gameStarted = true;
-            }
-            gameState.firing = true;
-        });
-        fireBtn.addEventListener('touchend', () => {
-            gameState.firing = false;
-        });
-        fireBtn.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            if (!gameState.gameStarted && !gameState.gameOver) {
-                gameState.gameStarted = true;
-            }
-            gameState.firing = true;
-        });
-        fireBtn.addEventListener('mouseup', () => {
-            gameState.firing = false;
-        });
+        // Fire button (toggle mode - tap to start/stop firing)
+        let fireToggled = false;
+        function toggleFire() {
+            if (!gameState.gameStarted && !gameState.gameOver) gameState.gameStarted = true;
+            fireToggled = !fireToggled;
+            gameState.firing = fireToggled;
+            fireBtn.style.background = fireToggled
+                ? 'linear-gradient(145deg, #ff1744, #d50000)'
+                : 'linear-gradient(145deg, #f44336, #d32f2f)';
+            fireBtn.textContent = fireToggled ? '🔥 FIRING' : '🔥 FIRE';
+        }
+        fireBtn.addEventListener('touchstart', (e) => { e.preventDefault(); toggleFire(); });
+        fireBtn.addEventListener('mousedown', toggleFire);
+
+        // Help button
+        const helpBtn = document.getElementById('astHelpBtn');
+        const helpOverlay = document.getElementById('astHelpOverlay');
+        const helpClose = document.getElementById('astHelpClose');
+        helpBtn.addEventListener('click', () => helpOverlay.style.display = 'block');
+        helpClose.addEventListener('click', () => helpOverlay.style.display = 'none');
+        helpOverlay.addEventListener('click', (e) => { if (e.target === helpOverlay) helpOverlay.style.display = 'none'; });
 
         // Start game loop
         lastTime = 0;
@@ -797,6 +876,10 @@
         }
         document.removeEventListener('keydown', handleKeyDown);
         document.removeEventListener('keyup', handleKeyUp);
+
+        // Show main header again
+        const mainHeader = document.querySelector('.header');
+        if (mainHeader) mainHeader.style.display = '';
 
         document.getElementById('asteroidsGame').style.display = 'none';
         document.getElementById('arcadeMenu').style.display = 'block';
