@@ -652,19 +652,24 @@
             }
         }
 
-        // Draw vehicles
+        // Draw vehicles (emoji only, no boxes)
         for (let vehicle of gameState.vehicles) {
             const x = vehicle.col * TILE_SIZE;
             const y = vehicle.row * TILE_SIZE;
             const width = vehicle.type.width * TILE_SIZE;
 
-            ctx.fillStyle = vehicle.type.color;
-            ctx.fillRect(x, y + 5, width, TILE_SIZE - 10);
-
-            ctx.font = `${TILE_SIZE - 8}px Arial`;
+            ctx.font = `${TILE_SIZE - 4}px Arial`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(vehicle.type.emoji, x + width / 2, y + TILE_SIZE / 2);
+
+            // For multi-tile vehicles, draw multiple emojis
+            if (vehicle.type.width > 1) {
+                for (let i = 0; i < vehicle.type.width; i++) {
+                    ctx.fillText(vehicle.type.emoji, x + i * TILE_SIZE + TILE_SIZE / 2, y + TILE_SIZE / 2);
+                }
+            } else {
+                ctx.fillText(vehicle.type.emoji, x + TILE_SIZE / 2, y + TILE_SIZE / 2);
+            }
         }
 
         // Draw water obstacles
