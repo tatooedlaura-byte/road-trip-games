@@ -458,13 +458,19 @@
         // Move frog with water obstacle if standing on one
         if (!gameState.frog.moving && WATER_LANES.includes(gameState.frog.row)) {
             const standingOn = getWaterObstacleAt(gameState.frog.row, gameState.frog.col);
-            if (standingOn && !standingOn.diving) {
-                gameState.frog.col += standingOn.speed * 0.05;
 
-                // Check if frog went off screen
-                if (gameState.frog.col < 0 || gameState.frog.col >= COLS) {
-                    loseLife();
-                }
+            // Die if not on any obstacle or if turtle is diving
+            if (!standingOn || (standingOn.isTurtle && standingOn.diving)) {
+                loseLife();
+                return;
+            }
+
+            // Move with the obstacle
+            gameState.frog.col += standingOn.speed * 0.05;
+
+            // Check if frog went off screen
+            if (gameState.frog.col < 0 || gameState.frog.col >= COLS) {
+                loseLife();
             }
         }
 
