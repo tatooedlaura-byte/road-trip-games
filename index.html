@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.144.4';</script>
+    <script>window.APP_VERSION = '1.145.0';</script>
 
     <style>
         * {
@@ -1363,29 +1363,47 @@
                 </div>
             </div>
 
-            <!-- Galaga Game Section (hidden by default) -->
-            <div id="galagaGame" style="display: none;">
-                <div class="game-container">
-                    <div class="game-card">
-                        <div class="game-header">
-                            <button onclick="exitGalaga()" class="game-back-btn">← Back</button>
-                            <h2 class="game-title">Galaga</h2>
-                        </div>
-                        <canvas id="galagaCanvas" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></canvas>
+            <!-- Galaga Game Section (fullscreen) -->
+            <div id="galagaGame" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; height: 100dvh; background: #000; z-index: 1000; flex-direction: column;">
+                <!-- Top bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0.5rem; background: rgba(0,0,0,0.7); flex-shrink: 0;">
+                    <button onclick="exitGalaga()" style="padding: 0.4rem 0.6rem; font-size: 0.75rem; background: linear-gradient(145deg, #4b5563, #374151); color: white; border: none; border-radius: 6px; touch-action: manipulation;">← Back</button>
+                    <span style="color: #00ff00; font-weight: bold; font-size: 0.9rem;">Galaga</span>
+                    <button onclick="document.getElementById('galagaHelp').style.display='flex'" style="padding: 0.4rem 0.7rem; font-size: 0.85rem; background: linear-gradient(145deg, #6366f1, #4f46e5); color: white; border: none; border-radius: 6px; touch-action: manipulation;">?</button>
+                </div>
 
-                        <!-- Mobile Touch Controls -->
-                        <div id="galagaControls" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 0.5rem;">
-                            <button id="galagaBtnFire" class="game-btn game-btn-primary" style="width: 70px; height: 70px; border-radius: 50%; font-size: 0.9rem;">FIRE</button>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <button id="galagaBtnLeft" class="game-dpad-btn" style="width: 70px; height: 70px;">◀</button>
-                                <button id="galagaBtnRight" class="game-dpad-btn" style="width: 70px; height: 70px;">▶</button>
-                            </div>
-                        </div>
+                <!-- Canvas wrapper -->
+                <div id="galagaCanvasWrapper" style="flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                    <canvas id="galagaCanvas" style="display: block; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;"></canvas>
+                </div>
 
-                        <div class="game-rules">
-                            <p>Arrow Keys / A-D to move | Space to shoot (auto-fire!)</p>
-                            <p>Boss can capture your ship - rescue it for Dual Fighter!</p>
-                        </div>
+                <!-- Control buttons -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); flex-shrink: 0; background: rgba(0,0,0,0.5);">
+                    <!-- Left: FIRE button -->
+                    <button id="galagaBtnFire" style="padding: 0.8rem 1rem; font-size: 0.8rem; font-weight: bold; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">FIRE</button>
+
+                    <!-- Center: NEW button -->
+                    <button onclick="galagaRestart()" style="padding: 0.5rem 0.8rem; font-size: 0.7rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">NEW</button>
+
+                    <!-- Right: Direction buttons -->
+                    <div style="display: flex; gap: 0.3rem;">
+                        <button id="galagaBtnLeft" style="padding: 1.2rem 1.8rem; font-size: 1.6rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
+                        <button id="galagaBtnRight" style="padding: 1.2rem 1.8rem; font-size: 1.6rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
+                    </div>
+                </div>
+
+                <!-- Help Modal -->
+                <div id="galagaHelp" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1001;">
+                    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; max-width: 90%; max-height: 80%; overflow-y: auto; color: white;">
+                        <h3 style="color: #00ff00; margin-bottom: 1rem; text-align: center;">How to Play Galaga</h3>
+                        <p style="margin-bottom: 0.5rem;"><strong>Goal:</strong> Destroy all enemy aliens to advance stages.</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>FIRE:</strong> Hold to auto-fire (max 2 bullets at once).</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>◀ ▶:</strong> Move your ship left and right.</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Boss Galaga:</strong> Green aliens at the top can capture your ship with a tractor beam!</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Dual Fighter:</strong> Destroy a boss holding your ship to rescue it and get double firepower!</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Challenge Stages:</strong> Every 3rd stage is a bonus round with more enemies.</p>
+                        <p style="margin-bottom: 1rem;"><strong>Scoring:</strong> Enemies worth more points when diving.</p>
+                        <button onclick="document.getElementById('galagaHelp').style.display='none'" style="width: 100%; padding: 0.75rem; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem;">Got it!</button>
                     </div>
                 </div>
             </div>

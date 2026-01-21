@@ -193,9 +193,10 @@ ctx.font = `bold ${fontSize}px Arial`;
 - [x] Caverns of Mars (v1.141.0) - FIRE/arrow buttons, scaled menus, HUD bars
 - [x] Centipede (v1.142.0) - FIRE/D-pad buttons, dynamic sizing, scaled text
 - [x] Downhill Skier (v1.143.0) - mode select/arrow buttons, dynamic sizing, scaled text
+- [x] Frogger (v1.144.0) - D-pad controls, dynamic grid sizing, hand preference toggle
+- [x] Galaga (v1.145.0) - FIRE/arrow buttons, dynamic sizing, scaled enemies/bullets
 
 ### Games Still Needing Mobile Update
-- [x] Frogger (v1.144.0) - D-pad controls, dynamic grid sizing, street/river layout
 - [ ] Snake
 - [ ] Space Invaders
 - [ ] Tetris
