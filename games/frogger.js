@@ -85,6 +85,7 @@
         waterObstacles: [],
         keys: { up: false, down: false, left: false, right: false },
         moveQueued: null,
+        targetLog: null, // Track log frog is jumping to
         animationId: null,
         timerInterval: null,
         specialItems: [], // Lady frog, flies
@@ -334,6 +335,15 @@
                 return; // Can't move out of bounds
             }
 
+            // When moving up/down, snap column to nearest integer for cleaner positioning
+            if (direction === 'up' || direction === 'down') {
+                newCol = Math.round(newCol);
+                // Re-check boundaries after snapping
+                if (newCol < 0 || newCol >= COLS) {
+                    return;
+                }
+            }
+
             // Award points for moving forward
             if (direction === 'up' && newRow < gameState.frog.row) {
                 gameState.score += 10;
@@ -343,6 +353,13 @@
             gameState.frog.col = newCol;
             gameState.frog.moving = true;
             gameState.frog.moveProgress = 0;
+
+            // If landing on a water lane, track the target log to move with it during animation
+            if (WATER_LANES.includes(newRow)) {
+                gameState.frog.targetLog = getWaterObstacleAt(newRow, newCol);
+            } else {
+                gameState.frog.targetLog = null;
+            }
         }
     }
 
@@ -380,9 +397,16 @@
         // Update frog movement animation
         if (gameState.frog.moving) {
             gameState.frog.moveProgress += 0.2;
+
+            // If jumping to a water lane with a target log, move frog with it during animation
+            if (gameState.frog.targetLog && !gameState.frog.targetLog.diving) {
+                gameState.frog.col += gameState.frog.targetLog.speed * 0.05;
+            }
+
             if (gameState.frog.moveProgress >= 1) {
                 gameState.frog.moving = false;
                 gameState.frog.moveProgress = 0;
+                gameState.frog.targetLog = null;
 
                 // Check for collisions/events after move completes
                 checkFrogPosition();
@@ -460,7 +484,14 @@
 
         // Check if reached home
         if (row === HOME_ROW) {
-            const homeIndex = HOME_POSITIONS.indexOf(col);
+            // Find closest home position (handles float column positions)
+            let homeIndex = -1;
+            for (let i = 0; i < HOME_POSITIONS.length; i++) {
+                if (Math.abs(col - HOME_POSITIONS[i]) < 0.8) {
+                    homeIndex = i;
+                    break;
+                }
+            }
             if (homeIndex !== -1) {
                 if (gameState.homesOccupied[homeIndex]) {
                     // Home already occupied
@@ -526,13 +557,17 @@
         }
     }
 
-    // Get water obstacle at position
+    // Get water obstacle at position (with tolerance for float positions)
     function getWaterObstacleAt(row, col) {
+        // Use frog center for collision check
+        const frogCenter = col + 0.5;
+
         for (let obstacle of gameState.waterObstacles) {
             if (obstacle.row === row) {
                 const left = obstacle.col;
                 const right = obstacle.col + obstacle.width;
-                if (col >= left && col < right) {
+                // Check if frog center is within the obstacle (with small tolerance)
+                if (frogCenter >= left - 0.3 && frogCenter < right + 0.3) {
                     return obstacle;
                 }
             }
