@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.140.1';</script>
+    <script>window.APP_VERSION = '1.140.2';</script>
 
     <style>
         * {
@@ -1453,7 +1453,7 @@
             </div>
 
             <!-- Breakout Game Section (hidden by default) -->
-            <div id="breakoutGame" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #0a0a15; z-index: 1000; display: flex; flex-direction: column;">
+            <div id="breakoutGame" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; height: 100dvh; background: #0a0a15; z-index: 1000; flex-direction: column;">
                 <!-- Top bar -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0.5rem; background: rgba(0,0,0,0.7); flex-shrink: 0; gap: 0.3rem; flex-wrap: nowrap;">
                     <button onclick="exitBreakout()" style="padding: 0.3rem 0.5rem; font-size: 0.7rem; background: #374151; color: white; border: none; border-radius: 4px; white-space: nowrap;">← Back</button>
@@ -1469,7 +1469,7 @@
                 <div id="breakoutMessage" class="game-message" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100;"></div>
 
                 <!-- Canvas wrapper - fills remaining space -->
-                <div id="breakoutCanvasWrapper" style="flex: 1; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <div id="breakoutCanvasWrapper" style="flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                     <canvas id="breakoutCanvas" style="display: block; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;"></canvas>
                 </div>
 
