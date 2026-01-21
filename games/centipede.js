@@ -12,13 +12,18 @@
     let level = 1;
     let animationId;
 
-    const GAME_WIDTH = 480;
-    const GAME_HEIGHT = 600;
-    const GRID_SIZE = 16;
-    const COLS = GAME_WIDTH / GRID_SIZE; // 30 columns
-    const ROWS = GAME_HEIGHT / GRID_SIZE; // 37.5 rows
+    // Dynamic canvas sizing
+    let CANVAS_WIDTH = 480;
+    let CANVAS_HEIGHT = 600;
+    let scaleFactor = 1;
+
+    // Game grid (calculated from canvas size)
+    const BASE_GRID_SIZE = 16;
+    let GRID_SIZE = BASE_GRID_SIZE;
+    let COLS = 30;
+    let ROWS = 37;
     const PLAYER_AREA_ROWS = 6; // Player can only move in bottom 6 rows
-    const PLAYER_START_ROW = ROWS - 2;
+    let PLAYER_START_ROW = ROWS - 2;
 
     // Colors
     const COLOR_BG = '#000000';
@@ -31,6 +36,36 @@
     const COLOR_SCORPION = '#ffff00';
     const COLOR_POISON = '#ff00ff';
     const COLOR_EXPLOSIVE = '#00ccff'; // Bright blue for explosive rocks
+
+    // Resize canvas to fill wrapper
+    function resizeCanvas() {
+        const wrapper = document.getElementById('centipedeCanvasWrapper');
+        if (!wrapper) return;
+
+        let w = wrapper.clientWidth;
+        let h = wrapper.clientHeight;
+
+        // Fallback if wrapper not ready
+        if (w === 0 || h === 0) {
+            w = window.innerWidth;
+            h = window.innerHeight - 120;
+        }
+
+        CANVAS_WIDTH = w;
+        CANVAS_HEIGHT = h;
+        gameCanvas.width = CANVAS_WIDTH;
+        gameCanvas.height = CANVAS_HEIGHT;
+
+        // Scale factor for game elements
+        scaleFactor = Math.min(CANVAS_WIDTH / 480, CANVAS_HEIGHT / 600);
+
+        // Recalculate grid based on new size
+        GRID_SIZE = Math.floor(BASE_GRID_SIZE * scaleFactor);
+        if (GRID_SIZE < 8) GRID_SIZE = 8; // Minimum grid size
+        COLS = Math.floor(CANVAS_WIDTH / GRID_SIZE);
+        ROWS = Math.floor(CANVAS_HEIGHT / GRID_SIZE);
+        PLAYER_START_ROW = ROWS - 2;
+    }
 
     // Player object
     function createPlayer() {
@@ -119,7 +154,7 @@
 
         // Create initial centipede
         const centipedeLength = 12;
-        centipedes.push(createCentipede(centipedeLength, GAME_WIDTH - GRID_SIZE, 0, 'left'));
+        centipedes.push(createCentipede(centipedeLength, CANVAS_WIDTH - GRID_SIZE, 0, 'left'));
 
         gameState = 'playing';
         if (!animationId) {
@@ -145,13 +180,13 @@
         if (keys.left && player.x > 0) {
             player.x -= player.speed;
         }
-        if (keys.right && player.x < GAME_WIDTH - GRID_SIZE) {
+        if (keys.right && player.x < CANVAS_WIDTH - GRID_SIZE) {
             player.x += player.speed;
         }
         if (keys.up && player.y > playerMinY) {
             player.y -= player.speed;
         }
-        if (keys.down && player.y < GAME_HEIGHT - GRID_SIZE) {
+        if (keys.down && player.y < CANVAS_HEIGHT - GRID_SIZE) {
             player.y += player.speed;
         }
 
@@ -220,7 +255,7 @@
         const newGridY = Math.floor(newY / GRID_SIZE);
 
         // Check screen edges
-        if (newX < 0 || newX >= GAME_WIDTH) {
+        if (newX < 0 || newX >= CANVAS_WIDTH) {
             shouldDrop = true;
         }
 
@@ -388,7 +423,7 @@
 
                 // Keep spider within player area bounds
                 const playerMinY = (ROWS - PLAYER_AREA_ROWS) * GRID_SIZE;
-                const playerMaxY = GAME_HEIGHT - GRID_SIZE;
+                const playerMaxY = CANVAS_HEIGHT - GRID_SIZE;
 
                 // Bounce when hitting bounds or after traveling enough for very wide zigzag
                 if (enemy.y <= playerMinY || enemy.y >= playerMaxY || enemy.bounceTimer > 80) {
@@ -397,7 +432,7 @@
                 }
 
                 // Remove if off screen
-                if (enemy.x < -GRID_SIZE || enemy.x > GAME_WIDTH + GRID_SIZE) {
+                if (enemy.x < -GRID_SIZE || enemy.x > CANVAS_WIDTH + GRID_SIZE) {
                     enemies.splice(i, 1);
                     continue;
                 }
@@ -440,7 +475,7 @@
                 }
 
                 // Remove if off screen
-                if (enemy.y > GAME_HEIGHT) {
+                if (enemy.y > CANVAS_HEIGHT) {
                     enemies.splice(i, 1);
                 }
 
@@ -458,7 +493,7 @@
                 }
 
                 // Remove if off screen
-                if (enemy.x < -GRID_SIZE || enemy.x > GAME_WIDTH + GRID_SIZE) {
+                if (enemy.x < -GRID_SIZE || enemy.x > CANVAS_WIDTH + GRID_SIZE) {
                     enemies.splice(i, 1);
                 }
             }
@@ -473,7 +508,7 @@
             const playerMinY = (ROWS - PLAYER_AREA_ROWS) * GRID_SIZE;
             enemies.push({
                 type: 'spider',
-                x: fromLeft ? -GRID_SIZE : GAME_WIDTH + GRID_SIZE,
+                x: fromLeft ? -GRID_SIZE : CANVAS_WIDTH + GRID_SIZE,
                 y: playerMinY + GRID_SIZE * 3, // Start in middle of player area
                 vx: fromLeft ? 0.75 : -0.75, // 50% slower horizontal movement
                 vy: 1, // Very slow vertical speed for very wide zigzag
@@ -500,7 +535,7 @@
             const fromLeft = Math.random() < 0.5;
             enemies.push({
                 type: 'scorpion',
-                x: fromLeft ? -GRID_SIZE : GAME_WIDTH + GRID_SIZE,
+                x: fromLeft ? -GRID_SIZE : CANVAS_WIDTH + GRID_SIZE,
                 y: Math.floor(Math.random() * (ROWS - PLAYER_AREA_ROWS - 5) + 5) * GRID_SIZE,
                 vx: fromLeft ? 1.5 : -1.5
             });
@@ -646,7 +681,7 @@
 
             // Create new centipede for this level
             const centipedeLength = 12;
-            centipedes.push(createCentipede(centipedeLength, GAME_WIDTH - GRID_SIZE, 0, 'left'));
+            centipedes.push(createCentipede(centipedeLength, CANVAS_WIDTH - GRID_SIZE, 0, 'left'));
 
             gameState = 'playing';
         }, 2000);
@@ -662,7 +697,7 @@
     function draw() {
         // Clear canvas
         ctx.fillStyle = COLOR_BG;
-        ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         if (gameState === 'menu') {
             drawMenu();
@@ -691,7 +726,7 @@
         ctx.setLineDash([5, 5]);
         ctx.beginPath();
         ctx.moveTo(0, (ROWS - PLAYER_AREA_ROWS) * GRID_SIZE);
-        ctx.lineTo(GAME_WIDTH, (ROWS - PLAYER_AREA_ROWS) * GRID_SIZE);
+        ctx.lineTo(CANVAS_WIDTH, (ROWS - PLAYER_AREA_ROWS) * GRID_SIZE);
         ctx.stroke();
         ctx.setLineDash([]);
     }
@@ -816,75 +851,87 @@
 
     // Draw HUD
     function drawHUD() {
+        const fontSize = Math.max(12, Math.min(18, CANVAS_WIDTH / 30));
         ctx.fillStyle = '#ffffff';
-        ctx.font = '16px monospace';
+        ctx.font = `${fontSize}px monospace`;
         ctx.textAlign = 'left';
-        ctx.fillText(`SCORE: ${score}`, 10, 20);
-        ctx.fillText(`LIVES: ${lives}`, 10, 40);
-        ctx.fillText(`LEVEL: ${level}`, 10, 60);
+        const lineHeight = fontSize + 4;
+        ctx.fillText(`SCORE: ${score}`, 10, lineHeight);
+        ctx.fillText(`LIVES: ${lives}`, 10, lineHeight * 2);
+        ctx.fillText(`LEVEL: ${level}`, 10, lineHeight * 3);
     }
 
     // Draw menu
     function drawMenu() {
+        const titleSize = Math.max(20, Math.min(36, CANVAS_WIDTH / 14));
+        const textSize = Math.max(12, Math.min(18, CANVAS_WIDTH / 28));
+        const smallSize = Math.max(10, Math.min(14, CANVAS_WIDTH / 36));
+        const startSize = Math.max(14, Math.min(24, CANVAS_WIDTH / 22));
+
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 36px Arial';
+        ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('🐛 CENTIPEDE', GAME_WIDTH / 2, 100);
+        ctx.fillText('CENTIPEDE', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.12);
 
-        ctx.font = '18px Arial';
-        ctx.fillText('Shoot all the centipede segments!', GAME_WIDTH / 2, 180);
-        ctx.fillText('Arrow Keys: Move', GAME_WIDTH / 2, 250);
-        ctx.fillText('Space: Shoot', GAME_WIDTH / 2, 280);
+        ctx.font = `${textSize}px Arial`;
+        ctx.fillText('Shoot all centipede segments!', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.22);
+        ctx.fillText('Use arrows to move', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.32);
+        ctx.fillText('FIRE button to shoot', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.38);
 
-        ctx.font = '14px Arial';
-        ctx.fillText('ENEMIES:', GAME_WIDTH / 2, 330);
-        ctx.fillText('🕷️ Spider - Eats mushrooms (300-900 pts)', GAME_WIDTH / 2, 355);
-        ctx.fillText('🦟 Flea - Drops mushrooms (200 pts)', GAME_WIDTH / 2, 380);
-        ctx.fillText('🦂 Scorpion - Poisons mushrooms (1000 pts)', GAME_WIDTH / 2, 405);
+        ctx.font = `${smallSize}px Arial`;
+        ctx.fillText('ENEMIES:', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.48);
+        ctx.fillText('Spider - 300-900 pts', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.53);
+        ctx.fillText('Flea - 200 pts', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.58);
+        ctx.fillText('Scorpion - 1000 pts', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.63);
 
         ctx.fillStyle = COLOR_EXPLOSIVE;
-        ctx.fillText('💣 EXPLOSIVE MUSHROOMS:', GAME_WIDTH / 2, 440);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText('Bright blue - blast everything within 3 spaces!', GAME_WIDTH / 2, 465);
+        ctx.fillText('Blue = Explosive!', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.70);
 
-        ctx.font = 'bold 24px Arial';
+        ctx.font = `bold ${startSize}px Arial`;
         ctx.fillStyle = '#00ff00';
-        ctx.fillText('TAP SCREEN OR PRESS SPACE', GAME_WIDTH / 2, 500);
+        ctx.fillText('TAP TO START', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.82);
     }
 
     // Draw level complete
     function drawLevelComplete() {
+        const titleSize = Math.max(24, Math.min(48, CANVAS_WIDTH / 10));
+        const textSize = Math.max(16, Math.min(28, CANVAS_WIDTH / 18));
+
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         ctx.fillStyle = '#00ff00';
-        ctx.font = 'bold 48px Arial';
+        ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('LEVEL COMPLETE!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 20);
+        ctx.fillText('LEVEL COMPLETE!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20);
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = '28px Arial';
-        ctx.fillText(`Starting Level ${level}...`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40);
+        ctx.font = `${textSize}px Arial`;
+        ctx.fillText(`Level ${level}...`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);
     }
 
     // Draw game over
     function drawGameOver() {
+        const titleSize = Math.max(24, Math.min(48, CANVAS_WIDTH / 10));
+        const textSize = Math.max(16, Math.min(28, CANVAS_WIDTH / 18));
+        const smallSize = Math.max(14, Math.min(20, CANVAS_WIDTH / 24));
+
         ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-        ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         ctx.fillStyle = '#ff0000';
-        ctx.font = 'bold 48px Arial';
+        ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('GAME OVER', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 60);
+        ctx.fillText('GAME OVER', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 60);
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = '28px Arial';
-        ctx.fillText(`Final Score: ${score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2);
-        ctx.fillText(`Level Reached: ${level}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40);
+        ctx.font = `${textSize}px Arial`;
+        ctx.fillText(`Score: ${score}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        ctx.fillText(`Level: ${level}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);
 
-        ctx.font = 'bold 20px Arial';
+        ctx.font = `bold ${smallSize}px Arial`;
         ctx.fillStyle = '#00ff00';
-        ctx.fillText('TAP SCREEN OR PRESS SPACE', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 100);
+        ctx.fillText('TAP TO RESTART', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 100);
     }
 
     // Game loop
@@ -940,69 +987,43 @@
 
     // Launch game
     window.launchCentipede = function() {
-        const content = document.getElementById('centipedeContent');
-
-        content.innerHTML = `
-            <div class="game-container">
-                <div class="game-card">
-                    <div class="game-header">
-                        <button onclick="exitCentipedeToMenu()" class="game-back-btn">← Back</button>
-                        <h2 class="game-title">Centipede</h2>
-                        <div style="width: 50px;"></div>
-                    </div>
-
-                    <canvas id="centipedeCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="border: 2px solid #00ff00; border-radius: 10px; max-width: 100%; height: auto; background: #000000;"></canvas>
-
-                    <!-- Mobile Touch Controls -->
-                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-end; margin-top: 0.5rem;">
-                        <button id="centipedeBtnFire" class="game-btn game-btn-danger" style="width: 70px; height: 70px; border-radius: 50%; font-size: 0.9rem;">FIRE</button>
-                        <div class="game-dpad">
-                            <div></div>
-                            <button id="centipedeBtnUp" class="game-dpad-btn">▲</button>
-                            <div></div>
-                            <button id="centipedeBtnLeft" class="game-dpad-btn">◀</button>
-                            <div class="game-dpad-btn game-dpad-center"></div>
-                            <button id="centipedeBtnRight" class="game-dpad-btn">▶</button>
-                            <div></div>
-                            <button id="centipedeBtnDown" class="game-dpad-btn">▼</button>
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // Show game section
-        document.querySelector('.welcome').style.display = 'none';
-        document.querySelector('.feature-grid').style.display = 'none';
+        // Hide other sections
         if (typeof hideAllMenus === 'function') hideAllMenus();
-        document.getElementById('centipedeGame').style.display = 'block';
 
-        // Initialize canvas
-        gameCanvas = document.getElementById('centipedeCanvas');
-        ctx = gameCanvas.getContext('2d');
+        // Show fullscreen game section
+        document.getElementById('centipedeGame').style.display = 'flex';
 
-        gameState = 'menu';
-        draw();
+        // Double RAF for layout to settle
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                // Initialize canvas
+                gameCanvas = document.getElementById('centipedeCanvas');
+                ctx = gameCanvas.getContext('2d');
 
-        // Event listeners (passive: false allows preventDefault to work)
-        document.addEventListener('keydown', handleKeyDown, { passive: false });
-        document.addEventListener('keyup', handleKeyUp);
+                // Resize canvas to fit wrapper
+                resizeCanvas();
 
-        // Setup mobile controls
-        setupMobileControls();
+                // Reset game state
+                player = null;
+                gameState = 'menu';
+                draw();
+
+                // Event listeners
+                document.addEventListener('keydown', handleKeyDown, { passive: false });
+                document.addEventListener('keyup', handleKeyUp);
+                window.addEventListener('resize', resizeCanvas);
+
+                // Setup mobile controls
+                setupHTMLControls();
+            });
+        });
     };
 
-    // Setup mobile touch controls
-    function setupMobileControls() {
+    // Setup HTML button controls
+    function setupHTMLControls() {
         const canvas = gameCanvas;
-        const btnUp = document.getElementById('centipedeBtnUp');
-        const btnDown = document.getElementById('centipedeBtnDown');
-        const btnLeft = document.getElementById('centipedeBtnLeft');
-        const btnRight = document.getElementById('centipedeBtnRight');
-        const btnFire = document.getElementById('centipedeBtnFire');
 
-        // Add canvas click/touch to start/restart game
+        // Canvas click/touch to start/restart
         const handleCanvasClick = () => {
             if (gameState === 'menu') {
                 score = 0;
@@ -1022,100 +1043,42 @@
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             handleCanvasClick();
-        });
+        }, { passive: false });
 
-        if (btnUp) {
-            btnUp.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                keys.up = true;
-            });
-            btnUp.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                keys.up = false;
-            });
-            btnUp.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                keys.up = true;
-            });
-            btnUp.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                keys.up = false;
-            });
+        // Helper to setup button with all event handlers
+        function setupButton(id, keyName) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+
+            btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[keyName] = true; }, { passive: false });
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[keyName] = false; }, { passive: false });
+            btn.addEventListener('touchcancel', () => { keys[keyName] = false; });
+            btn.addEventListener('mousedown', (e) => { e.preventDefault(); keys[keyName] = true; });
+            btn.addEventListener('mouseup', () => { keys[keyName] = false; });
+            btn.addEventListener('mouseleave', () => { keys[keyName] = false; });
         }
 
-        if (btnDown) {
-            btnDown.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                keys.down = true;
-            });
-            btnDown.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                keys.down = false;
-            });
-            btnDown.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                keys.down = true;
-            });
-            btnDown.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                keys.down = false;
-            });
-        }
+        // Setup direction buttons
+        setupButton('centipedeBtnUp', 'up');
+        setupButton('centipedeBtnDown', 'down');
+        setupButton('centipedeBtnLeft', 'left');
+        setupButton('centipedeBtnRight', 'right');
+        setupButton('centipedeBtnFire', 'space');
 
-        if (btnLeft) {
-            btnLeft.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                keys.left = true;
-            });
-            btnLeft.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                keys.left = false;
-            });
-            btnLeft.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                keys.left = true;
-            });
-            btnLeft.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                keys.left = false;
-            });
-        }
-
-        if (btnRight) {
-            btnRight.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                keys.right = true;
-            });
-            btnRight.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                keys.right = false;
-            });
-            btnRight.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                keys.right = true;
-            });
-            btnRight.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                keys.right = false;
-            });
-        }
-
-        if (btnFire) {
-            btnFire.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                keys.space = true;
-            });
-            btnFire.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                keys.space = false;
-            });
-            btnFire.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                keys.space = true;
-            });
-            btnFire.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                keys.space = false;
+        // NEW button handler
+        const btnNew = document.getElementById('centipedeBtnNew');
+        if (btnNew) {
+            btnNew.addEventListener('click', () => {
+                score = 0;
+                lives = 3;
+                level = 1;
+                player = null;
+                gameState = 'menu';
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+                draw();
             });
         }
     }
@@ -1124,10 +1087,12 @@
     window.exitCentipedeToMenu = function() {
         if (animationId) {
             cancelAnimationFrame(animationId);
+            animationId = null;
         }
 
         document.removeEventListener('keydown', handleKeyDown, { passive: false });
         document.removeEventListener('keyup', handleKeyUp);
+        window.removeEventListener('resize', resizeCanvas);
 
         document.getElementById('centipedeGame').style.display = 'none';
         document.getElementById('arcadeMenu').style.display = 'block';
