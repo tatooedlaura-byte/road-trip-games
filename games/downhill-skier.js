@@ -17,31 +17,72 @@
     let animationId;
     let keys = {};
 
-    const GAME_WIDTH = 800;
-    const GAME_HEIGHT = 600;
-    const SKIER_WIDTH = 30;
-    const SKIER_HEIGHT = 35;
+    // Dynamic canvas sizing
+    let CANVAS_WIDTH = 800;
+    let CANVAS_HEIGHT = 600;
+    let scaleFactor = 1;
+
+    // Base dimensions (used for scaling calculations)
+    const BASE_WIDTH = 800;
+    const BASE_HEIGHT = 600;
+
+    // Scaled game constants
+    let SKIER_WIDTH = 30;
+    let SKIER_HEIGHT = 35;
     const BASE_SCROLL_SPEED = 4;
-    const SKIER_SPEED = 5;
-    const SLOPE_WIDTH = 400;
+    let SKIER_SPEED = 5;
+    let SLOPE_WIDTH = 400;
     const SEGMENT_HEIGHT = 20;
-    const TREE_SPAWN_CHANCE = 0.08; // 8% chance per segment
-    const ROCK_SPAWN_CHANCE = 0.05; // 5% chance per segment
-    const MIN_TREE_SPACING = 60; // Minimum pixels between trees horizontally
-    const MIN_ROCK_SPACING = 80; // Minimum pixels between rocks horizontally
-    const GATE_SPACING = 200; // Vertical spacing between slalom gates
-    const GATE_WIDTH = 120; // Distance between left and right poles
-    const POLE_HEIGHT = 50; // Height of flagpoles
-    const GATE_PENALTY_TIME = 5.0; // 5 seconds penalty for missing gate
+    const TREE_SPAWN_CHANCE = 0.08;
+    const ROCK_SPAWN_CHANCE = 0.05;
+    let MIN_TREE_SPACING = 60;
+    let MIN_ROCK_SPACING = 80;
+    let GATE_SPACING = 200;
+    let GATE_WIDTH = 120;
+    let POLE_HEIGHT = 50;
+    const GATE_PENALTY_TIME = 5.0;
 
     let currentScrollSpeed = BASE_SCROLL_SPEED;
-    let lastGateY = 0; // Track last gate position
+    let lastGateY = 0;
+
+    // Resize canvas to fill wrapper
+    function resizeCanvas() {
+        const wrapper = document.getElementById('skierCanvasWrapper');
+        if (!wrapper) return;
+
+        let w = wrapper.clientWidth;
+        let h = wrapper.clientHeight;
+
+        if (w === 0 || h === 0) {
+            w = window.innerWidth;
+            h = window.innerHeight - 120;
+        }
+
+        CANVAS_WIDTH = w;
+        CANVAS_HEIGHT = h;
+        gameCanvas.width = CANVAS_WIDTH;
+        gameCanvas.height = CANVAS_HEIGHT;
+
+        // Scale factor based on canvas size
+        scaleFactor = Math.min(CANVAS_WIDTH / BASE_WIDTH, CANVAS_HEIGHT / BASE_HEIGHT);
+
+        // Update scaled dimensions
+        SKIER_WIDTH = Math.floor(30 * scaleFactor);
+        SKIER_HEIGHT = Math.floor(35 * scaleFactor);
+        SKIER_SPEED = 5 * scaleFactor;
+        SLOPE_WIDTH = Math.floor(CANVAS_WIDTH * 0.5); // 50% of canvas width
+        MIN_TREE_SPACING = Math.floor(60 * scaleFactor);
+        MIN_ROCK_SPACING = Math.floor(80 * scaleFactor);
+        GATE_SPACING = Math.floor(200 * scaleFactor);
+        GATE_WIDTH = Math.floor(120 * scaleFactor);
+        POLE_HEIGHT = Math.floor(50 * scaleFactor);
+    }
 
     // Skier object
     function createSkier() {
         return {
-            x: GAME_WIDTH / 2 - SKIER_WIDTH / 2,
-            y: GAME_HEIGHT / 2 - SKIER_HEIGHT / 2, // Middle of screen
+            x: CANVAS_WIDTH / 2 - SKIER_WIDTH / 2,
+            y: CANVAS_HEIGHT / 2 - SKIER_HEIGHT / 2, // Middle of screen
             velocityX: 0,
             direction: 0, // -1 left, 0 none, 1 right
             crashed: false,
@@ -116,26 +157,26 @@
         totalGates = 0;
         keys = {};
         currentScrollSpeed = BASE_SCROLL_SPEED;
-        lastGateY = GAME_HEIGHT + 100; // Start gates below screen
+        lastGateY = CANVAS_HEIGHT + 100; // Start gates below screen
 
         // Create initial slope segments
-        let slopeLeft = (GAME_WIDTH - SLOPE_WIDTH) / 2;
+        let slopeLeft = (CANVAS_WIDTH - SLOPE_WIDTH) / 2;
         let slopeRight = slopeLeft + SLOPE_WIDTH;
 
-        for (let i = 0; i < Math.ceil(GAME_HEIGHT / SEGMENT_HEIGHT) + 5; i++) {
+        for (let i = 0; i < Math.ceil(CANVAS_HEIGHT / SEGMENT_HEIGHT) + 5; i++) {
             // Add some gentle variation to slope edges
             const variation = (Math.random() - 0.5) * 4;
-            slopeLeft = Math.max(100, Math.min(GAME_WIDTH - SLOPE_WIDTH - 100, slopeLeft + variation));
+            slopeLeft = Math.max(100, Math.min(CANVAS_WIDTH - SLOPE_WIDTH - 100, slopeLeft + variation));
             slopeRight = slopeLeft + SLOPE_WIDTH;
 
-            slopeSegments.push(createSlopeSegment(GAME_HEIGHT + i * SEGMENT_HEIGHT, slopeLeft, slopeRight));
+            slopeSegments.push(createSlopeSegment(CANVAS_HEIGHT + i * SEGMENT_HEIGHT, slopeLeft, slopeRight));
         }
 
         // Create initial gates for slalom mode
         if (gameMode === 'slalom') {
-            const centerX = GAME_WIDTH / 2;
+            const centerX = CANVAS_WIDTH / 2;
             for (let i = 0; i < 10; i++) {
-                const gateY = GAME_HEIGHT + 200 + i * GATE_SPACING;
+                const gateY = CANVAS_HEIGHT + 200 + i * GATE_SPACING;
                 const offset = (Math.random() - 0.5) * 100; // Vary gate positions
                 gates.push(createGate(centerX + offset, gateY));
                 totalGates++;
@@ -319,7 +360,7 @@
 
             // Check if we need to spawn a new gate
             if (lastGateY - gates[gates.length - 1].y < GATE_SPACING * 5) {
-                const centerX = GAME_WIDTH / 2;
+                const centerX = CANVAS_WIDTH / 2;
                 const offset = (Math.random() - 0.5) * 120; // Vary gate positions
                 const newGateY = lastGateY + GATE_SPACING;
                 gates.push(createGate(centerX + offset, newGateY));
@@ -335,7 +376,7 @@
             // Add new segment at the bottom
             const lastSegment = slopeSegments[slopeSegments.length - 1];
             const variation = (Math.random() - 0.5) * 6;
-            let newSlopeLeft = Math.max(100, Math.min(GAME_WIDTH - SLOPE_WIDTH - 100, lastSegment.leftEdge + variation));
+            let newSlopeLeft = Math.max(100, Math.min(CANVAS_WIDTH - SLOPE_WIDTH - 100, lastSegment.leftEdge + variation));
             let newSlopeRight = newSlopeLeft + SLOPE_WIDTH;
 
             const newSegment = createSlopeSegment(lastSegment.y + SEGMENT_HEIGHT, newSlopeLeft, newSlopeRight);
@@ -435,7 +476,7 @@
     function draw() {
         // Clear canvas with sky blue background
         ctx.fillStyle = '#87ceeb';
-        ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         if (gameState === 'menu') {
             drawMenu();
@@ -478,7 +519,7 @@
             // Draw slope edges (dark areas outside slope)
             ctx.fillStyle = '#2d4a2e';
             ctx.fillRect(0, segment.y, segment.leftEdge, SEGMENT_HEIGHT);
-            ctx.fillRect(segment.rightEdge, segment.y, GAME_WIDTH - segment.rightEdge, SEGMENT_HEIGHT);
+            ctx.fillRect(segment.rightEdge, segment.y, CANVAS_WIDTH - segment.rightEdge, SEGMENT_HEIGHT);
 
             // Draw edge lines
             ctx.strokeStyle = '#444';
@@ -690,101 +731,98 @@
 
     // Draw score
     function drawScore() {
+        const fontSize = Math.max(14, Math.min(24, CANVAS_WIDTH / 22));
+        const smallFont = Math.max(12, Math.min(20, CANVAS_WIDTH / 28));
+        const lineHeight = fontSize + 8;
+
         ctx.fillStyle = '#333';
-        ctx.font = 'bold 24px Arial';
+        ctx.font = `bold ${fontSize}px Arial`;
         ctx.textAlign = 'left';
 
         if (gameMode === 'downhill') {
-            ctx.fillText(`Distance: ${score}`, 20, 40);
-            ctx.fillText(`High: ${highScore}`, 20, 70);
+            ctx.fillText(`Dist: ${score}`, 10, lineHeight);
+            ctx.fillText(`High: ${highScore}`, 10, lineHeight * 2);
         } else if (gameMode === 'slalom') {
             const displayTime = gameTime.toFixed(1);
-            ctx.fillText(`Time: ${displayTime}s`, 20, 40);
-            ctx.fillText(`Gates: ${gatesPassed}/${totalGates}`, 20, 70);
-            ctx.fillText(`Missed: ${gatesMissed}`, 20, 100);
+            ctx.fillText(`Time: ${displayTime}s`, 10, lineHeight);
+            ctx.fillText(`Gates: ${gatesPassed}/${totalGates}`, 10, lineHeight * 2);
+            ctx.fillText(`Miss: ${gatesMissed}`, 10, lineHeight * 3);
             if (bestSlalomTime < 999) {
-                ctx.fillText(`Best: ${bestSlalomTime.toFixed(1)}s`, 20, 130);
+                ctx.fillText(`Best: ${bestSlalomTime.toFixed(1)}s`, 10, lineHeight * 4);
             }
         }
 
         // Show crash counter (hearts/lives)
         const crashesLeft = 3 - skier.crashCount;
-        ctx.font = 'bold 20px Arial';
+        ctx.font = `bold ${smallFont}px Arial`;
         ctx.fillStyle = '#ff0000';
-        const heartsY = gameMode === 'slalom' ? 160 : 100;
-        ctx.fillText('Lives: ' + '❤️'.repeat(crashesLeft) + '🖤'.repeat(skier.crashCount), 20, heartsY);
+        const heartsY = gameMode === 'slalom' ? lineHeight * 5 : lineHeight * 3;
+        ctx.fillText('❤️'.repeat(crashesLeft) + '🖤'.repeat(skier.crashCount), 10, heartsY);
     }
 
     // Draw menu
     function drawMenu() {
-        // Draw background slope
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(200, 0, 400, GAME_HEIGHT);
+        const titleSize = Math.max(20, Math.min(36, CANVAS_WIDTH / 14));
+        const textSize = Math.max(12, Math.min(20, CANVAS_WIDTH / 28));
+        const subSize = Math.max(14, Math.min(24, CANVAS_WIDTH / 22));
 
-        // Draw some decorative trees
+        // Draw background slope
+        const slopeLeft = CANVAS_WIDTH * 0.25;
+        const slopeWidth = CANVAS_WIDTH * 0.5;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(slopeLeft, 0, slopeWidth, CANVAS_HEIGHT);
+
+        // Draw some decorative trees (scaled positions)
         const menuTrees = [
-            { x: 250, y: 150 },
-            { x: 550, y: 200 },
-            { x: 350, y: 350 },
-            { x: 500, y: 450 }
+            { x: CANVAS_WIDTH * 0.3, y: CANVAS_HEIGHT * 0.25 },
+            { x: CANVAS_WIDTH * 0.7, y: CANVAS_HEIGHT * 0.33 },
+            { x: CANVAS_WIDTH * 0.4, y: CANVAS_HEIGHT * 0.58 },
+            { x: CANVAS_WIDTH * 0.6, y: CANVAS_HEIGHT * 0.75 }
         ];
+        const treeScale = scaleFactor;
         for (let tree of menuTrees) {
-            const size = 30;
+            const size = 30 * treeScale;
             const treeHeight = size * 1.2;
 
             ctx.fillStyle = '#654321';
-            ctx.fillRect(tree.x - 4, tree.y - 10, 8, 15);
+            ctx.fillRect(tree.x - 4 * treeScale, tree.y - 10 * treeScale, 8 * treeScale, 15 * treeScale);
 
             ctx.fillStyle = '#2d5016';
             ctx.beginPath();
             ctx.moveTo(tree.x, tree.y - treeHeight);
-            ctx.lineTo(tree.x - size / 2, tree.y - 10);
-            ctx.lineTo(tree.x + size / 2, tree.y - 10);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.moveTo(tree.x, tree.y - treeHeight * 1.1);
-            ctx.lineTo(tree.x - size / 2.5, tree.y - treeHeight * 0.4);
-            ctx.lineTo(tree.x + size / 2.5, tree.y - treeHeight * 0.4);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.moveTo(tree.x, tree.y - treeHeight * 1.3);
-            ctx.lineTo(tree.x - size / 3, tree.y - treeHeight * 0.7);
-            ctx.lineTo(tree.x + size / 3, tree.y - treeHeight * 0.7);
+            ctx.lineTo(tree.x - size / 2, tree.y - 10 * treeScale);
+            ctx.lineTo(tree.x + size / 2, tree.y - 10 * treeScale);
             ctx.closePath();
             ctx.fill();
         }
 
         ctx.fillStyle = '#333';
-        ctx.font = 'bold 48px Arial';
+        ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('⛷️ DOWNHILL SKIER', GAME_WIDTH / 2, 100);
+        ctx.fillText('DOWNHILL SKIER', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.15);
 
-        ctx.font = '20px Arial';
-        ctx.fillText('Ski down the mountain!', GAME_WIDTH / 2, 180);
+        ctx.font = `${textSize}px Arial`;
+        ctx.fillText('Ski down the mountain!', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.25);
 
-        ctx.font = 'bold 24px Arial';
+        ctx.font = `bold ${subSize}px Arial`;
         ctx.fillStyle = '#ff6b6b';
-        ctx.fillText('← → Arrow Keys to Move', GAME_WIDTH / 2, 220);
+        ctx.fillText('Use arrows to steer', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.35);
 
-        ctx.font = 'bold 32px Arial';
+        ctx.font = `bold ${subSize}px Arial`;
         ctx.fillStyle = '#2d5016';
-        ctx.fillText('Choose a mode below!', GAME_WIDTH / 2, 300);
+        ctx.fillText('Choose mode below!', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.48);
 
         if (highScore > 0 || bestSlalomTime < 999) {
-            ctx.font = 'bold 22px Arial';
+            ctx.font = `bold ${textSize}px Arial`;
             ctx.fillStyle = '#333';
-            ctx.fillText('Best Scores:', GAME_WIDTH / 2, 370);
+            ctx.fillText('Best:', CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.60);
             if (highScore > 0) {
-                ctx.font = '18px Arial';
-                ctx.fillText(`Downhill Distance: ${highScore}`, GAME_WIDTH / 2, 400);
+                ctx.font = `${textSize * 0.9}px Arial`;
+                ctx.fillText(`Downhill: ${highScore}m`, CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.67);
             }
             if (bestSlalomTime < 999) {
-                ctx.font = '18px Arial';
-                ctx.fillText(`Slalom Time: ${bestSlalomTime.toFixed(1)}s`, GAME_WIDTH / 2, 425);
+                ctx.font = `${textSize * 0.9}px Arial`;
+                ctx.fillText(`Slalom: ${bestSlalomTime.toFixed(1)}s`, CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.74);
             }
         }
     }
@@ -793,12 +831,12 @@
     function drawModeSelect() {
         // Draw background slope
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(200, 0, 400, GAME_HEIGHT);
+        ctx.fillRect(200, 0, 400, CANVAS_HEIGHT);
 
         ctx.fillStyle = '#333';
         ctx.font = 'bold 42px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('SELECT MODE', GAME_WIDTH / 2, 80);
+        ctx.fillText('SELECT MODE', CANVAS_WIDTH / 2, 80);
 
         // Downhill mode box
         ctx.fillStyle = '#4169E1';
@@ -831,70 +869,75 @@
         // Instructions
         ctx.fillStyle = '#333';
         ctx.font = '18px Arial';
-        ctx.fillText('Click a mode to begin your run!', GAME_WIDTH / 2, 400);
+        ctx.fillText('Click a mode to begin your run!', CANVAS_WIDTH / 2, 400);
 
         // Best scores
         if (highScore > 0 || bestSlalomTime < 999) {
             ctx.font = 'bold 20px Arial';
             ctx.fillStyle = '#2d5016';
-            ctx.fillText('Your Best Times:', GAME_WIDTH / 2, 470);
+            ctx.fillText('Your Best Times:', CANVAS_WIDTH / 2, 470);
             ctx.font = '16px Arial';
             ctx.fillStyle = '#333';
             if (highScore > 0) {
-                ctx.fillText(`Downhill: ${highScore}m`, GAME_WIDTH / 2 - 100, 500);
+                ctx.fillText(`Downhill: ${highScore}m`, CANVAS_WIDTH / 2 - 100, 500);
             }
             if (bestSlalomTime < 999) {
-                ctx.fillText(`Slalom: ${bestSlalomTime.toFixed(1)}s`, GAME_WIDTH / 2 + 100, 500);
+                ctx.fillText(`Slalom: ${bestSlalomTime.toFixed(1)}s`, CANVAS_WIDTH / 2 + 100, 500);
             }
         }
     }
 
     // Draw game over
     function drawGameOver() {
+        const titleSize = Math.max(24, Math.min(48, CANVAS_WIDTH / 10));
+        const textSize = Math.max(16, Math.min(32, CANVAS_WIDTH / 16));
+        const smallSize = Math.max(14, Math.min(24, CANVAS_WIDTH / 20));
+        const restartSize = Math.max(14, Math.min(28, CANVAS_WIDTH / 18));
+
         // Semi-transparent overlay
         ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-        ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         ctx.fillStyle = '#d63031';
-        ctx.font = 'bold 48px Arial';
+        ctx.font = `bold ${titleSize}px Arial`;
         ctx.textAlign = 'center';
-        ctx.fillText('CRASHED!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 80);
+        ctx.fillText('CRASHED!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 80 * scaleFactor);
 
         ctx.fillStyle = '#333';
-        ctx.font = '32px Arial';
+        ctx.font = `${textSize}px Arial`;
 
         if (gameMode === 'downhill') {
-            ctx.fillText(`Distance: ${score}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 - 20);
+            ctx.fillText(`Distance: ${score}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20 * scaleFactor);
 
             if (score > highScore) {
                 ctx.fillStyle = '#00b894';
-                ctx.font = 'bold 28px Arial';
-                ctx.fillText('🎉 NEW RECORD! 🎉', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 30);
+                ctx.font = `bold ${smallSize}px Arial`;
+                ctx.fillText('NEW RECORD!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 30 * scaleFactor);
             } else {
                 ctx.fillStyle = '#333';
-                ctx.font = '24px Arial';
-                ctx.fillText(`Best Distance: ${highScore}`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 30);
+                ctx.font = `${smallSize}px Arial`;
+                ctx.fillText(`Best: ${highScore}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 30 * scaleFactor);
             }
         } else if (gameMode === 'slalom') {
             const finalTime = gameTime.toFixed(1);
-            ctx.fillText(`Time: ${finalTime}s`, GAME_WIDTH / 2, GAME_HEIGHT / 2 - 30);
-            ctx.font = '24px Arial';
-            ctx.fillText(`Gates: ${gatesPassed}/${totalGates} (Missed: ${gatesMissed})`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 5);
+            ctx.fillText(`Time: ${finalTime}s`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 30 * scaleFactor);
+            ctx.font = `${smallSize}px Arial`;
+            ctx.fillText(`Gates: ${gatesPassed}/${totalGates}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 5 * scaleFactor);
 
             if (gatesPassed === totalGates && gameTime < bestSlalomTime) {
                 ctx.fillStyle = '#00b894';
-                ctx.font = 'bold 28px Arial';
-                ctx.fillText('🎉 NEW BEST TIME! 🎉', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
+                ctx.font = `bold ${smallSize}px Arial`;
+                ctx.fillText('NEW BEST!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 50 * scaleFactor);
             } else if (bestSlalomTime < 999) {
                 ctx.fillStyle = '#333';
-                ctx.font = '22px Arial';
-                ctx.fillText(`Best Time: ${bestSlalomTime.toFixed(1)}s`, GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
+                ctx.font = `${smallSize * 0.9}px Arial`;
+                ctx.fillText(`Best: ${bestSlalomTime.toFixed(1)}s`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 50 * scaleFactor);
             }
         }
 
-        ctx.font = 'bold 28px Arial';
+        ctx.font = `bold ${restartSize}px Arial`;
         ctx.fillStyle = '#2d5016';
-        ctx.fillText('CLICK TO PLAY AGAIN', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 120);
+        ctx.fillText('TAP TO RESTART', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 120 * scaleFactor);
     }
 
     // Game over
@@ -1023,123 +1066,115 @@
 
     // Launch Downhill Skier
     window.launchDownhillSkier = function() {
-        const content = document.getElementById('downhillSkierContent');
-
-        content.innerHTML = `
-            <canvas id="skierCanvas" width="${GAME_WIDTH}" height="${GAME_HEIGHT}" style="border: 2px solid rgba(103, 232, 249, 0.5); border-radius: 10px; max-width: 100%; height: auto; background: linear-gradient(180deg, #87ceeb 0%, #e0f0ff 100%); cursor: pointer; touch-action: none;"></canvas>
-
-            <!-- Mode Selection Buttons (shown initially) -->
-            <div id="modeButtons" style="display: flex; gap: 1rem; margin-top: 0.5rem; justify-content: center;">
-                <button id="btnDownhill" class="game-btn game-btn-primary" style="padding: 1rem; min-width: 120px;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">DOWNHILL</div>
-                    <div style="font-size: 0.75rem; opacity: 0.9;">Go for distance!</div>
-                </button>
-                <button id="btnSlalom" class="game-btn game-btn-danger" style="padding: 1rem; min-width: 120px;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">SLALOM</div>
-                    <div style="font-size: 0.75rem; opacity: 0.9;">Race the clock!</div>
-                </button>
-            </div>
-
-            <div id="gameInfo" class="game-rules" style="display: none;">
-                <p style="margin: 0.5rem 0;">Controls: Arrow keys, swipe, or buttons</p>
-                <p style="margin: 0.5rem 0;">Goal: <span id="goalText"></span></p>
-            </div>
-
-            <!-- Left/Right Control Buttons (hidden initially) -->
-            <div id="controlButtons" style="display: none; gap: 0.5rem; margin-top: 0.5rem; justify-content: center;">
-                <button id="btnSkiLeft" class="game-dpad-btn" style="width: 70px; height: 70px;">◀</button>
-                <button id="btnSkiRight" class="game-dpad-btn" style="width: 70px; height: 70px;">▶</button>
-            </div>
-        `;
-
-        // Show game section
-        document.querySelector('.welcome').style.display = 'none';
-        document.querySelector('.feature-grid').style.display = 'none';
+        // Hide other sections
         if (typeof hideAllMenus === 'function') hideAllMenus();
-        document.getElementById('downhillSkierGame').style.display = 'block';
 
-        // Initialize canvas
-        gameCanvas = document.getElementById('skierCanvas');
-        ctx = gameCanvas.getContext('2d');
+        // Show fullscreen game section
+        document.getElementById('downhillSkierGame').style.display = 'flex';
 
-        gameState = 'menu';
-        draw();
+        // Show mode buttons, hide control buttons initially
+        document.getElementById('skierModeButtons').style.display = 'flex';
+        document.getElementById('skierControlButtons').style.display = 'none';
 
-        // Mode selection button handlers
-        document.getElementById('btnDownhill').addEventListener('click', () => {
-            gameMode = 'downhill';
-            document.getElementById('modeButtons').style.display = 'none';
-            document.getElementById('gameInfo').style.display = 'block';
-            document.getElementById('controlButtons').style.display = 'flex';
-            document.getElementById('goalText').textContent = 'Avoid trees and stay on the slope!';
-            initGame();
-        });
+        // Double RAF for layout to settle
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                // Initialize canvas
+                gameCanvas = document.getElementById('skierCanvas');
+                ctx = gameCanvas.getContext('2d');
 
-        document.getElementById('btnSlalom').addEventListener('click', () => {
-            gameMode = 'slalom';
-            document.getElementById('modeButtons').style.display = 'none';
-            document.getElementById('gameInfo').style.display = 'block';
-            document.getElementById('controlButtons').style.display = 'flex';
-            document.getElementById('goalText').textContent = 'Pass through all gates!';
-            initGame();
-        });
+                // Resize canvas to fit wrapper
+                resizeCanvas();
 
-        // Event listeners for canvas - click to restart after game over
-        gameCanvas.addEventListener('click', handleClick);
+                gameState = 'menu';
+                draw();
 
-        // Touch event listeners for canvas (swipe control during gameplay)
-        gameCanvas.addEventListener('touchstart', handleTouchStart, { passive: false });
-        gameCanvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-        gameCanvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+                // Event listeners
+                document.addEventListener('keydown', handleKeyDown);
+                document.addEventListener('keyup', handleKeyUp);
+                window.addEventListener('resize', resizeCanvas);
 
-        // Keyboard support
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('keyup', handleKeyUp);
+                // Canvas click/touch for restart
+                gameCanvas.addEventListener('click', handleClick);
+                gameCanvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+                gameCanvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+                gameCanvas.addEventListener('touchend', handleTouchEnd, { passive: false });
 
-        // On-screen button controls
-        const btnLeft = document.getElementById('btnSkiLeft');
-        const btnRight = document.getElementById('btnSkiRight');
-
-        // Mouse events
-        btnLeft.addEventListener('mousedown', () => handleButtonDown('ArrowLeft'));
-        btnLeft.addEventListener('mouseup', () => handleButtonUp('ArrowLeft'));
-        btnLeft.addEventListener('mouseleave', () => handleButtonUp('ArrowLeft'));
-
-        btnRight.addEventListener('mousedown', () => handleButtonDown('ArrowRight'));
-        btnRight.addEventListener('mouseup', () => handleButtonUp('ArrowRight'));
-        btnRight.addEventListener('mouseleave', () => handleButtonUp('ArrowRight'));
-
-        // Touch events for buttons
-        btnLeft.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            handleButtonDown('ArrowLeft');
-        });
-        btnLeft.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            handleButtonUp('ArrowLeft');
-        });
-
-        btnRight.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            handleButtonDown('ArrowRight');
-        });
-        btnRight.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            handleButtonUp('ArrowRight');
+                // Setup HTML button controls
+                setupHTMLControls();
+            });
         });
     };
+
+    // Setup HTML button controls
+    function setupHTMLControls() {
+        // Mode selection buttons
+        const btnDownhill = document.getElementById('btnDownhill');
+        const btnSlalom = document.getElementById('btnSlalom');
+
+        if (btnDownhill) {
+            btnDownhill.addEventListener('click', () => {
+                gameMode = 'downhill';
+                document.getElementById('skierModeButtons').style.display = 'none';
+                document.getElementById('skierControlButtons').style.display = 'flex';
+                initGame();
+            });
+        }
+
+        if (btnSlalom) {
+            btnSlalom.addEventListener('click', () => {
+                gameMode = 'slalom';
+                document.getElementById('skierModeButtons').style.display = 'none';
+                document.getElementById('skierControlButtons').style.display = 'flex';
+                initGame();
+            });
+        }
+
+        // Helper to setup button with all event handlers
+        function setupButton(id, keyName) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+
+            btn.addEventListener('touchstart', (e) => { e.preventDefault(); handleButtonDown(keyName); }, { passive: false });
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); handleButtonUp(keyName); }, { passive: false });
+            btn.addEventListener('touchcancel', () => { handleButtonUp(keyName); });
+            btn.addEventListener('mousedown', (e) => { e.preventDefault(); handleButtonDown(keyName); });
+            btn.addEventListener('mouseup', () => { handleButtonUp(keyName); });
+            btn.addEventListener('mouseleave', () => { handleButtonUp(keyName); });
+        }
+
+        // Setup direction buttons
+        setupButton('btnSkiLeft', 'ArrowLeft');
+        setupButton('btnSkiRight', 'ArrowRight');
+
+        // NEW button handler
+        const btnNew = document.getElementById('skierBtnNew');
+        if (btnNew) {
+            btnNew.addEventListener('click', () => {
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+                document.getElementById('skierModeButtons').style.display = 'flex';
+                document.getElementById('skierControlButtons').style.display = 'none';
+                gameState = 'menu';
+                draw();
+            });
+        }
+    }
 
     // Exit to menu
     window.exitDownhillSkierToMenu = function() {
         if (animationId) {
             cancelAnimationFrame(animationId);
+            animationId = null;
         }
 
-        // Remove keyboard listeners
+        // Remove event listeners
         document.removeEventListener('keydown', handleKeyDown);
         document.removeEventListener('keyup', handleKeyUp);
+        window.removeEventListener('resize', resizeCanvas);
 
-        // Remove touch event listeners
         if (gameCanvas) {
             gameCanvas.removeEventListener('touchstart', handleTouchStart);
             gameCanvas.removeEventListener('touchmove', handleTouchMove);

@@ -192,6 +192,7 @@ ctx.font = `bold ${fontSize}px Arial`;
 - [x] Breakout (v1.140.0) - dynamic sizing, LAUNCH/PAUSE/arrow buttons, bigger paddle
 - [x] Caverns of Mars (v1.141.0) - FIRE/arrow buttons, scaled menus, HUD bars
 - [x] Centipede (v1.142.0) - FIRE/D-pad buttons, dynamic sizing, scaled text
+- [x] Downhill Skier (v1.143.0) - mode select/arrow buttons, dynamic sizing, scaled text
 
 ### Games Still Needing Mobile Update
 - [ ] Frogger
