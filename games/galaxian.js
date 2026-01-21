@@ -2,25 +2,72 @@
 (function() {
     'use strict';
 
-    // Game constants
-    const CANVAS_WIDTH = 360;
-    const CANVAS_HEIGHT = 480;
-    const PLAYER_WIDTH = 24;
-    const PLAYER_HEIGHT = 24;
-    const PLAYER_SPEED = 4;
-    const BULLET_WIDTH = 3;
-    const BULLET_HEIGHT = 12;
-    const BULLET_SPEED = 8;
-    const ENEMY_WIDTH = 20;
-    const ENEMY_HEIGHT = 20;
+    // Dynamic canvas sizing
+    const BASE_WIDTH = 360;
+    const BASE_HEIGHT = 480;
+    let CANVAS_WIDTH = 360;
+    let CANVAS_HEIGHT = 480;
+    let scaleFactor = 1;
+
+    // Base game constants (will be scaled)
+    const BASE_PLAYER_WIDTH = 24;
+    const BASE_PLAYER_HEIGHT = 24;
+    const BASE_PLAYER_SPEED = 4;
+    const BASE_BULLET_WIDTH = 3;
+    const BASE_BULLET_HEIGHT = 12;
+    const BASE_BULLET_SPEED = 8;
+    const BASE_ENEMY_WIDTH = 20;
+    const BASE_ENEMY_HEIGHT = 20;
     const ENEMY_ROWS = 5;
     const ENEMY_COLS = 10;
-    const ENEMY_SPACING_X = 32;
-    const ENEMY_SPACING_Y = 32;
-    const ENEMY_START_X = 40;
-    const ENEMY_START_Y = 60;
-    const DIVE_SPEED = 3;
-    const ENEMY_BULLET_SPEED = 4;
+    const BASE_ENEMY_SPACING_X = 32;
+    const BASE_ENEMY_SPACING_Y = 32;
+    const BASE_ENEMY_START_X = 40;
+    const BASE_ENEMY_START_Y = 60;
+    const BASE_DIVE_SPEED = 3;
+    const BASE_ENEMY_BULLET_SPEED = 4;
+
+    // Scaled getters
+    function getPlayerWidth() { return BASE_PLAYER_WIDTH * scaleFactor; }
+    function getPlayerHeight() { return BASE_PLAYER_HEIGHT * scaleFactor; }
+    function getPlayerSpeed() { return BASE_PLAYER_SPEED * scaleFactor; }
+    function getBulletWidth() { return BASE_BULLET_WIDTH * scaleFactor; }
+    function getBulletHeight() { return BASE_BULLET_HEIGHT * scaleFactor; }
+    function getBulletSpeed() { return BASE_BULLET_SPEED * scaleFactor; }
+    function getEnemyWidth() { return BASE_ENEMY_WIDTH * scaleFactor; }
+    function getEnemyHeight() { return BASE_ENEMY_HEIGHT * scaleFactor; }
+    function getEnemyBulletSpeed() { return BASE_ENEMY_BULLET_SPEED * scaleFactor; }
+
+    // Resize canvas to fill wrapper
+    function resizeCanvas() {
+        const wrapper = document.getElementById('galaxianCanvasWrapper');
+        if (!wrapper || !gameState.canvas) return;
+
+        let w = wrapper.clientWidth;
+        let h = wrapper.clientHeight;
+
+        if (w === 0 || h === 0) {
+            w = window.innerWidth;
+            h = window.innerHeight - 120;
+        }
+
+        // Maintain aspect ratio (3:4)
+        const targetRatio = BASE_WIDTH / BASE_HEIGHT;
+        const currentRatio = w / h;
+
+        if (currentRatio > targetRatio) {
+            CANVAS_HEIGHT = h;
+            CANVAS_WIDTH = h * targetRatio;
+        } else {
+            CANVAS_WIDTH = w;
+            CANVAS_HEIGHT = w / targetRatio;
+        }
+
+        gameState.canvas.width = CANVAS_WIDTH;
+        gameState.canvas.height = CANVAS_HEIGHT;
+
+        scaleFactor = CANVAS_WIDTH / BASE_WIDTH;
+    }
 
     // Enemy types with colors and point values
     const ENEMY_TYPES = {
@@ -61,10 +108,11 @@
         constructor(x, y) {
             this.x = x;
             this.y = y;
-            this.width = PLAYER_WIDTH;
-            this.height = PLAYER_HEIGHT;
-            this.speed = PLAYER_SPEED;
         }
+
+        get width() { return getPlayerWidth(); }
+        get height() { return getPlayerHeight(); }
+        get speed() { return getPlayerSpeed(); }
 
         draw(ctx) {
             // Blink when invincible (skip drawing every 8 frames)
@@ -72,23 +120,26 @@
                 return;
             }
 
+            const w = this.width;
+            const h = this.height;
+
             // Draw simple spaceship shape
             ctx.fillStyle = '#00FF00';
             ctx.beginPath();
-            ctx.moveTo(this.x + this.width / 2, this.y);
-            ctx.lineTo(this.x + this.width, this.y + this.height);
-            ctx.lineTo(this.x + this.width / 2, this.y + this.height * 0.7);
-            ctx.lineTo(this.x, this.y + this.height);
+            ctx.moveTo(this.x + w / 2, this.y);
+            ctx.lineTo(this.x + w, this.y + h);
+            ctx.lineTo(this.x + w / 2, this.y + h * 0.7);
+            ctx.lineTo(this.x, this.y + h);
             ctx.closePath();
             ctx.fill();
         }
 
         moveLeft() {
-            this.x = Math.max(10, this.x - this.speed);
+            this.x = Math.max(10 * scaleFactor, this.x - this.speed);
         }
 
         moveRight() {
-            this.x = Math.min(CANVAS_WIDTH - this.width - 10, this.x + this.speed);
+            this.x = Math.min(CANVAS_WIDTH - this.width - 10 * scaleFactor, this.x + this.speed);
         }
     }
 
@@ -97,10 +148,11 @@
         constructor(x, y, speed) {
             this.x = x;
             this.y = y;
-            this.width = BULLET_WIDTH;
-            this.height = BULLET_HEIGHT;
             this.speed = speed;
         }
+
+        get width() { return getBulletWidth(); }
+        get height() { return getBulletHeight(); }
 
         draw(ctx) {
             ctx.fillStyle = '#FFFF00';
@@ -130,22 +182,26 @@
     // Star object for background
     class Star {
         constructor() {
-            this.x = Math.random() * CANVAS_WIDTH;
-            this.y = Math.random() * CANVAS_HEIGHT;
-            this.speed = Math.random() * 2 + 1;
+            this.baseX = Math.random();
+            this.baseY = Math.random();
+            this.baseSpeed = Math.random() * 2 + 1;
             this.brightness = Math.random() * 0.5 + 0.5;
         }
 
+        get x() { return this.baseX * CANVAS_WIDTH; }
+        get y() { return this.baseY * CANVAS_HEIGHT; }
+        get speed() { return this.baseSpeed * scaleFactor; }
+
         draw(ctx) {
             ctx.fillStyle = `rgba(255, 255, 255, ${this.brightness})`;
-            ctx.fillRect(this.x, this.y, 1, 1);
+            ctx.fillRect(this.x, this.y, Math.max(1, scaleFactor), Math.max(1, scaleFactor));
         }
 
         update() {
-            this.y += this.speed;
-            if (this.y > CANVAS_HEIGHT) {
-                this.y = 0;
-                this.x = Math.random() * CANVAS_WIDTH;
+            this.baseY += this.baseSpeed * scaleFactor / CANVAS_HEIGHT;
+            if (this.baseY > 1) {
+                this.baseY = 0;
+                this.baseX = Math.random();
             }
         }
     }
@@ -157,8 +213,6 @@
             this.homeY = y;
             this.x = x;
             this.y = y;
-            this.width = ENEMY_WIDTH;
-            this.height = ENEMY_HEIGHT;
             this.type = type;
             this.row = row;
             this.col = col;
@@ -171,38 +225,45 @@
             this.alive = true;
         }
 
+        get width() { return getEnemyWidth(); }
+        get height() { return getEnemyHeight(); }
+
         draw(ctx) {
             if (!this.alive) return;
+
+            const w = this.width;
+            const h = this.height;
+            const wingSize = 4 * scaleFactor;
 
             ctx.fillStyle = this.type.color;
 
             // Draw spaceship body - diamond/arrow shape
             ctx.beginPath();
-            ctx.moveTo(this.x + this.width / 2, this.y); // Top point
-            ctx.lineTo(this.x + this.width, this.y + this.height * 0.6); // Right side
-            ctx.lineTo(this.x + this.width / 2, this.y + this.height); // Bottom point
-            ctx.lineTo(this.x, this.y + this.height * 0.6); // Left side
+            ctx.moveTo(this.x + w / 2, this.y); // Top point
+            ctx.lineTo(this.x + w, this.y + h * 0.6); // Right side
+            ctx.lineTo(this.x + w / 2, this.y + h); // Bottom point
+            ctx.lineTo(this.x, this.y + h * 0.6); // Left side
             ctx.closePath();
             ctx.fill();
 
             // Draw wings/fins extending out
             ctx.beginPath();
-            ctx.moveTo(this.x, this.y + this.height * 0.6);
-            ctx.lineTo(this.x - 4, this.y + this.height * 0.5);
-            ctx.lineTo(this.x, this.y + this.height * 0.4);
+            ctx.moveTo(this.x, this.y + h * 0.6);
+            ctx.lineTo(this.x - wingSize, this.y + h * 0.5);
+            ctx.lineTo(this.x, this.y + h * 0.4);
             ctx.fill();
 
             ctx.beginPath();
-            ctx.moveTo(this.x + this.width, this.y + this.height * 0.6);
-            ctx.lineTo(this.x + this.width + 4, this.y + this.height * 0.5);
-            ctx.lineTo(this.x + this.width, this.y + this.height * 0.4);
+            ctx.moveTo(this.x + w, this.y + h * 0.6);
+            ctx.lineTo(this.x + w + wingSize, this.y + h * 0.5);
+            ctx.lineTo(this.x + w, this.y + h * 0.4);
             ctx.fill();
 
             // Add cockpit detail for flagships
             if (this.type === ENEMY_TYPES.FLAGSHIP) {
                 ctx.fillStyle = '#FFFF00';
                 ctx.beginPath();
-                ctx.arc(this.x + this.width / 2, this.y + this.height * 0.5, 3, 0, Math.PI * 2);
+                ctx.arc(this.x + w / 2, this.y + h * 0.5, 3 * scaleFactor, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
@@ -240,17 +301,17 @@
         }
 
         updateDive() {
-            this.divePhase += 0.01;  // Slowed further: 0.05 → 0.02 → 0.01
+            this.divePhase += 0.01;
 
-            // S-curve dive pattern
+            // S-curve dive pattern (scaled)
             const progress = this.divePhase;
-            const curveOffset = Math.sin(progress * Math.PI * 2) * 80;
+            const curveOffset = Math.sin(progress * Math.PI * 2) * 80 * scaleFactor;
 
             this.x = this.diveStartX + curveOffset;
-            this.y = this.diveStartY + progress * 100;  // Slowed further: 300 → 180 → 100
+            this.y = this.diveStartY + progress * 100 * scaleFactor;
 
             // Return to formation or die off screen
-            if (this.y > CANVAS_HEIGHT + 50) {
+            if (this.y > CANVAS_HEIGHT + 50 * scaleFactor) {
                 this.diving = false;
                 this.x = this.homeX;
                 this.y = this.homeY;
@@ -260,9 +321,9 @@
 
         shoot() {
             const bullet = new EnemyBullet(
-                this.x + this.width / 2 - BULLET_WIDTH / 2,
+                this.x + this.width / 2 - getBulletWidth() / 2,
                 this.y + this.height,
-                ENEMY_BULLET_SPEED
+                getEnemyBulletSpeed()
             );
             gameState.enemyBullets.push(bullet);
         }
@@ -284,9 +345,7 @@
         gameState.canvas = canvas;
         gameState.ctx = canvas.getContext('2d');
 
-        // Set canvas size
-        canvas.width = CANVAS_WIDTH;
-        canvas.height = CANVAS_HEIGHT;
+        resizeCanvas();
 
         resetGame();
         setupControls();
@@ -296,8 +355,8 @@
     function resetGame() {
         // Reset player
         gameState.player = new Player(
-            CANVAS_WIDTH / 2 - PLAYER_WIDTH / 2,
-            CANVAS_HEIGHT - 60
+            CANVAS_WIDTH / 2 - getPlayerWidth() / 2,
+            CANVAS_HEIGHT - 60 * scaleFactor
         );
 
         // Reset game state
@@ -329,10 +388,15 @@
     function createEnemyFormation() {
         gameState.enemies = [];
 
+        const startX = BASE_ENEMY_START_X * scaleFactor;
+        const startY = BASE_ENEMY_START_Y * scaleFactor;
+        const spacingX = BASE_ENEMY_SPACING_X * scaleFactor;
+        const spacingY = BASE_ENEMY_SPACING_Y * scaleFactor;
+
         for (let row = 0; row < ENEMY_ROWS; row++) {
             for (let col = 0; col < ENEMY_COLS; col++) {
-                const x = ENEMY_START_X + col * ENEMY_SPACING_X;
-                const y = ENEMY_START_Y + row * ENEMY_SPACING_Y;
+                const x = startX + col * spacingX;
+                const y = startY + row * spacingY;
 
                 let type;
                 if (row === 0 && (col === 4 || col === 5)) {
@@ -370,11 +434,12 @@
     }
 
     function shoot() {
+        if (!gameState.player) return;
         if (!gameState.bullet) {
             gameState.bullet = new Bullet(
-                gameState.player.x + gameState.player.width / 2 - BULLET_WIDTH / 2,
+                gameState.player.x + gameState.player.width / 2 - getBulletWidth() / 2,
                 gameState.player.y,
-                BULLET_SPEED
+                getBulletSpeed()
             );
         }
     }
@@ -400,9 +465,9 @@
     }
 
     function updateFormation() {
-        gameState.formationOffsetX += gameState.formationDirection * 0.5;
+        gameState.formationOffsetX += gameState.formationDirection * 0.5 * scaleFactor;
 
-        if (gameState.formationOffsetX > 30 || gameState.formationOffsetX < -30) {
+        if (gameState.formationOffsetX > 30 * scaleFactor || gameState.formationOffsetX < -30 * scaleFactor) {
             gameState.formationDirection *= -1;
         }
     }
@@ -427,16 +492,18 @@
                 if (checkRectCollision(bullet, gameState.player)) {
                     gameState.enemyBullets.splice(i, 1);
                     loseLife();
-                    break;
+                    return; // Exit early - player may now be null
                 }
             }
 
-            // Enemy collision with player
-            for (let enemy of gameState.enemies) {
-                if (enemy.alive && checkRectCollision(enemy, gameState.player)) {
-                    enemy.alive = false;
-                    loseLife();
-                    break;
+            // Enemy collision with player (re-check player exists)
+            if (gameState.player) {
+                for (let enemy of gameState.enemies) {
+                    if (enemy.alive && checkRectCollision(enemy, gameState.player)) {
+                        enemy.alive = false;
+                        loseLife();
+                        return; // Exit early
+                    }
                 }
             }
         }
@@ -482,8 +549,8 @@
             if (gameState.respawnTimer <= 0) {
                 // Respawn player
                 gameState.player = new Player(
-                    CANVAS_WIDTH / 2 - PLAYER_WIDTH / 2,
-                    CANVAS_HEIGHT - 60
+                    CANVAS_WIDTH / 2 - getPlayerWidth() / 2,
+                    CANVAS_HEIGHT - 60 * scaleFactor
                 );
                 gameState.respawning = false;
                 gameState.invincible = true;
@@ -570,32 +637,39 @@
     }
 
     function drawUI(ctx) {
+        const fontSize = Math.max(12, 16 * scaleFactor);
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = '16px monospace';
-        ctx.fillText(`Score: ${gameState.score}`, 10, 20);
-        ctx.fillText(`Lives: ${gameState.lives}`, 10, 40);
-        ctx.fillText(`Level: ${gameState.level}`, CANVAS_WIDTH - 90, 20);
+        ctx.font = `${fontSize}px monospace`;
+        ctx.fillText(`Score: ${gameState.score}`, 10 * scaleFactor, 20 * scaleFactor);
+        ctx.fillText(`Lives: ${gameState.lives}`, 10 * scaleFactor, 40 * scaleFactor);
+        ctx.fillText(`Level: ${gameState.level}`, CANVAS_WIDTH - 90 * scaleFactor, 20 * scaleFactor);
     }
 
     function drawGameOver(ctx) {
+        const boxHeight = 160 * scaleFactor;
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(0, CANVAS_HEIGHT / 2 - 80, CANVAS_WIDTH, 160);
+        ctx.fillRect(0, CANVAS_HEIGHT / 2 - boxHeight / 2, CANVAS_WIDTH, boxHeight);
 
+        const titleSize = Math.max(20, 32 * scaleFactor);
         ctx.fillStyle = '#FF0000';
-        ctx.font = 'bold 32px monospace';
+        ctx.font = `bold ${titleSize}px monospace`;
         ctx.textAlign = 'center';
-        ctx.fillText('GAME OVER', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 30);
+        ctx.fillText('GAME OVER', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 30 * scaleFactor);
 
+        const scoreSize = Math.max(14, 18 * scaleFactor);
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = '18px monospace';
+        ctx.font = `${scoreSize}px monospace`;
         ctx.fillText(`Final Score: ${gameState.score}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
 
-        // Restart button
+        // Restart button (scaled)
+        const btnWidth = 160 * scaleFactor;
+        const btnHeight = 50 * scaleFactor;
         ctx.fillStyle = '#28a745';
-        ctx.fillRect(CANVAS_WIDTH / 2 - 80, CANVAS_HEIGHT / 2 + 20, 160, 50);
+        ctx.fillRect(CANVAS_WIDTH / 2 - btnWidth / 2, CANVAS_HEIGHT / 2 + 20 * scaleFactor, btnWidth, btnHeight);
+        const btnFontSize = Math.max(14, 20 * scaleFactor);
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 20px monospace';
-        ctx.fillText('RESTART', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 52);
+        ctx.font = `bold ${btnFontSize}px monospace`;
+        ctx.fillText('RESTART', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 20 * scaleFactor + btnHeight / 2 + btnFontSize / 3);
 
         ctx.textAlign = 'left';
     }
@@ -633,14 +707,14 @@
             const x = (clientX - rect.left) * scaleX;
             const y = (clientY - rect.top) * scaleY;
 
-            // Check if click is on restart button
-            const buttonX = CANVAS_WIDTH / 2 - 80;
-            const buttonY = CANVAS_HEIGHT / 2 + 20;
-            const buttonWidth = 160;
-            const buttonHeight = 50;
+            // Check if click is on restart button (scaled)
+            const btnWidth = 160 * scaleFactor;
+            const btnHeight = 50 * scaleFactor;
+            const buttonX = CANVAS_WIDTH / 2 - btnWidth / 2;
+            const buttonY = CANVAS_HEIGHT / 2 + 20 * scaleFactor;
 
-            if (x >= buttonX && x <= buttonX + buttonWidth &&
-                y >= buttonY && y <= buttonY + buttonHeight) {
+            if (x >= buttonX && x <= buttonX + btnWidth &&
+                y >= buttonY && y <= buttonY + btnHeight) {
                 resetGame();
             }
         };
@@ -649,78 +723,62 @@
         canvas.addEventListener('touchstart', handleCanvasClick);
 
         if (btnLeft) {
-            btnLeft.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                gameState.keys['ArrowLeft'] = true;
-            });
-            btnLeft.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                gameState.keys['ArrowLeft'] = false;
-            });
-            btnLeft.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                gameState.keys['ArrowLeft'] = true;
-            });
-            btnLeft.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                gameState.keys['ArrowLeft'] = false;
-            });
+            btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); gameState.keys['ArrowLeft'] = true; }, { passive: false });
+            btnLeft.addEventListener('touchend', (e) => { e.preventDefault(); gameState.keys['ArrowLeft'] = false; }, { passive: false });
+            btnLeft.addEventListener('touchcancel', () => { gameState.keys['ArrowLeft'] = false; });
+            btnLeft.addEventListener('mousedown', (e) => { e.preventDefault(); gameState.keys['ArrowLeft'] = true; });
+            btnLeft.addEventListener('mouseup', () => { gameState.keys['ArrowLeft'] = false; });
+            btnLeft.addEventListener('mouseleave', () => { gameState.keys['ArrowLeft'] = false; });
         }
 
         if (btnRight) {
-            btnRight.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                gameState.keys['ArrowRight'] = true;
-            });
-            btnRight.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                gameState.keys['ArrowRight'] = false;
-            });
-            btnRight.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                gameState.keys['ArrowRight'] = true;
-            });
-            btnRight.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                gameState.keys['ArrowRight'] = false;
-            });
+            btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); gameState.keys['ArrowRight'] = true; }, { passive: false });
+            btnRight.addEventListener('touchend', (e) => { e.preventDefault(); gameState.keys['ArrowRight'] = false; }, { passive: false });
+            btnRight.addEventListener('touchcancel', () => { gameState.keys['ArrowRight'] = false; });
+            btnRight.addEventListener('mousedown', (e) => { e.preventDefault(); gameState.keys['ArrowRight'] = true; });
+            btnRight.addEventListener('mouseup', () => { gameState.keys['ArrowRight'] = false; });
+            btnRight.addEventListener('mouseleave', () => { gameState.keys['ArrowRight'] = false; });
         }
 
         if (btnFire) {
-            btnFire.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                gameState.keys[' '] = true;
-            });
-            btnFire.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                gameState.keys[' '] = false;
-            });
-            btnFire.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                gameState.keys[' '] = true;
-            });
-            btnFire.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                gameState.keys[' '] = false;
-            });
+            btnFire.addEventListener('touchstart', (e) => { e.preventDefault(); gameState.keys[' '] = true; }, { passive: false });
+            btnFire.addEventListener('touchend', (e) => { e.preventDefault(); gameState.keys[' '] = false; }, { passive: false });
+            btnFire.addEventListener('touchcancel', () => { gameState.keys[' '] = false; });
+            btnFire.addEventListener('mousedown', (e) => { e.preventDefault(); gameState.keys[' '] = true; });
+            btnFire.addEventListener('mouseup', () => { gameState.keys[' '] = false; });
+            btnFire.addEventListener('mouseleave', () => { gameState.keys[' '] = false; });
         }
     }
 
     // Launch Galaxian
     window.launchGalaxian = function() {
         if (typeof hideAllMenus === 'function') hideAllMenus();
-        document.getElementById('galaxianGame').style.display = 'block';
-        initGame();
-        setupMobileControls();
+        document.getElementById('galaxianGame').style.display = 'flex';
+
+        // Double RAF for layout to settle
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                initGame();
+                setupMobileControls();
+                window.addEventListener('resize', resizeCanvas);
+            });
+        });
     };
 
     // Exit to menu
     window.exitGalaxian = function() {
         if (gameState.animationId) {
             cancelAnimationFrame(gameState.animationId);
+            gameState.animationId = null;
         }
+        window.removeEventListener('resize', resizeCanvas);
         document.getElementById('galaxianGame').style.display = 'none';
         document.getElementById('arcadeMenu').style.display = 'block';
+    };
+
+    // Restart game (for HTML button)
+    window.galaxianRestart = function() {
+        resetGame();
     };
 
 })();

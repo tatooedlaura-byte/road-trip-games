@@ -195,6 +195,7 @@ ctx.font = `bold ${fontSize}px Arial`;
 - [x] Downhill Skier (v1.143.0) - mode select/arrow buttons, dynamic sizing, scaled text
 - [x] Frogger (v1.144.0) - D-pad controls, dynamic grid sizing, hand preference toggle
 - [x] Galaga (v1.145.0) - FIRE/arrow buttons, dynamic sizing, scaled enemies/bullets
+- [x] Galaxian (v1.146.0) - FIRE/arrow buttons, dynamic sizing, scaled enemies/dive patterns
 
 ### Games Still Needing Mobile Update
 - [ ] Snake
