@@ -723,6 +723,7 @@
     }
 
     function shoot() {
+        if (!gameState.player) return;
         if (gameState.bullets.length < MAX_PLAYER_BULLETS) {
             const bullet = new Bullet(
                 gameState.player.x + gameState.player.width / 2 - getBulletWidth() / 2,
@@ -786,16 +787,18 @@
                 if (checkRectCollision(bullet, gameState.player)) {
                     gameState.enemyBullets.splice(i, 1);
                     loseLife();
-                    break;
+                    return; // Exit early - player is now null or respawning
                 }
             }
 
-            // Enemy collision with player
-            for (let enemy of gameState.enemies) {
-                if (enemy.alive && enemy.diving && checkRectCollision(enemy, gameState.player)) {
-                    enemy.alive = false;
-                    loseLife();
-                    break;
+            // Enemy collision with player (re-check player exists after bullet check)
+            if (gameState.player) {
+                for (let enemy of gameState.enemies) {
+                    if (enemy.alive && enemy.diving && checkRectCollision(enemy, gameState.player)) {
+                        enemy.alive = false;
+                        loseLife();
+                        return; // Exit early
+                    }
                 }
             }
         }
