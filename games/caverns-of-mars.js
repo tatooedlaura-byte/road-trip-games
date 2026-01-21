@@ -538,22 +538,65 @@
             }
         });
 
-        // Draw fuel tanks
-        ctx.fillStyle = '#ffff00';
+        // Draw fuel tanks (canister style)
         fuelTanks.forEach(tank => {
             if (!tank.active) return;
             const screenY = tank.y - cave.scrollOffset;
             if (screenY > -50 && screenY < GAME_HEIGHT + 50) {
-                ctx.fillRect(tank.x, screenY, tank.width, tank.height);
-                ctx.strokeStyle = '#ff8800';
-                ctx.lineWidth = 2;
-                ctx.strokeRect(tank.x, screenY, tank.width, tank.height);
+                const x = tank.x;
+                const y = screenY;
+                const w = tank.width;
+                const h = tank.height;
 
-                // F for fuel
-                ctx.fillStyle = '#000';
-                ctx.font = 'bold 16px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('F', tank.x + tank.width / 2, screenY + tank.height / 2 + 6);
+                // Canister body - gradient for 3D effect
+                const bodyGradient = ctx.createLinearGradient(x, y, x + w, y);
+                bodyGradient.addColorStop(0, '#cc8800');
+                bodyGradient.addColorStop(0.3, '#ffcc00');
+                bodyGradient.addColorStop(0.5, '#ffee66');
+                bodyGradient.addColorStop(0.7, '#ffcc00');
+                bodyGradient.addColorStop(1, '#aa6600');
+
+                // Main body with rounded ends
+                ctx.fillStyle = bodyGradient;
+                ctx.beginPath();
+                ctx.roundRect(x + 2, y + 4, w - 4, h - 6, 3);
+                ctx.fill();
+
+                // Top cap/nozzle
+                ctx.fillStyle = '#888';
+                ctx.fillRect(x + w/2 - 4, y, 8, 5);
+                ctx.fillStyle = '#666';
+                ctx.fillRect(x + w/2 - 2, y - 2, 4, 4);
+
+                // Highlight stripe
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                ctx.fillRect(x + 5, y + 6, 3, h - 10);
+
+                // Fuel level bands
+                ctx.strokeStyle = '#aa6600';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(x + 4, y + h * 0.4);
+                ctx.lineTo(x + w - 4, y + h * 0.4);
+                ctx.moveTo(x + 4, y + h * 0.65);
+                ctx.lineTo(x + w - 4, y + h * 0.65);
+                ctx.stroke();
+
+                // Outline
+                ctx.strokeStyle = '#885500';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.roundRect(x + 2, y + 4, w - 4, h - 6, 3);
+                ctx.stroke();
+
+                // Glow effect
+                ctx.shadowColor = '#ffaa00';
+                ctx.shadowBlur = 8;
+                ctx.fillStyle = 'rgba(255, 200, 0, 0.3)';
+                ctx.beginPath();
+                ctx.roundRect(x, y + 2, w, h - 4, 4);
+                ctx.fill();
+                ctx.shadowBlur = 0;
             }
         });
 
