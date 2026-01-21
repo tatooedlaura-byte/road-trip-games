@@ -116,7 +116,7 @@
         scaleFactor = Math.min(CANVAS_WIDTH / 800, CANVAS_HEIGHT / 600);
 
         // Scale game elements
-        PADDLE_WIDTH = Math.round(100 * scaleFactor);
+        PADDLE_WIDTH = Math.round(130 * scaleFactor); // Bigger paddle for easier play
         PADDLE_SPEED = Math.round(8 * scaleFactor);
         BALL_RADIUS = Math.max(6, Math.round(8 * scaleFactor));
 
