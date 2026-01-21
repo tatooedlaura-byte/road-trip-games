@@ -2,21 +2,24 @@
 (function() {
     'use strict';
 
-    // Game constants
-    const CANVAS_WIDTH = 800;
-    const CANVAS_HEIGHT = 600;
-    const PADDLE_WIDTH = 100;
+    // Game constants - these will be recalculated based on canvas size
+    let CANVAS_WIDTH = 800;
+    let CANVAS_HEIGHT = 600;
+    let PADDLE_WIDTH = 100;
     const PADDLE_HEIGHT = 15;
-    const PADDLE_SPEED = 8;
-    const BALL_RADIUS = 8;
+    let PADDLE_SPEED = 8;
+    let BALL_RADIUS = 8;
     const BALL_SPEED = 4;
     const BRICK_ROWS = 8;
     const BRICK_COLS = 14;
-    const BRICK_WIDTH = 50;
-    const BRICK_HEIGHT = 20;
-    const BRICK_PADDING = 5;
-    const BRICK_OFFSET_TOP = 80;
-    const BRICK_OFFSET_LEFT = 35;
+    let BRICK_WIDTH = 50;
+    let BRICK_HEIGHT = 20;
+    let BRICK_PADDING = 5;
+    let BRICK_OFFSET_TOP = 80;
+    let BRICK_OFFSET_LEFT = 35;
+
+    // Scale factor for responsive sizing
+    let scaleFactor = 1;
     const STARTING_LIVES = 3;
 
     // Brick colors and points - neon theme
@@ -55,7 +58,7 @@
         canvas: null,
         ctx: null,
         paddle: { x: 0, y: 0, width: PADDLE_WIDTH, height: PADDLE_HEIGHT, dx: 0, normalWidth: PADDLE_WIDTH, wideUntil: 0 },
-        ball: { x: 0, y: 0, dx: 0, dy: 0, radius: BALL_RADIUS, launched: false, skipFrames: 0 },
+        ball: { x: 0, y: 0, dx: 0, dy: 0, radius: BALL_RADIUS, launched: false },
         balls: [], // Additional balls for multi-ball
         bricks: [],
         powerups: [], // Falling power-ups
@@ -80,9 +83,55 @@
         gameState.canvas = canvas;
         gameState.ctx = canvas.getContext('2d');
 
+        // Dynamic canvas sizing based on wrapper
+        resizeCanvas();
+
         resetGame();
         setupEventListeners();
         gameLoop();
+    }
+
+    // Resize canvas to fit wrapper while maintaining aspect ratio
+    function resizeCanvas() {
+        const wrapper = document.getElementById('breakoutCanvasWrapper');
+        if (!wrapper) return;
+
+        const wrapperWidth = wrapper.clientWidth;
+        const wrapperHeight = wrapper.clientHeight;
+
+        // Safety check - don't resize if wrapper has no size yet
+        if (wrapperWidth === 0 || wrapperHeight === 0) return;
+
+        // Use wrapper dimensions directly
+        CANVAS_WIDTH = wrapperWidth;
+        CANVAS_HEIGHT = wrapperHeight;
+
+        gameState.canvas.width = CANVAS_WIDTH;
+        gameState.canvas.height = CANVAS_HEIGHT;
+
+        // Calculate scale factor based on original 800x600
+        scaleFactor = Math.min(CANVAS_WIDTH / 800, CANVAS_HEIGHT / 600);
+
+        // Scale game elements
+        PADDLE_WIDTH = Math.round(100 * scaleFactor);
+        PADDLE_SPEED = Math.round(8 * scaleFactor);
+        BALL_RADIUS = Math.max(6, Math.round(8 * scaleFactor));
+
+        // Calculate brick dimensions to fit screen
+        const totalBrickAreaWidth = CANVAS_WIDTH - 40; // 20px padding on each side
+        BRICK_PADDING = Math.max(2, Math.round(5 * scaleFactor));
+        BRICK_WIDTH = Math.floor((totalBrickAreaWidth - (BRICK_COLS - 1) * BRICK_PADDING) / BRICK_COLS);
+        BRICK_HEIGHT = Math.max(12, Math.round(20 * scaleFactor));
+        BRICK_OFFSET_LEFT = Math.round((CANVAS_WIDTH - (BRICK_COLS * BRICK_WIDTH + (BRICK_COLS - 1) * BRICK_PADDING)) / 2);
+        BRICK_OFFSET_TOP = Math.round(60 * scaleFactor);
+
+        // Update paddle dimensions in gameState
+        gameState.paddle.normalWidth = PADDLE_WIDTH;
+        if (gameState.paddle.wideUntil === 0) {
+            gameState.paddle.width = PADDLE_WIDTH;
+        } else {
+            gameState.paddle.width = PADDLE_WIDTH * 1.5;
+        }
     }
 
     function resetGame() {
@@ -106,7 +155,6 @@
         gameState.ball.dx = 0;
         gameState.ball.dy = 0;
         gameState.ball.launched = false;
-        gameState.ball.skipFrames = 0;
 
         // Create bricks
         createBricks();
@@ -198,9 +246,12 @@
                 e.preventDefault();
                 gameState.keys.left = true;
                 gameState.useMouseControl = false;
-            });
+            }, { passive: false });
             btnLeft.addEventListener('touchend', (e) => {
                 e.preventDefault();
+                gameState.keys.left = false;
+            }, { passive: false });
+            btnLeft.addEventListener('touchcancel', () => {
                 gameState.keys.left = false;
             });
             btnLeft.addEventListener('mousedown', (e) => {
@@ -208,8 +259,10 @@
                 gameState.keys.left = true;
                 gameState.useMouseControl = false;
             });
-            btnLeft.addEventListener('mouseup', (e) => {
-                e.preventDefault();
+            btnLeft.addEventListener('mouseup', () => {
+                gameState.keys.left = false;
+            });
+            btnLeft.addEventListener('mouseleave', () => {
                 gameState.keys.left = false;
             });
         }
@@ -219,9 +272,12 @@
                 e.preventDefault();
                 gameState.keys.right = true;
                 gameState.useMouseControl = false;
-            });
+            }, { passive: false });
             btnRight.addEventListener('touchend', (e) => {
                 e.preventDefault();
+                gameState.keys.right = false;
+            }, { passive: false });
+            btnRight.addEventListener('touchcancel', () => {
                 gameState.keys.right = false;
             });
             btnRight.addEventListener('mousedown', (e) => {
@@ -229,8 +285,10 @@
                 gameState.keys.right = true;
                 gameState.useMouseControl = false;
             });
-            btnRight.addEventListener('mouseup', (e) => {
-                e.preventDefault();
+            btnRight.addEventListener('mouseup', () => {
+                gameState.keys.right = false;
+            });
+            btnRight.addEventListener('mouseleave', () => {
                 gameState.keys.right = false;
             });
         }
@@ -241,7 +299,7 @@
                 if (!gameState.ball.launched && !gameState.gameOver) {
                     launchBall();
                 }
-            });
+            }, { passive: false });
             btnLaunch.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (!gameState.ball.launched && !gameState.gameOver) {
@@ -293,13 +351,9 @@
             return;
         }
 
-        // Decrement skip frames
-        if (gameState.ball.skipFrames > 0) {
-            gameState.ball.skipFrames--;
-        }
-
-        // Sub-step movement - move ball in small increments to prevent tunneling
-        const steps = 5; // Divide movement into 5 sub-steps
+        // Sub-step movement - more steps at higher speeds to prevent tunneling
+        const speed = Math.sqrt(gameState.ball.dx ** 2 + gameState.ball.dy ** 2);
+        const steps = Math.max(5, Math.ceil(speed * 2)); // More sub-steps at higher speeds
         const stepDx = gameState.ball.dx / steps;
         const stepDy = gameState.ball.dy / steps;
 
@@ -307,9 +361,8 @@
             gameState.ball.x += stepDx;
             gameState.ball.y += stepDy;
 
-            // Check for brick collision after each sub-step (only if not in skip frames)
-            if (gameState.ball.skipFrames === 0 && checkBrickCollision()) {
-                gameState.ball.skipFrames = 3; // Skip next 3 frames after hitting a brick
+            // Check for brick collision after each sub-step
+            if (checkBrickCollision()) {
                 break; // Stop moving if we hit a brick
             }
         }
@@ -367,13 +420,9 @@
         for (let i = gameState.balls.length - 1; i >= 0; i--) {
             const ball = gameState.balls[i];
 
-            // Decrement skip frames
-            if (ball.skipFrames > 0) {
-                ball.skipFrames--;
-            }
-
-            // Sub-step movement
-            const steps = 5;
+            // Sub-step movement - more steps at higher speeds
+            const ballSpeed = Math.sqrt(ball.dx ** 2 + ball.dy ** 2);
+            const steps = Math.max(5, Math.ceil(ballSpeed * 2));
             const stepDx = ball.dx / steps;
             const stepDy = ball.dy / steps;
 
@@ -381,8 +430,7 @@
                 ball.x += stepDx;
                 ball.y += stepDy;
 
-                if (ball.skipFrames === 0 && checkBrickCollisionForBall(ball)) {
-                    ball.skipFrames = 3;
+                if (checkBrickCollisionForBall(ball)) {
                     break;
                 }
             }
@@ -419,14 +467,16 @@
         }
 
         // Update falling power-ups
+        const powerupFallSpeed = Math.max(2, 2 * scaleFactor);
+        const powerupSizeCheck = Math.max(16, Math.round(20 * scaleFactor));
         for (let i = gameState.powerups.length - 1; i >= 0; i--) {
             const powerup = gameState.powerups[i];
-            powerup.y += 2; // Fall speed
+            powerup.y += powerupFallSpeed; // Fall speed
 
             // Check if paddle caught it
-            if (powerup.y + 10 > gameState.paddle.y &&
+            if (powerup.y + powerupSizeCheck / 2 > gameState.paddle.y &&
                 powerup.y < gameState.paddle.y + gameState.paddle.height &&
-                powerup.x + 20 > gameState.paddle.x &&
+                powerup.x + powerupSizeCheck > gameState.paddle.x &&
                 powerup.x < gameState.paddle.x + gameState.paddle.width) {
 
                 applyPowerup(powerup.type);
@@ -486,8 +536,9 @@
 
             // Drop power-up if this brick had one
             if (hitBrick.powerup) {
+                const powerupSpawnSize = Math.max(16, Math.round(20 * scaleFactor));
                 gameState.powerups.push({
-                    x: hitBrick.x + hitBrick.width / 2 - 10,
+                    x: hitBrick.x + hitBrick.width / 2 - powerupSpawnSize / 2,
                     y: hitBrick.y,
                     type: hitBrick.powerup
                 });
@@ -548,8 +599,7 @@
                 y: gameState.ball.y,
                 dx: speed * Math.sin(angle),
                 dy: -speed * Math.cos(angle),
-                radius: BALL_RADIUS,
-                skipFrames: 0
+                radius: BALL_RADIUS
             });
         } else if (powerup.name === 'doublepoints') {
             gameState.doublePointsUntil = Date.now() + 10000; // 10 seconds
@@ -567,7 +617,6 @@
         gameState.ball.dx = 0;
         gameState.ball.dy = 0;
         gameState.ball.launched = false;
-        gameState.ball.skipFrames = 0;
         gameState.balls = []; // Clear multi-balls
         gameState.powerups = []; // Clear falling powerups
     }
@@ -587,18 +636,22 @@
     function gameOver() {
         gameState.gameOver = true;
         gameState.won = false;
-        document.getElementById('breakoutGameOverScreen').style.display = 'flex';
+        const screen = document.getElementById('breakoutGameOverScreen');
+        screen.style.display = 'flex';
         document.getElementById('breakoutFinalScore').textContent = gameState.score;
         document.getElementById('breakoutGameOverTitle').textContent = 'GAME OVER';
+        document.getElementById('breakoutGameOverTitle').style.color = '#f87171';
         document.getElementById('breakoutGameOverMessage').textContent = 'Better luck next time!';
     }
 
     function winGame() {
         gameState.gameOver = true;
         gameState.won = true;
-        document.getElementById('breakoutGameOverScreen').style.display = 'flex';
+        const screen = document.getElementById('breakoutGameOverScreen');
+        screen.style.display = 'flex';
         document.getElementById('breakoutFinalScore').textContent = gameState.score;
         document.getElementById('breakoutGameOverTitle').textContent = 'YOU WIN!';
+        document.getElementById('breakoutGameOverTitle').style.color = '#4ade80';
         document.getElementById('breakoutGameOverMessage').textContent = 'Congratulations! You beat all levels!';
     }
 
@@ -642,7 +695,8 @@
 
             // Draw power-up emoji if this brick has one
             if (brick.powerup) {
-                ctx.font = '16px Arial';
+                const emojiFontSize = Math.max(10, BRICK_HEIGHT - 4);
+                ctx.font = `${emojiFontSize}px Arial`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = '#fff';
@@ -654,20 +708,21 @@
         ctx.shadowBlur = 0;
 
         // Draw falling power-ups with glow
+        const powerupSize = Math.max(16, Math.round(20 * scaleFactor));
         for (let powerup of gameState.powerups) {
             ctx.shadowColor = powerup.type.color;
             ctx.shadowBlur = 15;
             ctx.fillStyle = powerup.type.color;
-            ctx.fillRect(powerup.x, powerup.y, 20, 20);
+            ctx.fillRect(powerup.x, powerup.y, powerupSize, powerupSize);
             ctx.shadowBlur = 0;
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
             ctx.lineWidth = 2;
-            ctx.strokeRect(powerup.x, powerup.y, 20, 20);
-            ctx.font = '14px Arial';
+            ctx.strokeRect(powerup.x, powerup.y, powerupSize, powerupSize);
+            ctx.font = `${powerupSize * 0.7}px Arial`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = '#fff';
-            ctx.fillText(powerup.type.emoji, powerup.x + 10, powerup.y + 10);
+            ctx.fillText(powerup.type.emoji, powerup.x + powerupSize / 2, powerup.y + powerupSize / 2);
         }
 
         // Draw paddle with neon glow
@@ -702,11 +757,12 @@
         // Draw launch hint
         if (!gameState.ball.launched && !gameState.gameOver) {
             ctx.fillStyle = 'rgba(243, 156, 18, 0.9)';
-            ctx.font = 'bold 22px Arial';
+            const launchFontSize = Math.max(14, Math.min(22, CANVAS_WIDTH / 20));
+            ctx.font = `bold ${launchFontSize}px Arial`;
             ctx.textAlign = 'center';
             ctx.shadowColor = 'rgba(243, 156, 18, 0.6)';
             ctx.shadowBlur = 10;
-            ctx.fillText('SPACE or CLICK to launch!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            ctx.fillText('Tap LAUNCH or press SPACE', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
             ctx.shadowBlur = 0;
         }
 
@@ -714,16 +770,17 @@
         if (gameState.paused) {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            const pauseFontSize = Math.max(24, Math.min(48, CANVAS_WIDTH / 10));
             ctx.fillStyle = '#f39c12';
             ctx.shadowColor = 'rgba(243, 156, 18, 0.8)';
             ctx.shadowBlur = 20;
-            ctx.font = 'bold 48px Arial';
+            ctx.font = `bold ${pauseFontSize}px Arial`;
             ctx.textAlign = 'center';
             ctx.fillText('PAUSED', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
             ctx.shadowBlur = 0;
             ctx.fillStyle = '#9ca3af';
-            ctx.font = '20px Arial';
-            ctx.fillText('Press P to resume', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);
+            ctx.font = `${pauseFontSize * 0.4}px Arial`;
+            ctx.fillText('Tap PAUSE or press P', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + pauseFontSize * 0.7);
         }
     }
 
@@ -742,21 +799,30 @@
     // Export functions to window
     window.launchBreakout = function() {
         if (typeof hideAllMenus === 'function') hideAllMenus();
-        document.getElementById('breakoutGame').style.display = 'block';
-        initGame();
-        setupMobileControls();
+        const gameEl = document.getElementById('breakoutGame');
+        gameEl.style.display = 'flex';
+
+        // Use requestAnimationFrame to ensure DOM is ready before sizing
+        requestAnimationFrame(() => {
+            initGame();
+            setupMobileControls();
+        });
     };
 
     window.exitBreakout = function() {
         if (gameState.animationId) {
             cancelAnimationFrame(gameState.animationId);
+            gameState.animationId = null;
         }
         document.getElementById('breakoutGame').style.display = 'none';
+        document.getElementById('breakoutGameOverScreen').style.display = 'none';
         document.getElementById('arcadeMenu').style.display = 'block';
     };
 
     window.breakoutRestart = function() {
         document.getElementById('breakoutGameOverScreen').style.display = 'none';
+        // Re-init to recalculate sizes
+        resizeCanvas();
         resetGame();
     };
 
