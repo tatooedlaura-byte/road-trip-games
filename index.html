@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.147.0';</script>
+    <script>window.APP_VERSION = '1.148.0';</script>
 
     <style>
         * {
@@ -1123,26 +1123,69 @@
             </div>
 
             <!-- Pac-Man Game Section (hidden by default) -->
-            <div id="pacmanGame" style="display: none;">
-                <div class="game-header">
-                    <button onclick="exitPacman()" class="game-back-btn">← Back</button>
-                    <h2 class="game-title">🟡 Pac-Man</h2>
-                </div>
-                <div style="text-align: center;">
-                    <canvas id="pacmanCanvas"></canvas>
+            <div id="pacmanGame" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; height: 100dvh; background: #000; z-index: 1000; flex-direction: column;">
+                <!-- Top bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0.5rem; background: rgba(0,0,0,0.7); flex-shrink: 0;">
+                    <button onclick="exitPacman()" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: bold; background: linear-gradient(145deg, #6366f1, #4f46e5); color: white; border: none; border-radius: 8px; touch-action: manipulation;">← Back</button>
+                    <div style="display: flex; gap: 0.8rem; font-size: 0.7rem; color: #fff;">
+                        <div style="text-align: center;"><div style="color: #ffd700;">SCORE</div><div id="pacmanScore">0</div></div>
+                        <div style="text-align: center;"><div style="color: #ffd700;">HIGH</div><div id="pacmanHigh">0</div></div>
+                        <div style="text-align: center;"><div style="color: #ffd700;">LVL</div><div id="pacmanLevel">1</div></div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span id="pacmanLives" style="font-size: 0.9rem;">🟡🟡🟡</span>
+                        <button onclick="pacmanShowHelp()" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.2); color: white; border: none; font-weight: bold; font-size: 0.9rem; touch-action: manipulation;">?</button>
+                    </div>
                 </div>
 
-                <!-- Mobile Touch Controls -->
-                <div id="pacmanControls" class="game-dpad">
-                    <div></div>
-                    <button id="btnUp" class="game-dpad-btn">▲</button>
-                    <div></div>
-                    <button id="btnLeft" class="game-dpad-btn">◀</button>
-                    <div class="game-dpad-btn game-dpad-center"></div>
-                    <button id="btnRight" class="game-dpad-btn">▶</button>
-                    <div></div>
-                    <button id="btnDown" class="game-dpad-btn">▼</button>
-                    <div></div>
+                <!-- Canvas wrapper -->
+                <div id="pacmanCanvasWrapper" style="flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                    <canvas id="pacmanCanvas" style="display: block; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;"></canvas>
+                </div>
+
+                <!-- Control buttons at bottom -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 2.5rem)); flex-shrink: 0; background: rgba(0,0,0,0.5);">
+                    <!-- D-pad left side -->
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.2rem;">
+                        <button id="pacmanBtnUp" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▲</button>
+                        <div style="display: flex; gap: 0.3rem;">
+                            <button id="pacmanBtnLeft" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
+                            <button id="pacmanBtnRight" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
+                        </div>
+                        <button id="pacmanBtnDown" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▼</button>
+                    </div>
+
+                    <!-- NEW button center -->
+                    <button onclick="pacmanNewGame()" style="padding: 0.6rem 1rem; font-size: 0.8rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 8px; touch-action: manipulation;">NEW</button>
+
+                    <!-- Spacer for balance -->
+                    <div style="width: 120px;"></div>
+                </div>
+
+                <!-- Help Modal -->
+                <div id="pacmanHelpModal" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 100;">
+                    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; max-width: 90%; max-height: 80%; overflow-y: auto; color: white;">
+                        <h3 style="margin: 0 0 1rem 0; color: #ffd700; text-align: center;">How to Play Pac-Man</h3>
+                        <div style="font-size: 0.85rem; line-height: 1.6;">
+                            <p><strong>Goal:</strong> Eat all the dots while avoiding ghosts!</p>
+                            <p><strong>Controls:</strong> Use the D-pad or arrow keys to move</p>
+                            <p><strong>Power Pellets:</strong> Large dots in corners let you eat ghosts!</p>
+                            <p><strong>Ghosts:</strong></p>
+                            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                                <li><span style="color: #FF0000;">Blinky (Red)</span> - Chases directly</li>
+                                <li><span style="color: #FFB8FF;">Pinky (Pink)</span> - Ambushes ahead</li>
+                                <li><span style="color: #00FFFF;">Inky (Cyan)</span> - Unpredictable</li>
+                                <li><span style="color: #FFB851;">Clyde (Orange)</span> - Shy, runs away</li>
+                            </ul>
+                            <p><strong>Scoring:</strong></p>
+                            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                                <li>Dot: 10 points</li>
+                                <li>Power Pellet: 50 points</li>
+                                <li>Ghost: 200 points</li>
+                            </ul>
+                        </div>
+                        <button onclick="pacmanHideHelp()" style="display: block; margin: 1rem auto 0; padding: 0.6rem 1.5rem; background: linear-gradient(145deg, #22c55e, #16a34a); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 0.9rem;">Got it!</button>
+                    </div>
                 </div>
             </div>
 
