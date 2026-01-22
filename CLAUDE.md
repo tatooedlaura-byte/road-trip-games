@@ -196,10 +196,10 @@ ctx.font = `bold ${fontSize}px Arial`;
 - [x] Frogger (v1.144.0) - D-pad controls, dynamic grid sizing, hand preference toggle
 - [x] Galaga (v1.145.0) - FIRE/arrow buttons, dynamic sizing, scaled enemies/bullets
 - [x] Galaxian (v1.146.0) - FIRE/arrow buttons, dynamic sizing, scaled enemies/dive patterns
+- [x] Pac-Man (v1.148.0) - D-pad controls, dynamic sizing, ghost flash warning, help modal
 
 ### Games Still Needing Mobile Update
 - [ ] Snake
 - [ ] Space Invaders
 - [ ] Tetris
-- [ ] Pac-Man (if exists)
 - [ ] Other arcade games in games/ folder
