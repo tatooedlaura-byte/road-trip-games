@@ -1,5 +1,5 @@
 // Service Worker for Road Trip Games
-const VERSION = '1.146.0';
+const VERSION = '1.147.0';
 const CACHE_NAME = `roadtrip-v${VERSION}`;
 const BYPASS_CACHE = true; // Always bypass cache to ensure updates are seen
 
@@ -11,7 +11,8 @@ const urlsToCache = [
   './icon-512.svg',
   './travelFacts.js',
   './data/states.json',
-  './data/ghost-words.txt'
+  './data/ghost-words.txt',
+  './data/spelling-bee-words.txt'
   // Game files are NOT pre-cached - always fetch fresh when online
 ];
 

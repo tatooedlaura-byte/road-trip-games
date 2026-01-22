@@ -896,12 +896,13 @@
         if (dictionaryLoaded) return;
 
         try {
-            const response = await fetch('./data/ghost-words.txt?v=' + (window.APP_VERSION || '1'));
+            const response = await fetch('./data/spelling-bee-words.txt?v=' + (window.APP_VERSION || '1'));
             if (!response.ok) throw new Error('HTTP ' + response.status);
             const text = await response.text();
             const words = text.split('\n').filter(w => w.trim().length >= 4);
             WORDS = new Set(words.map(w => w.trim().toLowerCase()));
             dictionaryLoaded = true;
+            console.log('Spelling Bee dictionary loaded:', WORDS.size, 'words');
         } catch (error) {
             console.warn('Using fallback dictionary for Spelling Bee');
             WORDS = new Set(FALLBACK_WORDS);
