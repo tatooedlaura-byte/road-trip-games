@@ -907,6 +907,34 @@
         document.getElementById('pacmanHelpModal').style.display = 'none';
     }
 
+    // Hand preference for D-pad position
+    let leftHanded = localStorage.getItem('pacmanLeftHanded') === 'true';
+
+    function toggleHand() {
+        leftHanded = !leftHanded;
+        localStorage.setItem('pacmanLeftHanded', leftHanded);
+        updateControlLayout();
+    }
+
+    function updateControlLayout() {
+        const controlBar = document.getElementById('pacmanControlBar');
+        const dpad = document.getElementById('pacmanDpad');
+        const spacer = document.getElementById('pacmanSpacer');
+        const handBtn = document.getElementById('pacmanHandBtn');
+
+        if (!controlBar || !dpad || !spacer) return;
+
+        if (leftHanded) {
+            // D-pad on right side
+            controlBar.style.flexDirection = 'row-reverse';
+            if (handBtn) handBtn.textContent = '🫲';
+        } else {
+            // D-pad on left side (default)
+            controlBar.style.flexDirection = 'row';
+            if (handBtn) handBtn.textContent = '🫱';
+        }
+    }
+
     // Launch game
     window.launchPacman = function() {
         if (typeof hideAllMenus === 'function') hideAllMenus();
@@ -920,6 +948,7 @@
                     resizeCanvas();
                 }
                 setupControls();
+                updateControlLayout();
                 startNewGame();
             });
         });
@@ -945,5 +974,6 @@
     window.pacmanNewGame = startNewGame;
     window.pacmanShowHelp = showHelp;
     window.pacmanHideHelp = hideHelp;
+    window.pacmanToggleHand = toggleHand;
 
 })();
