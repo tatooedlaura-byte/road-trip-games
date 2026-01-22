@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0">
 
     <!-- App Version for automatic updates -->
-    <script>window.APP_VERSION = '1.148.1';</script>
+    <script>window.APP_VERSION = '1.148.2';</script>
 
     <style>
         * {
@@ -1145,24 +1145,25 @@
 
                 <!-- Control buttons at bottom -->
                 <div id="pacmanControlBar" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 2.5rem)); flex-shrink: 0; background: rgba(0,0,0,0.5);">
-                    <!-- D-pad -->
-                    <div id="pacmanDpad" style="display: flex; flex-direction: column; align-items: center; gap: 0.2rem;">
-                        <button id="pacmanBtnUp" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▲</button>
-                        <div style="display: flex; gap: 0.3rem;">
-                            <button id="pacmanBtnLeft" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
-                            <button id="pacmanBtnRight" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
+                    <!-- Left side placeholder (or D-pad if left-handed) -->
+                    <div id="pacmanLeftSide" style="min-width: 100px;">
+                        <button id="pacmanHandBtn" onclick="pacmanToggleHand()" style="padding: 0.4rem 0.6rem; font-size: 0.65rem; font-weight: bold; background: linear-gradient(145deg, #6366f1, #4f46e5); color: white; border: none; border-radius: 6px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">Switch</button>
+                    </div>
+
+                    <!-- Center: NEW button -->
+                    <button onclick="pacmanNewGame()" style="padding: 0.6rem 1rem; font-size: 0.8rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 8px; touch-action: manipulation;">NEW</button>
+
+                    <!-- Right side: D-pad (default for right-handed) -->
+                    <div id="pacmanRightSide">
+                        <div id="pacmanDpad" style="display: flex; flex-direction: column; align-items: center; gap: 0.2rem;">
+                            <button id="pacmanBtnUp" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▲</button>
+                            <div style="display: flex; gap: 0.3rem;">
+                                <button id="pacmanBtnLeft" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">◀</button>
+                                <button id="pacmanBtnRight" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▶</button>
+                            </div>
+                            <button id="pacmanBtnDown" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▼</button>
                         </div>
-                        <button id="pacmanBtnDown" style="padding: 0.8rem 1.2rem; font-size: 1.4rem; font-weight: bold; background: linear-gradient(145deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; touch-action: manipulation; -webkit-user-select: none; -webkit-touch-callout: none;">▼</button>
                     </div>
-
-                    <!-- Center buttons -->
-                    <div style="display: flex; flex-direction: column; gap: 0.4rem; align-items: center;">
-                        <button onclick="pacmanNewGame()" style="padding: 0.6rem 1rem; font-size: 0.8rem; font-weight: bold; background: linear-gradient(145deg, #f97316, #ea580c); color: white; border: none; border-radius: 8px; touch-action: manipulation;">NEW</button>
-                        <button id="pacmanHandBtn" onclick="pacmanToggleHand()" style="padding: 0.4rem 0.8rem; font-size: 1rem; background: rgba(255,255,255,0.15); color: white; border: none; border-radius: 8px; touch-action: manipulation;">🫱</button>
-                    </div>
-
-                    <!-- Spacer for balance -->
-                    <div id="pacmanSpacer" style="width: 120px;"></div>
                 </div>
 
                 <!-- Help Modal -->

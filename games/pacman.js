@@ -907,31 +907,47 @@
         document.getElementById('pacmanHelpModal').style.display = 'none';
     }
 
-    // Hand preference for D-pad position
-    let leftHanded = localStorage.getItem('pacmanLeftHanded') === 'true';
-
+    // Toggle D-pad between left and right side
     function toggleHand() {
-        leftHanded = !leftHanded;
-        localStorage.setItem('pacmanLeftHanded', leftHanded);
-        updateControlLayout();
-    }
-
-    function updateControlLayout() {
-        const controlBar = document.getElementById('pacmanControlBar');
+        const leftSide = document.getElementById('pacmanLeftSide');
+        const rightSide = document.getElementById('pacmanRightSide');
         const dpad = document.getElementById('pacmanDpad');
-        const spacer = document.getElementById('pacmanSpacer');
         const handBtn = document.getElementById('pacmanHandBtn');
 
-        if (!controlBar || !dpad || !spacer) return;
+        const isLeftHanded = localStorage.getItem('pacmanLeftHanded') === 'true';
 
-        if (leftHanded) {
-            // D-pad on right side
-            controlBar.style.flexDirection = 'row-reverse';
-            if (handBtn) handBtn.textContent = '🫲';
+        if (isLeftHanded) {
+            // Switch to right-handed (D-pad on right)
+            rightSide.appendChild(dpad);
+            leftSide.innerHTML = '';
+            leftSide.appendChild(handBtn);
+            localStorage.setItem('pacmanLeftHanded', 'false');
         } else {
-            // D-pad on left side (default)
-            controlBar.style.flexDirection = 'row';
-            if (handBtn) handBtn.textContent = '🫱';
+            // Switch to left-handed (D-pad on left)
+            leftSide.appendChild(dpad);
+            rightSide.innerHTML = '';
+            rightSide.appendChild(handBtn);
+            localStorage.setItem('pacmanLeftHanded', 'true');
+        }
+
+        // Re-setup controls after DOM changes
+        setupControls();
+    }
+
+    // Apply saved hand preference on load
+    function applyHandPreference() {
+        const isLeftHanded = localStorage.getItem('pacmanLeftHanded') === 'true';
+        if (isLeftHanded) {
+            const leftSide = document.getElementById('pacmanLeftSide');
+            const rightSide = document.getElementById('pacmanRightSide');
+            const dpad = document.getElementById('pacmanDpad');
+            const handBtn = document.getElementById('pacmanHandBtn');
+
+            if (leftSide && rightSide && dpad && handBtn) {
+                leftSide.appendChild(dpad);
+                rightSide.innerHTML = '';
+                rightSide.appendChild(handBtn);
+            }
         }
     }
 
@@ -947,8 +963,8 @@
                 } else {
                     resizeCanvas();
                 }
+                applyHandPreference();
                 setupControls();
-                updateControlLayout();
                 startNewGame();
             });
         });
